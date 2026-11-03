@@ -47,8 +47,9 @@ cp .env.example .env
 python server.py
 ```
 
-浏览器访问 `http://127.0.0.1:5000`，后台入口为
-`http://127.0.0.1:5000/admin`，健康检查为
+学员登录入口为 `http://127.0.0.1:5000/login`，注册入口为
+`http://127.0.0.1:5000/register`；管理员独立入口为
+`http://127.0.0.1:5000/admin/login`，健康检查为
 `http://127.0.0.1:5000/api/health`。
 
 ## 测试

@@ -49,6 +49,7 @@ import hashlib
 import hmac
 import html
 import smtplib
+import time
 import xml.etree.ElementTree as ET
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -56,8 +57,9 @@ from urllib.parse import quote, urlparse
 
 import requests
 from dotenv import load_dotenv
+from flask_compress import Compress
 from flask import (
-    Flask, request, jsonify, Response, abort, send_file,
+    Flask, request, jsonify, Response, abort, send_file, redirect,
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -114,6 +116,13 @@ os.makedirs(TTS_CACHE, exist_ok=True)
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
+app.config["COMPRESS_MIN_SIZE"] = 1024
+app.config["COMPRESS_MIMETYPES"] = [
+    "text/html", "text/css", "application/json", "application/javascript",
+    "image/svg+xml",
+]
+Compress(app)
+ANALYTICS_CACHE = {}
 
 
 # ----------------------------- 数据库 -----------------------------
@@ -122,6 +131,7 @@ def db():
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys=ON")
     conn.execute("PRAGMA busy_timeout=10000")
+    conn.execute("PRAGMA synchronous=NORMAL")
     return conn
 
 
@@ -747,7 +757,8 @@ def api_data_put():
         return jsonify({"error": "学习进度必须是 JSON 对象"}), 400
     conn = db()
     conn.execute(
-        "INSERT OR REPLACE INTO user_data(user_id,data) VALUES(?,?)",
+        "INSERT INTO user_data(user_id,data) VALUES(?,?) "
+        "ON CONFLICT(user_id) DO UPDATE SET data=excluded.data",
         (u["user_id"], data),
     )
     conn.commit()
@@ -772,14 +783,34 @@ def api_admin_login():
 def api_admin_users():
     if not auth_admin():
         return jsonify({"error": "未授权"}), 401
+    try:
+        page = max(1, int(request.args.get("page", 1)))
+        page_size = max(10, min(100, int(request.args.get("page_size", 50))))
+    except (TypeError, ValueError):
+        page, page_size = 1, 50
+    query = (request.args.get("q") or "").strip()[:80]
+    where_sql = ""
+    params = []
+    if query:
+        where_sql = (
+            "WHERE u.phone LIKE ? OR u.email LIKE ? OR u.nickname LIKE ? "
+            "OR CAST(u.id AS TEXT)=? "
+        )
+        like = f"%{query}%"
+        params = [like, like, like, query]
     conn = db()
+    total = conn.execute(
+        "SELECT COUNT(*) AS n FROM users u " + where_sql, params
+    ).fetchone()["n"]
     rows = conn.execute(
         "SELECT u.id,u.phone,u.email,u.nickname,u.created_at,u.last_login,"
         "u.email_verified,u.openid,d.data,a.last_activity FROM users u "
         "LEFT JOIN user_data d ON d.user_id=u.id "
         "LEFT JOIN (SELECT user_id,MAX(activity_date) AS last_activity "
         "FROM user_activity GROUP BY user_id) a ON a.user_id=u.id "
-        "ORDER BY u.id DESC"
+        + where_sql
+        + "ORDER BY u.id DESC LIMIT ? OFFSET ?",
+        params + [page_size, (page - 1) * page_size],
     ).fetchall()
     out = []
     for u in rows:
@@ -813,7 +844,18 @@ def api_admin_users():
             }
         )
     conn.close()
-    return jsonify({"users": out})
+    pages = max(1, (total + page_size - 1) // page_size)
+    return jsonify(
+        {
+            "users": out,
+            "pagination": {
+                "page": page,
+                "page_size": page_size,
+                "pages": pages,
+                "total": total,
+            },
+        }
+    )
 
 
 @app.route("/api/admin/analytics", methods=["GET"])
@@ -826,6 +868,9 @@ def api_admin_analytics():
     except (TypeError, ValueError):
         trend_days = 30
     trend_days = max(7, min(90, trend_days))
+    cached = ANALYTICS_CACHE.get(trend_days)
+    if cached and time.monotonic() - cached[0] < 30:
+        return jsonify(cached[1])
 
     conn = db()
     users = conn.execute(
@@ -919,8 +964,7 @@ def api_admin_analytics():
             }
         )
 
-    return jsonify(
-        {
+    payload = {
             "generated_at": display_local_datetime(now_iso()),
             "definitions": {
                 "active": "当日登录、同步或保存过学习进度的去重用户",
@@ -950,7 +994,8 @@ def api_admin_analytics():
             "trend": trend,
             "tracking_note": "行为事件从本版本开始按日汇总；旧用户的最近登录和学习日已用于历史兼容。",
         }
-    )
+    ANALYTICS_CACHE[trend_days] = (time.monotonic(), payload)
+    return jsonify(payload)
 
 
 @app.route("/api/admin/logout", methods=["POST"])
@@ -970,15 +1015,30 @@ def index():
     p = HTML if os.path.exists(HTML) else HTML_FALLBACK
     if not os.path.exists(p):
         abort(404)
-    return send_file(p)
+    return send_file(p, conditional=True, max_age=0)
+
+
+@app.route("/login", methods=["GET"])
+@app.route("/register", methods=["GET"])
+def user_auth_page():
+    p = HTML if os.path.exists(HTML) else HTML_FALLBACK
+    if not os.path.exists(p):
+        abort(404)
+    return send_file(p, conditional=True, max_age=0)
 
 
 @app.route("/admin", methods=["GET"])
 @app.route("/admin.html", methods=["GET"])
+def admin_legacy_page():
+    return redirect("/admin/login", code=302)
+
+
+@app.route("/admin/login", methods=["GET"])
+@app.route("/admin/dashboard", methods=["GET"])
 def admin_page():
     if not os.path.exists(ADMIN_HTML):
         abort(404)
-    return send_file(ADMIN_HTML)
+    return send_file(ADMIN_HTML, conditional=True, max_age=0)
 
 
 @app.route("/api/health", methods=["GET"])

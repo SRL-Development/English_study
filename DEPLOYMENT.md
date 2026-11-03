@@ -174,7 +174,13 @@ caddy run --config deploy\caddy\Caddyfile.native
 https://englearner.cn/
 ```
 
-网页和 API 同源，不需要额外配置 CORS。后台入口为 `/admin`，健康检查为 `/api/health`。
+网页和 API 同源，不需要额外配置 CORS。学员登录为 `/login`，注册为
+`/register`；管理员使用完全独立的 `/admin/login`，登录后进入
+`/admin/dashboard`。健康检查为 `/api/health`。
+
+Flask 已启用 HTML/JSON 压缩；Nginx 示例仅对 SSE `/chat` 关闭缓冲，普通页面和
+API 保持 gzip 与代理缓冲。宝塔反向代理时建议同样开启 gzip，且不要对整站关闭
+`proxy_buffering`。
 
 ### 微信小程序
 

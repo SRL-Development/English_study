@@ -13,6 +13,7 @@ class ServerApiTests(unittest.TestCase):
         self.original_db = server.DB
         server.DB = os.path.join(self.tmp.name, "test.db")
         server.init_db()
+        server.ANALYTICS_CACHE.clear()
         server.app.config.update(TESTING=True)
         self.client = server.app.test_client()
 
@@ -36,6 +37,17 @@ class ServerApiTests(unittest.TestCase):
         self.assertEqual(response.json["status"], "ok")
         self.assertEqual(response.headers["X-Content-Type-Options"], "nosniff")
         self.assertNotIn("Access-Control-Allow-Origin", response.headers)
+
+    def test_user_and_admin_login_have_separate_routes(self):
+        login = self.client.get("/login", headers={"Accept-Encoding": "gzip"})
+        self.assertEqual(login.status_code, 200)
+        self.assertEqual(login.headers.get("Content-Encoding"), "gzip")
+        self.assertEqual(self.client.get("/register").status_code, 200)
+        legacy = self.client.get("/admin")
+        self.assertEqual(legacy.status_code, 302)
+        self.assertTrue(legacy.headers["Location"].endswith("/admin/login"))
+        self.assertEqual(self.client.get("/admin/login").status_code, 200)
+        self.assertEqual(self.client.get("/admin/dashboard").status_code, 200)
 
     def test_cors_only_allows_configured_origin(self):
         with mock.patch.object(server, "CORS_ORIGINS", {"https://study.example.com"}):
@@ -84,6 +96,7 @@ class ServerApiTests(unittest.TestCase):
 
         users = self.client.get("/api/admin/users", headers=headers)
         self.assertEqual(users.status_code, 200)
+        self.assertEqual(users.json["pagination"]["total"], 1)
         self.assertEqual(users.json["users"][0]["source"], "web")
         self.assertTrue(users.json["users"][0]["active_today"])
         self.assertEqual(users.json["users"][0]["last_active"], today)

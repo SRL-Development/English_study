@@ -4,38 +4,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>英语全能学习台 · EnglishLab</title>
+<title>EnglishLab · 职场与行业英语学习平台</title>
 <style>
   :root{
-    --bg:#f4f6fb; --card:#ffffff; --ink:#1f2733; --sub:#6b7686; --line:#e7ebf3;
-    --pri:#2f6df6; --pri-soft:#eaf1ff; --green:#1faa6b; --green-soft:#e6f7ef;
+    --bg:#f6f7fb; --card:#ffffff; --ink:#162033; --sub:#667085; --line:#e7e9f0;
+    --pri:#4f46e5; --pri-soft:#eeedff; --green:#159a68; --green-soft:#e7f8f0;
     --red:#e5484d; --red-soft:#fdecec; --amber:#f0a020; --amber-soft:#fef4e2;
-    --shadow:0 6px 20px rgba(31,39,51,.06);
-    --r:16px;
+    --navy:#101828; --shadow:0 10px 35px rgba(16,24,40,.07); --shadow-lg:0 24px 70px rgba(16,24,40,.16);
+    --r:18px;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
-    background:var(--bg); color:var(--ink); font-size:15px; line-height:1.55;
+    background:radial-gradient(circle at 12% 0,#eeedff 0,transparent 28%),var(--bg); color:var(--ink); font-size:15px; line-height:1.55;
     padding-bottom:env(safe-area-inset-bottom);
   }
-  .wrap{max-width:980px;margin:0 auto;padding:14px 16px 96px}
+  .wrap{max-width:1120px;margin:0 auto;padding:20px 20px 104px}
   /* top bar */
-  .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
   .brand{display:flex;align-items:center;gap:10px}
-  .logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--pri),#6aa1ff);display:flex;align-items:center;justify-content:center}
+  .logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#2720a9,var(--pri) 60%,#818cf8);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(79,70,229,.24)}
   .logo svg{width:22px;height:22px;fill:#fff}
-  .brand h1{font-size:17px;margin:0;font-weight:700;letter-spacing:.2px}
+  .brand h1{font-size:18px;margin:0;font-weight:760;letter-spacing:-.2px}
   .brand p{font-size:11px;color:var(--sub);margin:0}
   .sync{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--sub);background:var(--card);border:1px solid var(--line);padding:6px 10px;border-radius:20px;box-shadow:var(--shadow)}
   .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
   /* today */
-  .today{background:linear-gradient(135deg,#2f6df6,#5b8def);color:#fff;border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-bottom:16px}
+  .today{background:linear-gradient(120deg,#151c36 0%,#312e81 55%,#4f46e5 100%);color:#fff;border-radius:22px;padding:20px;box-shadow:0 18px 45px rgba(49,46,129,.18);margin-bottom:18px;position:relative;overflow:hidden}
+  .today:after{content:"";position:absolute;width:210px;height:210px;border-radius:50%;right:-90px;top:-120px;background:rgba(255,255,255,.09)}
   .today h2{font-size:14px;margin:0 0 10px;opacity:.92;font-weight:600;display:flex;align-items:center;gap:6px}
   .today h2 svg{width:16px;height:16px;fill:#fff}
   .today-row{display:flex;gap:10px;flex-wrap:wrap}
-  .tcard{flex:1;min-width:150px;background:rgba(255,255,255,.14);border-radius:12px;padding:11px 12px}
+  .tcard{flex:1;min-width:150px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px);border-radius:14px;padding:12px 14px;position:relative;z-index:1}
   .tcard .lab{font-size:11px;opacity:.85}
   .tcard .val{font-size:20px;font-weight:700;margin-top:2px}
   .tcard .val small{font-size:12px;font-weight:500;opacity:.8}
@@ -53,14 +54,14 @@
   .view{display:none}
   .view.on{display:block}
   /* card */
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px}
+  .card{background:rgba(255,255,255,.94);border:1px solid rgba(222,225,235,.9);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}
   /* filters */
   .filters{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;margin-bottom:4px}
   .filters::-webkit-scrollbar{display:none}
   .chip{flex:none;background:var(--bg);border:1px solid var(--line);color:var(--sub);font-size:13px;padding:7px 13px;border-radius:20px;cursor:pointer;white-space:nowrap;font-family:inherit}
   .chip.on{background:var(--pri);color:#fff;border-color:var(--pri)}
   /* flashcard */
-  .flash{height:230px;border-radius:14px;background:var(--pri-soft);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;cursor:pointer;position:relative;border:1px solid #d8e6ff}
+  .flash{height:240px;border-radius:16px;background:linear-gradient(145deg,#f7f7ff,#ecebff);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;cursor:pointer;position:relative;border:1px solid #dcd9ff}
   .flash .cat{position:absolute;top:12px;left:14px;font-size:11px;color:var(--pri);background:#fff;padding:3px 9px;border-radius:12px;font-weight:600}
   .flash .ph{position:absolute;top:12px;right:14px;font-size:11px;color:var(--sub);background:#fff;padding:3px 9px;border-radius:12px}
   .flash .en{font-size:30px;font-weight:700;color:var(--ink)}
@@ -153,9 +154,10 @@
   .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:#1f2733;color:#fff;font-size:13px;padding:10px 18px;border-radius:22px;z-index:60;opacity:0;transition:opacity .25s;pointer-events:none}
   .toast.show{opacity:1}
   @media(min-width:760px){
-    .wrap{padding-bottom:24px}
-    .tabs{position:static;background:none;border:none;max-width:980px;margin:0 auto 4px;gap:6px}
-    .tabs button{flex:none;flex-direction:row;padding:9px 16px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+    .wrap{padding-bottom:34px}
+    .tabs{position:sticky;top:0;background:rgba(246,247,251,.88);backdrop-filter:blur(16px);border:none;max-width:1120px;margin:0 auto 18px;gap:6px;padding:8px 20px;z-index:40}
+    .tabs button{flex:none;flex-direction:row;padding:9px 16px;background:transparent;border:1px solid transparent;border-radius:10px;box-shadow:none;font-weight:600}
+    .tabs button.on{background:#fff;border-color:var(--line);box-shadow:0 5px 18px rgba(16,24,40,.06)}
     .stat-grid{grid-template-columns:repeat(4,1fr)}
   }
   /* grammar */
@@ -240,20 +242,29 @@
 .mic-btn.sm{background:var(--pri-soft);color:var(--pri)}
 .chat-actions{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
 .chat-status{font-size:12px;color:var(--sub);margin-left:auto}
-  /* 登录/注册遮罩 */
-  .auth{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:linear-gradient(135deg,#eef3ff 0%,#f6f0ff 100%);padding:20px}
+  /* 用户账号门户：与管理后台使用完全不同的视觉与 URL */
+  .auth{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:#f5f6fa;padding:24px;overflow:auto}
   .auth.show{display:flex}
-  .auth-card{width:100%;max-width:380px;background:#fff;border-radius:18px;padding:28px 24px;box-shadow:0 18px 50px rgba(60,80,160,.18)}
-  .auth-logo{font-size:22px;font-weight:800;color:var(--pri);text-align:center;letter-spacing:.5px}
-  .auth-sub{font-size:12px;color:var(--sub);text-align:center;margin:6px 0 18px}
+  .auth-shell{width:min(980px,100%);min-height:600px;background:#fff;border-radius:28px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1.05fr .95fr;overflow:hidden;border:1px solid #e8eaf1}
+  .auth-story{background:linear-gradient(145deg,#11182d 0%,#23205f 52%,#4f46e5 100%);color:#fff;padding:52px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+  .auth-story:before,.auth-story:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.13)}
+  .auth-story:before{width:340px;height:340px;right:-180px;top:-120px}.auth-story:after{width:220px;height:220px;left:-110px;bottom:-100px}
+  .auth-brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:760;position:relative;z-index:1}.auth-mark{width:42px;height:42px;border-radius:13px;background:#fff;color:var(--pri);display:grid;place-items:center;font-size:19px;font-weight:850;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+  .auth-pitch{position:relative;z-index:1}.auth-pitch .eyebrow{font-size:12px;letter-spacing:1.8px;text-transform:uppercase;color:#c7d2fe;font-weight:700}.auth-pitch h2{font-size:36px;line-height:1.22;margin:12px 0 14px;letter-spacing:-1px}.auth-pitch p{color:#d6d8ef;font-size:14px;line-height:1.8;max-width:390px}
+  .auth-proof{display:grid;gap:11px;position:relative;z-index:1}.auth-proof span{display:flex;align-items:center;gap:9px;color:#eef0ff;font-size:13px}.auth-proof i{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center;font-style:normal;color:#a7f3d0;font-size:11px}
+  .auth-card{width:100%;padding:54px 52px;display:flex;flex-direction:column;justify-content:center}
+  .auth-logo{font-size:26px;font-weight:800;color:var(--navy);letter-spacing:-.6px}
+  .auth-sub{font-size:13px;color:var(--sub);margin:7px 0 24px}
   .auth-tabs{display:flex;gap:8px;margin-bottom:16px}
-  .atab{flex:1;padding:10px;border:1px solid var(--line);background:#fafbff;border-radius:10px;font-size:14px;color:var(--sub);cursor:pointer}
-  .atab.on{background:var(--pri);color:#fff;border-color:var(--pri)}
-  .auth-body input{width:100%;box-sizing:border-box;padding:12px 14px;margin-bottom:12px;border:1px solid var(--line);border-radius:10px;font-size:14px;outline:none}
-  .auth-body input:focus{border-color:var(--pri)}
-  .auth-btn{width:100%;padding:12px;border:none;border-radius:10px;background:var(--pri);color:#fff;font-size:15px;font-weight:600;cursor:pointer}
+  .atab{flex:1;padding:10px;border:0;background:#f2f3f7;border-radius:10px;font-size:14px;color:var(--sub);cursor:pointer;font-weight:650}
+  .atab.on{background:var(--navy);color:#fff}
+  .field-label{display:block;font-size:12px;font-weight:650;color:#475467;margin:0 0 6px}
+  .auth-body input{width:100%;box-sizing:border-box;padding:13px 14px;margin-bottom:13px;border:1px solid #dfe2ea;border-radius:11px;font-size:14px;outline:none;background:#fbfcfe;transition:.18s}
+  .auth-body input:focus{border-color:var(--pri);box-shadow:0 0 0 4px rgba(79,70,229,.09);background:#fff}
+  .auth-btn{width:100%;padding:13px;border:none;border-radius:11px;background:linear-gradient(135deg,#3730a3,var(--pri));color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 10px 22px rgba(79,70,229,.2)}
   .auth-btn:hover{opacity:.92}
-  .auth-err{color:#c0392b;font-size:13px;min-height:18px;margin-top:4px;text-align:center}
+  .auth-err{color:#c0392b;font-size:13px;min-height:20px;margin-top:7px;text-align:center}.auth-terms{font-size:11px;color:#98a2b3;text-align:center;margin-top:14px;line-height:1.6}
+  @media(max-width:760px){.auth{padding:0;background:#fff;align-items:stretch}.auth-shell{display:block;min-height:100vh;border-radius:0;border:0}.auth-story{padding:28px 24px 34px;min-height:260px}.auth-pitch h2{font-size:28px;margin:28px 0 10px}.auth-pitch p{margin-bottom:0}.auth-proof{display:none}.auth-card{padding:30px 24px 44px}.auth-logo{font-size:23px}}
 </style>
 </head>
 <body>
@@ -261,7 +272,7 @@
   <div class="topbar">
     <div class="brand">
       <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 3C8 3 5 5.5 5 9c0 2.4 1.4 4.4 3.4 5.5-.3 1.6-1.2 2.8-2.6 3.4.2 0 .5.1.8.1 2.2 0 4-1.4 4.9-3.2C12 14.8 12 14.8 12 14.8s0 0 .5 0C16.6 14.8 19 12.3 19 9c0-3.5-3-6-7-6zm-2.5 7.2c-.7 0-1.2-.6-1.2-1.3s.5-1.3 1.2-1.3 1.2.6 1.2 1.3-.5 1.3-1.2 1.3zm5 0c-.7 0-1.2-.6-1.2-1.3s.5-1.3 1.2-1.3 1.2.6 1.2 1.3-.5 1.3-1.2 1.3z"/></svg></div>
-      <div><h1>英语全能学习台</h1><p>EnglishLab · 听说读写 · 行业术语</p></div>
+      <div><h1>EnglishLab</h1><p>职场表达 · 行业术语 · AI 口语</p></div>
     </div>
     <div class="sync"><span class="dot"></span><span id="syncText">本地存储</span></div>
   </div>
@@ -381,8 +392,6 @@
       <button class="next-btn" onclick="nextGram()">下一题 →</button>
       <div class="sent-meta"><span id="gramProg"></span><span id="gramIdx"></span></div>
     </div>
-  </div>
-
   <!-- 句子补充 -->
   <div class="sec-h" style="margin-top:22px"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/></svg>句子补充（完形填空）</div>
   <div class="filters" id="fillFilters"></div>
@@ -397,6 +406,7 @@
     </div>
     <button class="next-btn" onclick="nextFill()">下一题 →</button>
     <div class="sent-meta"><span id="fillProg"></span><span id="fillIdx"></span></div>
+  </div>
   </div>
 
   <!-- 设置 -->
@@ -459,26 +469,42 @@
 
 <!-- 登录/注册遮罩（默认显示，作为进入门槛） -->
 <div class="auth show" id="auth">
-  <div class="auth-card">
-    <div class="auth-logo">英语全能学习台</div>
-    <div class="auth-sub">登录后学习进度云端同步、跨设备可用</div>
-    <div class="auth-tabs">
-      <button class="atab on" id="atLogin" onclick="setAuthTab('login')">登录</button>
-      <button class="atab" id="atReg" onclick="setAuthTab('reg')">注册</button>
+  <div class="auth-shell">
+    <section class="auth-story">
+      <div class="auth-brand"><span class="auth-mark">E</span><span>EnglishLab</span></div>
+      <div class="auth-pitch">
+        <div class="eyebrow">English for real work</div>
+        <h2>学会工作中<br>真正用得上的英语</h2>
+        <p>从行业词汇、听说训练到 AI 场景对话，用每天 15 分钟建立可复用的职场表达能力。</p>
+      </div>
+      <div class="auth-proof"><span><i>✓</i>按英语基础与行业方向定制</span><span><i>✓</i>学习进度云端安全同步</span><span><i>✓</i>网页与微信小程序跨端使用</span></div>
+    </section>
+    <section class="auth-card">
+      <div class="auth-logo" id="authTitle">欢迎回来</div>
+      <div class="auth-sub" id="authSubtitle">登录你的学习账号，继续今天的进度</div>
+      <div class="auth-tabs">
+        <button class="atab on" id="atLogin" onclick="setAuthTab('login')">账号登录</button>
+        <button class="atab" id="atReg" onclick="setAuthTab('reg')">免费注册</button>
+      </div>
+      <div class="auth-body" id="authLogin">
+        <label class="field-label" for="aIdent">手机号或邮箱</label>
+        <input id="aIdent" placeholder="输入已注册的手机号或邮箱" autocomplete="username">
+        <label class="field-label" for="aPw">登录密码</label>
+        <input id="aPw" type="password" placeholder="输入密码" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+        <button class="auth-btn" id="loginSubmit" onclick="doLogin()">登录并继续学习</button>
+      </div>
+      <div class="auth-body" id="authReg" style="display:none">
+        <label class="field-label" for="rPhone">手机号 <span style="font-weight:400;color:#98a2b3">· 与邮箱二选一</span></label>
+        <input id="rPhone" placeholder="输入手机号" inputmode="numeric" autocomplete="tel">
+        <label class="field-label" for="rEmail">邮箱 <span style="font-weight:400;color:#98a2b3">· 与手机号二选一</span></label>
+        <input id="rEmail" placeholder="name@example.com" inputmode="email" autocomplete="email">
+        <label class="field-label" for="rNick">昵称</label><input id="rNick" placeholder="怎么称呼你（可选）" autocomplete="nickname">
+        <label class="field-label" for="rPw">设置密码</label><input id="rPw" type="password" placeholder="8-128 位密码" autocomplete="new-password" onkeydown="if(event.key==='Enter')doRegister()">
+        <button class="auth-btn" id="registerSubmit" onclick="doRegister()">创建账号并开始学习</button>
+      </div>
+      <div class="auth-err" id="aErr"></div>
+      <div class="auth-terms">继续即表示你同意用于账号与学习进度同步的必要数据处理</div>
     </div>
-    <div class="auth-body" id="authLogin">
-      <input id="aIdent" placeholder="手机号 或 邮箱" autocomplete="username">
-      <input id="aPw" type="password" placeholder="密码" autocomplete="current-password">
-      <button class="auth-btn" onclick="doLogin()">登录</button>
-    </div>
-    <div class="auth-body" id="authReg" style="display:none">
-      <input id="rPhone" placeholder="手机号（与邮箱二选一）">
-      <input id="rEmail" placeholder="邮箱（与手机号二选一）">
-      <input id="rNick" placeholder="昵称（可选）">
-      <input id="rPw" type="password" placeholder="密码（8-128 位）" autocomplete="new-password">
-      <button class="auth-btn" onclick="doRegister()">注册并进入</button>
-    </div>
-    <div class="auth-err" id="aErr"></div>
   </div>
 </div>
 <script>
@@ -760,14 +786,19 @@ async function api(path,opts={}){
   return {status:r.status,body:body};
 }
 async function bootstrap(){
+  const entry=location.pathname==='/register'?'reg':'login';
+  if(!TOKEN){
+    backendMode=true; ME=null; showAuth(entry); renderAcct();
+    return;
+  }
   try{
     const res=await api('/api/me');
     if(res.status===200){ backendMode=true; ME=res.body.user; await pullData(); hideAuth(); enterApp(); }
-    else if(res.status===401){ backendMode=true; ME=null; TOKEN=''; localStorage.removeItem(KEY+'token'); showAuth('login'); renderAcct(); }
+    else if(res.status===401){ backendMode=true; ME=null; TOKEN=''; localStorage.removeItem(KEY+'token'); showAuth(entry); renderAcct(); }
     else { enterAppOffline(); }
   }catch(e){ enterAppOffline(); }
 }
-function enterAppOffline(){ backendMode=false; ME=null; renderAcct(); enterApp(); }
+function enterAppOffline(){ backendMode=false; ME=null; hideAuth(); renderAcct(); enterApp(); }
 function enterApp(){
   if(typeof P.level==='undefined'){ showOnboarding(); }
   else { state.level=P.level; state.vcat=(typeof P.focus==='undefined')?'all':P.focus; refreshAll(); }
@@ -782,11 +813,15 @@ async function pullData(){
 }
 function setAuthTab(tab){
   document.getElementById('aErr').textContent='';
-  if(tab==='login'){ document.getElementById('atLogin').classList.add('on'); document.getElementById('atReg').classList.remove('on'); document.getElementById('authLogin').style.display=''; document.getElementById('authReg').style.display='none'; }
-  else { document.getElementById('atReg').classList.add('on'); document.getElementById('atLogin').classList.remove('on'); document.getElementById('authReg').style.display=''; document.getElementById('authLogin').style.display='none'; }
+  const login=tab==='login';
+  document.getElementById('atLogin').classList.toggle('on',login); document.getElementById('atReg').classList.toggle('on',!login);
+  document.getElementById('authLogin').style.display=login?'':'none'; document.getElementById('authReg').style.display=login?'none':'';
+  document.getElementById('authTitle').textContent=login?'欢迎回来':'开始你的学习计划';
+  document.getElementById('authSubtitle').textContent=login?'登录你的学习账号，继续今天的进度':'创建免费账号，让学习进度跨设备同步';
+  if(location.pathname==='/'||location.pathname==='/login'||location.pathname==='/register') history.replaceState(null,'',login?'/login':'/register');
 }
 function showAuth(tab){ setAuthTab(tab||'login'); document.getElementById('auth').classList.add('show'); }
-function hideAuth(){ document.getElementById('auth').classList.remove('show'); }
+function hideAuth(){ document.getElementById('auth').classList.remove('show'); if(location.pathname==='/login'||location.pathname==='/register') history.replaceState(null,'','/'); }
 async function afterAuth(token,user){
   TOKEN=token; localStorage.setItem(KEY+'token',token); ME=user;
   await pullData(); hideAuth(); renderAcct(); enterApp();
@@ -796,11 +831,13 @@ async function doLogin(){
   const ident=document.getElementById('aIdent').value.trim();
   const pw=document.getElementById('aPw').value;
   if(!ident||!pw){ document.getElementById('aErr').textContent='请输入账号与密码'; return; }
+  const btn=document.getElementById('loginSubmit'); btn.disabled=true; btn.textContent='正在登录…';
   try{
     const res=await api('/api/login',{method:'POST',body:JSON.stringify({identifier:ident,password:pw})});
     if(res.status===200&&res.body&&res.body.token){ await afterAuth(res.body.token,res.body.user); toast('登录成功'); }
     else { document.getElementById('aErr').textContent=(res.body&&res.body.error)||'登录失败'; }
   }catch(e){ document.getElementById('aErr').textContent='网络错误，无法连接服务器'; }
+  finally{ btn.disabled=false; btn.textContent='登录并继续学习'; }
 }
 async function doRegister(){
   document.getElementById('aErr').textContent='';
@@ -810,11 +847,13 @@ async function doRegister(){
   const pw=document.getElementById('rPw').value;
   if(!phone&&!email){ document.getElementById('aErr').textContent='手机号与邮箱至少填一项'; return; }
   if(!pw||pw.length<8||pw.length>128){ document.getElementById('aErr').textContent='密码须为 8-128 位'; return; }
+  const btn=document.getElementById('registerSubmit'); btn.disabled=true; btn.textContent='正在创建账号…';
   try{
     const res=await api('/api/register',{method:'POST',body:JSON.stringify({phone,email,nickname:nick,password:pw})});
     if(res.status===200&&res.body&&res.body.token){ await afterAuth(res.body.token,res.body.user); toast('注册成功，欢迎！'); }
     else { document.getElementById('aErr').textContent=(res.body&&res.body.error)||'注册失败'; }
   }catch(e){ document.getElementById('aErr').textContent='网络错误，无法连接服务器'; }
+  finally{ btn.disabled=false; btn.textContent='创建账号并开始学习'; }
 }
 function logout(){
   api('/api/logout',{method:'POST'}).catch(()=>{});
@@ -1123,10 +1162,22 @@ function renderLevelBar(){
 function setLevel(id){ state.level=(id==='all')?'all':Number(id); P.level=state.level; save(P); renderLevelBar(); refreshAll(); }
 
 /* ============ 统一刷新入口 ============ */
-function refreshAll(){ renderLevelBar(); renderToday(); renderVocabFilters(); renderFlash(); renderVocabList(); renderSpeak(); renderDashboard(); renderGramFilters(); renderGram(); renderGramQuiz(); renderFillFilters(); renderFill(); renderChatScenes(); }
+function renderView(name){
+  if(name==='vocab'){ renderVocabFilters(); renderFlash(); renderVocabList(); }
+  else if(name==='speak'){ renderSpeak(); renderChatScenes(); }
+  else if(name==='dash'){ renderDashboard(); }
+  else if(name==='gram'){ renderGramFilters(); renderGram(); renderGramQuiz(); renderFillFilters(); renderFill(); }
+  else if(name==='set'){
+    document.getElementById('goalInput').value=P.dailyGoal;
+    document.getElementById('assessInput').value=P.assessEndpoint||'';
+    document.getElementById('chatEndpoint').value=P.chatEndpoint||'';
+    renderAcct();
+  }
+}
+function refreshAll(){ renderLevelBar(); renderToday(); renderView(state.active||'vocab'); }
 
 /* ============ 交互 ============ */
-const state={ vcat:'all', flipIdx:0, flipped:false, sIdx:0, mode:'dictation', gcat:'all', gOpen:null, gIdx:0, fcat:'all', fIdx:0, fScore:{c:0,t:0}, level:'all', chatScene:'daily', chatLog:[] };
+const state={ active:'vocab', vcat:'all', flipIdx:0, flipped:false, sIdx:0, mode:'dictation', gcat:'all', gOpen:null, gIdx:0, fcat:'all', fIdx:0, fScore:{c:0,t:0}, level:'all', chatScene:'daily', chatLog:[] };
 
 function switchTab(name){
   const map={vocab:'viewVocab',speak:'viewSpeak',dash:'viewDash',gram:'viewGram',set:'viewSet'};
@@ -1135,6 +1186,8 @@ function switchTab(name){
   document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('on'));
   const idx={vocab:0,speak:1,dash:2,gram:3,set:4}[name];
   document.querySelectorAll('.tabs button')[idx].classList.add('on');
+  state.active=name;
+  requestAnimationFrame(()=>renderView(name));
 }
 function setVCat(id){ state.vcat=id; state.flipIdx=0; P.focus=id; save(P); renderVocabFilters(); renderFlash(); renderVocabList(); renderLevelBar(); }
 
