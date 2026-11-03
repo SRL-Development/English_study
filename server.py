@@ -50,6 +50,7 @@ import hmac
 import html
 import smtplib
 import time
+import gzip
 import xml.etree.ElementTree as ET
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -57,7 +58,6 @@ from urllib.parse import quote, urlparse
 
 import requests
 from dotenv import load_dotenv
-from flask_compress import Compress
 from flask import (
     Flask, request, jsonify, Response, abort, send_file, redirect,
 )
@@ -116,12 +116,6 @@ os.makedirs(TTS_CACHE, exist_ok=True)
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
-app.config["COMPRESS_MIN_SIZE"] = 1024
-app.config["COMPRESS_MIMETYPES"] = [
-    "text/html", "text/css", "application/json", "application/javascript",
-    "image/svg+xml",
-]
-Compress(app)
 ANALYTICS_CACHE = {}
 
 
@@ -420,6 +414,30 @@ def _security_headers(resp):
     resp.headers["Permissions-Policy"] = "camera=(), geolocation=()"
     if request.path.startswith("/api/") and request.path != "/api/tts":
         resp.headers["Cache-Control"] = "no-store"
+    return resp
+
+
+@app.after_request
+def _compress_response(resp):
+    """对文本响应明确执行 gzip；音频、上传和 SSE 流不参与压缩。"""
+    accepted = request.headers.get("Accept-Encoding", "").lower()
+    content_type = (resp.content_type or "").split(";", 1)[0]
+    compressible = {
+        "text/html", "text/css", "application/json", "application/javascript",
+        "image/svg+xml",
+    }
+    if (
+        request.method != "HEAD"
+        and resp.status_code == 200
+        and "gzip" in accepted
+        and content_type in compressible
+        and not resp.headers.get("Content-Encoding")
+    ):
+        data = resp.get_data()
+        if len(data) >= 1024:
+            resp.set_data(gzip.compress(data, compresslevel=5))
+            resp.headers["Content-Encoding"] = "gzip"
+            resp.vary.add("Accept-Encoding")
     return resp
 
 
