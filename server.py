@@ -1010,12 +1010,19 @@ def api_admin_logout():
 
 
 # ----------------------------- 静态托管 -----------------------------
+def send_html(path):
+    """保留 send_file 的 ETag/条件请求，同时允许 Flask-Compress 处理 HTML。"""
+    response = send_file(path, conditional=True, max_age=0)
+    response.direct_passthrough = False
+    return response
+
+
 @app.route("/")
 def index():
     p = HTML if os.path.exists(HTML) else HTML_FALLBACK
     if not os.path.exists(p):
         abort(404)
-    return send_file(p, conditional=True, max_age=0)
+    return send_html(p)
 
 
 @app.route("/login", methods=["GET"])
@@ -1024,7 +1031,7 @@ def user_auth_page():
     p = HTML if os.path.exists(HTML) else HTML_FALLBACK
     if not os.path.exists(p):
         abort(404)
-    return send_file(p, conditional=True, max_age=0)
+    return send_html(p)
 
 
 @app.route("/admin", methods=["GET"])
@@ -1038,7 +1045,7 @@ def admin_legacy_page():
 def admin_page():
     if not os.path.exists(ADMIN_HTML):
         abort(404)
-    return send_file(ADMIN_HTML, conditional=True, max_age=0)
+    return send_html(ADMIN_HTML)
 
 
 @app.route("/api/health", methods=["GET"])
