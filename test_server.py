@@ -56,6 +56,46 @@ class ServerApiTests(unittest.TestCase):
             response = self.client.post("/api/admin/login", json={"password": "admin123"})
         self.assertEqual(response.status_code, 503)
 
+    def test_admin_analytics_and_user_details(self):
+        registered = self.register()
+        user_token = registered.json["token"]
+        today = server.local_today().isoformat()
+        progress = {
+            "studyDays": {today: 3},
+            "mastered": {"hello": True, "world": True},
+        }
+        saved = self.client.put(
+            "/api/data",
+            json={"data": json.dumps(progress)},
+            headers={"Authorization": "Bearer " + user_token},
+        )
+        self.assertEqual(saved.status_code, 200)
+
+        admin_token = server.make_admin_token()
+        headers = {"Authorization": "Bearer " + admin_token}
+        analytics = self.client.get("/api/admin/analytics?days=30", headers=headers)
+        self.assertEqual(analytics.status_code, 200)
+        self.assertEqual(analytics.json["metrics"]["total_users"], 1)
+        self.assertEqual(analytics.json["metrics"]["dau"], 1)
+        self.assertEqual(analytics.json["metrics"]["learning_dau"], 1)
+        self.assertEqual(analytics.json["metrics"]["total_mastered_words"], 2)
+        self.assertEqual(analytics.json["sources"]["web"], 1)
+        self.assertEqual(len(analytics.json["trend"]), 30)
+
+        users = self.client.get("/api/admin/users", headers=headers)
+        self.assertEqual(users.status_code, 200)
+        self.assertEqual(users.json["users"][0]["source"], "web")
+        self.assertTrue(users.json["users"][0]["active_today"])
+        self.assertEqual(users.json["users"][0]["last_active"], today)
+
+        conn = server.db()
+        activity_columns = {
+            row["name"] for row in conn.execute("PRAGMA table_info(user_activity)")
+        }
+        conn.close()
+        self.assertNotIn("ip", activity_columns)
+        self.assertNotIn("user_agent", activity_columns)
+
     def test_register_login_and_email_normalization(self):
         response = self.register()
         self.assertEqual(response.status_code, 200)

@@ -3,73 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>英语学习台 · 后台管理</title>
+<title>英语学习台 · 运营后台</title>
 <style>
-  :root{--pri:#6366f1;--pri-soft:#eef0ff;--line:#e6e8f0;--sub:#6b7280;--card:#fff;--bg:#f5f6fb}
+  :root{--pri:#5b5bd6;--pri2:#7c6ef6;--soft:#f0f0ff;--line:#e5e7ef;--sub:#687086;--card:#fff;--bg:#f5f6fa;--green:#16a085;--orange:#e28a2b}
   *{box-sizing:border-box}
-  body{margin:0;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:#1f2430}
-  .wrap{max-width:1080px;margin:0 auto;padding:24px}
+  body{margin:0;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:#202432}
+  .wrap{max-width:1380px;margin:0 auto;padding:22px}
   .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px}
-  h1{font-size:20px;margin:0;color:var(--pri)}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 8px 24px rgba(60,80,160,.06)}
-  .login{display:none}
-  .login.show{display:block}
-  .login input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:14px;margin-bottom:12px;outline:none}
-  .login input:focus{border-color:var(--pri)}
-  .btn{background:var(--pri);color:#fff;border:none;border-radius:10px;padding:11px 18px;font-size:14px;font-weight:600;cursor:pointer}
-  .btn:hover{opacity:.92}
-  .btn.ghost{background:#fff;color:var(--pri);border:1px solid var(--pri)}
-  .err{color:#c0392b;font-size:13px;min-height:18px}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
-  th{background:var(--pri-soft);color:var(--pri);font-weight:600;position:sticky;top:0}
-  td.num{text-align:right;font-variant-numeric:tabular-nums}
-  .empty{text-align:center;color:var(--sub);padding:30px}
-  .stat{display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap}
-  .stat .box{flex:1;min-width:120px;background:var(--pri-soft);border-radius:12px;padding:14px;text-align:center}
-  .stat .n{font-size:24px;font-weight:800;color:var(--pri)}
-  .stat .l{font-size:12px;color:var(--sub);margin-top:2px}
-  .tools{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-  .badge{display:inline-block;background:var(--pri-soft);color:var(--pri);border-radius:6px;padding:2px 8px;font-size:12px;margin:2px 4px 2px 0}
+  h1{font-size:21px;margin:0;color:var(--pri)} h2{font-size:16px;margin:0}
+  .sub{font-size:12px;color:var(--sub)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 7px 24px rgba(50,60,120,.05)}
+  .login{display:none;max-width:480px;margin:50px auto}.login.show{display:block}
+  .login input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:14px;margin:14px 0 12px;outline:none}.login input:focus{border-color:var(--pri)}
+  .btn{background:var(--pri);color:#fff;border:none;border-radius:9px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer}.btn:hover{opacity:.92}.btn.ghost{background:#fff;color:var(--pri);border:1px solid var(--pri)}
+  .err{color:#c0392b;font-size:13px;min-height:18px;margin-top:8px}
+  .stats{display:grid;grid-template-columns:repeat(8,minmax(110px,1fr));gap:12px;margin-bottom:14px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:14px 15px;min-height:88px}.stat .n{font-size:25px;font-weight:800;color:var(--pri);font-variant-numeric:tabular-nums}.stat .l{font-size:12px;color:var(--sub);margin-top:5px}.stat .hint{font-size:10px;color:#9aa0b2;margin-top:3px}
+  .grid{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+  .chart{width:100%;height:250px;display:block}.legend{display:flex;gap:14px;font-size:11px;color:var(--sub);flex-wrap:wrap}.dot{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:4px}
+  .mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mini{background:#f8f8fc;border-radius:10px;padding:12px}.mini .v{font-size:20px;font-weight:750;color:#353a50}.mini .k{font-size:11px;color:var(--sub);margin-top:3px}
+  .notice{font-size:12px;line-height:1.7;color:var(--sub);background:#fafaff;border:1px dashed #cacaf2;border-radius:10px;padding:10px 12px;margin-top:12px}
+  .tools{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}.tool-actions{display:flex;gap:8px}.updated{font-size:12px;color:var(--sub)}
+  .table-wrap{padding:0;overflow:auto;max-height:68vh}table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th{background:var(--soft);color:var(--pri);font-weight:650;position:sticky;top:0;z-index:1}td.num{text-align:right;font-variant-numeric:tabular-nums}.empty{text-align:center;color:var(--sub);padding:34px}.badge{display:inline-block;border-radius:6px;padding:2px 7px;font-size:11px}.web{background:#eef2ff;color:#4f5ec4}.wechat{background:#e9f8f1;color:#18855e}.ok{color:var(--green)}.muted{color:#a4a8b5}
+  @media(max-width:1100px){.stats{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:760px){.wrap{padding:14px}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.chart{height:210px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
-    <h1>英语学习台 · 后台管理</h1>
-    <div>
-      <button class="btn ghost" id="logoutBtn" style="display:none" onclick="adminLogout()">退出后台</button>
-    </div>
+    <div><h1>英语学习台 · 运营后台</h1><div class="sub">注册、活跃、学习与留存数据</div></div>
+    <button class="btn ghost" id="logoutBtn" style="display:none" onclick="adminLogout()">退出后台</button>
   </div>
 
   <div class="card login show" id="loginCard">
-    <div style="margin-bottom:6px;font-weight:600">管理员登录</div>
-    <div style="font-size:12px;color:var(--sub);margin-bottom:14px">请输入环境变量 ADMIN_PASSWORD 中配置的后台管理员密码</div>
+    <h2>管理员登录</h2>
+    <div class="sub" style="margin-top:6px">请输入服务端环境变量 ADMIN_PASSWORD 配置的密码</div>
     <input id="pw" type="password" placeholder="管理员密码" autocomplete="current-password">
     <button class="btn" onclick="adminLogin()">登录</button>
     <div class="err" id="err"></div>
   </div>
 
   <div id="dash" style="display:none">
-    <div class="stat">
-      <div class="box"><div class="n" id="sTotal">0</div><div class="l">注册用户总数</div></div>
-      <div class="box"><div class="n" id="sActive">0</div><div class="l">今日活跃(有学习)</div></div>
-      <div class="box"><div class="n" id="sStreak">0</div><div class="l">累计学习人次</div></div>
+    <div class="stats">
+      <div class="stat"><div class="n" id="mTotal">0</div><div class="l">注册用户</div><div class="hint">历史累计</div></div>
+      <div class="stat"><div class="n" id="mDau">0</div><div class="l">DAU</div><div class="hint">今日活跃</div></div>
+      <div class="stat"><div class="n" id="mWau">0</div><div class="l">WAU</div><div class="hint">近 7 日活跃</div></div>
+      <div class="stat"><div class="n" id="mMau">0</div><div class="l">MAU</div><div class="hint">近 30 日活跃</div></div>
+      <div class="stat"><div class="n" id="mNewToday">0</div><div class="l">今日新增</div><div class="hint" id="mNewMore">7日 0 / 30日 0</div></div>
+      <div class="stat"><div class="n" id="mStick">0%</div><div class="l">DAU / MAU</div><div class="hint">活跃粘性</div></div>
+      <div class="stat"><div class="n" id="mVerified">0%</div><div class="l">邮箱验证率</div><div class="hint" id="mVerifiedMore">0 人已验证</div></div>
+      <div class="stat"><div class="n" id="mLearnDau">0</div><div class="l">今日学习</div><div class="hint" id="mLearnMore">7日 0 / 30日 0</div></div>
     </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="section-head"><h2>近 30 日趋势</h2><div class="legend"><span><i class="dot" style="background:#d9d8ff"></i>新注册</span><span><i class="dot" style="background:#5b5bd6"></i>活跃</span><span><i class="dot" style="background:#16a085"></i>学习</span></div></div>
+        <svg id="trendChart" class="chart" role="img" aria-label="注册、活跃与学习趋势"></svg>
+      </div>
+      <div class="card">
+        <div class="section-head"><h2>质量与来源</h2></div>
+        <div class="mini-grid">
+          <div class="mini"><div class="v" id="qD1">—</div><div class="k">D1 次日留存</div></div>
+          <div class="mini"><div class="v" id="qD7">—</div><div class="k">D7 七日留存</div></div>
+          <div class="mini"><div class="v" id="qStudy">0</div><div class="k">累计学习量</div></div>
+          <div class="mini"><div class="v" id="qWords">0</div><div class="k">累计掌握词汇</div></div>
+          <div class="mini"><div class="v" id="qWeb">0</div><div class="k">网页注册</div></div>
+          <div class="mini"><div class="v" id="qWechat">0</div><div class="k">微信用户</div></div>
+        </div>
+        <div class="notice" id="definitions">数据指标加载中……</div>
+      </div>
+    </div>
+
     <div class="tools">
-      <button class="btn ghost" onclick="loadUsers()">刷新</button>
-      <button class="btn ghost" onclick="exportCSV()">导出 CSV</button>
+      <div><h2>用户明细</h2><div class="updated" id="updated"></div></div>
+      <div class="tool-actions"><button class="btn ghost" onclick="loadDashboard()">刷新</button><button class="btn ghost" onclick="exportCSV()">导出 CSV</button></div>
     </div>
-    <div class="card" style="padding:0;overflow:auto;max-height:70vh">
+    <div class="card table-wrap">
       <table id="tbl">
-        <thead>
-          <tr>
-            <th>ID</th><th>手机号</th><th>邮箱</th><th>昵称</th>
-            <th>注册时间</th><th>最近登录</th>
-            <th class="num">累计天数</th><th class="num">掌握词</th><th class="num">连续</th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
+        <thead><tr><th>ID</th><th>来源</th><th>手机号</th><th>邮箱 / 验证</th><th>昵称</th><th>注册时间</th><th>最近活跃</th><th class="num">学习天数</th><th class="num">掌握词</th><th class="num">连续天数</th></tr></thead>
+        <tbody id="tbody"><tr><td colspan="10" class="empty">正在加载……</td></tr></tbody>
       </table>
     </div>
   </div>
@@ -77,66 +90,64 @@
 
 <script>
 let TOKEN='';
-function escapeHTML(value){
-  return String(value??'').replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
-}
+function escapeHTML(value){return String(value??'').replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));}
 async function api(path,opts={}){
   const o=Object.assign({headers:{'Content-Type':'application/json'}},opts);
   if(TOKEN)o.headers['Authorization']='Bearer '+TOKEN;
-  try{
-    const r=await fetch(path,o); let body=null; try{body=await r.json();}catch(e){}
-    return {status:r.status,body:body};
-  }catch(e){ return {status:0,body:{error:'网络连接失败，请稍后重试'}}; }
+  try{const r=await fetch(path,o);let body=null;try{body=await r.json();}catch(e){}return {status:r.status,body};}
+  catch(e){return {status:0,body:{error:'网络连接失败，请稍后重试'}};}
 }
 async function adminLogin(){
   const pw=document.getElementById('pw').value;
   const res=await api('/api/admin/login',{method:'POST',body:JSON.stringify({password:pw})});
-  if(res.status===200&&res.body.token){ TOKEN=res.body.token; document.getElementById('loginCard').classList.remove('show'); document.getElementById('dash').style.display=''; document.getElementById('logoutBtn').style.display=''; loadUsers(); }
-  else { document.getElementById('err').textContent=(res.body&&res.body.error)||'登录失败'; }
+  if(res.status===200&&res.body.token){TOKEN=res.body.token;document.getElementById('loginCard').classList.remove('show');document.getElementById('dash').style.display='';document.getElementById('logoutBtn').style.display='';loadDashboard();}
+  else document.getElementById('err').textContent=(res.body&&res.body.error)||'登录失败';
 }
-function adminLogout(){ api('/api/admin/logout',{method:'POST'}); TOKEN=''; document.getElementById('loginCard').classList.add('show'); document.getElementById('dash').style.display='none'; document.getElementById('logoutBtn').style.display='none'; document.getElementById('pw').value=''; }
-async function loadUsers(){
-  const res=await api('/api/admin/users');
-  if(res.status!==200){ alert((res.body&&res.body.error)||'加载失败'); return; }
-  const users=res.body.users||[];
+function adminLogout(){api('/api/admin/logout',{method:'POST'});TOKEN='';document.getElementById('loginCard').classList.add('show');document.getElementById('dash').style.display='none';document.getElementById('logoutBtn').style.display='none';document.getElementById('pw').value='';}
+function setText(id,value){document.getElementById(id).textContent=value;}
+function retentionText(item){return item&&item.rate!==null?item.rate+'%':'—';}
+function renderAnalytics(data){
+  const m=data.metrics||{},r=data.retention||{},s=data.sources||{};
+  setText('mTotal',m.total_users||0);setText('mDau',m.dau||0);setText('mWau',m.wau||0);setText('mMau',m.mau||0);
+  setText('mNewToday',m.new_today||0);setText('mNewMore','7日 '+(m.new_7d||0)+' / 30日 '+(m.new_30d||0));
+  setText('mStick',(m.dau_mau||0)+'%');setText('mVerified',(m.verified_rate||0)+'%');setText('mVerifiedMore',(m.verified_users||0)+' / '+(m.email_users||0)+' 个邮箱');
+  setText('mLearnDau',m.learning_dau||0);setText('mLearnMore','7日 '+(m.learning_wau||0)+' / 30日 '+(m.learning_mau||0));
+  setText('qD1',retentionText(r.d1));setText('qD7',retentionText(r.d7));setText('qStudy',m.total_study_interactions||0);setText('qWords',m.total_mastered_words||0);setText('qWeb',s.web||0);setText('qWechat',s.wechat||0);
+  const d=data.definitions||{};setText('definitions',(d.active||'')+'。'+(d.periods||'')+'。'+(d.retention||'')+'。'+(data.tracking_note||''));setText('updated','数据更新：'+(data.generated_at||''));
+  renderTrend(data.trend||[]);
+}
+function renderTrend(rows){
+  const svg=document.getElementById('trendChart'),w=900,h=250,p={l:36,r:12,t:14,b:32};svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  if(!rows.length){svg.innerHTML='<text x="450" y="125" text-anchor="middle" fill="#888">暂无数据</text>';return;}
+  const max=Math.max(1,...rows.flatMap(x=>[Number(x.registrations)||0,Number(x.active)||0,Number(x.learners)||0]));const cw=(w-p.l-p.r)/rows.length;
+  const y=v=>p.t+(h-p.t-p.b)*(1-v/max);let parts=[];
+  for(let i=0;i<=4;i++){const value=Math.round(max*(4-i)/4),yy=p.t+(h-p.t-p.b)*i/4;parts.push(`<line x1="${p.l}" y1="${yy}" x2="${w-p.r}" y2="${yy}" stroke="#ececf3"/><text x="${p.l-7}" y="${yy+4}" text-anchor="end" font-size="10" fill="#9297a6">${value}</text>`);}
+  rows.forEach((row,i)=>{const x=p.l+i*cw+cw*.2,barH=h-p.b-y(row.registrations);parts.push(`<rect x="${x}" y="${y(row.registrations)}" width="${Math.max(2,cw*.6)}" height="${barH}" rx="2" fill="#d9d8ff"><title>${row.date} 新注册 ${row.registrations}</title></rect>`);});
+  for(const [key,color] of [['active','#5b5bd6'],['learners','#16a085']]){const pts=rows.map((r,i)=>`${p.l+i*cw+cw/2},${y(Number(r[key])||0)}`).join(' ');parts.push(`<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`);}
+  const tick=Math.max(1,Math.ceil(rows.length/6));rows.forEach((row,i)=>{if(i%tick===0||i===rows.length-1)parts.push(`<text x="${p.l+i*cw+cw/2}" y="${h-10}" text-anchor="middle" font-size="10" fill="#9297a6">${escapeHTML(row.date.slice(5))}</text>`);});svg.innerHTML=parts.join('');
+}
+function renderUsers(users){
   const tbody=document.getElementById('tbody');
-  if(!users.length){ tbody.innerHTML='<tr><td colspan="9" class="empty">暂无注册用户</td></tr>'; }
-  else{
-    tbody.innerHTML=users.map(u=>{
-      return '<tr>'+
-        '<td>'+Number(u.id)+'</td>'+
-        '<td>'+(u.phone?escapeHTML(u.phone):'<span style="color:#bbb">—</span>')+'</td>'+
-        '<td>'+(u.email?escapeHTML(u.email):'<span style="color:#bbb">—</span>')+'</td>'+
-        '<td>'+(u.nickname?escapeHTML(u.nickname):'<span style="color:#bbb">—</span>')+'</td>'+
-        '<td>'+escapeHTML(u.created_at||'')+'</td>'+
-        '<td>'+escapeHTML(u.last_login||'')+'</td>'+
-        '<td class="num">'+Number(u.days||0)+'</td>'+
-        '<td class="num">'+Number(u.mastered||0)+'</td>'+
-        '<td class="num">'+Number(u.streak||0)+'</td>'+
-      '</tr>';
-    }).join('');
-  }
-  document.getElementById('sTotal').textContent=users.length;
-  document.getElementById('sActive').textContent=users.filter(u=>u.active_today).length;
-  document.getElementById('sStreak').textContent=users.reduce((a,u)=>a+u.days,0);
+  if(!users.length){tbody.innerHTML='<tr><td colspan="10" class="empty">暂无注册用户</td></tr>';return;}
+  tbody.innerHTML=users.map(u=>{
+    const source=u.source==='wechat'?'<span class="badge wechat">微信</span>':'<span class="badge web">网页</span>';
+    const email=u.email?escapeHTML(u.email)+' '+(u.verified?'<span class="ok">✓</span>':'<span class="muted">未验证</span>'):'<span class="muted">—</span>';
+    return '<tr><td>'+Number(u.id)+'</td><td>'+source+'</td><td>'+(u.phone?escapeHTML(u.phone):'<span class="muted">—</span>')+'</td><td>'+email+'</td><td>'+(u.nickname?escapeHTML(u.nickname):'<span class="muted">—</span>')+'</td><td>'+escapeHTML(u.created_at||'')+'</td><td>'+escapeHTML(u.last_active||u.last_login||'')+'</td><td class="num">'+Number(u.days||0)+'</td><td class="num">'+Number(u.mastered||0)+'</td><td class="num">'+Number(u.streak||0)+'</td></tr>';
+  }).join('');
+}
+async function loadDashboard(){
+  const [analytics,users]=await Promise.all([api('/api/admin/analytics?days=30'),api('/api/admin/users')]);
+  if(analytics.status===401||users.status===401){adminLogout();alert('登录已失效，请重新登录');return;}
+  if(analytics.status!==200||users.status!==200){alert((analytics.body&&analytics.body.error)||(users.body&&users.body.error)||'数据加载失败');return;}
+  renderAnalytics(analytics.body);renderUsers(users.body.users||[]);
 }
 function exportCSV(){
-  const rows=[...document.querySelectorAll('#tbody tr')];
-  if(!rows.length||rows[0].querySelectorAll('td').length<9) return;
-  let csv='ID,手机号,邮箱,昵称,注册时间,最近登录,累计天数,掌握词,连续\n';
-  rows.forEach(tr=>{
-    const c=[...tr.querySelectorAll('td')].map(td=>{
-      let t=td.textContent.trim();
-      if(/^[=+\-@]/.test(t)) t="'"+t;
-      if(/[",\n]/.test(t)) t='"'+t.replace(/"/g,'""')+'"'; return t;
-    });
-    csv+=c.join(',')+'\n';
-  });
-  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='users_'+Date.now()+'.csv'; a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href),0);
+  const rows=[...document.querySelectorAll('#tbody tr')];if(!rows.length||rows[0].querySelectorAll('td').length<10)return;
+  let csv='ID,来源,手机号,邮箱与验证,昵称,注册时间,最近活跃,学习天数,掌握词,连续天数\n';
+  rows.forEach(tr=>{const c=[...tr.querySelectorAll('td')].map(td=>{let t=td.textContent.trim();if(/^[=+\-@]/.test(t))t="'"+t;if(/[",\n]/.test(t))t='"'+t.replace(/"/g,'""')+'"';return t;});csv+=c.join(',')+'\n';});
+  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='users_'+Date.now()+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),0);
 }
-document.getElementById('pw').addEventListener('keydown',e=>{ if(e.key==='Enter') adminLogin(); });
+document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')adminLogin();});
 </script>
 </body>
 </html>

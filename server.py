@@ -9,7 +9,7 @@
 功能一览：
   1) 账号：/api/register（手机号或邮箱 + 密码）、/api/login、/api/logout、/api/me
   2) 云端进度：/api/data  GET 取回该用户进度、PUT 保存（存 SQLite，跨设备同步）
-  3) 后台：/api/admin/login（独立管理员密码）、/api/admin/users（注册用户列表+学习统计）
+  3) 后台：管理员登录、用户明细与 DAU/WAU/MAU/留存等运营统计
   4) 声学评测：/assess（讯飞 ISE，密钥只在后端）
   5) AI 口语陪练：/chat（OpenAI 兼容接口流式 SSE，默认 DeepSeek）
   6) 静态托管：/ 返回 english-learning.html（或 index.html）、/admin 返回 admin.html
@@ -155,6 +155,21 @@ def init_db():
             token TEXT PRIMARY KEY,
             expires_at TEXT)"""
     )
+    c.execute(
+        """CREATE TABLE IF NOT EXISTS user_activity(
+            user_id INTEGER NOT NULL,
+            activity_date TEXT NOT NULL,
+            first_seen TEXT NOT NULL,
+            last_seen TEXT NOT NULL,
+            session_count INTEGER NOT NULL DEFAULT 0,
+            login_count INTEGER NOT NULL DEFAULT 0,
+            study_count INTEGER NOT NULL DEFAULT 0,
+            PRIMARY KEY(user_id, activity_date),
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE)"""
+    )
+    c.execute(
+        "CREATE INDEX IF NOT EXISTS idx_activity_date ON user_activity(activity_date)"
+    )
     # 兼容旧库：微信登录所需的 openid 列（可为空、唯一）
     try:
         c.execute("ALTER TABLE users ADD COLUMN openid TEXT")
@@ -284,6 +299,100 @@ def calc_streak(study):
         s += 1
         cur = cur - datetime.timedelta(days=1)
     return s
+
+
+def local_date_from_utc(value):
+    """把数据库中的 UTC ISO 时间转换为业务时区日期。"""
+    if not value:
+        return None
+    try:
+        stamp = datetime.datetime.fromisoformat(value)
+        offset = max(-23, min(23, APP_UTC_OFFSET_HOURS))
+        return (stamp + datetime.timedelta(hours=offset)).date()
+    except (TypeError, ValueError):
+        return None
+
+
+def display_local_datetime(value):
+    if not value:
+        return ""
+    try:
+        stamp = datetime.datetime.fromisoformat(value)
+        offset = max(-23, min(23, APP_UTC_OFFSET_HOURS))
+        return (stamp + datetime.timedelta(hours=offset)).strftime("%Y-%m-%d %H:%M:%S")
+    except (TypeError, ValueError):
+        return str(value)[:19].replace("T", " ")
+
+
+def record_activity(user_id, event_type="session"):
+    """按用户/日期聚合运营事件；不保存 IP、设备、内容或录音。"""
+    columns = {
+        "session": "session_count",
+        "login": "login_count",
+        "study": "study_count",
+    }
+    column = columns.get(event_type, "session_count")
+    stamp = now_iso()
+    activity_date = local_today().isoformat()
+    session_value = 1 if column == "session_count" else 0
+    login_value = 1 if column == "login_count" else 0
+    study_value = 1 if column == "study_count" else 0
+    conn = db()
+    try:
+        conn.execute(
+            "INSERT INTO user_activity("
+            "user_id,activity_date,first_seen,last_seen,session_count,login_count,study_count"
+            ") VALUES(?,?,?,?,?,?,?) "
+            "ON CONFLICT(user_id,activity_date) DO UPDATE SET "
+            "last_seen=excluded.last_seen, "
+            f"{column}={column}+1",
+            (
+                user_id,
+                activity_date,
+                stamp,
+                stamp,
+                session_value,
+                login_value,
+                study_value,
+            ),
+        )
+        conn.commit()
+    except sqlite3.Error:
+        # 运营统计是旁路功能，不应因短暂写入失败影响登录或学习。
+        conn.rollback()
+    finally:
+        conn.close()
+
+
+def parse_progress(raw_data):
+    """安全读取学习进度，旧数据异常时按空对象处理。"""
+    if not raw_data:
+        return {}, {}, {}
+    try:
+        data = json.loads(raw_data)
+    except (TypeError, json.JSONDecodeError):
+        data = {}
+    if not isinstance(data, dict):
+        data = {}
+    study = data.get("studyDays", {}) or {}
+    mastered = data.get("mastered", {}) or {}
+    if not isinstance(study, dict):
+        study = {}
+    if not isinstance(mastered, dict):
+        mastered = {}
+    return data, study, mastered
+
+
+def valid_study_dates(study):
+    dates = set()
+    for key, value in study.items():
+        if not isinstance(value, (int, float)) or value <= 0:
+            continue
+        try:
+            dates.add(datetime.date.fromisoformat(str(key)))
+        except (TypeError, ValueError):
+            continue
+    return dates
 
 
 # ----------------------------- HTTP 安全与 CORS -----------------------------
@@ -482,6 +591,7 @@ def api_register():
     conn.close()
 
     tok = make_token(uid)
+    record_activity(uid, "login")
 
     # 邮箱注册 → 异步发送欢迎/激活邮件（不阻塞注册响应）
     email_sent = False
@@ -549,6 +659,7 @@ def api_login():
     conn.commit()
     conn.close()
     tok = make_token(u["id"])
+    record_activity(u["id"], "login")
     return jsonify(
         {
             "token": tok,
@@ -597,6 +708,7 @@ def api_data_get():
     u = auth_user()
     if not u:
         return jsonify({"error": "未登录"}), 401
+    record_activity(u["user_id"], "session")
     conn = db()
     row = conn.execute(
         "SELECT data FROM user_data WHERE user_id=?", (u["user_id"],)
@@ -640,6 +752,7 @@ def api_data_put():
     )
     conn.commit()
     conn.close()
+    record_activity(u["user_id"], "study")
     return jsonify({"ok": True})
 
 
@@ -662,45 +775,182 @@ def api_admin_users():
     conn = db()
     rows = conn.execute(
         "SELECT u.id,u.phone,u.email,u.nickname,u.created_at,u.last_login,"
-        "u.email_verified,d.data FROM users u "
-        "LEFT JOIN user_data d ON d.user_id=u.id ORDER BY u.id DESC"
+        "u.email_verified,u.openid,d.data,a.last_activity FROM users u "
+        "LEFT JOIN user_data d ON d.user_id=u.id "
+        "LEFT JOIN (SELECT user_id,MAX(activity_date) AS last_activity "
+        "FROM user_activity GROUP BY user_id) a ON a.user_id=u.id "
+        "ORDER BY u.id DESC"
     ).fetchall()
     out = []
     for u in rows:
-        data = {}
-        if u["data"]:
+        _, study, mastered = parse_progress(u["data"])
+        study_dates = valid_study_dates(study)
+        last_login_date = local_date_from_utc(u["last_login"])
+        candidates = set(study_dates)
+        if last_login_date:
+            candidates.add(last_login_date)
+        if u["last_activity"]:
             try:
-                data = json.loads(u["data"])
-            except Exception:
-                data = {}
-        if not isinstance(data, dict):
-            data = {}
-        study = data.get("studyDays", {}) or {}
-        mastered = data.get("mastered", {}) or {}
-        if not isinstance(study, dict):
-            study = {}
-        if not isinstance(mastered, dict):
-            mastered = {}
+                candidates.add(datetime.date.fromisoformat(u["last_activity"]))
+            except ValueError:
+                pass
+        last_active = max(candidates).isoformat() if candidates else ""
         out.append(
             {
                 "id": u["id"],
+                "source": "wechat" if u["openid"] else "web",
                 "phone": u["phone"] or "",
                 "email": u["email"] or "",
                 "nickname": u["nickname"] or "",
                 "verified": bool(u["email_verified"]),
-                "created_at": (u["created_at"] or "")[:19].replace("T", " "),
-                "last_login": (u["last_login"] or "")[:19].replace("T", " "),
-                "active_today": was_active_today(u["last_login"]),
-                "days": sum(
-                    1 for value in study.values()
-                    if isinstance(value, (int, float)) and value > 0
-                ),
+                "created_at": display_local_datetime(u["created_at"]),
+                "last_login": display_local_datetime(u["last_login"]),
+                "last_active": last_active,
+                "active_today": local_today() in candidates,
+                "days": len(study_dates),
                 "mastered": len(mastered),
                 "streak": calc_streak(study),
             }
         )
     conn.close()
     return jsonify({"users": out})
+
+
+@app.route("/api/admin/analytics", methods=["GET"])
+def api_admin_analytics():
+    """运营仪表盘：只返回汇总数据，不收集 IP、设备指纹或学习内容。"""
+    if not auth_admin():
+        return jsonify({"error": "未授权"}), 401
+    try:
+        trend_days = int(request.args.get("days", 30))
+    except (TypeError, ValueError):
+        trend_days = 30
+    trend_days = max(7, min(90, trend_days))
+
+    conn = db()
+    users = conn.execute(
+        "SELECT u.id,u.created_at,u.last_login,u.email,u.email_verified,u.openid,d.data "
+        "FROM users u LEFT JOIN user_data d ON d.user_id=u.id"
+    ).fetchall()
+    activities = conn.execute(
+        "SELECT user_id,activity_date FROM user_activity"
+    ).fetchall()
+    conn.close()
+
+    today = local_today()
+    active_dates = {u["id"]: set() for u in users}
+    learning_dates = {u["id"]: set() for u in users}
+    for row in activities:
+        try:
+            active_dates.setdefault(row["user_id"], set()).add(
+                datetime.date.fromisoformat(row["activity_date"])
+            )
+        except (TypeError, ValueError):
+            continue
+
+    registration_dates = {}
+    source_counts = {"web": 0, "wechat": 0}
+    email_users = 0
+    verified_users = 0
+    total_study_interactions = 0
+    total_mastered_words = 0
+    for u in users:
+        uid = u["id"]
+        created = local_date_from_utc(u["created_at"])
+        if created:
+            registration_dates[uid] = created
+        login_date = local_date_from_utc(u["last_login"])
+        if login_date:
+            active_dates[uid].add(login_date)
+        _, study, mastered = parse_progress(u["data"])
+        dates = valid_study_dates(study)
+        learning_dates[uid].update(dates)
+        active_dates[uid].update(dates)
+        total_study_interactions += sum(
+            value for value in study.values()
+            if isinstance(value, (int, float)) and value > 0
+        )
+        total_mastered_words += len(mastered)
+        if u["email"]:
+            email_users += 1
+            verified_users += 1 if u["email_verified"] else 0
+        source_counts["wechat" if u["openid"] else "web"] += 1
+
+    def users_in_period(date_map, period_days):
+        start = today - datetime.timedelta(days=period_days - 1)
+        return sum(
+            1 for dates in date_map.values()
+            if any(start <= day <= today for day in dates)
+        )
+
+    def new_users(period_days):
+        start = today - datetime.timedelta(days=period_days - 1)
+        return sum(1 for day in registration_dates.values() if start <= day <= today)
+
+    def retention(day_number):
+        eligible = {
+            uid: created for uid, created in registration_dates.items()
+            if created <= today - datetime.timedelta(days=day_number)
+        }
+        returned = sum(
+            1 for uid, created in eligible.items()
+            if created + datetime.timedelta(days=day_number) in active_dates.get(uid, set())
+        )
+        cohort = len(eligible)
+        return {
+            "rate": round(returned * 100 / cohort, 1) if cohort else None,
+            "cohort": cohort,
+            "returned": returned,
+        }
+
+    dau = users_in_period(active_dates, 1)
+    wau = users_in_period(active_dates, 7)
+    mau = users_in_period(active_dates, 30)
+    total_users = len(users)
+    trend = []
+    for offset in range(trend_days - 1, -1, -1):
+        day = today - datetime.timedelta(days=offset)
+        trend.append(
+            {
+                "date": day.isoformat(),
+                "registrations": sum(1 for value in registration_dates.values() if value == day),
+                "active": sum(1 for values in active_dates.values() if day in values),
+                "learners": sum(1 for values in learning_dates.values() if day in values),
+            }
+        )
+
+    return jsonify(
+        {
+            "generated_at": display_local_datetime(now_iso()),
+            "definitions": {
+                "active": "当日登录、同步或保存过学习进度的去重用户",
+                "periods": "DAU=当日，WAU=近7日，MAU=近30日",
+                "retention": "D1/D7=注册后第1/7个自然日再次活跃的用户比例",
+            },
+            "metrics": {
+                "total_users": total_users,
+                "email_users": email_users,
+                "verified_users": verified_users,
+                "verified_rate": round(verified_users * 100 / email_users, 1) if email_users else 0,
+                "new_today": new_users(1),
+                "new_7d": new_users(7),
+                "new_30d": new_users(30),
+                "dau": dau,
+                "wau": wau,
+                "mau": mau,
+                "dau_mau": round(dau * 100 / mau, 1) if mau else 0,
+                "learning_dau": users_in_period(learning_dates, 1),
+                "learning_wau": users_in_period(learning_dates, 7),
+                "learning_mau": users_in_period(learning_dates, 30),
+                "total_study_interactions": total_study_interactions,
+                "total_mastered_words": total_mastered_words,
+            },
+            "retention": {"d1": retention(1), "d7": retention(7)},
+            "sources": source_counts,
+            "trend": trend,
+            "tracking_note": "行为事件从本版本开始按日汇总；旧用户的最近登录和学习日已用于历史兼容。",
+        }
+    )
 
 
 @app.route("/api/admin/logout", methods=["POST"])
@@ -1083,6 +1333,7 @@ def api_wxlogin():
         conn.commit()
     conn.close()
     tok = make_token(u["id"])
+    record_activity(u["id"], "login")
     return jsonify(
         {
             "token": tok,
