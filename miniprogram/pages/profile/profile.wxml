@@ -1,0 +1,45 @@
+<view class="container">
+  <view class="profile-card">
+    <view class="avatar">{{avatar}}</view>
+    <view class="nick">{{nickname}}</view>
+    <view class="level">{{levelText}}</view>
+  </view>
+
+  <view class="stats">
+    <view class="stat-box">
+      <view class="num">{{streak}}</view>
+      <view class="lab">连续天</view>
+    </view>
+    <view class="stat-box">
+      <view class="num">{{masteredCount}}</view>
+      <view class="lab">掌握词</view>
+    </view>
+    <view class="stat-box">
+      <view class="num">{{totalDays}}</view>
+      <view class="lab">累计天</view>
+    </view>
+  </view>
+
+  <view class="menu">
+    <view class="group" wx:for="{{menuGroups}}" wx:key="key" wx:for-item="group">
+      <view class="group-item"
+            wx:for="{{group.items}}" wx:key="key" wx:for-item="item"
+            data-key="{{item.key}}" bindtap="onMenuTap">
+        <text>{{item.text}}</text>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="bind-mask" wx:if="{{showBind}}" bindtap="onCloseBind">
+    <view class="bind-sheet" catchtap="noop">
+      <view class="bind-title">绑定手机 / 邮箱</view>
+      <input class="bind-input" placeholder="手机号" data-field="phone" value="{{phone}}" bindinput="onBindInput" />
+      <input class="bind-input" placeholder="邮箱" data-field="email" value="{{email}}" bindinput="onBindInput" />
+      <input class="bind-input" placeholder="设置密码（8-128 位）" password data-field="password" value="{{password}}" bindinput="onBindInput" />
+      <view class="bind-msg" wx:if="{{bindMsg}}">{{bindMsg}}</view>
+      <button class="primary-btn" bindtap="onSubmitBind">提交绑定</button>
+      <button class="cancel-btn" bindtap="onCloseBind">取消</button>
+    </view>
+  </view>
+</view>

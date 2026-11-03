@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英语学习台 · 后台管理</title>
+<style>
+  :root{--pri:#6366f1;--pri-soft:#eef0ff;--line:#e6e8f0;--sub:#6b7280;--card:#fff;--bg:#f5f6fb}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:#1f2430}
+  .wrap{max-width:1080px;margin:0 auto;padding:24px}
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px}
+  h1{font-size:20px;margin:0;color:var(--pri)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 8px 24px rgba(60,80,160,.06)}
+  .login{display:none}
+  .login.show{display:block}
+  .login input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:14px;margin-bottom:12px;outline:none}
+  .login input:focus{border-color:var(--pri)}
+  .btn{background:var(--pri);color:#fff;border:none;border-radius:10px;padding:11px 18px;font-size:14px;font-weight:600;cursor:pointer}
+  .btn:hover{opacity:.92}
+  .btn.ghost{background:#fff;color:var(--pri);border:1px solid var(--pri)}
+  .err{color:#c0392b;font-size:13px;min-height:18px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+  th{background:var(--pri-soft);color:var(--pri);font-weight:600;position:sticky;top:0}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .empty{text-align:center;color:var(--sub);padding:30px}
+  .stat{display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+  .stat .box{flex:1;min-width:120px;background:var(--pri-soft);border-radius:12px;padding:14px;text-align:center}
+  .stat .n{font-size:24px;font-weight:800;color:var(--pri)}
+  .stat .l{font-size:12px;color:var(--sub);margin-top:2px}
+  .tools{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .badge{display:inline-block;background:var(--pri-soft);color:var(--pri);border-radius:6px;padding:2px 8px;font-size:12px;margin:2px 4px 2px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>英语学习台 · 后台管理</h1>
+    <div>
+      <button class="btn ghost" id="logoutBtn" style="display:none" onclick="adminLogout()">退出后台</button>
+    </div>
+  </div>
+
+  <div class="card login show" id="loginCard">
+    <div style="margin-bottom:6px;font-weight:600">管理员登录</div>
+    <div style="font-size:12px;color:var(--sub);margin-bottom:14px">请输入环境变量 ADMIN_PASSWORD 中配置的后台管理员密码</div>
+    <input id="pw" type="password" placeholder="管理员密码" autocomplete="current-password">
+    <button class="btn" onclick="adminLogin()">登录</button>
+    <div class="err" id="err"></div>
+  </div>
+
+  <div id="dash" style="display:none">
+    <div class="stat">
+      <div class="box"><div class="n" id="sTotal">0</div><div class="l">注册用户总数</div></div>
+      <div class="box"><div class="n" id="sActive">0</div><div class="l">今日活跃(有学习)</div></div>
+      <div class="box"><div class="n" id="sStreak">0</div><div class="l">累计学习人次</div></div>
+    </div>
+    <div class="tools">
+      <button class="btn ghost" onclick="loadUsers()">刷新</button>
+      <button class="btn ghost" onclick="exportCSV()">导出 CSV</button>
+    </div>
+    <div class="card" style="padding:0;overflow:auto;max-height:70vh">
+      <table id="tbl">
+        <thead>
+          <tr>
+            <th>ID</th><th>手机号</th><th>邮箱</th><th>昵称</th>
+            <th>注册时间</th><th>最近登录</th>
+            <th class="num">累计天数</th><th class="num">掌握词</th><th class="num">连续</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+let TOKEN='';
+function escapeHTML(value){
+  return String(value??'').replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+}
+async function api(path,opts={}){
+  const o=Object.assign({headers:{'Content-Type':'application/json'}},opts);
+  if(TOKEN)o.headers['Authorization']='Bearer '+TOKEN;
+  try{
+    const r=await fetch(path,o); let body=null; try{body=await r.json();}catch(e){}
+    return {status:r.status,body:body};
+  }catch(e){ return {status:0,body:{error:'网络连接失败，请稍后重试'}}; }
+}
+async function adminLogin(){
+  const pw=document.getElementById('pw').value;
+  const res=await api('/api/admin/login',{method:'POST',body:JSON.stringify({password:pw})});
+  if(res.status===200&&res.body.token){ TOKEN=res.body.token; document.getElementById('loginCard').classList.remove('show'); document.getElementById('dash').style.display=''; document.getElementById('logoutBtn').style.display=''; loadUsers(); }
+  else { document.getElementById('err').textContent=(res.body&&res.body.error)||'登录失败'; }
+}
+function adminLogout(){ api('/api/admin/logout',{method:'POST'}); TOKEN=''; document.getElementById('loginCard').classList.add('show'); document.getElementById('dash').style.display='none'; document.getElementById('logoutBtn').style.display='none'; document.getElementById('pw').value=''; }
+async function loadUsers(){
+  const res=await api('/api/admin/users');
+  if(res.status!==200){ alert((res.body&&res.body.error)||'加载失败'); return; }
+  const users=res.body.users||[];
+  const tbody=document.getElementById('tbody');
+  if(!users.length){ tbody.innerHTML='<tr><td colspan="9" class="empty">暂无注册用户</td></tr>'; }
+  else{
+    tbody.innerHTML=users.map(u=>{
+      return '<tr>'+
+        '<td>'+Number(u.id)+'</td>'+
+        '<td>'+(u.phone?escapeHTML(u.phone):'<span style="color:#bbb">—</span>')+'</td>'+
+        '<td>'+(u.email?escapeHTML(u.email):'<span style="color:#bbb">—</span>')+'</td>'+
+        '<td>'+(u.nickname?escapeHTML(u.nickname):'<span style="color:#bbb">—</span>')+'</td>'+
+        '<td>'+escapeHTML(u.created_at||'')+'</td>'+
+        '<td>'+escapeHTML(u.last_login||'')+'</td>'+
+        '<td class="num">'+Number(u.days||0)+'</td>'+
+        '<td class="num">'+Number(u.mastered||0)+'</td>'+
+        '<td class="num">'+Number(u.streak||0)+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+  document.getElementById('sTotal').textContent=users.length;
+  document.getElementById('sActive').textContent=users.filter(u=>u.active_today).length;
+  document.getElementById('sStreak').textContent=users.reduce((a,u)=>a+u.days,0);
+}
+function exportCSV(){
+  const rows=[...document.querySelectorAll('#tbody tr')];
+  if(!rows.length||rows[0].querySelectorAll('td').length<9) return;
+  let csv='ID,手机号,邮箱,昵称,注册时间,最近登录,累计天数,掌握词,连续\n';
+  rows.forEach(tr=>{
+    const c=[...tr.querySelectorAll('td')].map(td=>{
+      let t=td.textContent.trim();
+      if(/^[=+\-@]/.test(t)) t="'"+t;
+      if(/[",\n]/.test(t)) t='"'+t.replace(/"/g,'""')+'"'; return t;
+    });
+    csv+=c.join(',')+'\n';
+  });
+  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='users_'+Date.now()+'.csv'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),0);
+}
+document.getElementById('pw').addEventListener('keydown',e=>{ if(e.key==='Enter') adminLogin(); });
+</script>
+</body>
+</html>

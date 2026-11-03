@@ -1,0 +1,15 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "english-learning-mini",
+  "appid": "touristappid",
+  "description": "英语全能学习台 小程序端（复用 server.py 后端）",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.0.0"
+}

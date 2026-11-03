@@ -1,0 +1,1426 @@
+<!-- 本工作台通过 WorkBuddy「资料库」skill 搭建、存储和部署 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>英语全能学习台 · EnglishLab</title>
+<style>
+  :root{
+    --bg:#f4f6fb; --card:#ffffff; --ink:#1f2733; --sub:#6b7686; --line:#e7ebf3;
+    --pri:#2f6df6; --pri-soft:#eaf1ff; --green:#1faa6b; --green-soft:#e6f7ef;
+    --red:#e5484d; --red-soft:#fdecec; --amber:#f0a020; --amber-soft:#fef4e2;
+    --shadow:0 6px 20px rgba(31,39,51,.06);
+    --r:16px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg); color:var(--ink); font-size:15px; line-height:1.55;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:14px 16px 96px}
+  /* top bar */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--pri),#6aa1ff);display:flex;align-items:center;justify-content:center}
+  .logo svg{width:22px;height:22px;fill:#fff}
+  .brand h1{font-size:17px;margin:0;font-weight:700;letter-spacing:.2px}
+  .brand p{font-size:11px;color:var(--sub);margin:0}
+  .sync{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--sub);background:var(--card);border:1px solid var(--line);padding:6px 10px;border-radius:20px;box-shadow:var(--shadow)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+  /* today */
+  .today{background:linear-gradient(135deg,#2f6df6,#5b8def);color:#fff;border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-bottom:16px}
+  .today h2{font-size:14px;margin:0 0 10px;opacity:.92;font-weight:600;display:flex;align-items:center;gap:6px}
+  .today h2 svg{width:16px;height:16px;fill:#fff}
+  .today-row{display:flex;gap:10px;flex-wrap:wrap}
+  .tcard{flex:1;min-width:150px;background:rgba(255,255,255,.14);border-radius:12px;padding:11px 12px}
+  .tcard .lab{font-size:11px;opacity:.85}
+  .tcard .val{font-size:20px;font-weight:700;margin-top:2px}
+  .tcard .val small{font-size:12px;font-weight:500;opacity:.8}
+  .tcard.warn{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4)}
+  .tcard .act{margin-top:8px;display:inline-block;background:#fff;color:var(--pri);font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;cursor:pointer}
+  /* section title */
+  .sec-h{font-size:15px;font-weight:700;margin:18px 2px 10px;display:flex;align-items:center;gap:8px}
+  .sec-h svg{width:18px;height:18px;fill:var(--pri)}
+  /* tabs */
+  .tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;z-index:30;padding-bottom:env(safe-area-inset-bottom)}
+  .tabs button{flex:1;background:none;border:none;padding:9px 4px 8px;font-size:11px;color:var(--sub);display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;font-family:inherit}
+  .tabs button svg{width:22px;height:22px;fill:var(--sub)}
+  .tabs button.on{color:var(--pri)}
+  .tabs button.on svg{fill:var(--pri)}
+  .view{display:none}
+  .view.on{display:block}
+  /* card */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px}
+  /* filters */
+  .filters{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;margin-bottom:4px}
+  .filters::-webkit-scrollbar{display:none}
+  .chip{flex:none;background:var(--bg);border:1px solid var(--line);color:var(--sub);font-size:13px;padding:7px 13px;border-radius:20px;cursor:pointer;white-space:nowrap;font-family:inherit}
+  .chip.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+  /* flashcard */
+  .flash{height:230px;border-radius:14px;background:var(--pri-soft);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;cursor:pointer;position:relative;border:1px solid #d8e6ff}
+  .flash .cat{position:absolute;top:12px;left:14px;font-size:11px;color:var(--pri);background:#fff;padding:3px 9px;border-radius:12px;font-weight:600}
+  .flash .ph{position:absolute;top:12px;right:14px;font-size:11px;color:var(--sub);background:#fff;padding:3px 9px;border-radius:12px}
+  .flash .en{font-size:30px;font-weight:700;color:var(--ink)}
+  .flash .zh{font-size:17px;color:var(--sub);margin-top:6px}
+  .flash .ex{font-size:13px;color:var(--pri);margin-top:12px;font-style:italic;padding:0 6px}
+  .flash .hint{position:absolute;bottom:10px;font-size:11px;color:var(--sub)}
+  .speak-btn{position:absolute;bottom:10px;right:12px;width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .speak-btn svg{width:18px;height:18px;fill:var(--pri)}
+  .fbtns{display:flex;gap:10px;margin-top:14px}
+  .fbtns button{flex:1;padding:13px 0;border-radius:12px;border:1px solid var(--line);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;background:var(--card);color:var(--ink)}
+  .fbtns .no{background:var(--red-soft);color:var(--red);border-color:#f6c9ca}
+  .fbtns .yes{background:var(--green-soft);color:var(--green);border-color:#bfe9d4}
+  .badges{display:flex;gap:8px;margin-top:12px}
+  .badges button{flex:1;padding:9px 0;border-radius:10px;border:1px dashed var(--line);background:var(--bg);font-size:12px;color:var(--sub);cursor:pointer;font-family:inherit}
+  .badges button.on{background:var(--amber-soft);color:var(--amber);border-color:#f5d9a8;border-style:solid}
+  .badges button.onm{background:var(--green-soft);color:var(--green);border-color:#bfe9d4;border-style:solid}
+  .progress-line{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:14px 0 4px}
+  .progress-line i{display:block;height:100%;background:var(--pri);border-radius:6px;transition:width .3s}
+  .prog-tip{font-size:12px;color:var(--sub);text-align:center}
+  .level-desc{font-size:12px;color:var(--sub);margin:2px 2px 14px;line-height:1.6}
+  /* list */
+  .list{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+  .li{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 12px}
+  .li .en{font-weight:600;flex:1}
+  .li .en small{display:block;font-weight:400;color:var(--sub);font-size:12px}
+  .li .zh{color:var(--sub);font-size:13px;text-align:right;max-width:42%}
+  .li .ic{width:30px;height:30px;border-radius:8px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+  .li .ic svg{width:16px;height:16px;fill:var(--pri)}
+  .pill{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;flex:none}
+  .pill.m{background:var(--green-soft);color:var(--green)}
+  .pill.d{background:var(--amber-soft);color:var(--amber)}
+  .search{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:12px;font-size:15px;font-family:inherit;background:var(--card);margin-bottom:10px}
+  /* speak module */
+  .mode-switch{display:flex;gap:8px;margin-bottom:14px}
+  .mode-switch button{flex:1;padding:10px 0;border-radius:11px;border:1px solid var(--line);background:var(--card);font-size:13px;font-weight:600;color:var(--sub);cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px}
+  .mode-switch button svg{width:16px;height:16px;fill:var(--sub)}
+  .mode-switch button.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+  .mode-switch button.on svg{fill:#fff}
+  .play-big{width:100%;padding:16px;border-radius:14px;background:var(--pri-soft);border:1px solid #d8e6ff;color:var(--pri);font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:inherit}
+  .play-big svg{width:22px;height:22px;fill:var(--pri)}
+  .sent-zh{text-align:center;color:var(--sub);font-size:13px;margin:10px 0 14px}
+  .dict-input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;font-size:16px;font-family:inherit}
+  .mic-btn{width:100%;padding:16px;border-radius:14px;background:var(--green-soft);border:1px solid #bfe9d4;color:var(--green);font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;margin-top:6px}
+  .mic-btn svg{width:22px;height:22px;fill:var(--green)}
+  .mic-btn.rec{background:var(--red);color:#fff;border-color:var(--red);animation:pulse 1.1s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+  .result{margin-top:14px;padding:13px;border-radius:12px;font-size:14px;display:none}
+  .result.show{display:block}
+  .result.ok{background:var(--green-soft);border:1px solid #bfe9d4;color:#136b46}
+  .result.no{background:var(--red-soft);border:1px solid #f6c9ca;color:#a3272b}
+  .result .score{font-size:26px;font-weight:800;display:block;margin-bottom:4px}
+  .result .heard{font-size:13px;color:var(--sub);margin-top:6px;word-break:break-word}
+  .next-btn{width:100%;margin-top:12px;padding:13px;border-radius:12px;background:var(--pri);color:#fff;border:none;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}
+  .sent-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--sub);margin-top:10px}
+  /* dashboard */
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow);text-align:center}
+  .stat .n{font-size:26px;font-weight:800;color:var(--pri)}
+  .stat .l{font-size:12px;color:var(--sub);margin-top:2px}
+  .ring-wrap{display:flex;align-items:center;gap:14px}
+  .heat{margin-top:6px}
+  .heat svg{width:100%;height:auto;display:block}
+  .heat-leg{display:flex;gap:12px;font-size:11px;color:var(--sub);margin-top:8px;align-items:center}
+  .heat-leg i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:4px;vertical-align:-1px}
+  .cat-bars{display:flex;flex-direction:column;gap:11px;margin-top:6px}
+  .cat-bar .top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+  .cat-bar .top b{font-weight:600}
+  .cat-bar .top span{color:var(--sub)}
+  .cat-bar .bar{height:9px;background:var(--line);border-radius:6px;overflow:hidden}
+  .cat-bar .bar i{display:block;height:100%;background:var(--pri);border-radius:6px}
+  /* settings */
+  .set-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line)}
+  .set-row:last-child{border:none}
+  .set-row .t{font-size:14px}
+  .set-row .d{font-size:12px;color:var(--sub)}
+  .set-row input[type=number]{width:70px;padding:8px;border:1px solid var(--line);border-radius:9px;font-size:15px;text-align:center;font-family:inherit}
+  .btn-ghost{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:var(--card);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:10px;color:var(--ink)}
+  .btn-red{color:var(--red);border-color:#f6c9ca;background:var(--red-soft)}
+  .file-in{display:none}
+  .empty{text-align:center;color:var(--sub);font-size:13px;padding:24px}
+  /* modal */
+  .mask{position:fixed;inset:0;background:rgba(20,28,40,.45);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+  .mask.show{display:flex}
+  .modal{background:#fff;border-radius:16px;padding:20px;max-width:340px;width:100%}
+  .modal h3{margin:0 0 8px;font-size:16px}
+  .modal p{font-size:13px;color:var(--sub);margin:0 0 16px}
+  .modal .mbtns{display:flex;gap:10px}
+  .modal .mbtns button{flex:1;padding:11px;border-radius:11px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+  .modal .mbtns .danger{background:var(--red);color:#fff;border-color:var(--red)}
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:#1f2733;color:#fff;font-size:13px;padding:10px 18px;border-radius:22px;z-index:60;opacity:0;transition:opacity .25s;pointer-events:none}
+  .toast.show{opacity:1}
+  @media(min-width:760px){
+    .wrap{padding-bottom:24px}
+    .tabs{position:static;background:none;border:none;max-width:980px;margin:0 auto 4px;gap:6px}
+    .tabs button{flex:none;flex-direction:row;padding:9px 16px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+    .stat-grid{grid-template-columns:repeat(4,1fr)}
+  }
+  /* grammar */
+  .gcard{background:var(--bg);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:8px}
+  .gcard .ghead{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;font-weight:600;gap:8px}
+  .gcard .ghead .cat{font-size:11px;color:var(--pri);background:#fff;border:1px solid #d8e6ff;padding:2px 8px;border-radius:10px;font-weight:600;flex:none}
+  .gcard .gbody{padding:0 14px 14px;font-size:13px;color:var(--sub);line-height:1.7;display:none}
+  .gcard .gbody.show{display:block}
+  .gcard .gbody .ex{margin-top:8px;color:var(--pri);font-style:italic}
+  .gcard .arrow{transition:transform .2s;color:var(--sub);flex:none}
+  .gcard.open .arrow{transform:rotate(90deg)}
+  .gq{font-size:16px;font-weight:600;line-height:1.5}
+  .gopts{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+  .gopt{padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--card);font-size:14px;cursor:pointer;font-family:inherit;text-align:left;display:flex;align-items:center;gap:10px}
+  .gopt .k{width:22px;height:22px;border-radius:6px;background:var(--pri-soft);color:var(--pri);font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;font-size:12px}
+  .gopt.ok{background:var(--green-soft);border-color:#bfe9d4;color:#136b46}
+  .gopt.no{background:var(--red-soft);border-color:#f6c9ca;color:#a3272b}
+  /* 句子补充 */
+  .fill-sent{font-size:18px;font-weight:600;line-height:1.8;text-align:center;margin-bottom:6px}
+  .fill-sent .blank{display:inline-block;min-width:64px;border-bottom:2px solid var(--pri);color:var(--pri);padding:0 6px}
+
+  /* 引导问卷 */
+  .onboard{position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:200;padding:16px}
+  .onboard.show{display:flex}
+  .ob-card{background:var(--card);max-width:560px;width:100%;border-radius:18px;padding:26px 26px 22px;box-shadow:0 20px 60px rgba(0,0,0,.3);max-height:90vh;overflow:auto}
+  .ob-card h2{margin:0 0 6px;font-size:21px;color:var(--ink)}
+  .ob-sub{margin:0 0 6px;color:var(--sub);font-size:13px;line-height:1.6}
+  .ob-q{font-weight:600;margin:18px 0 10px;color:var(--ink);font-size:15px}
+  .ob-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .ob-opt{border:1.5px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;transition:.15s;background:var(--bg)}
+  .ob-opt:hover{border-color:var(--pri)}
+  .ob-opt.on{border-color:var(--pri);box-shadow:0 0 0 3px rgba(99,102,241,.18)}
+  .ob-opt b{display:block;font-size:15px;color:var(--ink)}
+  .ob-opt span{font-size:12px;color:var(--sub)}
+  .ob-start{margin-top:20px;width:100%;padding:13px;border:0;border-radius:12px;background:var(--pri);color:#fff;font-size:15px;font-weight:600;cursor:pointer}
+  .ob-start:disabled{background:var(--line);color:var(--sub);cursor:not-allowed}
+  .ob-hint{text-align:center;color:var(--red);font-size:12px;margin-top:8px;min-height:16px}
+  .focus-desc{font-size:13px;color:var(--sub);margin:-4px 0 14px;padding:0 2px}
+  @media(max-width:560px){ .ob-opts{grid-template-columns:1fr} }
+
+  /* 纠音报告（类流利说：单词级反馈） */
+  .pr-report{border:1.5px solid var(--line);border-radius:14px;padding:14px;margin-top:4px;background:var(--bg)}
+  .pr-report.ok{border-color:#bfe9d4}
+  .pr-report.no{border-color:#f6c9ca}
+  .pr-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .pr-head .score{font-size:22px;font-weight:700;color:var(--ink)}
+  .pr-tag{font-size:13px;padding:2px 10px;border-radius:20px;background:rgba(99,102,241,.12);color:var(--pri)}
+  .pr-metrics{display:flex;gap:10px;margin-bottom:12px}
+  .pr-metrics>div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center}
+  .pr-metrics b{display:block;font-size:18px;color:var(--ink)}
+  .pr-metrics span{font-size:12px;color:var(--sub)}
+  .pr-block{margin-bottom:10px}
+  .pr-label{font-size:12px;color:var(--sub);margin-bottom:4px}
+  .pr-words{font-size:16px;line-height:1.9;word-break:break-word}
+  .pr-words .w{display:inline-block;padding:1px 6px;border-radius:6px;margin:1px 2px}
+  .w-match{background:var(--green-soft);color:#136b46}
+  .w-miss{background:#ececec;color:#9a9a9a;text-decoration:line-through}
+  .w-extra{background:var(--amber-soft);color:var(--amber)}
+  .pr-tip{font-size:13px;color:var(--sub);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-top:4px}
+  .pr-note{font-size:11px;color:var(--sub);margin-top:8px;opacity:.85;line-height:1.5}
+  .w-miss.clickable{cursor:pointer;border:1px dashed #bbb}
+  .w-miss.clickable:hover{background:#e2e2e2}
+  .badges{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .badge{text-align:center;border:1.5px solid var(--line);border-radius:12px;padding:12px 6px;opacity:.4;filter:grayscale(1)}
+  .badge.on{opacity:1;filter:none;border-color:var(--pri);background:rgba(99,102,241,.08)}
+  .badge .bt{font-size:22px}
+  .badge .bd{font-size:11px;color:var(--sub);margin-top:4px}
+  @media(max-width:560px){ .badges{grid-template-columns:repeat(2,1fr)} }
+.sub-h{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:10px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.sub-tip{font-size:12px;font-weight:400;color:var(--sub)}
+.chat-scenes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chip{padding:5px 12px;border:1px solid var(--line);background:#fff;border-radius:999px;font-size:13px;color:var(--sub);cursor:pointer;transition:.15s}
+.chip.on{background:var(--pri);border-color:var(--pri);color:#fff}
+.chat-log{height:280px;overflow-y:auto;border:1px solid var(--line);border-radius:12px;padding:12px;background:#fafbff;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.bubble{max-width:80%;padding:8px 12px;border-radius:12px;font-size:14px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.bubble.me{align-self:flex-end;background:var(--pri);color:#fff;border-bottom-right-radius:4px}
+.bubble.ai{align-self:flex-start;background:#fff;border:1px solid var(--line);color:var(--ink);border-bottom-left-radius:4px}
+.chat-input-row{display:flex;gap:8px;align-items:center}
+.chat-input-row .dict-input{flex:1;margin:0}
+.mic-btn.sm,.btn-primary.sm,.btn-ghost.sm{padding:8px 12px;font-size:13px;min-width:44px}
+.btn-primary{background:var(--pri);color:#fff;border:none;border-radius:10px;cursor:pointer;font-size:14px;padding:9px 16px}
+.mic-btn.sm{background:var(--pri-soft);color:var(--pri)}
+.chat-actions{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.chat-status{font-size:12px;color:var(--sub);margin-left:auto}
+  /* 登录/注册遮罩 */
+  .auth{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:linear-gradient(135deg,#eef3ff 0%,#f6f0ff 100%);padding:20px}
+  .auth.show{display:flex}
+  .auth-card{width:100%;max-width:380px;background:#fff;border-radius:18px;padding:28px 24px;box-shadow:0 18px 50px rgba(60,80,160,.18)}
+  .auth-logo{font-size:22px;font-weight:800;color:var(--pri);text-align:center;letter-spacing:.5px}
+  .auth-sub{font-size:12px;color:var(--sub);text-align:center;margin:6px 0 18px}
+  .auth-tabs{display:flex;gap:8px;margin-bottom:16px}
+  .atab{flex:1;padding:10px;border:1px solid var(--line);background:#fafbff;border-radius:10px;font-size:14px;color:var(--sub);cursor:pointer}
+  .atab.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+  .auth-body input{width:100%;box-sizing:border-box;padding:12px 14px;margin-bottom:12px;border:1px solid var(--line);border-radius:10px;font-size:14px;outline:none}
+  .auth-body input:focus{border-color:var(--pri)}
+  .auth-btn{width:100%;padding:12px;border:none;border-radius:10px;background:var(--pri);color:#fff;font-size:15px;font-weight:600;cursor:pointer}
+  .auth-btn:hover{opacity:.92}
+  .auth-err{color:#c0392b;font-size:13px;min-height:18px;margin-top:4px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 3C8 3 5 5.5 5 9c0 2.4 1.4 4.4 3.4 5.5-.3 1.6-1.2 2.8-2.6 3.4.2 0 .5.1.8.1 2.2 0 4-1.4 4.9-3.2C12 14.8 12 14.8 12 14.8s0 0 .5 0C16.6 14.8 19 12.3 19 9c0-3.5-3-6-7-6zm-2.5 7.2c-.7 0-1.2-.6-1.2-1.3s.5-1.3 1.2-1.3 1.2.6 1.2 1.3-.5 1.3-1.2 1.3zm5 0c-.7 0-1.2-.6-1.2-1.3s.5-1.3 1.2-1.3 1.2.6 1.2 1.3-.5 1.3-1.2 1.3z"/></svg></div>
+      <div><h1>英语全能学习台</h1><p>EnglishLab · 听说读写 · 行业术语</p></div>
+    </div>
+    <div class="sync"><span class="dot"></span><span id="syncText">本地存储</span></div>
+  </div>
+
+  <!-- 今天要处理 -->
+  <div class="today">
+    <h2><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 3 2 5.5 2 9h10c0-3.5 2-6 2-9a7 7 0 00-7-7zm0 20a2.5 2.5 0 01-2.5-2.5h5A2.5 2.5 0 0112 22z"/></svg>今天要处理</h2>
+    <div class="today-row" id="todayRow"></div>
+  </div>
+
+  <!-- 学习阶段 -->
+  <div class="filters" id="levelBar"></div>
+  <div class="level-desc" id="levelDesc"></div>
+  <div class="focus-desc" id="focusDesc"></div>
+
+  <!-- 词汇术语库 -->
+  <div class="view on" id="viewVocab">
+    <div class="sec-h"><svg viewBox="0 0 24 24"><path d="M4 5h16v3H4zm0 5.5h16v3H4zm0 5.5h10v3H4z"/></svg>词汇术语库</div>
+    <div class="filters" id="vocabFilters"></div>
+    <div class="card">
+      <div class="flash" id="flash" onclick="flipCard()">
+        <span class="cat" id="flashCat"></span>
+        <span class="ph" id="flashPh"></span>
+        <div class="en" id="flashEn"></div>
+        <div class="zh" id="flashZh" style="display:none"></div>
+        <div class="ex" id="flashEx" style="display:none"></div>
+        <span class="hint" id="flashHint">点击卡片翻面</span>
+        <div class="speak-btn" onclick="event.stopPropagation();speakCur()"><svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4zM14 3.2v2.1a7 7 0 010 13.4v2.1a9 9 0 000-17.6z"/></svg></div>
+      </div>
+      <div class="progress-line"><i id="vocabProg" style="width:0%"></i></div>
+      <div class="prog-tip" id="vocabProgTip"></div>
+      <div class="fbtns">
+        <button class="no" onclick="cardNo()">不认识</button>
+        <button class="yes" onclick="cardYes()">认识</button>
+      </div>
+      <div class="badges">
+        <button id="badgeMastered" onclick="toggleMastered()">★ 标记掌握</button>
+        <button id="badgeDiff" onclick="toggleDiff()">⚑ 加入生词</button>
+      </div>
+    </div>
+    <div class="sec-h" style="margin-top:20px"><svg viewBox="0 0 24 24"><path d="M4 5h16v3H4zm0 5.5h16v3H4zm0 5.5h10v3H4z"/></svg>词库浏览 <span style="font-size:12px;color:var(--sub);font-weight:400" id="vocabCount"></span></div>
+    <input class="search" id="vocabSearch" placeholder="搜索英文或中文…" oninput="renderVocabList()">
+    <div class="list" id="vocabList"></div>
+  </div>
+
+  <!-- 听说训练 -->
+  <div class="view" id="viewSpeak">
+    <div class="sec-h"><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>听说训练</div>
+    <div class="mode-switch">
+      <button id="modeDict" class="on" onclick="setMode('dictation')"><svg viewBox="0 0 24 24"><path d="M4 6h12v3H4zm0 4.5h16v3H4zm0 4.5h8v3H4z"/></svg>听写输入</button>
+      <button id="modeSpeak" onclick="setMode('speak')"><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>语音跟读</button>
+    </div>
+    <div class="card">
+      <button class="play-big" onclick="playSentence()"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>播放句子（TTS）</button>
+      <div class="sent-zh" id="sentZh"></div>
+      <div id="dictArea">
+        <input class="dict-input" id="dictInput" placeholder="听完后在框内输入你听到的内容…" onkeydown="if(event.key==='Enter')checkDict()">
+      </div>
+      <div id="speakArea" style="display:none">
+        <button class="mic-btn" id="micBtn" onclick="startSpeak()"><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>点击开始跟读</button>
+        <button class="mic-btn" id="assessBtn" onclick="startAssess()" style="margin-left:10px;background:var(--amber-soft);color:var(--amber)">🎙 录音评测发音</button>
+      </div>
+      <div class="result" id="speakResult"></div>
+      <button class="next-btn" onclick="nextSentence()">下一句 →</button>
+      <div class="sent-meta"><span id="sentCat"></span><span id="sentIdx"></span></div>
+    </div>
+    <!-- AI 口语陪练（听说训练子板块，不新增顶层 Tab） -->
+    <div class="card" style="margin-top:16px">
+      <div class="sub-h">AI 口语陪练 <span class="sub-tip">跟 AI 外教自由对话，实时纠错点拨</span></div>
+      <div class="chat-scenes" id="chatScenes"></div>
+      <div class="chat-log" id="chatLog"></div>
+      <div class="chat-input-row">
+        <input class="dict-input" id="chatInput" placeholder="用英语说点什么，或点麦克风口头输入…" onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="mic-btn sm" onclick="chatVoiceInput()" title="语音输入"><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg></button>
+        <button class="btn-primary sm" onclick="sendChat()">发送</button>
+      </div>
+      <div class="chat-actions">
+        <button class="btn-ghost sm" onclick="readLastAI()">朗读回复</button>
+        <button class="btn-ghost sm" onclick="clearChat()">清空对话</button>
+        <span class="chat-status" id="chatStatus"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 学习中心 -->
+  <div class="view" id="viewDash">
+    <div class="sec-h"><svg viewBox="0 0 24 24"><path d="M4 13h6v8H4zm0-11h6v8H4zm10 5h6v14h-6zm0-5h6v4h-6z"/></svg>学习中心</div>
+    <div class="stat-grid">
+      <div class="stat"><div class="n" id="stDays">0</div><div class="l">累计学习天数</div></div>
+      <div class="stat"><div class="n" id="stStreak">0</div><div class="l">连续打卡</div></div>
+      <div class="stat"><div class="n" id="stMastered">0</div><div class="l">掌握词汇</div></div>
+      <div class="stat"><div class="n" id="stSpeak">0</div><div class="l">听说练习</div></div>
+    </div>
+    <div class="sec-h" style="margin-top:20px"><svg viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 00-2 2v13a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2h-2V2h-2v2H9V2H7zm12 7v10H5V9h14z"/></svg>打卡热力图</div>
+    <div class="card heat"><div id="heatChart"></div>
+      <div class="heat-leg"><span><i style="background:var(--line)"></i>0</span><span><i style="background:#cfe0ff"></i>1-4</span><span><i style="background:#8fb6ff"></i>5-9</span><span><i style="background:var(--pri)"></i>10+</span><span style="margin-left:auto">近10周</span></div>
+    </div>
+    <div class="sec-h" style="margin-top:20px"><svg viewBox="0 0 24 24"><path d="M4 5h16v3H4zm0 5.5h16v3H4zm0 5.5h10v3H4z"/></svg>各行业掌握进度</div>
+    <div class="card"><div class="cat-bars" id="catBars"></div></div>
+    <div class="sec-h" style="margin-top:20px"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 14.3 7.2 17l.9-5.4L4.2 7.7l5.4-.8z"/></svg>打卡成就</div>
+    <div class="card">
+      <div class="badges" id="badges"></div>
+      <button class="btn-ghost" style="margin-top:14px" onclick="shareAchievement()">📤 分享今日成就</button>
+    </div>
+  </div>
+
+  <!-- 语法 -->
+  <div class="view" id="viewGram">
+    <div class="sec-h"><svg viewBox="0 0 24 24"><path d="M4 18 L12 4 L20 18 H16.5 L15 14 H9 L7.5 18 Z M10.2 11 H13.8 L12 7 Z"/></svg>语法精讲</div>
+    <div class="filters" id="gramFilters"></div>
+    <div class="list" id="gramList"></div>
+    <div class="sec-h" style="margin-top:20px"><svg viewBox="0 0 24 24"><path d="M4 18 L12 4 L20 18 H16.5 L15 14 H9 L7.5 18 Z M10.2 11 H13.8 L12 7 Z"/></svg>语法闯关</div>
+    <div class="card">
+      <div id="gramQ"></div>
+      <div class="gopts" id="gramOpts"></div>
+      <div class="result" id="gramResult"></div>
+      <button class="next-btn" onclick="nextGram()">下一题 →</button>
+      <div class="sent-meta"><span id="gramProg"></span><span id="gramIdx"></span></div>
+    </div>
+  </div>
+
+  <!-- 句子补充 -->
+  <div class="sec-h" style="margin-top:22px"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/></svg>句子补充（完形填空）</div>
+  <div class="filters" id="fillFilters"></div>
+  <div class="card">
+    <div class="fill-sent" id="fillSent"></div>
+    <div class="sent-zh" id="fillZh"></div>
+    <input class="dict-input" id="fillInput" placeholder="在空格处填入合适的词 / 短语…" onkeydown="if(event.key==='Enter')checkFill()">
+    <div class="result" id="fillResult"></div>
+    <div class="fbtns" style="margin-top:12px">
+      <button class="no" onclick="showFillHint()" style="background:var(--amber-soft);color:var(--amber);border-color:#f5d9a8">💡 提示</button>
+      <button class="yes" style="background:var(--pri);color:#fff;border-color:var(--pri)" onclick="checkFill()">提交答案</button>
+    </div>
+    <button class="next-btn" onclick="nextFill()">下一题 →</button>
+    <div class="sent-meta"><span id="fillProg"></span><span id="fillIdx"></span></div>
+  </div>
+
+  <!-- 设置 -->
+  <div class="view" id="viewSet">
+    <div class="sec-h"><svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm9 4l-2-1.5.3-2.4-2.3-.9-1.3-2-2.2.6L11 2.6 9 3.4 7.4 1.5 5.1 2.4 4.8 4.8 2.4 5.4 2 7.8l-2 1.5L2 12l-2 1.5.4 2.4 2.3.9 1.3 2 2.2-.6.9 2.1 2-1 2 .8 1.6 1.9 2.3-1 .6-2.2 2.4.9.3 2.4-2 1.4z" transform="scale(.9)"/></svg>设置与数据</div>
+    <div class="card">
+      <div class="set-row"><div><div class="t">每日词汇目标</div><div class="d">达标后今日任务自动完成</div></div><input type="number" id="goalInput" min="1" max="100" onchange="saveGoal()"></div>
+      <div class="set-row"><div><div class="t">声学评测服务地址（可选）</div><div class="d">部署后端代理后填入，启用真实发音评分（需麦克风录音）</div></div><input type="text" id="assessInput" placeholder="https://你的域名/assess" onchange="saveAssess()"></div>
+      <div class="set-row"><div><div class="t">AI 对话服务地址（可选）</div><div class="d">部署后端代理后填入，启用 AI 口语陪练（需模型密钥）</div></div><input type="text" id="chatEndpoint" placeholder="https://你的域名/chat" onchange="saveChatEndpoint()"></div>
+      <button class="btn-ghost" onclick="exportJSON()">⬇ 导出 JSON 备份</button>
+      <button class="btn-ghost" onclick="document.getElementById('fileIn').click()">⬆ 导入恢复</button>
+      <input type="file" id="fileIn" class="file-in" accept="application/json" onchange="importJSON(event)">
+      <button class="btn-ghost btn-red" onclick="confirmClear()">清空示例 / 全部进度</button>
+      <button class="btn-ghost" onclick="showOnboarding()">📝 重新填写学习画像</button>
+      <div class="set-row"><div><div class="t">当前账号</div><div class="d" id="acctInfo">—</div></div><button class="btn-ghost btn-red" id="logoutBtn" onclick="logout()">退出登录</button></div>
+    </div>
+    <div class="card" style="margin-top:14px;font-size:12px;color:var(--sub);line-height:1.7">
+      <b style="color:var(--ink)">使用说明</b><br>
+      · 听读：浏览器内置语音合成，无需联网即可发声（首次可能需联网加载语音包）。<br>
+      · 说：语音跟读使用浏览器语音识别，需用 Chrome/Edge 并在 https 或 localhost 环境授权麦克风。<br>
+      · 数据保存在本机浏览器，建议定期导出备份；换设备用「导入恢复」迁移。<br>
+      · 顶部「学习阶段」可切换 零基础/初中/高中/大学，全站词库、听说、语法、句子补充按基础难度自动筛选。
+      · 语法模块：6 大语法分类精讲 + 12 道闯关选择题 + 16 道句子补充（完形填空：语法填空/术语填空），答完自动累计今日「语法练习」进度。
+      · AI 口语陪练：在「听说训练」底部，选场景后跟 AI 外教自由对话，AI 用英文回复并附中文纠错点拨；可用麦克风口头输入、点「朗读回复」听 AI 语音。需在「设置」填 AI 对话服务地址（自建后端）。
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="on" onclick="switchTab('vocab')"><svg viewBox="0 0 24 24"><path d="M4 5h16v3H4zm0 5.5h16v3H4zm0 5.5h10v3H4z"/></svg>词库</button>
+  <button onclick="switchTab('speak')"><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>听说</button>
+  <button onclick="switchTab('dash')"><svg viewBox="0 0 24 24"><path d="M4 13h6v8H4zm0-11h6v8H4zm10 5h6v14h-6zm0-5h6v4h-6z"/></svg>中心</button>
+  <button onclick="switchTab('gram')"><svg viewBox="0 0 24 24"><path d="M4 18 L12 4 L20 18 H16.5 L15 14 H9 L7.5 18 Z M10.2 11 H13.8 L12 7 Z"/></svg>语法</button>
+  <button onclick="switchTab('set')"><svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm9 4l-2-1.5.3-2.4-2.3-.9-1.3-2-2.2.6L11 2.6 9 3.4 7.4 1.5 5.1 2.4 4.8 4.8 2.4 5.4 2 7.8l-2 1.5L2 12l-2 1.5.4 2.4 2.3.9 1.3 2 2.2-.6.9 2.1 2-1 2 .8 1.6 1.9 2.3-1 .6-2.2 2.4.9.3 2.4-2 1.4z"/></svg>设置</button>
+</div>
+
+<div class="mask" id="mask"><div class="modal"><h3 id="mTitle">确认</h3><p id="mText"></p><div class="mbtns"><button onclick="closeMask()">取消</button><button class="danger" id="mOk">确定</button></div></div></div>
+<div class="toast" id="toast"></div>
+
+  <!-- 引导问卷：首次收集人群信息，决定展示什么词库 -->
+  <div class="onboard" id="onboard">
+    <div class="ob-card">
+      <h2>先了解一下你的情况 👋</h2>
+      <p class="ob-sub">我们会根据你的基础与方向，为你定制要展示的词库、听说与语法内容。之后也能随时在顶部手动调整。</p>
+      <div class="ob-q">1. 你目前的英语基础是？</div>
+      <div class="ob-opts" id="obLevel">
+        <div class="ob-opt" data-v="0"><b>零基础</b><span>几乎没学过，先开口、记常用词</span></div>
+        <div class="ob-opt" data-v="1"><b>初中</b><span>学过基础，能应付简单日常</span></div>
+        <div class="ob-opt" data-v="2"><b>高中</b><span>能读简单专业短句、基础语法</span></div>
+        <div class="ob-opt" data-v="3"><b>大学</b><span>需要专业/行业英文与高阶表达</span></div>
+      </div>
+      <div class="ob-q">2. 你最想提升的方向？（可选）</div>
+      <div class="ob-opts" id="obFocus">
+        <div class="ob-opt on" data-v="all"><b>综合</b><span>所有行业都看</span></div>
+      </div>
+      <button class="ob-start" id="obStart" onclick="submitOnboarding()" disabled>开始学习 →</button>
+      <div class="ob-hint" id="obHint">请先选择你的英语基础</div>
+    </div>
+  </div>
+
+<!-- 登录/注册遮罩（默认显示，作为进入门槛） -->
+<div class="auth show" id="auth">
+  <div class="auth-card">
+    <div class="auth-logo">英语全能学习台</div>
+    <div class="auth-sub">登录后学习进度云端同步、跨设备可用</div>
+    <div class="auth-tabs">
+      <button class="atab on" id="atLogin" onclick="setAuthTab('login')">登录</button>
+      <button class="atab" id="atReg" onclick="setAuthTab('reg')">注册</button>
+    </div>
+    <div class="auth-body" id="authLogin">
+      <input id="aIdent" placeholder="手机号 或 邮箱" autocomplete="username">
+      <input id="aPw" type="password" placeholder="密码" autocomplete="current-password">
+      <button class="auth-btn" onclick="doLogin()">登录</button>
+    </div>
+    <div class="auth-body" id="authReg" style="display:none">
+      <input id="rPhone" placeholder="手机号（与邮箱二选一）">
+      <input id="rEmail" placeholder="邮箱（与手机号二选一）">
+      <input id="rNick" placeholder="昵称（可选）">
+      <input id="rPw" type="password" placeholder="密码（8-128 位）" autocomplete="new-password">
+      <button class="auth-btn" onclick="doRegister()">注册并进入</button>
+    </div>
+    <div class="auth-err" id="aErr"></div>
+  </div>
+</div>
+<script>
+/* ============ 数据层：词库 ============ */
+const CATS = [
+  {id:'daily', name:'日常交流'},
+  {id:'business', name:'商务洽谈'},
+  {id:'engineering', name:'工程技术'},
+  {id:'it', name:'IT互联网'},
+  {id:'medical', name:'医疗健康'},
+  {id:'finance', name:'金融财务'}
+];
+const VOCAB = [
+  // 日常交流
+  {en:'Hi',ph:'/haɪ/',zh:'你好',cat:'daily',ex:'Hi, how are you?'},
+  {en:'Thanks',ph:'/θæŋks/',zh:'谢谢',cat:'daily',ex:'Thanks for your help.'},
+  {en:'Sorry',ph:'/ˈsɒri/',zh:'抱歉',cat:'daily',ex:"I'm sorry I'm late."},
+  {en:'Please',ph:'/pliːz/',zh:'请',cat:'daily',ex:'Please have a seat.'},
+  {en:'Excuse me',ph:'/ɪkˈskjuːz miː/',zh:'打扰一下',cat:'daily',ex:'Excuse me, where is the restroom?'},
+  {en:"What's up",ph:'/wɒts ʌp/',zh:'最近咋样',cat:'daily',ex:"Hey, what's up?"},
+  {en:'See you later',ph:'/siː juː ˈleɪtə/',zh:'回头见',cat:'daily',ex:'See you later!'},
+  {en:'Nice to meet you',ph:'/naɪs tə miːt juː/',zh:'很高兴认识你',cat:'daily',ex:'Nice to meet you.'},
+  {en:"I don't understand",ph:'/',zh:'我不明白',cat:'daily',ex:"Sorry, I don't understand."},
+  {en:'Make a reservation',ph:'/',zh:'预订',cat:'daily',ex:"I'd like to make a reservation."},
+  {en:'The bill, please',ph:'/',zh:'买单',cat:'daily',ex:'The bill, please.'},
+  {en:'Where is the station',ph:'/',zh:'车站在哪',cat:'daily',ex:'Where is the nearest station?'},
+  {en:'Could you help me',ph:'/',zh:'能帮我吗',cat:'daily',ex:'Could you help me with this?'},
+  {en:"I'm fine",ph:'/',zh:'我很好',cat:'daily',ex:"I'm fine, thank you."},
+  {en:'Check the menu',ph:'/',zh:'看菜单',cat:'daily',ex:"Let's check the menu."},
+  {en:'Have a good day',ph:'/',zh:'祝一天愉快',cat:'daily',ex:'Have a good day!'},
+  // 商务洽谈
+  {en:'Meeting',ph:'/ˈmiːtɪŋ/',zh:'会议',cat:'business',ex:'We have a meeting at 3.'},
+  {en:'Negotiation',ph:'/nɪɡəʊʃiˈeɪʃn/',zh:'谈判',cat:'business',ex:'The negotiation went well.'},
+  {en:'Contract',ph:'/ˈkɒntrækt/',zh:'合同',cat:'business',ex:'Please sign the contract.'},
+  {en:'Proposal',ph:'/prəˈpəʊzl/',zh:'提案',cat:'business',ex:'Here is our proposal.'},
+  {en:'Deadline',ph:'/ˈdedlaɪn/',zh:'截止日期',cat:'business',ex:'The deadline is Friday.'},
+  {en:'Budget',ph:'/ˈbʌdʒɪt/',zh:'预算',cat:'business',ex:'We need to cut the budget.'},
+  {en:'Revenue',ph:'/ˈrevənjuː/',zh:'营收',cat:'business',ex:'Revenue increased by 10%.'},
+  {en:'Partnership',ph:'/ˈpɑːtnəʃɪp/',zh:'合作伙伴关系',cat:'business',ex:"Let's form a partnership."},
+  {en:'Discount',ph:'/ˈdɪskaʊnt/',zh:'折扣',cat:'business',ex:'Can you offer a discount?'},
+  {en:'Invoice',ph:'/ˈɪnvɔɪs/',zh:'发票',cat:'business',ex:'Please send the invoice.'},
+  {en:'Supply chain',ph:'/',zh:'供应链',cat:'business',ex:'The supply chain was disrupted.'},
+  {en:'Market share',ph:'/',zh:'市场份额',cat:'business',ex:'We grew our market share.'},
+  {en:'Quarter',ph:'/ˈkwɔːtə/',zh:'季度',cat:'business',ex:'Q3 results are strong.'},
+  {en:'Stakeholder',ph:'/',zh:'利益相关者',cat:'business',ex:'Inform all stakeholders.'},
+  {en:'Bottom line',ph:'/',zh:'底线/净利',cat:'business',ex:'The bottom line matters.'},
+  {en:'Follow up',ph:'/',zh:'跟进',cat:'business',ex:"I'll follow up by email."},
+  // 工程技术
+  {en:'Blueprint',ph:'/ˈbluːprɪnt/',zh:'蓝图',cat:'engineering',ex:'Review the blueprint.'},
+  {en:'Tolerance',ph:'/ˈtɒlərəns/',zh:'公差',cat:'engineering',ex:'The tolerance is ±0.1mm.'},
+  {en:'Load',ph:'/ləʊd/',zh:'载荷',cat:'engineering',ex:'Calculate the max load.'},
+  {en:'Torque',ph:'/tɔːk/',zh:'扭矩',cat:'engineering',ex:'Apply the correct torque.'},
+  {en:'Welding',ph:'/ˈweldɪŋ/',zh:'焊接',cat:'engineering',ex:'Welding requires PPE.'},
+  {en:'Circuit',ph:'/ˈsɜːkɪt/',zh:'电路',cat:'engineering',ex:'The circuit is short.'},
+  {en:'Voltage',ph:'/ˈvəʊltɪdʒ/',zh:'电压',cat:'engineering',ex:'Check the voltage first.'},
+  {en:'Current',ph:'/ˈkʌrənt/',zh:'电流',cat:'engineering',ex:'Measure the current.'},
+  {en:'Pipeline',ph:'/ˈpaɪplaɪn/',zh:'管道',cat:'engineering',ex:'Inspect the pipeline.'},
+  {en:'Foundation',ph:'/faʊnˈdeɪʃn/',zh:'地基',cat:'engineering',ex:'The foundation is poured.'},
+  {en:'Specification',ph:'/ˌspesɪfɪˈkeɪʃn/',zh:'规格说明',cat:'engineering',ex:'Meet the specification.'},
+  {en:'Prototype',ph:'/ˈprəʊtətaɪp/',zh:'原型',cat:'engineering',ex:'Build a prototype.'},
+  {en:'Maintenance',ph:'/ˈmeɪntənəns/',zh:'维护',cat:'engineering',ex:'Schedule maintenance.'},
+  {en:'Calibration',ph:'/ˌkælɪˈbreɪʃn/',zh:'校准',cat:'engineering',ex:'Recalibrate the sensor.'},
+  {en:'Module',ph:'/ˈmɒdjuːl/',zh:'模块',cat:'engineering',ex:'Replace the module.'},
+  {en:'Efficiency',ph:'/ɪˈfɪʃnsi/',zh:'效率',cat:'engineering',ex:'Improve efficiency.'},
+  // IT互联网
+  {en:'API',ph:'/ˌeɪ piː ˈaɪ/',zh:'应用程序接口',cat:'it',ex:'Call the API endpoint.'},
+  {en:'Database',ph:'/ˈdeɪtəbeɪs/',zh:'数据库',cat:'it',ex:'Query the database.'},
+  {en:'Deploy',ph:'/dɪˈplɔɪ/',zh:'部署',cat:'it',ex:'Deploy to production.'},
+  {en:'Repository',ph:'/rɪˈpɒzətri/',zh:'代码仓库',cat:'it',ex:'Clone the repository.'},
+  {en:'Algorithm',ph:'/ˈælɡərɪðəm/',zh:'算法',cat:'it',ex:'Optimize the algorithm.'},
+  {en:'Latency',ph:'/ˈleɪtənsi/',zh:'延迟',cat:'it',ex:'Reduce latency.'},
+  {en:'Bandwidth',ph:'/ˈbændwɪdθ/',zh:'带宽',cat:'it',ex:'Bandwidth is limited.'},
+  {en:'Cache',ph:'/kæʃ/',zh:'缓存',cat:'it',ex:'Clear the cache.'},
+  {en:'Encryption',ph:'/ɪnˈkrɪpʃn/',zh:'加密',cat:'it',ex:'Use end-to-end encryption.'},
+  {en:'Server',ph:'/ˈsɜːvə/',zh:'服务器',cat:'it',ex:'The server is down.'},
+  {en:'Debug',ph:'/diːˈbʌɡ/',zh:'调试',cat:'it',ex:'Debug the issue.'},
+  {en:'Framework',ph:'/ˈfreɪmwɜːk/',zh:'框架',cat:'it',ex:'Pick a framework.'},
+  {en:'Scalability',ph:'/ˌskeɪləˈbɪləti/',zh:'可扩展性',cat:'it',ex:'Design for scalability.'},
+  {en:'Runtime',ph:'/ˈrʌntaɪm/',zh:'运行时',cat:'it',ex:'A runtime error occurred.'},
+  {en:'Endpoint',ph:'/ˈendpɔɪnt/',zh:'端点',cat:'it',ex:'Hit the endpoint.'},
+  {en:'Open source',ph:'/',zh:'开源',cat:'it',ex:"It's open source."},
+  // 医疗健康
+  {en:'Symptom',ph:'/ˈsɪmptəm/',zh:'症状',cat:'medical',ex:'What are your symptoms?'},
+  {en:'Diagnosis',ph:'/ˌdaɪəɡˈnəʊsɪs/',zh:'诊断',cat:'medical',ex:'The diagnosis is clear.'},
+  {en:'Prescription',ph:'/prɪˈskrɪpʃn/',zh:'处方',cat:'medical',ex:'Take the prescription.'},
+  {en:'Vaccine',ph:'/ˈvæksiːn/',zh:'疫苗',cat:'medical',ex:'Get the vaccine.'},
+  {en:'Blood pressure',ph:'/',zh:'血压',cat:'medical',ex:'Check blood pressure.'},
+  {en:'Temperature',ph:'/ˈtemprətʃə/',zh:'体温',cat:'medical',ex:'Your temperature is normal.'},
+  {en:'Allergy',ph:'/ˈælədʒi/',zh:'过敏',cat:'medical',ex:'I have an allergy.'},
+  {en:'Fracture',ph:'/ˈfræktʃə/',zh:'骨折',cat:'medical',ex:'He has a fracture.'},
+  {en:'Antibiotic',ph:'/ˌæntibaɪˈɒtɪk/',zh:'抗生素',cat:'medical',ex:'Take the antibiotic.'},
+  {en:'Chronic',ph:'/ˈkrɒnɪk/',zh:'慢性的',cat:'medical',ex:'A chronic condition.'},
+  {en:'Emergency',ph:'/iˈmɜːdʒənsi/',zh:'急诊',cat:'medical',ex:'Call emergency now.'},
+  {en:'Hygiene',ph:'/ˈhaɪdʒiːn/',zh:'卫生',cat:'medical',ex:'Maintain good hygiene.'},
+  {en:'Infection',ph:'/ɪnˈfekʃn/',zh:'感染',cat:'medical',ex:'Prevent infection.'},
+  {en:'Pulse',ph:'/pʌls/',zh:'脉搏',cat:'medical',ex:'Check the pulse.'},
+  {en:'Dosage',ph:'/ˈdəʊsɪdʒ/',zh:'剂量',cat:'medical',ex:'Follow the dosage.'},
+  {en:'Recovery',ph:'/rɪˈkʌvəri/',zh:'康复',cat:'medical',ex:'Wish you a full recovery.'},
+  // 金融财务
+  {en:'Investment',ph:'/ɪnˈvestmənt/',zh:'投资',cat:'finance',ex:'Make a long-term investment.'},
+  {en:'Interest rate',ph:'/',zh:'利率',cat:'finance',ex:'The interest rate rose.'},
+  {en:'Inflation',ph:'/ɪnˈfleɪʃn/',zh:'通胀',cat:'finance',ex:'Inflation is high.'},
+  {en:'Portfolio',ph:'/pɔːtˈfəʊliəʊ/',zh:'投资组合',cat:'finance',ex:'Diversify your portfolio.'},
+  {en:'Dividend',ph:'/ˈdɪvɪdend/',zh:'股息',cat:'finance',ex:'The dividend was paid.'},
+  {en:'Asset',ph:'/ˈæset/',zh:'资产',cat:'finance',ex:'Protect your assets.'},
+  {en:'Liability',ph:'/ˌlaɪəˈbɪləti/',zh:'负债',cat:'finance',ex:'Reduce liabilities.'},
+  {en:'Liquidity',ph:'/lɪˈkwɪdəti/',zh:'流动性',cat:'finance',ex:'Ensure liquidity.'},
+  {en:'Mortgage',ph:'/ˈmɔːɡɪdʒ/',zh:'抵押贷款',cat:'finance',ex:'Pay the mortgage.'},
+  {en:'Currency',ph:'/ˈkʌrənsi/',zh:'货币',cat:'finance',ex:'The currency fluctuates.'},
+  {en:'Profit margin',ph:'/',zh:'利润率',cat:'finance',ex:'Improve profit margin.'},
+  {en:'Audit',ph:'/ˈɔːdɪt/',zh:'审计',cat:'finance',ex:'The audit is done.'},
+  {en:'Hedge',ph:'/hedʒ/',zh:'对冲',cat:'finance',ex:'Hedge the risk.'},
+  {en:'Capital',ph:'/ˈkæpɪtl/',zh:'资本',cat:'finance',ex:'Raise capital.'},
+  {en:'Forecast',ph:'/ˈfɔːkɑːst/',zh:'预测',cat:'finance',ex:'Sales forecast.'},
+  {en:'Tax',ph:'/tæks/',zh:'税',cat:'finance',ex:'File your tax.'}
+];
+const SENTENCES = [
+  {en:'Could you please send me the contract by Friday?',zh:'能否在周五前把合同发给我？',cat:'business'},
+  {en:"Let's review the blueprint before we start welding.",zh:'开始焊接前我们先看一下蓝图。',cat:'engineering'},
+  {en:'The server is down, so we need to debug the issue.',zh:'服务器宕机了，我们得排查一下。',cat:'it'},
+  {en:'Please check your blood pressure every morning.',zh:'请每天早晨测一下血压。',cat:'medical'},
+  {en:'We should diversify our investment portfolio.',zh:'我们应该分散投资组合。',cat:'finance'},
+  {en:'Nice to meet you, thanks for coming to the meeting.',zh:'很高兴认识你，感谢来参会。',cat:'daily'},
+  {en:'The API latency is too high, clear the cache.',zh:'接口延迟太高了，清理一下缓存。',cat:'it'},
+  {en:'Apply the correct torque and check the tolerance.',zh:'施加正确的扭矩并检查公差。',cat:'engineering'},
+  {en:'What are your main symptoms today?',zh:'你今天主要症状是什么？',cat:'medical'},
+  {en:'The inflation rate affects our profit margin.',zh:'通胀率会影响我们的利润率。',cat:'finance'},
+  {en:'Excuse me, where is the nearest train station?',zh:'打扰一下，最近的火车站在哪？',cat:'daily'},
+  {en:"We'd like to form a partnership and share the market.",zh:'我们希望建立合作、共拓市场。',cat:'business'},
+  {en:'Hello, how are you?',zh:'你好，最近好吗？',cat:'daily',lv:0},
+  {en:'Thank you very much.',zh:'非常感谢。',cat:'daily',lv:0}
+];
+const GRAM_CATS=[
+  {id:'tense',name:'时态'},
+  {id:'passive',name:'被动语态'},
+  {id:'clause',name:'从句'},
+  {id:'subjunctive',name:'虚拟语气'},
+  {id:'nonfinite',name:'非谓语动词'},
+  {id:'prep',name:'冠词与介词'}
+];
+const GRAMMAR=[
+  {cat:'tense',t:'现在完成时',rule:'表示过去发生、与现在结果相关；结构 have/has + 过去分词(done)。常与 already / yet / ever / never 连用。',ex:'I have finished my homework. （我已经做完作业了。）'},
+  {cat:'tense',t:'过去进行时',rule:'表示过去某一时刻正在发生的动作；结构 was/were + doing。',ex:'He was reading at 8 p.m. （昨晚8点他正在读书。）'},
+  {cat:'tense',t:'将来完成时',rule:'表示将来某一时间前已经完成的动作；结构 will have + done。常与 by + 将来时间连用。',ex:'I will have left by then. （到那时我就已经离开了。）'},
+  {cat:'passive',t:'一般被动语态',rule:'动作承受者作主语；结构 be + done，时态由 be 体现。',ex:'The bridge was built in 2020. （这座桥于2020年建成。）'},
+  {cat:'passive',t:'情态动词被动',rule:'含情态动词的被动；结构 情态动词 + be + done。',ex:'The work must be done today. （这项工作今天必须完成。）'},
+  {cat:'clause',t:'定语从句',rule:'修饰名词/代词，由 who / which / that / where / when 等引导；that/which 指物，who 指人，where 表地点。',ex:'The book that I bought is good. （我买的那本书很好。）'},
+  {cat:'clause',t:'名词性从句',rule:'在句中作主/宾/表/同位语，由 what / that / whether 等引导；what 兼具先行词与连接词作用。',ex:'What he said is true. （他所说的是真的。）'},
+  {cat:'clause',t:'状语从句',rule:'作状语，表时间/原因/条件/让步等；if 引导条件句遵循“主将从现”。',ex:'If it rains, we will stay. （如果下雨我们就留下。）'},
+  {cat:'subjunctive',t:'与现在/将来相反',rule:'if + 主语 + 过去式（be 用 were），主句 would/could/might + do。',ex:'If I were you, I would go. （如果我是你，我就去。）'},
+  {cat:'subjunctive',t:'与过去相反',rule:'if + had + done，主句 would/could/might + have + done。',ex:'If I had known, I would have helped. （我要是早知道就帮忙了。）'},
+  {cat:'nonfinite',t:'不定式 to do',rule:'表目的、将来或补充说明；可作主/宾/状语/定语。',ex:'I came to help. （我是来帮忙的。）'},
+  {cat:'nonfinite',t:'动名词 doing',rule:'动词 -ing 作名词用，可作主语/宾语；常用于 enjoy / mind / suggest 等后。',ex:'Reading is fun. （阅读很有趣。）'},
+  {cat:'nonfinite',t:'过去分词 done',rule:'表被动或完成，可作定语/状语/补语。',ex:'The broken window was fixed. （破了的窗户被修好了。）'},
+  {cat:'prep',t:'冠词 a / an / the',rule:'a/an 表泛指（an 用于元音音素前），the 表特指或双方已知。',ex:'I saw a dog. The dog was big. （我看见一只狗，那只狗很大。）'},
+  {cat:'prep',t:'时间介词 at / in / on',rule:'at 接时刻，in 接年月季节或时段，on 接具体某天。',ex:'at 3 p.m., in July, on Monday. （下午3点、七月、周一。）'}
+];
+const GRAMMAR_QUIZ=[
+  {q:'She ___ to Paris three times.',o:['has been','have been','went','goes'],a:0,why:'主语单数且表“去过”的经历，用现在完成时 has been (to)。'},
+  {q:'The report ___ by tomorrow.',o:['will be finished','will finish','is finishing','finishes'],a:0,why:'将来被动：will be + 过去分词。'},
+  {q:'If I ___ rich, I would travel.',o:['were','am','be','was'],a:0,why:'与现在事实相反的虚拟语气，be 统一用 were。'},
+  {q:'___ he said is true.',o:['What','That','Which','This'],a:0,why:'名词性从句缺主语且表“所…的事”，用 What 引导。'},
+  {q:'I enjoy ___ books.',o:['reading','to read','read','reads'],a:0,why:'enjoy 后接动名词 doing。'},
+  {q:'The window ___ yesterday.',o:['was broken','broke','broken','break'],a:0,why:'过去被动：was + 过去分词 broken。'},
+  {q:'He suggested ___ early.',o:['leaving','to leave','leave','left'],a:0,why:'suggest 后接动名词 doing。'},
+  {q:'By next year, she ___ here for 10 years.',o:['will have worked','works','will work','worked'],a:0,why:'by + 将来时间，用将来完成时 will have + done。'},
+  {q:'This is the house ___ I was born.',o:['where','that','which','when'],a:0,why:'定语从句表地点，用 where（= in which）。'},
+  {q:'If it ___ sunny, we will go.',o:['is','will be','be','was'],a:0,why:'真实条件句“主将从现”，if 从句用一般现在时 is。'},
+  {q:'___ book on the desk is mine.',o:['The','A','An','/'],a:0,why:'特指桌上的那本书，用定冠词 The。'},
+  {q:'He is interested ___ music.',o:['in','on','at','for'],a:0,why:'固定搭配 be interested in。'}
+];
+
+/* ============ 数据层：句子补充（完形填空）============ */
+const FILL_CATS=[
+  {id:'all',name:'全部'},
+  {id:'gram',name:'语法填空'},
+  {id:'term',name:'术语填空'}
+];
+const SENTENCE_FILL=[
+  // 语法填空
+  {type:'gram',sent:'The bridge ___ built in 2020.',ans:'was',zh:'这座桥于2020年建成。',hint:'一般过去被动：was + done'},
+  {type:'gram',sent:'She ___ to Paris three times.',ans:'has been',zh:'她去过巴黎三次。',hint:'现在完成时 has been (to)'},
+  {type:'gram',sent:'If I ___ you, I would accept the offer.',ans:'were',zh:'如果我是你，我就接受这个提议。',hint:'虚拟语气 be 统一用 were'},
+  {type:'gram',sent:'I enjoy ___ English every morning.',ans:'reading',zh:'我喜欢每天早上读英语。',hint:'enjoy 后接动名词 doing'},
+  {type:'gram',sent:'He suggested ___ early to avoid traffic.',ans:'leaving',zh:'他建议早点出发避开拥堵。',hint:'suggest 后接 doing'},
+  {type:'gram',sent:'___ book on the desk is mine.',ans:'The',zh:'桌上那本书是我的。',hint:'特指用定冠词 The'},
+  {type:'gram',sent:'We will have a meeting ___ Monday.',ans:'on',zh:'我们周一开会。',hint:'具体某天用介词 on'},
+  {type:'gram',sent:'The report will ___ finished by tomorrow.',ans:'be',zh:'报告明天前会完成。',hint:'将来被动：will be + done'},
+  {type:'gram',sent:'This is the city ___ I was born.',ans:'where',zh:'这是我出生的城市。',hint:'定语从句表地点用 where'},
+  {type:'gram',sent:'What he ___ is very important.',ans:'said',zh:'他所说的话很重要。',hint:'名词性从句，said 表“说”'},
+  {type:'gram',sent:'I ___ fine, thank you.',ans:'am',zh:'我很好，谢谢。',hint:'be 动词第一人称 am',lv:0},
+  {type:'gram',sent:'What ___ your name?',ans:'is',zh:'你叫什么名字？',hint:'be 动词第三人称单数 is',lv:0},
+  {type:'gram',sent:'She ___ to school every day.',ans:'goes',zh:'她每天去上学。',hint:'一般现在时第三人称单数 goes',lv:1},
+  {type:'gram',sent:'They ___ playing soccer.',ans:'are',zh:'他们正在踢足球。',hint:'现在进行时 are + doing',lv:1},
+  // 术语填空（复用行业词库）
+  {type:'term',sent:'Please sign the ___ before we start.',ans:'contract',zh:'开始前请签合同。',hint:'商务洽谈：合同'},
+  {type:'term',sent:'The server is down, we need to ___ the issue.',ans:'debug',zh:'服务器宕机，我们需要排查问题。',hint:'IT互联网：调试'},
+  {type:'term',sent:'Check your blood ___ every morning.',ans:'pressure',zh:'每天早晨测一下血压。',hint:'医疗健康：血压'},
+  {type:'term',sent:'Apply the correct ___ and check the tolerance.',ans:'torque',zh:'施加正确扭矩并检查公差。',hint:'工程技术：扭矩'},
+  {type:'term',sent:'We should diversify our investment ___ .',ans:'portfolio',zh:'我们应分散投资组合。',hint:'金融财务：投资组合'},
+  {type:'term',sent:'Review the ___ before we start welding.',ans:'blueprint',zh:'焊接前先看一下蓝图。',hint:'工程技术：蓝图'}
+];
+
+/* ============ 基础阶段分层（lv：0零基础/1初中/2高中/3大学；选阶段显示 lv<=所选）============ */
+const LEVELS=[
+  {id:'all',name:'全部阶段',desc:'不限制基础，展示全部词库、听说、语法与句子练习。'},
+  {id:0,name:'零基础',desc:'只学最常用日常用语，先开口、记单词，不打专业术语。'},
+  {id:1,name:'初中',desc:'日常交流 + 基础会话，能应付简单沟通与常见场景。'},
+  {id:2,name:'高中',desc:'加入商务/医疗基础术语，能读专业场景短句与基础语法。'},
+  {id:3,name:'大学',desc:'全部行业术语 + 进阶语法，覆盖专业英文与高阶表达。'}
+];
+function vLv(t){
+  if(t.cat==='daily'){ const b0=['Hi','Thanks','Sorry','Please','Excuse me',"What's up",'See you later','Nice to meet you',"I don't understand",'Could you help me',"I'm fine",'Have a good day','Where is the station']; return b0.includes(t.en)?0:1; }
+  if(t.cat==='business'){ const a3=['Negotiation','Revenue','Partnership','Supply chain','Market share','Quarter','Stakeholder','Bottom line']; return a3.includes(t.en)?3:2; }
+  if(t.cat==='medical'){ const b2=['Temperature','Emergency','Hygiene']; return b2.includes(t.en)?2:3; }
+  return 3;
+}
+function sLv(s){
+  if(s.lv!=null) return s.lv;
+  if(s.cat==='daily') return 1;
+  if(s.cat==='business'||s.cat==='medical') return 2;
+  return 3;
+}
+function fLv(f){
+  if(f.lv!=null) return f.lv;
+  if(f.type==='term'){ return (f.ans==='contract'||f.ans==='pressure')?2:3; }
+  const lv1=['The','on']; if(lv1.includes(f.ans)) return 1;
+  const lv2=['was','has been','be']; if(lv2.includes(f.ans)) return 2;
+  return 3;
+}
+function gLv(g){
+  const lv1=['现在完成时','冠词 a / an / the','时间介词 at / in / on']; if(lv1.includes(g.t)) return 1;
+  const lv2=['过去进行时','一般被动语态','定语从句','名词性从句','状语从句']; if(lv2.includes(g.t)) return 2;
+  return 3;
+}
+function qzLv(q){
+  const lv1=['has been','The','in']; if(lv1.some(k=>q.q.includes(k))) return 1;
+  const lv2=['was broken','What','where','is']; if(lv2.some(k=>q.q.includes(k))) return 2;
+  return 3;
+}
+
+/* ============ 数据层：localStorage + 云端账号 ============ */
+const KEY='wb_eng_';
+function escHtml(value){ return String(value??'').replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch])); }
+let TOKEN=localStorage.getItem(KEY+'token')||'';
+let backendMode=false;   // true=连接后端(需登录)  false=离线(仅本机)
+let ME=null;             // 当前登录用户 {id,phone,email,nickname}
+function applyDefaults(d,seed){
+  if(!d)d={};
+  if(!d.studyDays)d.studyDays={};
+  if(!d.speakCount)d.speakCount={};
+  if(!d.mastered)d.mastered={};
+  if(!d.difficult)d.difficult={};
+  if(!d.seen)d.seen={};
+  if(!d.gramCount)d.gramCount={};
+  if(typeof d.dailyGoal!=='number')d.dailyGoal=10;
+  if(seed && !d.seeded){ seedExample(d); d.seeded=true; }
+  return d;
+}
+function load(){
+  let d={};
+  try{d=JSON.parse(localStorage.getItem(KEY+'prog')||'{}');}catch(e){d={}}
+  return applyDefaults(d,true); // 离线演示数据带示例
+}
+let pushTimer=null;
+function save(d){
+  localStorage.setItem(KEY+'prog',JSON.stringify(d));
+  if(backendMode && TOKEN){ clearTimeout(pushTimer); pushTimer=setTimeout(()=>pushData(d),800); }
+}
+function pushData(d){
+  if(!backendMode||!TOKEN) return;
+  api('/api/data',{method:'PUT',body:JSON.stringify({data:d})}).catch(()=>{});
+}
+async function api(path,opts={}){
+  const o=Object.assign({headers:{'Content-Type':'application/json'}},opts);
+  if(TOKEN)o.headers['Authorization']='Bearer '+TOKEN;
+  const r=await fetch(path,o);
+  let body=null; try{body=await r.json();}catch(e){}
+  return {status:r.status,body:body};
+}
+async function bootstrap(){
+  try{
+    const res=await api('/api/me');
+    if(res.status===200){ backendMode=true; ME=res.body.user; await pullData(); hideAuth(); enterApp(); }
+    else if(res.status===401){ backendMode=true; ME=null; TOKEN=''; localStorage.removeItem(KEY+'token'); showAuth('login'); renderAcct(); }
+    else { enterAppOffline(); }
+  }catch(e){ enterAppOffline(); }
+}
+function enterAppOffline(){ backendMode=false; ME=null; renderAcct(); enterApp(); }
+function enterApp(){
+  if(typeof P.level==='undefined'){ showOnboarding(); }
+  else { state.level=P.level; state.vcat=(typeof P.focus==='undefined')?'all':P.focus; refreshAll(); }
+}
+async function pullData(){
+  try{
+    const res=await api('/api/data');
+    let d={};
+    if(res.status===200&&res.body){ d=(typeof res.body.data==='string')?JSON.parse(res.body.data||'{}'):(res.body.data||{}); }
+    P=applyDefaults(d,false);
+  }catch(e){ P=applyDefaults({},false); }
+}
+function setAuthTab(tab){
+  document.getElementById('aErr').textContent='';
+  if(tab==='login'){ document.getElementById('atLogin').classList.add('on'); document.getElementById('atReg').classList.remove('on'); document.getElementById('authLogin').style.display=''; document.getElementById('authReg').style.display='none'; }
+  else { document.getElementById('atReg').classList.add('on'); document.getElementById('atLogin').classList.remove('on'); document.getElementById('authReg').style.display=''; document.getElementById('authLogin').style.display='none'; }
+}
+function showAuth(tab){ setAuthTab(tab||'login'); document.getElementById('auth').classList.add('show'); }
+function hideAuth(){ document.getElementById('auth').classList.remove('show'); }
+async function afterAuth(token,user){
+  TOKEN=token; localStorage.setItem(KEY+'token',token); ME=user;
+  await pullData(); hideAuth(); renderAcct(); enterApp();
+}
+async function doLogin(){
+  document.getElementById('aErr').textContent='';
+  const ident=document.getElementById('aIdent').value.trim();
+  const pw=document.getElementById('aPw').value;
+  if(!ident||!pw){ document.getElementById('aErr').textContent='请输入账号与密码'; return; }
+  try{
+    const res=await api('/api/login',{method:'POST',body:JSON.stringify({identifier:ident,password:pw})});
+    if(res.status===200&&res.body&&res.body.token){ await afterAuth(res.body.token,res.body.user); toast('登录成功'); }
+    else { document.getElementById('aErr').textContent=(res.body&&res.body.error)||'登录失败'; }
+  }catch(e){ document.getElementById('aErr').textContent='网络错误，无法连接服务器'; }
+}
+async function doRegister(){
+  document.getElementById('aErr').textContent='';
+  const phone=document.getElementById('rPhone').value.trim();
+  const email=document.getElementById('rEmail').value.trim();
+  const nick=document.getElementById('rNick').value.trim();
+  const pw=document.getElementById('rPw').value;
+  if(!phone&&!email){ document.getElementById('aErr').textContent='手机号与邮箱至少填一项'; return; }
+  if(!pw||pw.length<8||pw.length>128){ document.getElementById('aErr').textContent='密码须为 8-128 位'; return; }
+  try{
+    const res=await api('/api/register',{method:'POST',body:JSON.stringify({phone,email,nickname:nick,password:pw})});
+    if(res.status===200&&res.body&&res.body.token){ await afterAuth(res.body.token,res.body.user); toast('注册成功，欢迎！'); }
+    else { document.getElementById('aErr').textContent=(res.body&&res.body.error)||'注册失败'; }
+  }catch(e){ document.getElementById('aErr').textContent='网络错误，无法连接服务器'; }
+}
+function logout(){
+  api('/api/logout',{method:'POST'}).catch(()=>{});
+  TOKEN=''; localStorage.removeItem(KEY+'token'); ME=null; backendMode=true;
+  P=applyDefaults({},false);
+  renderAcct(); showAuth('login'); toast('已退出登录');
+}
+function renderAcct(){
+  const el=document.getElementById('acctInfo'); if(!el) return;
+  const lb=document.getElementById('logoutBtn');
+  if(backendMode && ME){ el.textContent=''; const b=document.createElement('b'); b.textContent=ME.nickname||'用户'; el.append(b,document.createTextNode(' · '+(ME.phone||ME.email||''))); if(lb)lb.style.display=''; }
+  else if(backendMode && !ME){ el.innerHTML='未登录（请先登录或注册）'; if(lb)lb.style.display='none'; }
+  else { el.innerHTML='离线模式（数据仅存本机浏览器）'; if(lb)lb.style.display='none'; }
+}
+function todayStr(){ const t=new Date(); return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); }
+function dateAdd(s,n){ const p=s.split('-'); const d=new Date(+p[0],+p[1]-1,+p[2]); d.setDate(d.getDate()+n); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function seedExample(d){
+  // 过去7天学习记录，制造热力图与"昨天未达标"的逾期项
+  const counts=[8,12,5,10,7,3,4]; // 今天-7 .. 今天-1
+  for(let i=1;i<=7;i++){ d.studyDays[dateAdd(todayStr(),-i)]=counts[i-1]; }
+  d.speakCount[dateAdd(todayStr(),-2)]=3;
+  d.speakCount[dateAdd(todayStr(),-4)]=2;
+  // 标记几条掌握/生词
+  d.mastered['daily|Hi']=1; d.mastered['business|Meeting']=1; d.mastered['it|API']=1;
+  d.difficult['engineering|Tolerance']=1; d.seen['daily|Hi']=1;
+}
+let P=load();
+
+/* ============ 计算层 ============ */
+function catName(id){ const c=CATS.find(x=>x.id===id); return c?c.name:id; }
+function termId(t){ return t.cat+'|'+t.en; }
+function streakDays(){
+  let s=0; let cur=todayStr();
+  if(!P.studyDays[cur]){ cur=dateAdd(cur,-1); } // 今天没学则从昨天起算
+  while(P.studyDays[cur]){ s++; cur=dateAdd(cur,-1); }
+  return s;
+}
+function studiedToday(){ return P.studyDays[todayStr()]||0; }
+function totalDays(){ return Object.keys(P.studyDays).filter(k=>P.studyDays[k]>0).length; }
+function masteredCount(){ return Object.keys(P.mastered).length; }
+function speakTotal(){ return Object.values(P.speakCount).reduce((a,b)=>a+b,0); }
+
+/* ============ 渲染层 ============ */
+function renderToday(){
+  const goal=P.dailyGoal, done=studiedToday();
+  const remain=Math.max(0,goal-done);
+  const spokeToday=P.speakCount[todayStr()]||0;
+  const cards=[];
+  if(remain>0){
+    cards.push(`<div class="tcard warn"><div class="lab">今日词汇目标</div><div class="val">${done}<small>/${goal}</small></div><div class="act" onclick="switchTab('vocab')">去学 ${remain} 个 →</div></div>`);
+  }else{
+    cards.push(`<div class="tcard"><div class="lab">今日词汇目标</div><div class="val">✓ ${goal}</div><div class="act" onclick="switchTab('vocab')">复习一下</div></div>`);
+  }
+  if(spokeToday===0){
+    cards.push(`<div class="tcard warn"><div class="lab">听说训练</div><div class="val">待完成</div><div class="act" onclick="switchTab('speak')">开始跟读 →</div></div>`);
+  }else{
+    cards.push(`<div class="tcard"><div class="lab">听说训练</div><div class="val">${spokeToday}<small> 次</small></div><div class="act" onclick="switchTab('speak')">再来一句</div></div>`);
+  }
+  const gToday=P.gramCount[todayStr()]||0;
+  if(gToday===0){
+    cards.push(`<div class="tcard warn"><div class="lab">语法练习</div><div class="val">待完成</div><div class="act" onclick="switchTab('gram')">去闯关 →</div></div>`);
+  }else{
+    cards.push(`<div class="tcard"><div class="lab">语法练习</div><div class="val">${gToday}<small> 题</small></div><div class="act" onclick="switchTab('gram')">再练几题</div></div>`);
+  }
+  // 昨天未达标 → 顺延提示
+  const y=dateAdd(todayStr(),-1); const yc=P.studyDays[y]||0;
+  if(yc<goal){
+    cards.push(`<div class="tcard warn"><div class="lab">昨日未达标</div><div class="val">${yc}<small>/${goal}</small></div><div class="act" onclick="switchTab('vocab')">补学顺延 →</div></div>`);
+  }
+  document.getElementById('todayRow').innerHTML=cards.join('');
+}
+
+function renderVocabFilters(){
+  let h='<div class="chip'+(state.vcat==='all'?' on':'')+'" onclick="setVCat(\'all\')">全部</div>';
+  CATS.forEach(c=>{ h+='<div class="chip'+(state.vcat===c.id?' on':'')+'" onclick="setVCat(\''+c.id+'\')">'+c.name+'</div>'; });
+  document.getElementById('vocabFilters').innerHTML=h;
+}
+function filteredVocab(){
+  let arr=VOCAB;
+  if(state.vcat!=='all') arr=arr.filter(t=>t.cat===state.vcat);
+  if(state.level!=='all') arr=arr.filter(t=>vLv(t)<=state.level);
+  return arr;
+}
+function renderFlash(){
+  const arr=filteredVocab();
+  if(state.flipIdx>=arr.length) state.flipIdx=0;
+  if(arr.length===0){ document.getElementById('flashEn').textContent='暂无'; return; }
+  const t=arr[state.flipIdx]; const id=termId(t);
+  document.getElementById('flashCat').textContent=catName(t.cat);
+  document.getElementById('flashPh').textContent=t.ph||'';
+  document.getElementById('flashEn').textContent=t.en;
+  document.getElementById('flashZh').textContent=t.zh;
+  document.getElementById('flashEx').textContent='“'+t.ex+'”';
+  // reset flip
+  state.flipped=false;
+  document.getElementById('flashZh').style.display='none';
+  document.getElementById('flashEx').style.display='none';
+  document.getElementById('flashHint').style.display='block';
+  // progress
+  const seen=arr.filter(x=>P.seen[termId(x)]).length;
+  const pct=arr.length?Math.round(seen/arr.length*100):0;
+  document.getElementById('vocabProg').style.width=pct+'%';
+  document.getElementById('vocabProgTip').textContent='本类已学 '+seen+' / '+arr.length+' 词';
+  // badges
+  document.getElementById('badgeMastered').className=P.mastered[id]?'onm':'';
+  document.getElementById('badgeMastered').textContent=P.mastered[id]?'★ 已掌握':'★ 标记掌握';
+  document.getElementById('badgeDiff').className=P.difficult[id]?'on':'';
+  document.getElementById('badgeDiff').textContent=P.difficult[id]?'⚑ 已在生词':'⚑ 加入生词';
+}
+function renderVocabList(){
+  const q=(document.getElementById('vocabSearch').value||'').toLowerCase().trim();
+  let arr=filteredVocab();
+  if(q) arr=arr.filter(t=>(t.en+' '+t.zh).toLowerCase().includes(q));
+  document.getElementById('vocabCount').textContent='（'+arr.length+' 词）';
+  if(arr.length===0){ document.getElementById('vocabList').innerHTML='<div class="empty">没有匹配的词汇</div>'; return; }
+  const h=arr.map(t=>{
+    const id=termId(t);
+    let pill='';
+    if(P.mastered[id]) pill='<span class="pill m">掌握</span>';
+    else if(P.difficult[id]) pill='<span class="pill d">生词</span>';
+    return '<div class="li"><div class="ic" onclick="speak(\''+t.en.replace(/'/g,"\\'")+'\')"><svg viewBox="0 0 24 24"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4z"/></svg></div>'+
+      '<div class="en">'+t.en+'<small>'+(t.ph||'')+'</small></div>'+
+      '<div class="zh">'+t.zh+'</div>'+pill+'</div>';
+  }).join('');
+  document.getElementById('vocabList').innerHTML=h;
+}
+
+function filteredSpeak(){
+  let a=SENTENCES;
+  if(state.level!=='all') a=a.filter(s=>sLv(s)<=state.level);
+  return a;
+}
+function renderSpeak(){
+  const arr=filteredSpeak();
+  if(arr.length===0){ document.getElementById('sentZh').textContent='该阶段暂无听说句子，切到更高阶段试试'; document.getElementById('sentCat').textContent=''; document.getElementById('sentIdx').textContent='0 / 0'; document.getElementById('speakResult').className='result'; document.getElementById('dictInput').value=''; const mic=document.getElementById('micBtn'); mic.className='mic-btn'; mic.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>点击开始跟读'; return; }
+  if(state.sIdx>=arr.length) state.sIdx=0;
+  const s=arr[state.sIdx];
+  document.getElementById('sentZh').textContent=s.zh;
+  document.getElementById('sentCat').textContent='行业：'+catName(s.cat);
+  document.getElementById('sentIdx').textContent=(state.sIdx+1)+' / '+arr.length;
+  document.getElementById('speakResult').className='result';
+  document.getElementById('dictInput').value='';
+  const mic=document.getElementById('micBtn'); mic.className='mic-btn'; mic.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>点击开始跟读';
+}
+function renderDashboard(){
+  document.getElementById('stDays').textContent=totalDays();
+  document.getElementById('stStreak').textContent=streakDays();
+  document.getElementById('stMastered').textContent=masteredCount();
+  document.getElementById('stSpeak').textContent=speakTotal();
+  renderHeat();
+  renderCatBars();
+  renderBadges();
+  document.getElementById('goalInput').value=P.dailyGoal;
+  document.getElementById('assessInput').value=P.assessEndpoint||'';
+  document.getElementById('chatEndpoint').value=P.chatEndpoint||'';
+}
+function renderHeat(){
+  const weeks=10, days=7;
+  const cell=13, gap=3, w=weeks*(cell+gap)+2, h=days*(cell+gap)+2;
+  let rects='';
+  // 起点：今天所在周的左上角
+  const todayD=todayStr();
+  // 计算今天是一周第几天(周日为0)
+  const t=new Date(todayD+'T00:00:00');
+  const dow=t.getDay();
+  const start=dateAdd(todayD,-(weeks-1)*7-dow);
+  for(let w=0;w<weeks;w++){
+    for(let d=0;d<days;d++){
+      const ds=dateAdd(start,w*7+d);
+      const c=P.studyDays[ds]||0;
+      let fill='var(--line)';
+      if(c>=1&&c<=4)fill='#cfe0ff'; else if(c>=5&&c<=9)fill='#8fb6ff'; else if(c>=10)fill='var(--pri)';
+      const x=2+w*(cell+gap), y=2+d*(cell+gap);
+      rects+='<rect x="'+x+'" y="'+y+'" width="'+cell+'" height="'+cell+'" rx="3" fill="'+fill+'"><title>'+ds+(c?(' · '+c+'词'):'')+'</title></rect>';
+    }
+  }
+  document.getElementById('heatChart').innerHTML='<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="xMidYMid meet">'+rects+'</svg>';
+}
+function renderCatBars(){
+  const h=CATS.map(c=>{
+    const arr=VOCAB.filter(t=>t.cat===c.id);
+    const m=arr.filter(t=>P.mastered[termId(t)]).length;
+    const pct=arr.length?Math.round(m/arr.length*100):0;
+    return '<div class="cat-bar"><div class="top"><b>'+c.name+'</b><span>'+m+' / '+arr.length+' 掌握</span></div><div class="bar"><i style="width:'+pct+'%"></i></div></div>';
+  }).join('');
+  document.getElementById('catBars').innerHTML=h;
+}
+function renderBadges(){
+  const s=streakDays();
+  const miles=[{d:3,t:'🥉'},{d:7,t:'🔥'},{d:30,t:'🏆'},{d:100,t:'💎'}];
+  const h=miles.map(m=>'<div class="badge'+(s>=m.d?' on':'')+'"><div class="bt">'+m.t+'</div><div class="bd">连续 '+m.d+' 天</div></div>').join('');
+  document.getElementById('badges').innerHTML=h;
+}
+function shareAchievement(){
+  const s=streakDays(), d=totalDays(), m=masteredCount(), sp=speakTotal(), g=P.gramCount[todayStr()]||0;
+  const nl='\u000A';
+  const txt='【英语全能学习台】今日打卡 ✓'+nl+'🔥 连续 '+s+' 天 · 累计 '+d+' 天'+nl+'📚 掌握 '+m+' 词 · 🎧 听说 '+sp+' 次 · 📝 语法 '+g+' 题'+nl+'#英语学习 #每日打卡';
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(()=>toast('成就文案已复制，去分享吧'),()=>fallbackCopy(txt)); }
+  else fallbackCopy(txt);
+}
+function fallbackCopy(txt){ const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');toast('成就文案已复制');}catch(e){ window.prompt('复制下面文案分享：',txt); } document.body.removeChild(ta); }
+
+/* ============ 语法模块 ============ */
+function renderGramFilters(){
+  let h='<div class="chip'+(state.gcat==='all'?' on':'')+'" onclick="setGCat(\'all\')">全部</div>';
+  GRAM_CATS.forEach(c=>{ h+='<div class="chip'+(state.gcat===c.id?' on':'')+'" onclick="setGCat(\''+c.id+'\')">'+c.name+'</div>'; });
+  document.getElementById('gramFilters').innerHTML=h;
+}
+function gramName(id){ const c=GRAM_CATS.find(x=>x.id===id); return c?c.name:id; }
+function renderGram(){
+  let arr=GRAMMAR;
+  if(state.gcat!=='all') arr=arr.filter(g=>g.cat===state.gcat);
+  if(state.level!=='all') arr=arr.filter(g=>gLv(g)<=state.level);
+  if(arr.length===0){ document.getElementById('gramList').innerHTML='<div class="empty">暂无内容</div>'; return; }
+  const h=arr.map((g,i)=>{
+    const id=state.gcat+'|'+i; const open=state.gOpen===id;
+    return '<div class="gcard'+(open?' open':'')+'"><div class="ghead" onclick="toggleGram(\''+id+'\')"><span><span class="cat">'+gramName(g.cat)+'</span>'+g.t+'</span><svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="var(--sub)"><path d="M9 6l6 6-6 6"/></svg></div>'+
+      '<div class="gbody'+(open?' show':'')+'"><div>'+g.rule+'</div><div class="ex">'+g.ex+'</div></div></div>';
+  }).join('');
+  document.getElementById('gramList').innerHTML=h;
+}
+function toggleGram(id){ state.gOpen=(state.gOpen===id)?null:id; renderGram(); }
+function setGCat(id){ state.gcat=id; state.gOpen=null; renderGramFilters(); renderGram(); }
+let gramScore={c:0,t:0};
+function filteredQuiz(){ let a=GRAMMAR_QUIZ; if(state.level!=='all') a=a.filter(q=>qzLv(q)<=state.level); return a; }
+function renderGramQuiz(){
+  const all=filteredQuiz();
+  if(all.length===0){ document.getElementById('gramQ').innerHTML='<div class="empty">该阶段暂无题目</div>'; document.getElementById('gramOpts').innerHTML=''; document.getElementById('gramResult').className='result'; document.getElementById('gramIdx').textContent='0 / 0'; return; }
+  if(state.gIdx>=all.length) state.gIdx=0;
+  const q=all[state.gIdx];
+  document.getElementById('gramQ').innerHTML='<div class="gq">'+q.q+'</div>';
+  document.getElementById('gramOpts').innerHTML=q.o.map((o,i)=>'<button class="gopt" id="gopt'+i+'" onclick="answerGram('+i+')"><span class="k">'+(String.fromCharCode(65+i))+'</span>'+o+'</button>').join('');
+  document.getElementById('gramResult').className='result';
+  const rate=gramScore.t?Math.round(gramScore.c/gramScore.t*100)+'%':'—';
+  document.getElementById('gramProg').textContent='正确率 '+rate+'（'+gramScore.c+'/'+gramScore.t+'）';
+  document.getElementById('gramIdx').textContent=(state.gIdx+1)+' / '+all.length;
+}
+function answerGram(i){
+  const q=filteredQuiz()[state.gIdx]; const correct=(i===q.a);
+  for(let k=0;k<q.o.length;k++){
+    const b=document.getElementById('gopt'+k); if(!b)continue; b.onclick=null;
+    if(k===q.a) b.classList.add('ok'); else if(k===i) b.classList.add('no');
+  }
+  const r=document.getElementById('gramResult'); r.className='result '+(correct?'ok':'no');
+  r.innerHTML='<span class="score">'+(correct?'答对 ✓':'答错 ✗')+'</span>'+q.why;
+  gramScore.t++; if(correct)gramScore.c++;
+  P.gramCount[todayStr()]=(P.gramCount[todayStr()]||0)+1; save(P);
+  const rate=Math.round(gramScore.c/gramScore.t*100)+'%';
+  document.getElementById('gramProg').textContent='正确率 '+rate+'（'+gramScore.c+'/'+gramScore.t+'）';
+  renderToday();
+}
+function nextGram(){ state.gIdx=(state.gIdx+1)%filteredQuiz().length; renderGramQuiz(); }
+
+/* ============ 句子补充模块 ============ */
+function renderFillFilters(){
+  let h='<div class="chip'+(state.fcat==='all'?' on':'')+'" onclick="setFCat(\'all\')">全部</div>';
+  FILL_CATS.forEach(c=>{ h+='<div class="chip'+(state.fcat===c.id?' on':'')+'" onclick="setFCat(\''+c.id+'\')">'+c.name+'</div>'; });
+  document.getElementById('fillFilters').innerHTML=h;
+}
+function filteredFill(){ let arr=SENTENCE_FILL; if(state.fcat!=='all') arr=arr.filter(x=>x.type===state.fcat); if(state.level!=='all') arr=arr.filter(x=>fLv(x)<=state.level); return arr; }
+function renderFill(){
+  const arr=filteredFill();
+  if(arr.length===0){ document.getElementById('fillSent').innerHTML='<span class="empty">暂无题目</span>'; return; }
+  const it=arr[state.fIdx];
+  document.getElementById('fillSent').innerHTML=it.sent.replace(/___/g,'<span class="blank">___</span>');
+  document.getElementById('fillZh').textContent=it.zh;
+  document.getElementById('fillInput').value='';
+  document.getElementById('fillResult').className='result';
+  const rate=state.fScore.t?Math.round(state.fScore.c/state.fScore.t*100)+'%':'—';
+  document.getElementById('fillProg').textContent='正确率 '+rate+'（'+state.fScore.c+'/'+state.fScore.t+'）';
+  document.getElementById('fillIdx').textContent=(state.fIdx+1)+' / '+arr.length;
+}
+function setFCat(id){ state.fcat=id; state.fIdx=0; state.fScore={c:0,t:0}; renderFillFilters(); renderFill(); }
+function checkFill(){
+  const arr=filteredFill(); const it=arr[state.fIdx];
+  const inp=document.getElementById('fillInput').value;
+  const correct=norm(inp)===norm(it.ans);
+  const full=it.sent.replace('___', it.ans);
+  const r=document.getElementById('fillResult');
+  r.className='result '+(correct?'ok':'no');
+  if(correct){ r.innerHTML='<span class="score">答对 ✓</span>完整句：'+escHtml(full)+'<div class="heard">你填：'+escHtml(inp)+'</div>'; }
+  else { r.innerHTML='<span class="score">答错 ✗</span>正确答案：'+escHtml(it.ans)+'<div class="heard">完整句：'+escHtml(full)+'<br>你填：'+escHtml(inp||'(空)')+'</div>'; }
+  state.fScore.t++; if(correct)state.fScore.c++;
+  P.gramCount[todayStr()]=(P.gramCount[todayStr()]||0)+1; save(P);
+  const rate=Math.round(state.fScore.c/state.fScore.t*100)+'%';
+  document.getElementById('fillProg').textContent='正确率 '+rate+'（'+state.fScore.c+'/'+state.fScore.t+'）';
+  renderToday(); renderDashboard();
+}
+function showFillHint(){
+  const arr=filteredFill(); const it=arr[state.fIdx];
+  const r=document.getElementById('fillResult'); r.className='result';
+  r.innerHTML='💡 提示：'+(it.hint||('首字母 '+norm(it.ans).charAt(0)+'…'));
+}
+function nextFill(){ const arr=filteredFill(); state.fIdx=(state.fIdx+1)%arr.length; renderFill(); }
+
+/* ============ 学习阶段（基础分层）============ */
+function renderLevelBar(){
+  let h='';
+  LEVELS.forEach(l=>{ h+='<div class="chip'+(String(state.level)===String(l.id)?' on':'')+'" onclick="setLevel(\''+l.id+'\')">'+l.name+'</div>'; });
+  document.getElementById('levelBar').innerHTML=h;
+  const cur=LEVELS.find(l=>String(l.id)===String(state.level));
+  document.getElementById('levelDesc').textContent=cur?cur.desc:'';
+  const f=state.vcat==='all'?'综合（所有行业）':catName(state.vcat);
+  document.getElementById('focusDesc').textContent='🎯 已为你聚焦：'+f+'　（可在词库区随时切换）';
+}
+function setLevel(id){ state.level=(id==='all')?'all':Number(id); P.level=state.level; save(P); renderLevelBar(); refreshAll(); }
+
+/* ============ 统一刷新入口 ============ */
+function refreshAll(){ renderLevelBar(); renderToday(); renderVocabFilters(); renderFlash(); renderVocabList(); renderSpeak(); renderDashboard(); renderGramFilters(); renderGram(); renderGramQuiz(); renderFillFilters(); renderFill(); renderChatScenes(); }
+
+/* ============ 交互 ============ */
+const state={ vcat:'all', flipIdx:0, flipped:false, sIdx:0, mode:'dictation', gcat:'all', gOpen:null, gIdx:0, fcat:'all', fIdx:0, fScore:{c:0,t:0}, level:'all', chatScene:'daily', chatLog:[] };
+
+function switchTab(name){
+  const map={vocab:'viewVocab',speak:'viewSpeak',dash:'viewDash',gram:'viewGram',set:'viewSet'};
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.getElementById(map[name]).classList.add('on');
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('on'));
+  const idx={vocab:0,speak:1,dash:2,gram:3,set:4}[name];
+  document.querySelectorAll('.tabs button')[idx].classList.add('on');
+}
+function setVCat(id){ state.vcat=id; state.flipIdx=0; P.focus=id; save(P); renderVocabFilters(); renderFlash(); renderVocabList(); renderLevelBar(); }
+
+function flipCard(){
+  state.flipped=!state.flipped;
+  document.getElementById('flashZh').style.display=state.flipped?'block':'none';
+  document.getElementById('flashEx').style.display=state.flipped?'block':'none';
+  document.getElementById('flashHint').style.display=state.flipped?'none':'block';
+}
+function speakCur(){ const arr=filteredVocab(); if(arr[state.flipIdx]) speak(arr[state.flipIdx].en); }
+function speak(text){
+  if(!('speechSynthesis' in window)){ toast('当前浏览器不支持语音合成'); return; }
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=0.92; window.speechSynthesis.speak(u);
+}
+function markStudied(n){
+  const k=todayStr(); P.studyDays[k]=(P.studyDays[k]||0)+n; save(P);
+}
+function cardYes(){
+  const arr=filteredVocab(); const t=arr[state.flipIdx]; if(!t)return;
+  P.seen[termId(t)]=1; markStudied(1);
+  state.flipIdx++; renderFlash(); renderVocabList(); renderToday(); renderDashboard();
+}
+function cardNo(){
+  const arr=filteredVocab(); const t=arr[state.flipIdx]; if(!t)return;
+  P.seen[termId(t)]=1; P.difficult[termId(t)]=1; markStudied(1);
+  state.flipIdx++; renderFlash(); renderVocabList(); renderToday(); renderDashboard();
+}
+function toggleMastered(){
+  const arr=filteredVocab(); const t=arr[state.flipIdx]; if(!t)return; const id=termId(t);
+  if(P.mastered[id]) delete P.mastered[id]; else { P.mastered[id]=1; delete P.difficult[id]; }
+  save(P); renderFlash(); renderDashboard();
+}
+function toggleDiff(){
+  const arr=filteredVocab(); const t=arr[state.flipIdx]; if(!t)return; const id=termId(t);
+  if(P.difficult[id]) delete P.difficult[id]; else { P.difficult[id]=1; delete P.mastered[id]; }
+  save(P); renderFlash(); renderDashboard();
+}
+
+function setMode(m){
+  state.mode=m;
+  document.getElementById('modeDict').className=m==='dictation'?'on':'';
+  document.getElementById('modeSpeak').className=m==='speak'?'on':'';
+  document.getElementById('dictArea').style.display=m==='dictation'?'block':'none';
+  document.getElementById('speakArea').style.display=m==='speak'?'block':'none';
+  document.getElementById('speakResult').className='result';
+}
+function playSentence(){ const a=filteredSpeak(); if(a[state.sIdx]) speak(a[state.sIdx].en); }
+function norm(s){ return (s||'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim(); }
+function lev(a,b){ const m=a.length,n=b.length; if(!m)return n; if(!n)return m; let prev=Array(n+1); for(let j=0;j<=n;j++)prev[j]=j; for(let i=1;i<=m;i++){ let cur=[i]; for(let j=1;j<=n;j++){ const c=a[i-1]==b[j-1]?0:1; cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+c); } prev=cur; } return prev[n]; }
+function ratio(a,b){ a=norm(a); b=norm(b); if(!a&&!b)return 100; const L=Math.max(a.length,b.length)||1; return Math.round((1-lev(a,b)/L)*100); }
+/* 单词级对齐：基于词序列 LCS，区分 正确/漏读/多读 */
+function alignWords(target,heard){
+  const T=norm(target).split(' ').filter(Boolean);
+  const H=norm(heard).split(' ').filter(Boolean);
+  const m=T.length,n=H.length;
+  const dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++){ dp[i][j]=(T[i-1]===H[j-1])?dp[i-1][j-1]+1:Math.max(dp[i-1][j],dp[i][j-1]); }
+  let i=m,j=n; const mt=new Array(m).fill(false),mh=new Array(n).fill(false);
+  while(i>0&&j>0){ if(T[i-1]===H[j-1]){ mt[i-1]=true; mh[j-1]=true; i--; j--; } else if(dp[i-1][j]>=dp[i][j-1]) i--; else j--; }
+  const tWords=T.map((w,k)=>({w,type:mt[k]?'match':'miss'}));
+  const hWords=H.map((w,k)=>({w,type:mh[k]?'match':'extra'}));
+  const matched=mt.filter(Boolean).length;
+  const completeness=m?Math.round(matched/m*100):0;
+  const accuracy=(m||n)?Math.round(matched/Math.max(m,n)*100):0;
+  return {tWords,hWords,completeness,accuracy,matched,total:m};
+}
+/* 纠音报告（类流利说） */
+function renderPronReport(target,heard,mode){
+  const a=alignWords(target,heard);
+  const tHtml=a.tWords.map(x=>{
+    if(x.type==='miss') return '<span class="w w-miss clickable" onclick="addPronDiff(\''+x.w.replace(/'/g,"\\'")+'\')" title="点击加入生词本">'+x.w+'</span>';
+    return '<span class="w w-'+x.type+'">'+x.w+'</span>';
+  }).join(' ');
+  const hHtml=a.hWords.length?a.hWords.map(x=>'<span class="w w-'+x.type+'">'+x.w+'</span>').join(' '):'<span class="w w-miss">(空)</span>';
+  const score=Math.round((a.accuracy+a.completeness)/2);
+  const miss=a.tWords.filter(x=>x.type==='miss');
+  const extra=a.hWords.filter(x=>x.type==='extra');
+  let tip='整体不错，继续保持！';
+  if(miss.length){ tip='漏读 / 未识别到：'+miss.map(x=>x.w).join('、')+'。重点练这些词，注意重音与连读。'; }
+  else if(extra.length){ tip='有个别多读的词（'+extra.map(x=>x.w).join('、')+'），只跟读原句内容即可。'; }
+  return '<div class="pr-report '+(score>=75?'ok':'no')+'">'+
+    '<div class="pr-head"><span class="score">'+score+' 分</span><span class="pr-tag">'+(score>=75?'达标 🎉':'继续加油 💪')+'</span></div>'+
+    '<div class="pr-metrics"><div><b>'+a.completeness+'%</b><span>完整度</span></div><div><b>'+a.accuracy+'%</b><span>准确率</span></div></div>'+
+    '<div class="pr-block"><div class="pr-label">原句</div><div class="pr-words">'+tHtml+'</div></div>'+
+    '<div class="pr-block"><div class="pr-label">'+(mode==='speak'?'你读（识别）':'你输入')+'</div><div class="pr-words">'+hHtml+'</div></div>'+
+    '<div class="pr-tip">💡 '+tip+'</div>'+
+    '<div class="pr-note">注：本评测基于语音识别/文本的词级比对，反映「词有没有读对」，并非声学发音评测（音色/口音需接入云端语音评测 API）。'+(P.assessEndpoint?' 你已配置声学评测服务，可在听说区点 🎙 录音评测获取真实发音分。':'')+'</div>'+
+    '</div>';
+}
+
+function addPronDiff(word){
+  word=(word||'').trim(); if(!word)return;
+  let id='free|'+word;
+  const found=VOCAB.find(t=>t.en.toLowerCase()===word.toLowerCase());
+  if(found) id=found.cat+'|'+found.en;
+  if(P.difficult[id]){ toast('已在生词本'); return; }
+  P.difficult[id]=1; delete P.mastered[id]; save(P); renderDashboard();
+  toast('已加入生词：'+word);
+}
+
+function checkDict(){
+  const inp=document.getElementById('dictInput').value;
+  const target=filteredSpeak()[state.sIdx].en;
+  const r=document.getElementById('speakResult');
+  P.speakCount[todayStr()]=(P.speakCount[todayStr()]||0)+1; save(P);
+  r.className='result';
+  r.innerHTML=renderPronReport(target,inp,'dictation');
+  renderToday(); renderDashboard();
+}
+let recog=null;
+function startSpeak(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const r=document.getElementById('speakResult');
+  if(!SR){ r.className='result no'; r.innerHTML='当前浏览器不支持语音识别，请改用「听写输入」模式，或用 Chrome/Edge 打开。'; return; }
+  if(recog&&recog.active){ recog.stop(); return; }
+  const mic=document.getElementById('micBtn');
+  mic.className='mic-btn rec'; mic.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>聆听中…（点击停止）';
+  const rec=new SR(); rec.lang='en-US'; rec.interimResults=false; rec.maxAlternatives=1; rec.active=true; recog=rec;
+  rec.onresult=e=>{ const heard=e.results[0][0].transcript; finishSpeak(heard); };
+  rec.onerror=e=>{ finishSpeak(null,e.error); };
+  rec.onend=()=>{ if(recog===rec) recog=null; };
+  try{ rec.start(); }catch(err){ finishSpeak(null,'start-failed'); }
+}
+function finishSpeak(heard,err){
+  const mic=document.getElementById('micBtn');
+  mic.className='mic-btn'; mic.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>点击开始跟读';
+  const r=document.getElementById('speakResult');
+  if(err){ r.className='result no'; r.innerHTML='识别失败：'+err+'。请检查麦克风授权，或先用「听写输入」。'; return; }
+  const target=filteredSpeak()[state.sIdx].en;
+  P.speakCount[todayStr()]=(P.speakCount[todayStr()]||0)+1; save(P);
+  r.className='result';
+  r.innerHTML=renderPronReport(target,heard||'','speak');
+  renderToday(); renderDashboard();
+}
+let assessRec=null;
+function saveAssess(){ P.assessEndpoint=(document.getElementById('assessInput').value||'').trim(); save(P); toast('已保存评测地址'); }
+function saveChatEndpoint(){ P.chatEndpoint=(document.getElementById('chatEndpoint').value||'').trim(); save(P); toast('已保存 AI 对话地址'); }
+function chatSceneName(id){ const c=CATS.find(x=>x.id===id); return c?c.name:id; }
+function renderChatScenes(){
+  const wrap=document.getElementById('chatScenes');
+  wrap.innerHTML=CATS.map(c=>'<button class="chip'+(state.chatScene===c.id?' on':'')+'" data-v="'+c.id+'">'+c.name+'</button>').join('');
+}
+function appendChat(role,text){
+  const log=document.getElementById('chatLog');
+  const div=document.createElement('div'); div.className='bubble '+(role==='user'?'me':'ai');
+  div.textContent=text;
+  log.appendChild(div); log.scrollTop=log.scrollHeight;
+  return div;
+}
+function sendChat(){
+  const ep=P.chatEndpoint;
+  if(!ep){ toast('请先在「设置」填写 AI 对话服务地址'); return; }
+  const inp=document.getElementById('chatInput');
+  const text=(inp.value||'').trim();
+  if(!text) return;
+  appendChat('user',text); inp.value='';
+  state.chatLog.push({role:'user',content:text});
+  const aiBubble=appendChat('ai','');
+  const statusEl=document.getElementById('chatStatus'); statusEl.textContent='AI 思考中…';
+  const payload={message:text, history: state.chatLog.slice(0,-1), scene: chatSceneName(state.chatScene), level:(typeof state.level==='number'?state.level:1)};
+  fetch(ep,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(r=>{
+    if(!r.ok){ return r.json().then(e=>{ throw new Error(e.error||('HTTP '+r.status)); }); }
+    const reader=r.body.getReader(); const dec=new TextDecoder(); let buf='';
+    function pump(){
+      return reader.read().then(res=>{
+        const done=res.done, value=res.value;
+        if(done){ statusEl.textContent=''; state.chatLog.push({role:'assistant',content:aiBubble.textContent}); return; }
+        buf+=dec.decode(value,{stream:true});
+        let idx;
+        while((idx=buf.indexOf('\n\n'))>=0){
+          const chunk=buf.slice(0,idx); buf=buf.slice(idx+2);
+          const m=chunk.match(/^data:\s*(.*)$/); if(!m) continue;
+          const data=m[1].trim();
+          if(data==='[DONE]'){ continue; }
+          try{ const obj=JSON.parse(data);
+            if(obj.error){ statusEl.textContent='错误：'+obj.error; return; }
+            if(obj.delta){ aiBubble.textContent+=obj.delta; const lg=document.getElementById('chatLog'); lg.scrollTop=lg.scrollHeight; }
+          }catch(e2){}
+        }
+        return pump();
+      });
+    }
+    return pump();
+  }).catch(e=>{ statusEl.textContent='连接失败：'+(e.message||e); });
+}
+let chatRec=null;
+function chatVoiceInput(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){ toast('当前浏览器不支持语音识别，请直接输入'); return; }
+  if(chatRec){ chatRec.stop(); return; }
+  const rec=new SR(); rec.lang='en-US'; rec.interimResults=false;
+  rec.onresult=(e)=>{ const txt=e.results[0][0].transcript; const inp=document.getElementById('chatInput'); inp.value=(inp.value?inp.value+' ':'')+txt; inp.focus(); };
+  rec.onerror=(e)=>{ toast('语音识别失败：'+(e.error||e)); };
+  rec.onend=()=>{ chatRec=null; toast('语音输入结束，可编辑后发送'); };
+  chatRec=rec; rec.start(); toast('请说英语…');
+}
+function readLastAI(){
+  const log=document.getElementById('chatLog');
+  const bs=log.querySelectorAll('.bubble.ai');
+  if(!bs.length){ toast('还没有 AI 回复'); return; }
+  let txt=bs[bs.length-1].textContent;
+  const en=txt.replace(/[一-鿿]/g,' ').replace(/\s+/g,' ').trim();
+  speak(en||txt);
+}
+function clearChat(){ state.chatLog=[]; document.getElementById('chatLog').innerHTML=''; document.getElementById('chatStatus').textContent=''; }
+function startAssess(){
+  if(!P.assessEndpoint){ toast('请先在「设置」填写声学评测服务地址'); return; }
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){ toast('当前浏览器不支持录音'); return; }
+  const btn=document.getElementById('assessBtn');
+  if(assessRec){ assessRec.stop(); return; }
+  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+    const rec=new MediaRecorder(stream); const chunks=[];
+    rec.ondataavailable=e=>{ if(e.data.size)chunks.push(e.data); };
+    rec.onstop=()=>{ stream.getTracks().forEach(t=>t.stop()); const blob=new Blob(chunks,{type:rec.mimeType||'audio/webm'}); btn.className='mic-btn'; btn.innerHTML='🎙 录音评测发音'; assessPronunciation(blob, filteredSpeak()[state.sIdx].en); };
+    rec.start(); assessRec=rec; btn.className='mic-btn rec'; btn.innerHTML='⏹ 录音中…（点击停止）'; toast('正在录音，读完原句后点击停止');
+  }).catch(err=>{ toast('无法访问麦克风：'+(err.message||err)); });
+}
+function assessPronunciation(blob, refText){
+  const r=document.getElementById('speakResult'); r.className='result'; r.innerHTML='<div class="pr-report"><div class="pr-tip">⏳ 正在评测发音…</div></div>';
+  const fd=new FormData(); fd.append('audio',blob); fd.append('text',refText); fd.append('lang','en-US');
+  fetch(P.assessEndpoint,{method:'POST',body:fd}).then(x=>x.json()).then(d=>{ renderAssessResult(d, refText); }).catch(e=>{ r.innerHTML='<div class="pr-report no"><div class="pr-tip">评测服务调用失败：'+escHtml(e.message||e)+'。请检查服务地址与网络。</div></div>'; });
+}
+function renderAssessResult(d, refText){
+  const r=document.getElementById('speakResult');
+  const overall=d.overall!=null?Math.round(d.overall):'—';
+  let wordsHtml='';
+  if(Array.isArray(d.words)&&d.words.length){ wordsHtml='<div class="pr-block"><div class="pr-label">逐词发音分</div><div class="pr-words">'+d.words.map(w=>{ const sc=Number.isFinite(Number(w.score))?Math.round(Number(w.score)):0; const cls=sc>=80?'w-match':(sc>=60?'w-extra':'w-miss'); return '<span class="w '+cls+'" title="'+sc+' 分">'+escHtml(w.word)+'</span>'; }).join(' ')+'</div></div>'; }
+  r.innerHTML='<div class="pr-report '+(overall>=75?'ok':'no')+'"><div class="pr-head"><span class="score">'+overall+' 分</span><span class="pr-tag">发音准确度</span></div>'+wordsHtml+'<div class="pr-note">注：此分为云端声学评测结果（发音音色/重音/流利度），由你部署的评测后端返回。</div></div>';
+}
+
+function nextSentence(){ state.sIdx=(state.sIdx+1)%filteredSpeak().length; renderSpeak(); }
+
+function saveGoal(){ const v=parseInt(document.getElementById('goalInput').value)||10; P.dailyGoal=Math.min(100,Math.max(1,v)); save(P); renderToday(); toast('已保存每日目标：'+P.dailyGoal+' 词'); }
+
+function exportJSON(){
+  const blob=new Blob([JSON.stringify(P,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='english-lab-backup-'+todayStr()+'.json'; a.click();
+  toast('已导出备份');
+}
+function importJSON(e){
+  const f=e.target.files[0]; if(!f)return;
+  const rd=new FileReader();
+  rd.onload=()=>{ try{ const d=JSON.parse(rd.result); P=Object.assign(load(),d); save(P); refreshAll(); toast('已恢复数据'); }catch(err){ toast('文件格式错误'); } };
+  rd.readAsText(f); e.target.value='';
+}
+let pendingClear=false;
+function confirmClear(){ pendingClear=true; openMask('清空全部进度？','将删除所有学习记录、掌握/生词标记，恢复为初始示例数据。此操作不可撤销。','确认清空'); }
+function openMask(t,txt,ok){ document.getElementById('mTitle').textContent=t; document.getElementById('mText').textContent=txt; document.getElementById('mOk').textContent=ok; document.getElementById('mask').classList.add('show'); }
+function closeMask(){ document.getElementById('mask').classList.remove('show'); pendingClear=false; }
+document.getElementById('mOk').addEventListener('click',()=>{
+  if(pendingClear){ P={studyDays:{},speakCount:{},mastered:{},difficult:{},seen:{},gramCount:{},dailyGoal:10,seeded:false}; P=load(); save(P); refreshAll(); toast('已清空并重置示例'); }
+  closeMask();
+});
+let toastTimer=null;
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),1800); }
+
+/* ============ 初始化 ============ */
+window.addEventListener('DOMContentLoaded',()=>{
+  const cs=document.getElementById('chatScenes');
+  if(cs){ cs.addEventListener('click',function(e){ const b=e.target.closest('.chip'); if(!b) return; state.chatScene=b.dataset.v; this.querySelectorAll('.chip').forEach(x=>x.classList.remove('on')); b.classList.add('on'); }); }
+  bootstrap();
+});
+
+/* ============ 引导问卷：收集人群信息，决定展示什么词库 ============ */
+let obSel={level:null,focus:'all'};
+function buildOnboard(){
+  const f=document.getElementById('obFocus');
+  let h='<div class="ob-opt on" data-v="all"><b>综合</b><span>所有行业都看</span></div>';
+  CATS.forEach(c=>{ h+='<div class="ob-opt" data-v="'+c.id+'"><b>'+c.name+'</b><span>'+c.name+'方向术语</span></div>'; });
+  f.innerHTML=h;
+  f.querySelectorAll('.ob-opt').forEach(el=>{ el.onclick=()=>{ f.querySelectorAll('.ob-opt').forEach(x=>x.classList.remove('on')); el.classList.add('on'); obSel.focus=el.dataset.v; }; });
+  const lv=document.getElementById('obLevel');
+  lv.querySelectorAll('.ob-opt').forEach(el=>{ el.onclick=()=>{ lv.querySelectorAll('.ob-opt').forEach(x=>x.classList.remove('on')); el.classList.add('on'); obSel.level=Number(el.dataset.v); const b=document.getElementById('obStart'); b.disabled=false; document.getElementById('obHint').textContent=''; }; });
+}
+function showOnboarding(){ obSel={level:null,focus:'all'}; buildOnboard(); document.getElementById('obStart').disabled=true; document.getElementById('obHint').textContent='请先选择你的英语基础'; document.getElementById('onboard').classList.add('show'); }
+function submitOnboarding(){
+  if(obSel.level==null){ document.getElementById('obHint').textContent='请先选择你的英语基础'; return; }
+  P.level=obSel.level; P.focus=obSel.focus; save(P);
+  state.level=obSel.level; state.vcat=obSel.focus;
+  document.getElementById('onboard').classList.remove('show');
+  refreshAll();
+  toast('已为你定制内容');
+}
+</script>
+</body>
+</html>

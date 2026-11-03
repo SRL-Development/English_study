@@ -1,0 +1,36 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Runtime data (may contain user information)
+app.db
+app.db-*
+*.sqlite
+*.sqlite3
+tts_cache/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+venv/
+.venv/
+
+# Node and editor files
+node_modules/
+.vscode/
+.idea/
+*.log
+
+# Local WorkBuddy/Codex artifacts
+.workbuddy/
+.wbapp_*.genie
+
+# WeChat developer-tool private settings
+miniprogram/project.private.config.json
+

@@ -1,0 +1,41 @@
+.header {
+  text-align: center;
+  padding: 60rpx 0 40rpx;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #6b7280;
+  margin-top: 12rpx;
+}
+
+.tip {
+  font-size: 30rpx;
+  color: #374151;
+  margin-bottom: 24rpx;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.label {
+  font-size: 30rpx;
+  color: #374151;
+}
+
+.picker {
+  font-size: 30rpx;
+  color: #2563eb;
+  padding-right: 8rpx;
+}
