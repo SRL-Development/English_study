@@ -9,9 +9,24 @@
 - 账号注册登录、邮箱激活、微信登录及后台用户统计
 - Edge TTS 语音合成、讯飞 ISE 发音评测、OpenAI 兼容模型对话
 
+## 客户端
+
+- HTTPS 网页：后端直接托管 `english-learning.html`，通过同一域名访问 API
+- 微信小程序：在 `miniprogram/config.js` 设置同一个 HTTPS API 域名
+
+## 部署方式
+
+支持以下服务端部署：
+
+- Docker Compose（Linux/Windows，推荐）
+- Linux 原生 Gunicorn + systemd
+- Windows 原生 Waitress + 开机计划任务
+
+完整操作见 [DEPLOYMENT.md](./DEPLOYMENT.md)。
+
 ## 本地运行
 
-需要 Python 3.10 或更高版本，以及用于音频转码的 FFmpeg。
+建议使用 Python 3.11 或 3.12，并安装用于音频转码的 FFmpeg。
 
 ```bash
 python -m venv venv

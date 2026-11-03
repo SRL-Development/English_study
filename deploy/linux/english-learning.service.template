@@ -1,0 +1,20 @@
+[Unit]
+Description=English Learning Flask Application
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__RUN_USER__
+Group=__RUN_USER__
+WorkingDirectory=__APP_DIR__
+EnvironmentFile=__APP_DIR__/.env
+Environment=APP_DATA_DIR=__DATA_DIR__
+ExecStart=__APP_DIR__/venv/bin/gunicorn --workers 2 --threads 4 --timeout 90 --bind 127.0.0.1:5000 server:app
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

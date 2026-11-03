@@ -17,6 +17,9 @@ User=www
 Group=www
 WorkingDirectory=/www/wwwroot/english
 EnvironmentFile=/www/wwwroot/english/.env
+Environment=APP_DATA_DIR=/var/lib/english-learning
+StateDirectory=english-learning
+StateDirectoryMode=0750
 ExecStart=/www/wwwroot/english/venv/bin/gunicorn -w 2 --threads 4 --timeout 90 -b 127.0.0.1:5000 server:app
 Restart=always
 RestartSec=3

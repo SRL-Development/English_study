@@ -1,0 +1,7 @@
+{$SITE_DOMAIN} {
+    encode zstd gzip
+
+    reverse_proxy app:5000 {
+        flush_interval -1
+    }
+}

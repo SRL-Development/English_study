@@ -9,6 +9,9 @@ app.db-*
 *.sqlite
 *.sqlite3
 tts_cache/
+data/*
+!data/.gitkeep
+backups/
 
 # Python
 __pycache__/

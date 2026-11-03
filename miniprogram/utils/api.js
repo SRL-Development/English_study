@@ -1,6 +1,6 @@
-// 后端基地址：部署后改成你的备案 HTTPS 域名（如 https://api.你的域名.com）
-// 开发阶段可在微信开发者工具「不校验合法域名」下用局域网/公网地址调试。
-const DEFAULT_BASE = 'https://englearner.cn';
+// 后端基地址统一放在 config.js；开发工具中仍可用本地存储 apiBase 临时覆盖。
+const config = require('../config.js');
+const DEFAULT_BASE = String(config.API_BASE || '').replace(/\/+$/, '');
 
 let BASE = DEFAULT_BASE;
 let TOKEN = '';

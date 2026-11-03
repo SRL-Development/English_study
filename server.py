@@ -16,7 +16,7 @@
   7) 邮件通知：/api/register 注册成功后，向用户邮箱发送欢迎/激活邮件（阿里云邮箱 SMTP）
   8) 邮箱激活：/api/verify-email 点击邮件链接标记邮箱已验证
 
-数据库：SQLite 文件 app.db（随服务自动创建，存于本目录）。
+数据库：SQLite 文件 app.db（随服务自动创建；可通过 APP_DATA_DIR / APP_DB_PATH 指定）。
 
 环境变量（在宝塔启动脚本或 /etc/profile.d/ 中导出）：
   ADMIN_PASSWORD  后台管理员密码（必填；未配置时后台登录接口禁用）
@@ -55,13 +55,21 @@ from email.mime.text import MIMEText
 from urllib.parse import quote, urlparse
 
 import requests
+from dotenv import load_dotenv
 from flask import (
     Flask, request, jsonify, Response, abort, send_file,
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-DB = os.path.join(BASE, "app.db")
+load_dotenv(os.path.join(BASE, ".env"), override=False)
+
+DATA_DIR = os.path.abspath(os.environ.get("APP_DATA_DIR", "").strip() or BASE)
+os.makedirs(DATA_DIR, exist_ok=True)
+DB = os.path.abspath(
+    os.environ.get("APP_DB_PATH", "").strip() or os.path.join(DATA_DIR, "app.db")
+)
+os.makedirs(os.path.dirname(DB), exist_ok=True)
 HTML = os.path.join(BASE, "english-learning.html")
 HTML_FALLBACK = os.path.join(BASE, "index.html")
 ADMIN_HTML = os.path.join(BASE, "admin.html")
@@ -99,7 +107,9 @@ MAIL_FROM_NAME = os.environ.get("MAIL_FROM_NAME", "英语学习台")
 SITE_BASE_URL = os.environ.get("SITE_BASE_URL", "")   # 站点对外地址，如 https://englearner.cn
 
 # 语音合成缓存目录（TTS，给小程序提供音频 URL，替代浏览器 TTS）
-TTS_CACHE = os.path.join(BASE, "tts_cache")
+TTS_CACHE = os.path.abspath(
+    os.environ.get("TTS_CACHE_DIR", "").strip() or os.path.join(DATA_DIR, "tts_cache")
+)
 os.makedirs(TTS_CACHE, exist_ok=True)
 
 app = Flask(__name__)
