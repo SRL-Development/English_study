@@ -28,7 +28,9 @@ jobs:
           bash -n deploy/docker/update.sh
           bash -n deploy/nginx/configure.sh
       - name: Validate production Compose
-        run: docker compose --env-file .env.example -f compose.server.yaml config --quiet
+        run: |
+          cp .env.example .env
+          docker compose -f compose.server.yaml config --quiet
       - name: Validate Nginx templates
         run: |
           sudo apt-get update -qq
