@@ -2,7 +2,7 @@ name: english-study
 
 services:
   user:
-    image: ${USER_IMAGE:-ghcr.io/shirenliang12-source/english-study-user:latest}
+    image: ${USER_IMAGE:-ghcr.io/srl-development/english-study-user:latest}
     pull_policy: always
     restart: unless-stopped
     env_file:
@@ -25,7 +25,7 @@ services:
       retries: 3
 
   admin:
-    image: ${ADMIN_IMAGE:-ghcr.io/shirenliang12-source/english-study-admin:latest}
+    image: ${ADMIN_IMAGE:-ghcr.io/srl-development/english-study-admin:latest}
     pull_policy: always
     restart: unless-stopped
     env_file:

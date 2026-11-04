@@ -59,10 +59,10 @@ jobs:
         include:
           - role: user
             port: 5000
-            image: ghcr.io/shirenliang12-source/english-study-user
+            image: ghcr.io/srl-development/english-study-user
           - role: admin
             port: 5001
-            image: ghcr.io/shirenliang12-source/english-study-admin
+            image: ghcr.io/srl-development/english-study-admin
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4

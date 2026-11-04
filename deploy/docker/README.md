@@ -1,5 +1,11 @@
 # 云主机 Docker + Nginx 部署
 
+最新版部署包：
+
+```text
+https://github.com/SRL-Development/English_study/releases/latest/download/english-study-cloud-latest.zip
+```
+
 生产结构：宿主机 Nginx 只公开 `80/443`，两个 Docker 容器分别只监听
 `127.0.0.1:5000` 与 `127.0.0.1:5001`，共用 `english-study-data` 数据卷。
 

@@ -91,15 +91,15 @@ sudo bash deploy/docker/update.sh
 每次推送 `main` 后，GitHub Actions 还会运行后端测试并发布镜像：
 
 ```text
-ghcr.io/shirenliang12-source/english-study-user:latest
-ghcr.io/shirenliang12-source/english-study-admin:latest
+ghcr.io/srl-development/english-study-user:latest
+ghcr.io/srl-development/english-study-admin:latest
 ```
 
 若服务器可以访问 GHCR，可在 `.env` 中设置：
 
 ```dotenv
-USER_IMAGE=ghcr.io/shirenliang12-source/english-study-user:latest
-ADMIN_IMAGE=ghcr.io/shirenliang12-source/english-study-admin:latest
+USER_IMAGE=ghcr.io/srl-development/english-study-user:latest
+ADMIN_IMAGE=ghcr.io/srl-development/english-study-admin:latest
 ```
 
 手动更新：

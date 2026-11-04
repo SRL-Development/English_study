@@ -9,7 +9,7 @@ services:
         APP_ROLE: user
         APP_PORT: 5000
         APP_VERSION: local
-    image: ${USER_IMAGE:-ghcr.io/shirenliang12-source/english-study-user:latest}
+    image: ${USER_IMAGE:-ghcr.io/srl-development/english-study-user:latest}
     pull_policy: always
     restart: unless-stopped
     env_file:
@@ -43,7 +43,7 @@ services:
         APP_ROLE: admin
         APP_PORT: 5001
         APP_VERSION: local
-    image: ${ADMIN_IMAGE:-ghcr.io/shirenliang12-source/english-study-admin:latest}
+    image: ${ADMIN_IMAGE:-ghcr.io/srl-development/english-study-admin:latest}
     pull_policy: always
     restart: unless-stopped
     env_file:
