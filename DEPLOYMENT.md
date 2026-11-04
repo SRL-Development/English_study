@@ -1,18 +1,14 @@
 # 部署指南
 
-本项目采用同一个 Flask 服务同时提供网页、账号/API、语音评测、AI 对话和后台页面：
+本项目发布为用户平台与管理平台两个独立镜像，运行时共用持久化数据卷：
 
 ```text
-HTTPS 网页 / 微信小程序
-          ↓
- Caddy / Nginx / Nginx Proxy Manager
-          ↓
-      Flask :5000
-          ↓
-  SQLite + TTS 持久化目录
+用户域名 / 微信小程序 ─→ user:5000 ─┐
+                                     ├→ english-study-data
+管理后台独立域名 ──────→ admin:5000 ─┘
 ```
 
-生产环境只公开 `80/443`。`5000`、Portainer `9443` 及其他管理端口不得直接对全网开放。
+生产环境只公开 `80/443`。宿主机的 `5000/5001` 都只监听 `127.0.0.1`，不得直接对全网开放。
 
 ## 一、统一配置
 
@@ -29,6 +25,7 @@ ADMIN_PASSWORD=强随机密码
 MAIL_SECRET=另一个强随机值
 SITE_BASE_URL=https://englearner.cn
 SITE_DOMAIN=englearner.cn
+ADMIN_DOMAIN=admin.englearner.cn
 APP_UTC_OFFSET_HOURS=8
 ```
 
@@ -39,24 +36,26 @@ APP_UTC_OFFSET_HOURS=8
 要求：Docker Engine 与 Docker Compose 插件。
 
 ```bash
-docker compose up -d --build
+docker compose pull user admin
+docker compose up -d --force-recreate user admin
 docker compose ps
 curl http://127.0.0.1:5000/api/health
+curl http://127.0.0.1:5001/api/health
 ```
 
-默认仅把应用映射到服务器本机 `127.0.0.1:5000`。数据库和 TTS 缓存保存在命名卷
+用户平台映射到 `127.0.0.1:5000`，管理平台映射到 `127.0.0.1:5001`。数据库和 TTS 缓存保存在命名卷
 `english-study-data` 中，重建容器不会删除。不要执行 `docker compose down -v`，除非明确要删除数据。
 
 ### Docker 自动 HTTPS
 
-先把 `SITE_DOMAIN` 的 DNS A 记录指向服务器，并开放 `80/443`：
+先把 `SITE_DOMAIN`、`ADMIN_DOMAIN` 的 DNS A 记录都指向服务器，并开放 `80/443`：
 
 ```bash
-docker compose -f compose.yaml -f compose.https.yaml up -d --build
+docker compose -f compose.yaml -f compose.https.yaml up -d
 ```
 
-Caddy 会为 `SITE_DOMAIN` 自动申请证书并转发到应用。已有 Nginx、宝塔或 Nginx Proxy Manager
-占用 `80/443` 时，不要启动 Caddy，直接把现有反向代理指向 `127.0.0.1:5000`。
+Caddy 会为两个域名分别申请证书。使用 1Panel、宝塔或已有 Nginx 时不要启动 Caddy：
+用户域名反向代理到 `127.0.0.1:5000`，管理域名反向代理到 `127.0.0.1:5001`。
 
 ### Portainer 管理页面
 
@@ -78,28 +77,45 @@ ssh -L 9443:127.0.0.1:9443 root@服务器IP
 sudo bash deploy/docker/update.sh
 ```
 
-脚本会先在线备份 SQLite，再拉取 `main`、重建容器、执行健康检查；失败时尝试恢复旧提交。
+脚本会先在线备份 SQLite，再拉取 `main` 和两个镜像、重建容器并执行双端健康检查。
 
 每次推送 `main` 后，GitHub Actions 还会运行后端测试并发布镜像：
 
 ```text
-ghcr.io/shirenliang12-source/english-study:latest
+ghcr.io/shirenliang12-source/english-study-user:latest
+ghcr.io/shirenliang12-source/english-study-admin:latest
 ```
 
 若服务器可以访问 GHCR，可在 `.env` 中设置：
 
 ```dotenv
-APP_IMAGE=ghcr.io/shirenliang12-source/english-study:latest
+USER_IMAGE=ghcr.io/shirenliang12-source/english-study-user:latest
+ADMIN_IMAGE=ghcr.io/shirenliang12-source/english-study-admin:latest
 ```
 
 然后更新：
 
 ```bash
-docker compose pull app
-docker compose up -d --no-build app
+docker compose pull user admin
+docker compose up -d --force-recreate user admin
 ```
 
-阿里云访问 GHCR 不稳定时，可将同一镜像同步到阿里云 ACR，再把 `APP_IMAGE` 改为 ACR 地址。
+阿里云访问 GHCR 不稳定时，可将两个镜像同步到阿里云 ACR，再把 `USER_IMAGE`、
+`ADMIN_IMAGE` 改为对应的 ACR 地址。
+
+### 1Panel 图形界面
+
+在 1Panel 的「容器 → 编排」中新建编排，使用仓库里的 `compose.1panel.yaml`，并在同一
+编排目录创建 `.env`（可从 `.env.example` 复制）。首次部署或后续升级都执行：
+
+```bash
+docker compose -f compose.1panel.yaml pull user admin
+docker compose -f compose.1panel.yaml up -d --force-recreate user admin
+```
+
+在 1Panel「网站」中创建两个反向代理网站：用户域名代理到
+`http://127.0.0.1:5000`，管理域名代理到 `http://127.0.0.1:5001`，然后分别申请
+HTTPS 证书。阿里云安全组只需放行 `80/443`，不要放行 `5000/5001`。
 
 ## 三、Linux 原生部署
 
@@ -175,8 +191,8 @@ https://englearner.cn/
 ```
 
 网页和 API 同源，不需要额外配置 CORS。学员登录为 `/login`，注册为
-`/register`；管理员使用完全独立的 `/admin/login`，登录后进入
-`/admin/dashboard`。健康检查为 `/api/health`。
+`/register`，登录后各模块使用 `/app/...` 独立地址。管理员在独立域名使用
+`/admin/login`，登录后进入 `/admin/dashboard`。两个容器的健康检查均为 `/api/health`。
 
 Flask 已启用 HTML/JSON 压缩；Nginx 示例仅对 SSE `/chat` 关闭缓冲，普通页面和
 API 保持 gzip 与代理缓冲。宝塔反向代理时建议同样开启 gzip，且不要对整站关闭
@@ -219,13 +235,13 @@ Docker 更新脚本把数据库备份到 `backups/`；Linux 更新脚本默认�
 Docker 迁移示例（先把旧数据库放到当前项目根目录）：
 
 ```bash
-docker compose stop app
+docker compose stop user admin
 docker run --rm \
   -v english-study-data:/data \
   -v "$PWD:/backup:ro" \
   python:3.12-slim \
   sh -c 'cp /backup/app.db /data/app.db && chown 10001:10001 /data/app.db'
-docker compose start app
+docker compose start user admin
 ```
 
 迁移前后都应保留一份独立数据库备份，并通过 `/api/health` 和后台用户列表确认数据完整。

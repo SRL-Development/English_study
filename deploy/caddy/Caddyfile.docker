@@ -1,7 +1,15 @@
 {$SITE_DOMAIN} {
     encode zstd gzip
 
-    reverse_proxy app:5000 {
+    reverse_proxy user:5000 {
+        flush_interval -1
+    }
+}
+
+{$ADMIN_DOMAIN} {
+    encode zstd gzip
+
+    reverse_proxy admin:5000 {
         flush_interval -1
     }
 }

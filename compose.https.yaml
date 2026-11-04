@@ -3,10 +3,13 @@ services:
     image: caddy:2.10-alpine
     restart: unless-stopped
     depends_on:
-      app:
+      user:
+        condition: service_healthy
+      admin:
         condition: service_healthy
     environment:
       SITE_DOMAIN: ${SITE_DOMAIN:?请在 .env 中设置 SITE_DOMAIN}
+      ADMIN_DOMAIN: ${ADMIN_DOMAIN:?请在 .env 中设置 ADMIN_DOMAIN}
     ports:
       - "80:80"
       - "443:443"

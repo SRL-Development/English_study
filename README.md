@@ -1,6 +1,7 @@
 # 英语全能学习台
 
-网站与微信小程序双端英语学习项目，共用 Flask + SQLite 后端。
+网站与微信小程序双端英语学习项目。用户平台和管理平台发布为两个独立 Docker 镜像，
+共用同一个 SQLite 持久化数据卷。
 
 ## 功能
 
@@ -47,10 +48,11 @@ cp .env.example .env
 python server.py
 ```
 
-学员登录入口为 `http://127.0.0.1:5000/login`，注册入口为
-`http://127.0.0.1:5000/register`；管理员独立入口为
-`http://127.0.0.1:5000/admin/login`，健康检查为
-`http://127.0.0.1:5000/api/health`。
+Docker 部署后，用户平台监听 `127.0.0.1:5000`，管理平台监听
+`127.0.0.1:5001`。用户镜像不提供管理路由，管理镜像也不提供用户页面与用户 API。
+
+用户端页面分别为 `/app/home`、`/app/vocabulary`、`/app/speaking`、
+`/app/grammar`、`/app/profile`；管理端入口为 `/admin/login`。
 
 ## 测试
 

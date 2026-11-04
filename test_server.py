@@ -11,6 +11,8 @@ class ServerApiTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.original_db = server.DB
+        self.original_role = server.APP_ROLE
+        server.APP_ROLE = "all"
         server.DB = os.path.join(self.tmp.name, "test.db")
         server.init_db()
         server.ANALYTICS_CACHE.clear()
@@ -19,6 +21,7 @@ class ServerApiTests(unittest.TestCase):
 
     def tearDown(self):
         server.DB = self.original_db
+        server.APP_ROLE = self.original_role
         self.tmp.cleanup()
 
     def register(self, **overrides):
@@ -48,6 +51,24 @@ class ServerApiTests(unittest.TestCase):
         self.assertTrue(legacy.headers["Location"].endswith("/admin/login"))
         self.assertEqual(self.client.get("/admin/login").status_code, 200)
         self.assertEqual(self.client.get("/admin/dashboard").status_code, 200)
+
+    def test_container_roles_are_http_isolated(self):
+        server.APP_ROLE = "user"
+        self.assertEqual(self.client.get("/login").status_code, 200)
+        self.assertEqual(self.client.get("/app/home").status_code, 200)
+        self.assertEqual(self.client.get("/admin/login").status_code, 404)
+        self.assertEqual(self.client.post("/api/admin/login", json={}).status_code, 404)
+
+        server.APP_ROLE = "admin"
+        root = self.client.get("/")
+        self.assertEqual(root.status_code, 302)
+        self.assertTrue(root.headers["Location"].endswith("/admin/login"))
+        self.assertEqual(self.client.get("/admin/login").status_code, 200)
+        self.assertEqual(self.client.get("/login").status_code, 404)
+        self.assertEqual(self.client.get("/app/home").status_code, 404)
+        health = self.client.get("/api/health")
+        self.assertEqual(health.status_code, 200)
+        self.assertEqual(health.json["role"], "admin")
 
     def test_cors_only_allows_configured_origin(self):
         with mock.patch.object(server, "CORS_ORIGINS", {"https://study.example.com"}):

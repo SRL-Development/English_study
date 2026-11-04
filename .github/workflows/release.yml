@@ -24,6 +24,13 @@ jobs:
   docker:
     needs: test
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        include:
+          - role: user
+            image: ghcr.io/shirenliang12-source/english-study-user
+          - role: admin
+            image: ghcr.io/shirenliang12-source/english-study-admin
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v3
@@ -35,7 +42,7 @@ jobs:
       - uses: docker/metadata-action@v5
         id: meta
         with:
-          images: ghcr.io/shirenliang12-source/english-study
+          images: ${{ matrix.image }}
           tags: |
             type=raw,value=latest
             type=sha
@@ -43,7 +50,8 @@ jobs:
         with:
           context: .
           push: true
+          build-args: APP_ROLE=${{ matrix.role }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=${{ matrix.role }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.role }}

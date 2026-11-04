@@ -25,10 +25,10 @@ fi
 
 mkdir -p "$BACKUP_DIR"
 STAMP="$(date +%Y%m%d-%H%M%S)"
-CID="$(docker compose ps -q app 2>/dev/null || true)"
+CID="$(docker compose ps -q user 2>/dev/null || true)"
 
 if [[ -n "$CID" ]]; then
-  docker compose exec -T app python - "/data/app.db" "/tmp/app-$STAMP.db" <<'PY'
+  docker compose exec -T user python - "/data/app.db" "/tmp/app-$STAMP.db" <<'PY'
 import os
 import sqlite3
 import sys
@@ -41,21 +41,21 @@ if os.path.exists(sys.argv[1]):
     source.close()
 PY
   docker cp "$CID:/tmp/app-$STAMP.db" "$BACKUP_DIR/app-$STAMP.db" 2>/dev/null || true
-  docker compose exec -T app rm -f "/tmp/app-$STAMP.db" || true
+  docker compose exec -T user rm -f "/tmp/app-$STAMP.db" || true
 fi
 
 git merge --ff-only origin/main
 
-if ! docker compose build app || ! docker compose up -d app; then
+if ! docker compose pull user admin || ! docker compose up -d --force-recreate user admin; then
   git reset --hard "$OLD"
-  docker compose build app || true
-  docker compose up -d app || true
+  docker compose up -d --force-recreate user admin || true
   echo "容器更新失败，已尝试恢复旧版本。"
   exit 1
 fi
 
 for _ in {1..12}; do
-  if curl -fsS http://127.0.0.1:5000/api/health >/dev/null; then
+  if curl -fsS http://127.0.0.1:5000/api/health >/dev/null \
+    && curl -fsS http://127.0.0.1:5001/api/health >/dev/null; then
     find "$BACKUP_DIR" -type f -name 'app-*.db' -mtime +30 -delete
     echo "部署成功：$(git rev-parse HEAD)"
     exit 0
@@ -64,7 +64,6 @@ for _ in {1..12}; do
 done
 
 git reset --hard "$OLD"
-docker compose build app
-docker compose up -d app
+docker compose up -d --force-recreate user admin
 echo "健康检查失败，已恢复旧版本。"
 exit 1

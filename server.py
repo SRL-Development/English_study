@@ -75,6 +75,9 @@ os.makedirs(os.path.dirname(DB), exist_ok=True)
 HTML = os.path.join(BASE, "english-learning.html")
 HTML_FALLBACK = os.path.join(BASE, "index.html")
 ADMIN_HTML = os.path.join(BASE, "admin.html")
+APP_ROLE = os.environ.get("APP_ROLE", "all").strip().lower()
+if APP_ROLE not in {"all", "user", "admin"}:
+    APP_ROLE = "all"
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "").strip()
 EMAIL_SIGNING_SECRET = os.environ.get("MAIL_SECRET", "").strip() or ADMIN_PASSWORD
 WX_APP_ID = os.environ.get("WX_APP_ID", "")
@@ -117,6 +120,24 @@ os.makedirs(TTS_CACHE, exist_ok=True)
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
 ANALYTICS_CACHE = {}
+
+
+@app.before_request
+def enforce_app_role():
+    """Keep the public and administrative containers isolated at the HTTP edge."""
+    path = request.path
+    if APP_ROLE == "user":
+        if path.startswith("/admin") or path.startswith("/api/admin"):
+            abort(404)
+    elif APP_ROLE == "admin":
+        if path == "/":
+            return redirect("/admin/login", code=302)
+        if not (
+            path.startswith("/admin")
+            or path.startswith("/api/admin")
+            or path == "/api/health"
+        ):
+            abort(404)
 
 
 # ----------------------------- 数据库 -----------------------------
@@ -1052,6 +1073,19 @@ def user_auth_page():
     return send_html(p)
 
 
+USER_PAGES = {"home", "vocabulary", "speaking", "grammar", "profile"}
+
+
+@app.route("/app/<page>", methods=["GET"])
+def user_app_page(page):
+    if page not in USER_PAGES:
+        abort(404)
+    p = HTML if os.path.exists(HTML) else HTML_FALLBACK
+    if not os.path.exists(p):
+        abort(404)
+    return send_html(p)
+
+
 @app.route("/admin", methods=["GET"])
 @app.route("/admin.html", methods=["GET"])
 def admin_legacy_page():
@@ -1075,7 +1109,7 @@ def api_health():
         conn.close()
     except sqlite3.Error:
         return jsonify({"status": "error", "database": "unavailable"}), 503
-    return jsonify({"status": "ok", "database": "ok"})
+    return jsonify({"status": "ok", "database": "ok", "role": APP_ROLE})
 
 
 # =====================================================================
