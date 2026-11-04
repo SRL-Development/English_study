@@ -7,8 +7,8 @@
 <title>EnglishLab · 职场与行业英语学习平台</title>
 <style>
   :root{
-    --bg:#f6f7fb; --card:#ffffff; --ink:#162033; --sub:#667085; --line:#e7e9f0;
-    --pri:#4f46e5; --pri-soft:#eeedff; --green:#159a68; --green-soft:#e7f8f0;
+    --bg:#f5f7fb; --card:#ffffff; --ink:#172033; --sub:#667085; --line:#e4e8f0;
+    --pri:#5146e5; --pri-2:#6d5dfc; --pri-soft:#efedff; --green:#0f9f6e; --green-soft:#e7f8f1;
     --red:#e5484d; --red-soft:#fdecec; --amber:#f0a020; --amber-soft:#fef4e2;
     --navy:#101828; --shadow:0 10px 35px rgba(16,24,40,.07); --shadow-lg:0 24px 70px rgba(16,24,40,.16);
     --r:18px;
@@ -17,10 +17,10 @@
   html,body{margin:0;padding:0}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
-    background:radial-gradient(circle at 12% 0,#eeedff 0,transparent 28%),var(--bg); color:var(--ink); font-size:15px; line-height:1.55;
+    background:radial-gradient(circle at 8% -4%,#e7e4ff 0,transparent 28%),radial-gradient(circle at 94% 5%,#e8f8f2 0,transparent 22%),var(--bg); color:var(--ink); font-size:15px; line-height:1.55;
     padding-bottom:env(safe-area-inset-bottom);
   }
-  .wrap{max-width:1120px;margin:0 auto;padding:20px 20px 104px}
+  .wrap{max-width:1180px;margin:0 auto;padding:22px 24px 104px}
   /* top bar */
   .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
   .brand{display:flex;align-items:center;gap:10px}
@@ -31,12 +31,16 @@
   .sync{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--sub);background:var(--card);border:1px solid var(--line);padding:6px 10px;border-radius:20px;box-shadow:var(--shadow);white-space:nowrap}
   .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
   /* today */
-  .today{background:linear-gradient(120deg,#151c36 0%,#312e81 55%,#4f46e5 100%);color:#fff;border-radius:22px;padding:20px;box-shadow:0 18px 45px rgba(49,46,129,.18);margin-bottom:18px;position:relative;overflow:hidden}
+  .today{background:linear-gradient(125deg,#151a37 0%,#292362 48%,#5146e5 100%);color:#fff;border-radius:26px;padding:25px;box-shadow:0 22px 52px rgba(49,46,129,.2);margin-bottom:22px;position:relative;overflow:hidden}
   .today:after{content:"";position:absolute;width:210px;height:210px;border-radius:50%;right:-90px;top:-120px;background:rgba(255,255,255,.09)}
-  .today h2{font-size:14px;margin:0 0 10px;opacity:.92;font-weight:600;display:flex;align-items:center;gap:6px}
+  .today h2{font-size:12px;margin:0 0 8px;opacity:.76;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
   .today h2 svg{width:16px;height:16px;fill:#fff}
   .today-row{display:flex;gap:10px;flex-wrap:wrap}
-  .tcard{flex:1;min-width:150px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px);border-radius:14px;padding:12px 14px;position:relative;z-index:1}
+  .today-main{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;position:relative;z-index:2;margin-bottom:20px}
+  .today-copy h3{font-size:28px;line-height:1.25;letter-spacing:-.6px;margin:0}.today-copy p{margin:7px 0 0;color:#d8dbff;font-size:13px}
+  .today-progress{display:flex;align-items:center;gap:12px;margin-top:16px}.today-progress-track{width:min(340px,48vw);height:8px;border-radius:999px;background:rgba(255,255,255,.17);overflow:hidden}.today-progress-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#8ee8c5,#fff);transition:width .35s}.today-progress span{font-size:12px;color:#e4e7ff;white-space:nowrap}
+  .today-cta{border:0;border-radius:14px;background:#fff;color:#312e81;font:700 14px inherit;padding:13px 18px;cursor:pointer;box-shadow:0 10px 28px rgba(9,12,35,.2);white-space:nowrap}.today-cta:hover{transform:translateY(-1px)}
+  .tcard{flex:1;min-width:150px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13);backdrop-filter:blur(8px);border-radius:15px;padding:12px 14px;position:relative;z-index:1}
   .tcard .lab{font-size:11px;opacity:.85}
   .tcard .val{font-size:20px;font-weight:700;margin-top:2px}
   .tcard .val small{font-size:12px;font-weight:500;opacity:.8}
@@ -64,7 +68,15 @@
   .account-name{font-size:17px;font-weight:750}.account-meta{font-size:12px;color:var(--sub);margin-top:2px}
   .setting-label{font-size:12px;color:var(--sub);margin-bottom:10px}.goal-control{display:flex;align-items:center;gap:10px}.goal-control input{width:92px!important;font-size:24px!important;font-weight:800;color:var(--pri)}
   /* card */
-  .card{background:rgba(255,255,255,.94);border:1px solid rgba(222,225,235,.9);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}
+  .card{background:rgba(255,255,255,.96);border:1px solid rgba(222,225,235,.92);border-radius:20px;box-shadow:var(--shadow);padding:20px}
+  .home-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(250px,.55fr);gap:14px;margin-bottom:18px}
+  .continue-card{display:flex;align-items:center;justify-content:space-between;gap:18px;background:linear-gradient(145deg,#fff,#f7f6ff)}
+  .continue-kicker{font-size:11px;letter-spacing:1.1px;text-transform:uppercase;color:var(--pri);font-weight:800}.continue-card h3{font-size:20px;margin:5px 0 5px;letter-spacing:-.25px}.continue-card p{font-size:13px;color:var(--sub);margin:0}.continue-action{display:flex;align-items:center;gap:10px;margin-top:15px}.primary-action{border:0;border-radius:12px;background:linear-gradient(135deg,#3e36bd,var(--pri-2));color:#fff;padding:11px 16px;font:700 13px inherit;cursor:pointer;box-shadow:0 9px 22px rgba(79,70,229,.2)}.lesson-time{font-size:12px;color:var(--sub)}
+  .course-orbit{width:108px;height:108px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--pri) var(--course-progress,0%),#e5e4f5 0);position:relative;flex:none}.course-orbit:after{content:"";position:absolute;inset:9px;border-radius:50%;background:#fff}.course-orbit b{position:relative;z-index:1;font-size:24px;color:var(--pri)}
+  .streak-card{background:linear-gradient(145deg,#fff9ed,#fff);display:flex;flex-direction:column;justify-content:center}.streak-top{display:flex;align-items:center;gap:10px}.streak-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#fff0cd;font-size:22px}.streak-card strong{font-size:25px}.streak-card p{font-size:12px;color:var(--sub);margin:8px 0 0}
+  .lesson-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 20px}.lesson-card{border:1px solid var(--line);border-radius:18px;background:#fff;padding:17px;cursor:pointer;transition:.2s;box-shadow:0 6px 20px rgba(16,24,40,.035)}.lesson-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(16,24,40,.08);border-color:#d6d2ff}.lesson-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.lesson-icon{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;font-size:18px}.lesson-icon.vocab{background:#ebe9ff}.lesson-icon.speak{background:#e4f8f0}.lesson-icon.grammar{background:#fff0db}.lesson-state{font-size:11px;border-radius:999px;padding:4px 8px;background:#f2f4f7;color:var(--sub)}.lesson-card h3{font-size:15px;margin:0 0 5px}.lesson-card p{font-size:12px;color:var(--sub);margin:0}.lesson-foot{display:flex;justify-content:space-between;color:var(--sub);font-size:11px;margin-top:15px;padding-top:12px;border-top:1px solid #eef0f4}.lesson-foot b{color:var(--pri)}
+  .loading-shell{position:fixed;inset:0;z-index:240;display:none;align-items:center;justify-content:center;background:linear-gradient(145deg,#f6f7fb,#efedff)}.loading-shell.show{display:flex}.loading-card{display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--sub);font-size:13px}.loading-mark{width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,#312e81,var(--pri-2));color:#fff;display:grid;place-items:center;font-size:22px;font-weight:850;box-shadow:0 16px 40px rgba(79,70,229,.25);animation:loadPulse 1.2s ease-in-out infinite}.loading-dots{display:flex;gap:5px}.loading-dots i{width:6px;height:6px;border-radius:50%;background:var(--pri);animation:loadDot 1s infinite}.loading-dots i:nth-child(2){animation-delay:.15s}.loading-dots i:nth-child(3){animation-delay:.3s}@keyframes loadPulse{50%{transform:translateY(-3px)}}@keyframes loadDot{50%{opacity:.25}}
+  .view-error{border:1px solid #f4c7c9;background:#fff4f4;border-radius:16px;padding:18px;color:#9b2c31}.view-error b{display:block;margin-bottom:5px}.view-error button{margin-top:10px;border:0;border-radius:10px;background:#fff;color:#9b2c31;padding:8px 12px;font-weight:700;cursor:pointer}
   /* filters */
   .filters{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;margin-bottom:4px}
   .filters::-webkit-scrollbar{display:none}
@@ -171,7 +183,8 @@
     .tabs button.on{background:#fff;border-color:var(--line);box-shadow:0 5px 18px rgba(16,24,40,.06)}
     .stat-grid{grid-template-columns:repeat(4,1fr)}
   }
-  @media(max-width:680px){.profile-grid{grid-template-columns:1fr}.page-head h2{font-size:22px}.page-head{margin-top:6px}}
+  @media(max-width:760px){.home-layout{grid-template-columns:1fr}.lesson-grid{grid-template-columns:1fr}.today-main{align-items:flex-start;flex-direction:column}.today-cta{width:100%}.today-progress-track{width:100%}.today-progress{width:100%}.continue-card{align-items:flex-start}.course-orbit{width:86px;height:86px}.profile-grid{grid-template-columns:1fr}.page-head h2{font-size:22px}.page-head{margin-top:6px}}
+  @media(max-width:460px){.wrap{padding:16px 16px 98px}.today{padding:20px;border-radius:22px}.today-copy h3{font-size:23px}.today-row{display:grid;grid-template-columns:1fr}.tcard{min-width:0;display:grid;grid-template-columns:1fr auto;align-items:center;padding:10px 12px}.tcard .lab,.tcard .val{grid-column:1}.tcard .val{font-size:18px}.tcard .act{grid-column:2;grid-row:1/span 2;margin:0}.continue-card{display:block}.course-orbit{margin-top:18px}.topbar{margin-bottom:13px}.brand p{max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
   /* grammar */
   .gcard{background:var(--bg);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:8px}
   .gcard .ghead{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;font-weight:600;gap:8px}
@@ -299,7 +312,15 @@
 
   <!-- 今天要处理 -->
   <div class="today" id="todayPanel">
-    <h2><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 3 2 5.5 2 9h10c0-3.5 2-6 2-9a7 7 0 00-7-7zm0 20a2.5 2.5 0 01-2.5-2.5h5A2.5 2.5 0 0112 22z"/></svg>今日学习计划</h2>
+    <div class="today-main">
+      <div class="today-copy">
+        <h2><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 00-7 7c0 3 2 5.5 2 9h10c0-3.5 2-6 2-9a7 7 0 00-7-7zm0 20a2.5 2.5 0 01-2.5-2.5h5A2.5 2.5 0 0112 22z"/></svg>Daily learning plan</h2>
+        <h3 id="todayGreeting">今天继续进步一点</h3>
+        <p id="todayMeta">完成词汇、听说和语法练习，预计 15 分钟</p>
+        <div class="today-progress"><div class="today-progress-track"><i id="todayProgressBar" style="width:0%"></i></div><span id="todayProgressText">0 / 3 项完成</span></div>
+      </div>
+      <button class="today-cta" id="todayCta" onclick="continueToday()">开始今日学习 →</button>
+    </div>
     <div class="today-row" id="todayRow"></div>
   </div>
 
@@ -382,6 +403,18 @@
   <!-- 学习中心 -->
   <div class="view on" id="viewDash">
     <div class="page-head"><div><span class="eyebrow">Learning overview</span><h2>学习中心</h2><p>看见每天的积累，按节奏完成今天的学习任务。</p></div></div>
+    <div class="home-layout">
+      <div class="card continue-card">
+        <div><div class="continue-kicker">Recommended next</div><h3>继续你的职场英语路径</h3><p id="continueDesc">从高频词汇开始，再完成一次真实场景表达。</p><div class="continue-action"><button class="primary-action" onclick="continueToday()">继续学习</button><span class="lesson-time">约 5 分钟</span></div></div>
+        <div class="course-orbit" id="courseOrbit" style="--course-progress:0%"><b id="coursePercent">0%</b></div>
+      </div>
+      <div class="card streak-card"><div class="streak-top"><div class="streak-icon">🔥</div><div><strong id="homeStreak">0</strong><div>天连续学习</div></div></div><p id="streakHint">今天完成任意一项练习即可延续记录。</p></div>
+    </div>
+    <div class="lesson-grid">
+      <div class="lesson-card" onclick="switchTab('vocab')"><div class="lesson-top"><div class="lesson-icon vocab">Aa</div><span class="lesson-state" id="vocabState">今日任务</span></div><h3>高频词汇</h3><p>行业词汇卡片与记忆复习</p><div class="lesson-foot"><span>3–5 分钟</span><b id="vocabLessonProgress">0 / 10</b></div></div>
+      <div class="lesson-card" onclick="switchTab('speak')"><div class="lesson-top"><div class="lesson-icon speak">◉</div><span class="lesson-state" id="speakState">待开始</span></div><h3>听说与发音</h3><p>跟读、听写与 AI 场景对话</p><div class="lesson-foot"><span>5 分钟</span><b id="speakLessonProgress">0 次</b></div></div>
+      <div class="lesson-card" onclick="switchTab('gram')"><div class="lesson-top"><div class="lesson-icon grammar">A+</div><span class="lesson-state" id="gramState">待开始</span></div><h3>语法闯关</h3><p>短讲解搭配即时练习反馈</p><div class="lesson-foot"><span>3–5 分钟</span><b id="gramLessonProgress">0 题</b></div></div>
+    </div>
     <div class="stat-grid">
       <div class="stat"><div class="n" id="stDays">0</div><div class="l">累计学习天数</div></div>
       <div class="stat"><div class="n" id="stStreak">0</div><div class="l">连续打卡</div></div>
@@ -453,6 +486,8 @@
   </div>
 </div>
 
+<div class="loading-shell show" id="appLoading"><div class="loading-card"><div class="loading-mark">E</div><div>正在准备你的学习计划</div><div class="loading-dots"><i></i><i></i><i></i></div></div></div>
+
 <div class="mask" id="mask"><div class="modal"><h3 id="mTitle">确认</h3><p id="mText"></p><div class="mbtns"><button onclick="closeMask()">取消</button><button class="danger" id="mOk">确定</button></div></div></div>
 <div class="toast" id="toast"></div>
 
@@ -478,7 +513,7 @@
   </div>
 
 <!-- 登录/注册遮罩（默认显示，作为进入门槛） -->
-<div class="auth show" id="auth">
+<div class="auth" id="auth">
   <div class="auth-shell">
     <section class="auth-story">
       <div class="auth-brand"><span class="auth-mark">E</span><span>EnglishLab</span></div>
@@ -763,15 +798,19 @@ function escHtml(value){ return String(value??'').replace(/[&<>'"]/g,ch=>({'&':'
 let TOKEN=localStorage.getItem(KEY+'token')||'';
 let backendMode=false;   // true=连接后端(需登录)  false=离线(仅本机)
 let ME=null;             // 当前登录用户 {id,phone,email,nickname}
+function plainObject(value){ return value&&typeof value==='object'&&!Array.isArray(value)?value:{}; }
+function countMap(value){ const out={}; Object.entries(plainObject(value)).forEach(([k,v])=>{ const n=Number(v); if(Number.isFinite(n)&&n>=0)out[k]=n; }); return out; }
 function applyDefaults(d,seed){
-  if(!d)d={};
-  if(!d.studyDays)d.studyDays={};
-  if(!d.speakCount)d.speakCount={};
-  if(!d.mastered)d.mastered={};
-  if(!d.difficult)d.difficult={};
-  if(!d.seen)d.seen={};
-  if(!d.gramCount)d.gramCount={};
-  if(typeof d.dailyGoal!=='number')d.dailyGoal=10;
+  d=plainObject(d);
+  d.studyDays=countMap(d.studyDays);
+  d.speakCount=countMap(d.speakCount);
+  d.mastered=plainObject(d.mastered);
+  d.difficult=plainObject(d.difficult);
+  d.seen=plainObject(d.seen);
+  d.gramCount=countMap(d.gramCount);
+  const goal=Number(d.dailyGoal); d.dailyGoal=Number.isFinite(goal)?Math.min(100,Math.max(1,Math.round(goal))):10;
+  if(d.level!==undefined && ![0,1,2,3,'all'].includes(d.level)) delete d.level;
+  if(typeof d.focus!=='string')d.focus='all';
   d.assessEndpoint='/assess';
   d.chatEndpoint='/chat';
   if(seed && !d.seeded){ seedExample(d); d.seeded=true; }
@@ -792,32 +831,43 @@ function pushData(d){
   api('/api/data',{method:'PUT',body:JSON.stringify({data:d})}).catch(()=>{});
 }
 async function api(path,opts={}){
-  const o=Object.assign({headers:{'Content-Type':'application/json'}},opts);
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),12000);
+  const o=Object.assign({},opts,{headers:Object.assign({'Content-Type':'application/json'},opts.headers||{}),signal:opts.signal||controller.signal});
   if(TOKEN)o.headers['Authorization']='Bearer '+TOKEN;
-  const r=await fetch(path,o);
-  let body=null; try{body=await r.json();}catch(e){}
-  return {status:r.status,body:body};
+  try{
+    const r=await fetch(path,o);
+    let body=null; try{body=await r.json();}catch(e){}
+    return {status:r.status,body:body};
+  }finally{ clearTimeout(timer); }
 }
+function setLoading(show){ const el=document.getElementById('appLoading'); if(el)el.classList.toggle('show',!!show); }
 async function bootstrap(){
   const entry=location.pathname==='/register'?'reg':'login';
+  setLoading(true);
   if(!TOKEN){
     if(location.pathname!=='/register') history.replaceState(null,'','/login');
     backendMode=true; ME=null; showAuth(entry); renderAcct();
+    setLoading(false);
     return;
   }
   try{
     const res=await api('/api/me');
-    if(res.status===200){ backendMode=true; ME=res.body.user; await pullData(); hideAuth(); enterApp(); }
+    if(res.status===200){ backendMode=true; ME=res.body.user; await pullData(); hideAuth(); renderAcct(); enterApp(); }
     else if(res.status===401){ backendMode=true; ME=null; TOKEN=''; localStorage.removeItem(KEY+'token'); showAuth(entry); renderAcct(); }
     else { enterAppOffline(); }
-  }catch(e){ enterAppOffline(); }
+  }catch(e){ console.warn('bootstrap fallback',e); enterAppOffline(); }
+  finally{ setLoading(false); }
 }
 function enterAppOffline(){ backendMode=false; ME=null; hideAuth(); renderAcct(); enterApp(); }
 function enterApp(){
   state.active=pageFromLocation();
   switchTab(state.active,false);
-  if(typeof P.level==='undefined'){ showOnboarding(); }
-  else { state.level=P.level; state.vcat=(typeof P.focus==='undefined')?'all':P.focus; refreshAll(); }
+  if(typeof P.level==='undefined'){
+    state.level='all'; state.vcat='all'; refreshAll(); showOnboarding();
+  }else{
+    state.level=P.level; state.vcat=(typeof P.focus==='undefined')?'all':P.focus; refreshAll();
+  }
 }
 async function pullData(){
   try{
@@ -825,7 +875,7 @@ async function pullData(){
     let d={};
     if(res.status===200&&res.body){ d=(typeof res.body.data==='string')?JSON.parse(res.body.data||'{}'):(res.body.data||{}); }
     P=applyDefaults(d,false);
-  }catch(e){ P=applyDefaults({},false); }
+  }catch(e){ console.warn('cloud progress unavailable, using local cache',e); P=load(); }
 }
 function setAuthTab(tab){
   document.getElementById('aErr').textContent='';
@@ -836,11 +886,13 @@ function setAuthTab(tab){
   document.getElementById('authSubtitle').textContent=login?'登录你的学习账号，继续今天的进度':'创建免费账号，让学习进度跨设备同步';
   if(location.pathname==='/'||location.pathname==='/login'||location.pathname==='/register') history.replaceState(null,'',login?'/login':'/register');
 }
-function showAuth(tab){ setAuthTab(tab||'login'); document.getElementById('auth').classList.add('show'); }
+function showAuth(tab){ setAuthTab(tab||'login'); document.getElementById('auth').classList.add('show'); setLoading(false); }
 function hideAuth(){ document.getElementById('auth').classList.remove('show'); if(location.pathname==='/'||location.pathname==='/login'||location.pathname==='/register') history.replaceState(null,'',PAGE_ROUTES.dash); }
 async function afterAuth(token,user){
-  TOKEN=token; localStorage.setItem(KEY+'token',token); ME=user;
-  await pullData(); hideAuth(); renderAcct(); enterApp();
+  setLoading(true);
+  TOKEN=token; localStorage.setItem(KEY+'token',token); ME=user; backendMode=true;
+  try{ await pullData(); hideAuth(); renderAcct(); enterApp(); }
+  finally{ setLoading(false); }
 }
 async function doLogin(){
   document.getElementById('aErr').textContent='';
@@ -920,6 +972,15 @@ function renderToday(){
   const goal=P.dailyGoal, done=studiedToday();
   const remain=Math.max(0,goal-done);
   const spokeToday=P.speakCount[todayStr()]||0;
+  const gToday=P.gramCount[todayStr()]||0;
+  const completed=(remain===0?1:0)+(spokeToday>0?1:0)+(gToday>0?1:0);
+  const progress=Math.round(completed/3*100);
+  const displayName=ME&&ME.nickname?ME.nickname:'学习者';
+  document.getElementById('todayGreeting').textContent=(completed===3?'今天的计划完成得很漂亮，':completed?'继续保持，':'准备好开始了吗，')+displayName;
+  document.getElementById('todayMeta').textContent=completed===3?'可以复习薄弱项，或开始一轮 AI 场景对话。':'完成词汇、听说和语法练习，预计 15 分钟';
+  document.getElementById('todayProgressBar').style.width=progress+'%';
+  document.getElementById('todayProgressText').textContent=completed+' / 3 项完成';
+  document.getElementById('todayCta').textContent=completed===3?'自由复习 →':'继续今日学习 →';
   const cards=[];
   if(remain>0){
     cards.push(`<div class="tcard warn"><div class="lab">今日词汇目标</div><div class="val">${done}<small>/${goal}</small></div><div class="act" onclick="switchTab('vocab')">去学 ${remain} 个 →</div></div>`);
@@ -931,19 +992,15 @@ function renderToday(){
   }else{
     cards.push(`<div class="tcard"><div class="lab">听说训练</div><div class="val">${spokeToday}<small> 次</small></div><div class="act" onclick="switchTab('speak')">再来一句</div></div>`);
   }
-  const gToday=P.gramCount[todayStr()]||0;
   if(gToday===0){
     cards.push(`<div class="tcard warn"><div class="lab">语法练习</div><div class="val">待完成</div><div class="act" onclick="switchTab('gram')">去闯关 →</div></div>`);
   }else{
     cards.push(`<div class="tcard"><div class="lab">语法练习</div><div class="val">${gToday}<small> 题</small></div><div class="act" onclick="switchTab('gram')">再练几题</div></div>`);
   }
-  // 昨天未达标 → 顺延提示
-  const y=dateAdd(todayStr(),-1); const yc=P.studyDays[y]||0;
-  if(yc<goal){
-    cards.push(`<div class="tcard warn"><div class="lab">昨日未达标</div><div class="val">${yc}<small>/${goal}</small></div><div class="act" onclick="switchTab('vocab')">补学顺延 →</div></div>`);
-  }
   document.getElementById('todayRow').innerHTML=cards.join('');
 }
+function nextTodayModule(){ const goal=P.dailyGoal; if(studiedToday()<goal)return 'vocab'; if(!(P.speakCount[todayStr()]||0))return 'speak'; if(!(P.gramCount[todayStr()]||0))return 'gram'; return 'vocab'; }
+function continueToday(){ switchTab(nextTodayModule()); }
 
 function renderVocabFilters(){
   let h='<div class="chip'+(state.vcat==='all'?' on':'')+'" onclick="setVCat(\'all\')">全部</div>';
@@ -1018,10 +1075,24 @@ function renderSpeak(){
   const mic=document.getElementById('micBtn'); mic.className='mic-btn'; mic.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>点击开始跟读';
 }
 function renderDashboard(){
+  const streak=streakDays(), done=studiedToday(), goal=P.dailyGoal;
+  const spoke=P.speakCount[todayStr()]||0, grammar=P.gramCount[todayStr()]||0;
+  const tasks=(done>=goal?1:0)+(spoke>0?1:0)+(grammar>0?1:0), pct=Math.round(tasks/3*100);
   document.getElementById('stDays').textContent=totalDays();
-  document.getElementById('stStreak').textContent=streakDays();
+  document.getElementById('stStreak').textContent=streak;
   document.getElementById('stMastered').textContent=masteredCount();
   document.getElementById('stSpeak').textContent=speakTotal();
+  document.getElementById('homeStreak').textContent=streak;
+  document.getElementById('coursePercent').textContent=pct+'%';
+  document.getElementById('courseOrbit').style.setProperty('--course-progress',pct+'%');
+  document.getElementById('continueDesc').textContent=tasks===3?'今日计划已经完成，可以复习生词或继续自由对话。':'下一步：'+({vocab:'完成今日高频词汇',speak:'进行一次听说跟读',gram:'完成一道语法闯关'}[nextTodayModule()]);
+  document.getElementById('streakHint').textContent=streak?'连续学习正在形成习惯，今天再完成一项吧。':'完成今天的任意学习任务，开启连续记录。';
+  document.getElementById('vocabLessonProgress').textContent=Math.min(done,goal)+' / '+goal;
+  document.getElementById('speakLessonProgress').textContent=spoke+' 次';
+  document.getElementById('gramLessonProgress').textContent=grammar+' 题';
+  document.getElementById('vocabState').textContent=done>=goal?'已完成':'今日任务';
+  document.getElementById('speakState').textContent=spoke?'已练习':'待开始';
+  document.getElementById('gramState').textContent=grammar?'已练习':'待开始';
   renderHeat();
   renderCatBars();
   renderBadges();
@@ -1180,16 +1251,24 @@ function setLevel(id){ state.level=(id==='all')?'all':Number(id); P.level=state.
 
 /* ============ 统一刷新入口 ============ */
 function renderView(name){
-  if(name==='vocab'){ renderVocabFilters(); renderFlash(); renderVocabList(); }
-  else if(name==='speak'){ renderSpeak(); renderChatScenes(); }
-  else if(name==='dash'){ renderDashboard(); }
-  else if(name==='gram'){ renderGramFilters(); renderGram(); renderGramQuiz(); renderFillFilters(); renderFill(); }
-  else if(name==='set'){
-    document.getElementById('goalInput').value=P.dailyGoal;
-    const level=LEVELS.find(l=>String(l.id)===String(P.level));
-    const focus=P.focus&&P.focus!=='all'?catName(P.focus):'综合方向';
-    document.getElementById('profileInfo').textContent=(level?level.name:'待选择')+' · '+focus;
-    renderAcct();
+  const viewMap={vocab:'viewVocab',speak:'viewSpeak',dash:'viewDash',gram:'viewGram',set:'viewSet'};
+  const view=document.getElementById(viewMap[name]);
+  if(view)view.querySelectorAll('.view-error').forEach(el=>el.remove());
+  try{
+    if(name==='vocab'){ renderVocabFilters(); renderFlash(); renderVocabList(); }
+    else if(name==='speak'){ renderSpeak(); renderChatScenes(); }
+    else if(name==='dash'){ renderDashboard(); }
+    else if(name==='gram'){ renderGramFilters(); renderGram(); renderGramQuiz(); renderFillFilters(); renderFill(); }
+    else if(name==='set'){
+      document.getElementById('goalInput').value=P.dailyGoal;
+      const level=LEVELS.find(l=>String(l.id)===String(P.level));
+      const focus=P.focus&&P.focus!=='all'?catName(P.focus):'综合方向';
+      document.getElementById('profileInfo').textContent=(level?level.name:'待选择')+' · '+focus;
+      renderAcct();
+    }
+  }catch(error){
+    console.error('render failed:',name,error);
+    if(view){ const box=document.createElement('div'); box.className='view-error'; box.innerHTML='<b>本模块暂时没有完整加载</b><span>你的学习数据仍然安全，请点击重试。</span><br><button type="button">重新加载模块</button>'; box.querySelector('button').onclick=()=>renderView(name); view.prepend(box); }
   }
 }
 function refreshAll(){ renderLevelBar(); renderToday(); renderView(state.active||'dash'); }
@@ -1199,6 +1278,7 @@ const state={ active:pageFromLocation(), vcat:'all', flipIdx:0, flipped:false, s
 
 function switchTab(name,updateUrl=true){
   const map={vocab:'viewVocab',speak:'viewSpeak',dash:'viewDash',gram:'viewGram',set:'viewSet'};
+  if(!map[name])name='dash';
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
   document.getElementById(map[name]).classList.add('on');
   document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('on'));
