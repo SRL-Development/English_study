@@ -20,7 +20,34 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - run: python -m unittest -v test_server.py
-      - run: bash -n deploy/1panel/update.sh
+      - name: Check deployment scripts
+        run: |
+          bash -n deploy/1panel/update.sh
+          bash -n deploy/cloud/install-dependencies.sh
+          bash -n deploy/docker/install.sh
+          bash -n deploy/docker/update.sh
+          bash -n deploy/nginx/configure.sh
+      - name: Validate production Compose
+        run: docker compose --env-file .env.example -f compose.server.yaml config --quiet
+      - name: Validate Nginx templates
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq nginx openssl
+          sudo mkdir -p /etc/letsencrypt/live/learn.example.com
+          sudo openssl req -x509 -nodes -newkey rsa:2048 -days 1 \
+            -subj '/CN=learn.example.com' \
+            -keyout /etc/letsencrypt/live/learn.example.com/privkey.pem \
+            -out /etc/letsencrypt/live/learn.example.com/fullchain.pem
+          sed -e 's/__SITE_DOMAIN__/learn.example.com/g' \
+              -e 's/__ADMIN_DOMAIN__/admin.example.com/g' \
+              deploy/nginx/english-study-http.conf.template \
+            | sudo tee /etc/nginx/conf.d/english-study.conf >/dev/null
+          sudo nginx -t
+          sed -e 's/__SITE_DOMAIN__/learn.example.com/g' \
+              -e 's/__ADMIN_DOMAIN__/admin.example.com/g' \
+              deploy/nginx/english-study-https.conf.template \
+            | sudo tee /etc/nginx/conf.d/english-study.conf >/dev/null
+          sudo nginx -t
 
   docker:
     needs: test

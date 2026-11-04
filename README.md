@@ -19,7 +19,8 @@
 
 支持以下服务端部署：
 
-- Docker Compose（Linux/Windows，推荐）
+- 云主机 Docker Compose + 宿主机 Nginx（生产环境推荐）
+- Docker Compose（Linux/Windows）
 - Linux 原生 Gunicorn + systemd
 - Windows 原生 Waitress + 开机计划任务
 
@@ -64,7 +65,9 @@ npx pyright
 
 ## 生产部署
 
-推荐使用 Gunicorn，仅监听本机端口，再由 Nginx 或宝塔反向代理：
+云主机生产部署使用 `compose.server.yaml`，容器仅监听本机端口，再由宿主机 Nginx
+提供双域名 HTTPS。完整的一键安装、升级与回滚说明见
+[`deploy/docker/README.md`](./deploy/docker/README.md)。原生 Python 部署推荐使用 Gunicorn：
 
 ```bash
 gunicorn -w 2 --threads 4 --timeout 90 -b 127.0.0.1:5000 server:app

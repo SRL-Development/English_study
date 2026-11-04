@@ -31,22 +31,31 @@ APP_UTC_OFFSET_HOURS=8
 
 微信、讯飞、LLM 和邮件配置按实际开通情况填写。`.env`、数据库和缓存均不得提交到 Git。
 
-## 二、Docker 部署（推荐）
+## 二、云主机 Docker + Nginx 部署（推荐）
 
-要求：Docker Engine 与 Docker Compose 插件。
+生产环境使用 `compose.server.yaml`，不在服务器构建源码。宿主机 Nginx 公开 `80/443`，
+USER/ADMIN 容器只绑定 `127.0.0.1:5000/5001`。数据库和 TTS 缓存保存在命名卷
+`english-study-data`，重建容器不会删除。
+
+把发布包解压到 `/opt/english-study` 后执行：
 
 ```bash
-docker compose pull user admin
-docker compose up -d --force-recreate user admin
-docker compose ps
-curl http://127.0.0.1:5000/api/health
-curl http://127.0.0.1:5001/api/health
+cd /opt/english-study
+sudo bash deploy/cloud/install-dependencies.sh
+cp .env.example .env
+nano .env
+sudo bash deploy/docker/install.sh
+sudo bash deploy/nginx/configure.sh
 ```
 
-用户平台映射到 `127.0.0.1:5000`，管理平台映射到 `127.0.0.1:5001`。数据库和 TTS 缓存保存在命名卷
-`english-study-data` 中，重建容器不会删除。不要执行 `docker compose down -v`，除非明确要删除数据。
+依赖脚本支持 Ubuntu/Debian 以及使用 DNF/YUM 的主流 RPM 系统，并从 Docker 官方软件源
+安装 Engine 与 Compose 插件。配置 HTTPS 前，必须先把 `SITE_DOMAIN`、`ADMIN_DOMAIN` 的
+DNS A 记录指向服务器，并在阿里云安全组开放 TCP `22/80/443`。
 
-### Docker 自动 HTTPS
+容器启用了只读根文件系统、最小权限、PID 限制、健康检查与 Docker 日志轮转。不要开放
+`5000/5001`，也不要执行 `docker compose down -v`。
+
+### 备选：Docker 内 Caddy 自动 HTTPS
 
 先把 `SITE_DOMAIN`、`ADMIN_DOMAIN` 的 DNS A 记录都指向服务器，并开放 `80/443`：
 
@@ -54,8 +63,7 @@ curl http://127.0.0.1:5001/api/health
 docker compose -f compose.yaml -f compose.https.yaml up -d
 ```
 
-Caddy 会为两个域名分别申请证书。使用 1Panel、宝塔或已有 Nginx 时不要启动 Caddy：
-用户域名反向代理到 `127.0.0.1:5000`，管理域名反向代理到 `127.0.0.1:5001`。
+Caddy 会为两个域名分别申请证书。采用本指南的宿主机 Nginx 时不要启动 Caddy。
 
 ### Portainer 管理页面
 
@@ -77,7 +85,8 @@ ssh -L 9443:127.0.0.1:9443 root@服务器IP
 sudo bash deploy/docker/update.sh
 ```
 
-脚本会先在线备份 SQLite，再拉取 `main` 和两个镜像、重建容器并执行双端健康检查。
+脚本会先在线备份 SQLite，再拉取两个稳定镜像、重建容器并核对角色、版本、构建号；
+健康检查失败会自动回滚。服务器不需要 Git，也不会执行 `git pull`。
 
 每次推送 `main` 后，GitHub Actions 还会运行后端测试并发布镜像：
 
@@ -93,17 +102,16 @@ USER_IMAGE=ghcr.io/shirenliang12-source/english-study-user:latest
 ADMIN_IMAGE=ghcr.io/shirenliang12-source/english-study-admin:latest
 ```
 
-然后更新：
+手动更新：
 
 ```bash
-docker compose pull user admin
-docker compose up -d --force-recreate user admin
+sudo bash deploy/docker/update.sh
 ```
 
 阿里云访问 GHCR 不稳定时，可将两个镜像同步到阿里云 ACR，再把 `USER_IMAGE`、
 `ADMIN_IMAGE` 改为对应的 ACR 地址。
 
-### 1Panel 图形界面
+### 旧方案：1Panel 图形界面
 
 在 1Panel 的「容器 → 编排」中新建编排，使用仓库里的 `compose.1panel.yaml`，并在同一
 编排目录创建 `.env`（可从 `.env.example` 复制）。首次部署或后续升级都执行：
