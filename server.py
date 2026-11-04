@@ -79,6 +79,7 @@ APP_ROLE = os.environ.get("APP_ROLE", "all").strip().lower()
 if APP_ROLE not in {"all", "user", "admin"}:
     APP_ROLE = "all"
 APP_VERSION = os.environ.get("APP_VERSION", "dev").strip() or "dev"
+APP_BUILD = os.environ.get("APP_BUILD", "dev").strip() or "dev"
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "").strip()
 EMAIL_SIGNING_SECRET = os.environ.get("MAIL_SECRET", "").strip() or ADMIN_PASSWORD
 WX_APP_ID = os.environ.get("WX_APP_ID", "")
@@ -434,6 +435,8 @@ def _security_headers(resp):
     resp.headers["X-Frame-Options"] = "DENY"
     resp.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     resp.headers["Permissions-Policy"] = "camera=(), geolocation=()"
+    resp.headers["X-App-Version"] = APP_VERSION
+    resp.headers["X-App-Build"] = APP_BUILD[:12]
     if request.path.startswith("/api/") and request.path != "/api/tts":
         resp.headers["Cache-Control"] = "no-store"
     return resp
@@ -1114,7 +1117,13 @@ def api_health():
     except sqlite3.Error:
         return jsonify({"status": "error", "database": "unavailable"}), 503
     return jsonify(
-        {"status": "ok", "database": "ok", "role": APP_ROLE, "version": APP_VERSION}
+        {
+            "status": "ok",
+            "database": "ok",
+            "role": APP_ROLE,
+            "version": APP_VERSION,
+            "build": APP_BUILD,
+        }
     )
 
 

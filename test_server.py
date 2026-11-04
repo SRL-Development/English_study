@@ -39,6 +39,8 @@ class ServerApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json["status"], "ok")
         self.assertEqual(response.json["version"], server.APP_VERSION)
+        self.assertEqual(response.json["build"], server.APP_BUILD)
+        self.assertEqual(response.headers["X-App-Version"], server.APP_VERSION)
         self.assertEqual(response.headers["X-Content-Type-Options"], "nosniff")
         self.assertNotIn("Access-Control-Allow-Origin", response.headers)
 
