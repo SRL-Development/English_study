@@ -78,6 +78,7 @@ ADMIN_HTML = os.path.join(BASE, "admin.html")
 APP_ROLE = os.environ.get("APP_ROLE", "all").strip().lower()
 if APP_ROLE not in {"all", "user", "admin"}:
     APP_ROLE = "all"
+APP_VERSION = os.environ.get("APP_VERSION", "dev").strip() or "dev"
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "").strip()
 EMAIL_SIGNING_SECRET = os.environ.get("MAIL_SECRET", "").strip() or ADMIN_PASSWORD
 WX_APP_ID = os.environ.get("WX_APP_ID", "")
@@ -1050,9 +1051,12 @@ def api_admin_logout():
 
 # ----------------------------- 静态托管 -----------------------------
 def send_html(path):
-    """保留 send_file 的 ETag/条件请求，同时允许 Flask-Compress 处理 HTML。"""
-    response = send_file(path, conditional=True, max_age=0)
+    """HTML 始终重新验证，避免镜像升级后浏览器或反代继续显示旧页面。"""
+    response = send_file(path, conditional=False, max_age=0, etag=False)
     response.direct_passthrough = False
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
     return response
 
 
@@ -1109,7 +1113,9 @@ def api_health():
         conn.close()
     except sqlite3.Error:
         return jsonify({"status": "error", "database": "unavailable"}), 503
-    return jsonify({"status": "ok", "database": "ok", "role": APP_ROLE})
+    return jsonify(
+        {"status": "ok", "database": "ok", "role": APP_ROLE, "version": APP_VERSION}
+    )
 
 
 # =====================================================================

@@ -9,7 +9,7 @@
 {$ADMIN_DOMAIN} {
     encode zstd gzip
 
-    reverse_proxy admin:5000 {
+    reverse_proxy admin:5001 {
         flush_interval -1
     }
 }

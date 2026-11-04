@@ -28,8 +28,10 @@ jobs:
       matrix:
         include:
           - role: user
+            port: 5000
             image: ghcr.io/shirenliang12-source/english-study-user
           - role: admin
+            port: 5001
             image: ghcr.io/shirenliang12-source/english-study-admin
     steps:
       - uses: actions/checkout@v7
@@ -50,8 +52,33 @@ jobs:
         with:
           context: .
           push: true
-          build-args: APP_ROLE=${{ matrix.role }}
+          build-args: |
+            APP_ROLE=${{ matrix.role }}
+            APP_PORT=${{ matrix.port }}
+            APP_VERSION=${{ github.sha }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=${{ matrix.role }}
           cache-to: type=gha,mode=max,scope=${{ matrix.role }}
+      - name: Smoke test published image
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          docker pull "${{ matrix.image }}:latest"
+          docker run -d --name english-study-smoke \
+            -e ADMIN_PASSWORD=smoke-test-only \
+            -p "127.0.0.1:${{ matrix.port }}:${{ matrix.port }}" \
+            "${{ matrix.image }}:latest"
+          cleanup() {
+            docker logs english-study-smoke || true
+            docker rm -f english-study-smoke || true
+          }
+          trap cleanup EXIT
+          for attempt in {1..20}; do
+            if curl -fsS "http://127.0.0.1:${{ matrix.port }}/api/health" \
+              | grep -q '"role":"${{ matrix.role }}"'; then
+              exit 0
+            fi
+            sleep 2
+          done
+          exit 1

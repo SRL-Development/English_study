@@ -5,7 +5,7 @@
 ```text
 用户域名 / 微信小程序 ─→ user:5000 ─┐
                                      ├→ english-study-data
-管理后台独立域名 ──────→ admin:5000 ─┘
+管理后台独立域名 ──────→ admin:5001 ─┘
 ```
 
 生产环境只公开 `80/443`。宿主机的 `5000/5001` 都只监听 `127.0.0.1`，不得直接对全网开放。
@@ -112,6 +112,11 @@ docker compose up -d --force-recreate user admin
 docker compose -f compose.1panel.yaml pull user admin
 docker compose -f compose.1panel.yaml up -d --force-recreate user admin
 ```
+
+注意：1Panel 会把编排内容保存在面板数据库中，不会自动跟随 GitHub 文件变化。仓库的
+`compose.1panel.yaml` 更新后，必须在 1Panel 编排编辑器中重新粘贴最新内容。新版中
+Admin 容器内外均使用 `5001`，映射应显示为 `127.0.0.1:5001:5001`，并通过
+`pull_policy: always` 避免只重启旧镜像。
 
 在 1Panel「网站」中创建两个反向代理网站：用户域名代理到
 `http://127.0.0.1:5000`，管理域名代理到 `http://127.0.0.1:5001`，然后分别申请

@@ -38,6 +38,7 @@ class ServerApiTests(unittest.TestCase):
         response = self.client.get("/api/health")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json["status"], "ok")
+        self.assertEqual(response.json["version"], server.APP_VERSION)
         self.assertEqual(response.headers["X-Content-Type-Options"], "nosniff")
         self.assertNotIn("Access-Control-Allow-Origin", response.headers)
 
@@ -45,6 +46,8 @@ class ServerApiTests(unittest.TestCase):
         login = self.client.get("/login", headers={"Accept-Encoding": "gzip"})
         self.assertEqual(login.status_code, 200)
         self.assertEqual(login.headers.get("Content-Encoding"), "gzip")
+        self.assertIn("no-store", login.headers.get("Cache-Control", ""))
+        self.assertNotIn("ETag", login.headers)
         self.assertEqual(self.client.get("/register").status_code, 200)
         legacy = self.client.get("/admin")
         self.assertEqual(legacy.status_code, 302)

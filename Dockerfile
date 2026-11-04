@@ -1,11 +1,15 @@
 FROM python:3.12-slim
 
 ARG APP_ROLE=all
+ARG APP_PORT=5000
+ARG APP_VERSION=dev
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     APP_DATA_DIR=/data \
-    APP_ROLE=${APP_ROLE}
+    APP_ROLE=${APP_ROLE} \
+    APP_PORT=${APP_PORT} \
+    APP_VERSION=${APP_VERSION}
 
 WORKDIR /app
 
@@ -25,9 +29,9 @@ RUN groupadd --system --gid 10001 app \
 
 USER app
 
-EXPOSE 5000
+EXPOSE ${APP_PORT}
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/api/health', timeout=3)"
+    CMD python -c "import os,urllib.request; urllib.request.urlopen('http://127.0.0.1:'+os.environ.get('APP_PORT','5000')+'/api/health', timeout=3)"
 
-CMD ["gunicorn", "--workers", "2", "--threads", "4", "--timeout", "90", "--bind", "0.0.0.0:5000", "server:app"]
+CMD ["sh", "-c", "exec gunicorn --workers 2 --threads 4 --timeout 90 --bind 0.0.0.0:${APP_PORT} server:app"]
