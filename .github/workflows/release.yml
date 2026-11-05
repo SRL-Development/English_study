@@ -117,6 +117,19 @@ jobs:
           for attempt in {1..20}; do
             if curl -fsS "http://127.0.0.1:${{ matrix.port }}/api/health" \
               | grep -q '"role":"${{ matrix.role }}"'; then
+              if [[ "${{ matrix.role }}" == "user" ]]; then
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids" \
+                  | grep -q 'EnglishLab Family'
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/kindergarten" \
+                  | grep -q '动画英语岛'
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/primary" \
+                  | grep -q '英语挑战世界'
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/assets/kids-common.js" \
+                  | grep -q 'KidsAPI'
+              else
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/admin/login" \
+                  | grep -q '运营控制台'
+              fi
               exit 0
             fi
             sleep 2

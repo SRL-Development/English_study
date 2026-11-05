@@ -70,6 +70,8 @@
   /* card */
   .card{background:rgba(255,255,255,.96);border:1px solid rgba(222,225,235,.92);border-radius:20px;box-shadow:var(--shadow);padding:20px}
   .home-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(250px,.55fr);gap:14px;margin-bottom:18px}
+  .family-banner{display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;background:linear-gradient(120deg,#e5f7ff,#fff2ce 54%,#efe7ff);border:1px solid rgba(106,121,167,.15);border-radius:22px;padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+  .family-banner:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-55px;top:-75px;background:rgba(255,255,255,.48)}.family-copy{position:relative;z-index:1}.family-copy .kicker{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#3676b6;font-weight:800}.family-copy h3{font-size:19px;margin:4px 0}.family-copy p{font-size:12px;color:var(--sub);margin:0}.family-actions{display:flex;align-items:center;gap:9px;position:relative;z-index:1}.family-actions span{font-size:36px}.family-actions a{display:inline-flex;align-items:center;min-height:42px;padding:9px 14px;border-radius:12px;background:#172d58;color:#fff;text-decoration:none;font-size:12px;font-weight:750;box-shadow:0 8px 20px rgba(23,45,88,.2)}
   .continue-card{display:flex;align-items:center;justify-content:space-between;gap:18px;background:linear-gradient(145deg,#fff,#f7f6ff)}
   .continue-kicker{font-size:11px;letter-spacing:1.1px;text-transform:uppercase;color:var(--pri);font-weight:800}.continue-card h3{font-size:20px;margin:5px 0 5px;letter-spacing:-.25px}.continue-card p{font-size:13px;color:var(--sub);margin:0}.continue-action{display:flex;align-items:center;gap:10px;margin-top:15px}.primary-action{border:0;border-radius:12px;background:linear-gradient(135deg,#3e36bd,var(--pri-2));color:#fff;padding:11px 16px;font:700 13px inherit;cursor:pointer;box-shadow:0 9px 22px rgba(79,70,229,.2)}.lesson-time{font-size:12px;color:var(--sub)}
   .course-orbit{width:108px;height:108px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--pri) var(--course-progress,0%),#e5e4f5 0);position:relative;flex:none}.course-orbit:after{content:"";position:absolute;inset:9px;border-radius:50%;background:#fff}.course-orbit b{position:relative;z-index:1;font-size:24px;color:var(--pri)}
@@ -183,7 +185,7 @@
     .tabs button.on{background:#fff;border-color:var(--line);box-shadow:0 5px 18px rgba(16,24,40,.06)}
     .stat-grid{grid-template-columns:repeat(4,1fr)}
   }
-  @media(max-width:760px){.home-layout{grid-template-columns:1fr}.lesson-grid{grid-template-columns:1fr}.today-main{align-items:flex-start;flex-direction:column}.today-cta{width:100%}.today-progress-track{width:100%}.today-progress{width:100%}.continue-card{align-items:flex-start}.course-orbit{width:86px;height:86px}.profile-grid{grid-template-columns:1fr}.page-head h2{font-size:22px}.page-head{margin-top:6px}}
+  @media(max-width:760px){.home-layout{grid-template-columns:1fr}.lesson-grid{grid-template-columns:1fr}.family-banner{grid-template-columns:1fr}.family-actions{justify-content:space-between}.today-main{align-items:flex-start;flex-direction:column}.today-cta{width:100%}.today-progress-track{width:100%}.today-progress{width:100%}.continue-card{align-items:flex-start}.course-orbit{width:86px;height:86px}.profile-grid{grid-template-columns:1fr}.page-head h2{font-size:22px}.page-head{margin-top:6px}}
   @media(max-width:460px){.wrap{padding:16px 16px 98px}.today{padding:20px;border-radius:22px}.today-copy h3{font-size:23px}.today-row{display:grid;grid-template-columns:1fr}.tcard{min-width:0;display:grid;grid-template-columns:1fr auto;align-items:center;padding:10px 12px}.tcard .lab,.tcard .val{grid-column:1}.tcard .val{font-size:18px}.tcard .act{grid-column:2;grid-row:1/span 2;margin:0}.continue-card{display:block}.course-orbit{margin-top:18px}.topbar{margin-bottom:13px}.brand p{max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
   /* grammar */
   .gcard{background:var(--bg);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:8px}
@@ -403,6 +405,10 @@
   <!-- 学习中心 -->
   <div class="view on" id="viewDash">
     <div class="page-head"><div><span class="eyebrow">Learning overview</span><h2>学习中心</h2><p>看见每天的积累，按节奏完成今天的学习任务。</p></div></div>
+    <div class="family-banner">
+      <div class="family-copy"><div class="kicker">EnglishLab Family</div><h3>为孩子开启专属英语世界</h3><p>幼儿园动画互动 · 小学游戏闯关 · 家长查看成长进度</p></div>
+      <div class="family-actions"><span>🦊🚀</span><a href="/kids">进入儿童学习中心 →</a></div>
+    </div>
     <div class="home-layout">
       <div class="card continue-card">
         <div><div class="continue-kicker">Recommended next</div><h3>继续你的职场英语路径</h3><p id="continueDesc">从高频词汇开始，再完成一次真实场景表达。</p><div class="continue-action"><button class="primary-action" onclick="continueToday()">继续学习</button><span class="lesson-time">约 5 分钟</span></div></div>

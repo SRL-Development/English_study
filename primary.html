@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#314bc0">
+<title>英语挑战世界 · EnglishLab Family</title>
+<link rel="stylesheet" href="/assets/kids.css">
+</head>
+<body>
+<div class="learn-shell kids-shell">
+  <div class="learn-top"><header class="kids-top"><a class="kids-brand" href="/kids"><span class="kids-mark">🚀</span><span>英语挑战世界<small>learn · quest · level up</small></span></a><div class="top-actions"><div class="reward-row"><span class="reward" id="starCount">⭐ 0</span><span class="reward" id="coinCount">🪙 0</span><span class="reward" id="levelCount">🏆 0</span></div><div class="learner-chip"><span class="mini-avatar" id="childAvatar">🦊</span><span id="childName">挑战者</span></div><a class="icon-btn" href="/kids" title="家长中心">⌂</a></div></header></div>
+  <main class="learn-main">
+    <section class="quest-hero"><div><div class="eyebrow">English Quest Academy</div><h1 id="heroGreeting">准备好今天的挑战了吗？</h1><p>完成词汇、听力、拼写、句子和阅读任务，解锁新的英语世界。</p></div><div class="quest-avatar">🧭</div></section>
+    <section class="learn-intro"><div><h1>冒险地图</h1><p>每个世界有 4 个训练关和 1 个综合 Boss 关。</p></div><div class="overall"><div class="overall-top"><span>总进度</span><span id="progressText">0 / 15</span></div><div class="progress-track"><i id="progressBar"></i></div></div></section>
+    <section class="quest-map" id="questMap"></section>
+  </main>
+</div>
+
+<div class="modal-mask" id="challengeModal" role="dialog" aria-modal="true">
+  <div class="modal activity-modal challenge-card">
+    <div class="activity-head"><div><small id="challengeProgress">挑战 1 / 1</small><br><b id="challengeName">任务名称</b></div><button type="button" class="close-x" onclick="closeChallenge()" aria-label="关闭">×</button></div>
+    <div class="activity-body" id="challengeBody"></div>
+  </div>
+</div>
+<div class="loading" id="kidsLoading"><div class="loader-card"><div class="loader-friend">🚀</div><b>正在加载挑战地图…</b></div></div>
+<div class="toast" id="kidsToast"></div>
+<script src="/assets/kids-common.js"></script>
+<script>
+const WORLDS=[
+ {id:'campus',name:'校园新手村',desc:'问候、物品与课堂英语',icon:'🎒',levels:[
+  {id:'p-hello',title:'问候信号',type:'choice',question:'“Nice to meet you” 应该怎么回应？',answer:'Nice to meet you, too.',options:['Good night.','Nice to meet you, too.','I am a pencil.']},
+  {id:'p-school-listen',title:'听力雷达',type:'listen',question:'听句子，选择提到的物品。',speech:'Please open your English book.',answer:'book',options:['book','ruler','desk']},
+  {id:'p-pencil',title:'拼词工厂',type:'spell',question:'根据提示拼出单词',context:'铅笔 · /ˈpensl/',answer:'pencil'},
+  {id:'p-sentence',title:'句子建造',type:'sentence',question:'把单词排成正确的句子',answer:'This is my school bag.',words:['school','This','bag.','is','my']},
+  {id:'p-campus-boss',title:'校园 Boss',boss:true,questions:[
+   {type:'choice',question:'老师说 “Good morning!” 你应该回答？',answer:'Good morning!',options:['Good morning!','Goodbye!','Thank you!']},
+   {type:'spell',question:'拼出“橡皮”',context:'e _ a s e r',answer:'eraser'},
+   {type:'sentence',question:'组成正确句子',answer:'May I come in?',words:['come','May','in?','I']}
+  ]}
+ ]},
+ {id:'city',name:'城市任务站',desc:'生活场景、方向与日常交流',icon:'🏙️',levels:[
+  {id:'p-food',title:'餐厅点单',type:'choice',question:'你想要一杯水，应该说？',answer:'May I have some water?',options:['Where is the bus?','May I have some water?','I can fly.']},
+  {id:'p-city-listen',title:'方向听力',type:'listen',question:'听句子，判断要去哪里。',speech:'Let us meet at the library after school.',answer:'library',options:['hospital','library','supermarket']},
+  {id:'p-market',title:'拼写市场',type:'spell',question:'拼出“市场”',context:'m a r _ e t',answer:'market'},
+  {id:'p-city-story',title:'阅读侦探',type:'story',question:'Where is Mia going?',context:'Mia has a shopping list. She takes a bag and walks to the supermarket with her dad.',answer:'supermarket',options:['school','supermarket','zoo']},
+  {id:'p-city-boss',title:'城市 Boss',boss:true,questions:[
+   {type:'listen',question:'听句子，选择正确方向。',speech:'Turn left at the traffic lights.',answer:'left',options:['right','left','straight']},
+   {type:'choice',question:'问路时应该说？',answer:'Excuse me, where is the park?',options:['I like the park.','Excuse me, where is the park?','The park is green.']},
+   {type:'sentence',question:'组成正确句子',answer:'The bank is next to the cafe.',words:['next','The','the','is','bank','to','cafe.']}
+  ]}
+ ]},
+ {id:'space',name:'星际英语基地',desc:'阅读、表达与综合能力升级',icon:'🪐',levels:[
+  {id:'p-space-vocab',title:'太空词库',type:'choice',question:'Which word means “宇航员”？',answer:'astronaut',options:['astronaut','airport','artist']},
+  {id:'p-space-listen',title:'任务广播',type:'listen',question:'听广播，飞船什么时候出发？',speech:'The spaceship will leave at nine o clock.',answer:'nine o’clock',options:['seven o’clock','nine o’clock','twelve o’clock']},
+  {id:'p-planet',title:'行星拼写',type:'spell',question:'拼出“行星”',context:'p l a _ e t',answer:'planet'},
+  {id:'p-space-story',title:'星球故事',type:'story',question:'Why does Leo wear a helmet?',context:'Leo steps onto a new planet. There is no air to breathe, so he keeps his helmet on.',answer:'There is no air.',options:['It is raining.','There is no air.','He is sleepy.']},
+  {id:'p-space-boss',title:'终极 Boss',boss:true,questions:[
+   {type:'choice',question:'Choose the best sentence.',answer:'We are exploring a new planet.',options:['We exploring planet.','We are exploring a new planet.','We is explore a planet.']},
+   {type:'spell',question:'拼出“任务”',context:'m i s s _ o n',answer:'mission'},
+   {type:'story',question:'What will the team do next?',context:'The team finds a bright blue river. They take a picture and mark it on their map.',answer:'They will continue exploring.',options:['They will go to sleep.','They will continue exploring.','They will return to school.']}
+  ]}
+ ]}
+];
+let child=null,progress=null,activeLevel=null,questions=[],questionIndex=0,attempts=0,correctCount=0,selectedWords=[],levelStarted=0;
+const flatLevels=()=>WORLDS.flatMap(w=>w.levels);
+function pstate(){return progress.primary;}
+function isUnlocked(id){const levels=flatLevels(),idx=levels.findIndex(x=>x.id===id);return idx===0||pstate().completed.includes(levels[idx-1].id)||pstate().completed.includes(id);}
+function renderHeader(){const p=pstate();document.getElementById('childAvatar').textContent=KidsAPI.avatar(child.avatar);document.getElementById('childName').textContent=child.nickname;document.getElementById('starCount').textContent='⭐ '+Number(p.stars||0);document.getElementById('coinCount').textContent='🪙 '+Number(p.coins||0);document.getElementById('levelCount').textContent='🏆 '+p.completed.length;document.getElementById('heroGreeting').textContent=child.nickname+'，准备好今天的挑战了吗？';document.getElementById('progressText').textContent=p.completed.length+' / '+flatLevels().length;document.getElementById('progressBar').style.width=(p.completed.length/flatLevels().length*100)+'%';}
+function renderMap(){const p=pstate();document.getElementById('questMap').innerHTML=WORLDS.map((world,wi)=>`<article class="quest-world"><div class="quest-world-head"><div class="quest-world-icon">${world.icon}</div><div><h2>世界 ${wi+1} · ${world.name}</h2><p>${world.desc}</p></div></div><div class="quest-nodes">${world.levels.map((level,i)=>{const done=p.completed.includes(level.id),unlock=isUnlocked(level.id),score=p.scores[level.id]||0;return`<button class="quest-node ${done?'done':''} ${level.boss?'boss':''}" ${unlock?'':'disabled'} onclick="startChallenge('${level.id}')"><span class="lock">${done?'✓':unlock?'':'🔒'}</span><span class="num">${level.boss?'⚔️':i+1}</span><b>${level.title}</b><small>${level.boss?'综合 Boss':typeLabel(level.type)}</small><div class="node-stars">${done?scoreStars(score):'☆☆☆'}</div></button>`;}).join('')}</div></article>`).join('');renderHeader();}
+function typeLabel(type){return({choice:'情景选择',listen:'听力挑战',spell:'拼词挑战',sentence:'句子建造',story:'阅读侦探'})[type]||'综合挑战';}
+function scoreStars(score){const n=score>=90?3:score>=70?2:1;return'★'.repeat(n)+'☆'.repeat(3-n);}
+function startChallenge(id){activeLevel=flatLevels().find(x=>x.id===id);if(!activeLevel)return;questions=activeLevel.questions||[activeLevel];questionIndex=0;attempts=0;correctCount=0;selectedWords=[];levelStarted=Date.now();document.getElementById('challengeName').textContent=activeLevel.title;document.getElementById('challengeModal').classList.add('show');KidsAPI.event(child.id,'lesson_start',id);renderQuestion();}
+function closeChallenge(){document.getElementById('challengeModal').classList.remove('show');activeLevel=null;}
+function currentQuestion(){return questions[questionIndex];}
+function renderQuestion(){const q=currentQuestion(),body=document.getElementById('challengeBody');selectedWords=[];document.getElementById('challengeProgress').textContent=`挑战 ${questionIndex+1} / ${questions.length} · ${typeLabel(q.type)}`;let action='';if(q.type==='choice'||q.type==='story'||q.type==='listen'){action=`<div class="choice-grid">${q.options.map((x,i)=>`<button class="choice" onclick="answerChoice(this,${i})">${KidsAPI.escapeHTML(x)}</button>`).join('')}</div>`;}else if(q.type==='spell'){action=`<input class="answer-input" id="answerInput" autocomplete="off" placeholder="输入英文单词"><div class="activity-actions" style="margin-top:14px"><button class="btn btn-primary" onclick="submitText()">提交答案</button></div>`;}else if(q.type==='sentence'){action=`<div class="sentence-build" id="sentenceBuild"><span style="color:#8793a6;font-size:12px">点击下方单词组成句子</span></div><div class="word-bank">${q.words.map((x,i)=>`<button class="word-chip" id="word-${i}" onclick="pickWord(${i})">${KidsAPI.escapeHTML(x)}</button>`).join('')}</div><div class="activity-actions"><button class="btn btn-ghost" onclick="clearSentence()">重排</button><button class="btn btn-primary" onclick="submitSentence()">检查句子</button></div>`;}body.innerHTML=`<div class="challenge-type">${typeLabel(q.type)}</div><div class="challenge-question">${KidsAPI.escapeHTML(q.question)}</div>${q.context?`<div class="challenge-context">${KidsAPI.escapeHTML(q.context)}</div>`:''}${q.type==='listen'?'<button class="btn btn-ghost" onclick="playCurrent()" style="margin-bottom:18px">🔊 播放英语</button>':''}${action}<div class="feedback" id="feedback"></div>`;if(q.type==='listen')setTimeout(playCurrent,300);if(q.type==='spell')setTimeout(()=>document.getElementById('answerInput')?.focus(),100);}
+function playCurrent(){const q=currentQuestion();KidsAPI.speak(q.speech||q.answer,.78);}
+function answerChoice(btn,index){const q=currentQuestion(),value=q.options[index],ok=value===q.answer;document.querySelectorAll('.choice').forEach(x=>x.disabled=true);btn.classList.add(ok?'correct':'wrong');if(!ok){attempts++;document.querySelectorAll('.choice').forEach((x,i)=>{if(q.options[i]===q.answer)x.classList.add('correct');});}finishQuestion(ok);}
+function normalizeText(v){return String(v||'').toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9' ]/g,'').replace(/\s+/g,' ').trim();}
+function submitText(){const q=currentQuestion(),input=document.getElementById('answerInput'),ok=normalizeText(input.value)===normalizeText(q.answer);if(!ok)attempts++;input.style.borderColor=ok?'var(--mint)':'var(--coral)';finishQuestion(ok);}
+function pickWord(i){const q=currentQuestion();if(selectedWords.includes(i))return;selectedWords.push(i);document.getElementById('word-'+i).classList.add('used');document.getElementById('sentenceBuild').innerHTML=selectedWords.map(x=>`<button class="word-chip" onclick="removeWord(${x})">${KidsAPI.escapeHTML(q.words[x])}</button>`).join('');}
+function removeWord(i){selectedWords=selectedWords.filter(x=>x!==i);document.getElementById('word-'+i).classList.remove('used');const q=currentQuestion();document.getElementById('sentenceBuild').innerHTML=selectedWords.length?selectedWords.map(x=>`<button class="word-chip" onclick="removeWord(${x})">${KidsAPI.escapeHTML(q.words[x])}</button>`).join(''):'<span style="color:#8793a6;font-size:12px">点击下方单词组成句子</span>';}
+function clearSentence(){selectedWords=[];document.querySelectorAll('.word-chip').forEach(x=>x.classList.remove('used'));document.getElementById('sentenceBuild').innerHTML='<span style="color:#8793a6;font-size:12px">点击下方单词组成句子</span>';}
+function submitSentence(){const q=currentQuestion(),value=selectedWords.map(i=>q.words[i]).join(' '),ok=normalizeText(value)===normalizeText(q.answer);if(!ok)attempts++;finishQuestion(ok);}
+function finishQuestion(ok){const f=document.getElementById('feedback');if(ok){correctCount++;f.textContent='正确！Excellent!';f.className='feedback ok';KidsAPI.speak('Excellent!',.9);}else{f.textContent='这次还差一点。正确答案：'+currentQuestion().answer;f.className='feedback no';KidsAPI.speak(currentQuestion().answer,.72);}document.querySelectorAll('button,input').forEach(x=>{if(x.closest('#challengeBody'))x.disabled=true;});setTimeout(()=>{questionIndex++;if(questionIndex<questions.length)renderQuestion();else completeLevel();},1250);}
+async function completeLevel(){const p=pstate(),score=Math.max(60,Math.round(correctCount/questions.length*100)-attempts*5),stars=score>=90?3:score>=70?2:1,first=!p.completed.includes(activeLevel.id);if(first){p.completed.push(activeLevel.id);p.stars=Number(p.stars||0)+stars;p.coins=Number(p.coins||0)+10+stars*5;}p.scores[activeLevel.id]=Math.max(Number(p.scores[activeLevel.id]||0),score);progress.activityDays[KidsAPI.today()]=Number(progress.activityDays[KidsAPI.today()]||0)+1;await KidsAPI.saveProgress(child.id,progress);await KidsAPI.event(child.id,'challenge_complete',activeLevel.id,{score,duration:Math.round((Date.now()-levelStarted)/1000),metadata:{stars,boss:!!activeLevel.boss}});document.getElementById('challengeProgress').textContent='任务完成';document.getElementById('challengeBody').innerHTML=`<div class="reward-burst">${activeLevel.boss?'🏆':'⭐'}</div><h2 class="activity-title">${activeLevel.boss?'Boss 挑战成功！':'关卡完成！'}</h2><p class="activity-prompt">得分 <b>${score}</b> · 获得 ${stars} 颗星和 ${first?10+stars*5:0} 枚金币</p><div class="node-stars" style="font-size:25px">${scoreStars(score)}</div><div class="activity-actions" style="margin-top:22px"><button class="btn btn-primary" onclick="finishLevel()">返回冒险地图</button></div>`;renderHeader();}
+function finishLevel(){closeChallenge();renderMap();KidsAPI.toast('下一关已解锁！');}
+async function boot(){try{child=await KidsAPI.selectedChild('primary');if(!child)return;progress=KidsAPI.normalizeProgress(await KidsAPI.loadProgress(child.id));renderMap();}catch(e){KidsAPI.toast(e.message);setTimeout(()=>location.href='/kids',1000);}finally{KidsAPI.showLoading(false);}}
+document.getElementById('challengeModal').addEventListener('click',e=>{if(e.target.id==='challengeModal')closeChallenge();});
+boot();
+</script>
+</body>
+</html>

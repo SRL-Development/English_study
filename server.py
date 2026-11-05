@@ -75,6 +75,11 @@ os.makedirs(os.path.dirname(DB), exist_ok=True)
 HTML = os.path.join(BASE, "english-learning.html")
 HTML_FALLBACK = os.path.join(BASE, "index.html")
 ADMIN_HTML = os.path.join(BASE, "admin.html")
+KIDS_HUB_HTML = os.path.join(BASE, "kids-hub.html")
+KINDERGARTEN_HTML = os.path.join(BASE, "kindergarten.html")
+PRIMARY_HTML = os.path.join(BASE, "primary.html")
+KIDS_CSS = os.path.join(BASE, "kids.css")
+KIDS_COMMON_JS = os.path.join(BASE, "kids-common.js")
 APP_ROLE = os.environ.get("APP_ROLE", "all").strip().lower()
 if APP_ROLE not in {"all", "user", "admin"}:
     APP_ROLE = "all"
@@ -196,6 +201,51 @@ def init_db():
     )
     c.execute(
         "CREATE INDEX IF NOT EXISTS idx_activity_date ON user_activity(activity_date)"
+    )
+    c.execute(
+        """CREATE TABLE IF NOT EXISTS child_profiles(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            parent_user_id INTEGER NOT NULL,
+            nickname TEXT NOT NULL,
+            avatar TEXT NOT NULL DEFAULT 'fox',
+            age_band TEXT NOT NULL,
+            grade_band TEXT,
+            track TEXT NOT NULL,
+            daily_limit INTEGER NOT NULL DEFAULT 15,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL,
+            FOREIGN KEY(parent_user_id) REFERENCES users(id) ON DELETE CASCADE)"""
+    )
+    c.execute(
+        "CREATE INDEX IF NOT EXISTS idx_child_parent ON child_profiles(parent_user_id)"
+    )
+    c.execute(
+        """CREATE TABLE IF NOT EXISTS child_progress(
+            child_id INTEGER PRIMARY KEY,
+            data TEXT NOT NULL DEFAULT '{}',
+            updated_at TEXT NOT NULL,
+            FOREIGN KEY(child_id) REFERENCES child_profiles(id) ON DELETE CASCADE)"""
+    )
+    c.execute(
+        """CREATE TABLE IF NOT EXISTS child_events(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            child_id INTEGER NOT NULL,
+            parent_user_id INTEGER NOT NULL,
+            event_type TEXT NOT NULL,
+            module TEXT NOT NULL,
+            score INTEGER,
+            duration_seconds INTEGER NOT NULL DEFAULT 0,
+            metadata TEXT,
+            activity_date TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            FOREIGN KEY(child_id) REFERENCES child_profiles(id) ON DELETE CASCADE,
+            FOREIGN KEY(parent_user_id) REFERENCES users(id) ON DELETE CASCADE)"""
+    )
+    c.execute(
+        "CREATE INDEX IF NOT EXISTS idx_child_events_date ON child_events(activity_date)"
+    )
+    c.execute(
+        "CREATE INDEX IF NOT EXISTS idx_child_events_child ON child_events(child_id,activity_date)"
     )
     # 兼容旧库：微信登录所需的 openid 列（可为空、唯一）
     try:
@@ -430,7 +480,7 @@ def _security_headers(resp):
         resp.headers["Access-Control-Allow-Origin"] = origin
         resp.headers["Vary"] = "Origin"
         resp.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-        resp.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, OPTIONS"
+        resp.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
     resp.headers["X-Content-Type-Options"] = "nosniff"
     resp.headers["X-Frame-Options"] = "DENY"
     resp.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
@@ -810,6 +860,265 @@ def api_data_put():
     return jsonify({"ok": True})
 
 
+# ----------------------------- 儿童学习档案 -----------------------------
+CHILD_TRACKS = {"kindergarten", "primary"}
+CHILD_AGE_BANDS = {"3-4", "4-5", "5-6", "6-8", "8-10", "10-12"}
+CHILD_GRADE_BANDS = {"k1", "k2", "k3", "g1-2", "g3-4", "g5-6"}
+CHILD_AVATARS = {"fox", "bear", "owl", "bunny", "panda", "lion"}
+CHILD_EVENT_TYPES = {
+    "lesson_start", "lesson_complete", "challenge_complete", "reward", "session"
+}
+MAX_CHILD_PROGRESS_BYTES = 256 * 1024
+
+
+def child_profile_payload(row, progress=None):
+    payload = {
+        "id": row["id"],
+        "nickname": row["nickname"],
+        "avatar": row["avatar"],
+        "age_band": row["age_band"],
+        "grade_band": row["grade_band"],
+        "track": row["track"],
+        "daily_limit": row["daily_limit"],
+        "created_at": row["created_at"],
+        "updated_at": row["updated_at"],
+    }
+    if progress is not None:
+        payload["progress"] = progress
+    return payload
+
+
+def owned_child(conn, child_id, parent_user_id):
+    return conn.execute(
+        "SELECT * FROM child_profiles WHERE id=? AND parent_user_id=?",
+        (child_id, parent_user_id),
+    ).fetchone()
+
+
+def parse_child_profile(data, *, partial=False):
+    if not isinstance(data, dict):
+        return None, "请求格式错误"
+    result = {}
+    if not partial or "nickname" in data:
+        nickname = text_field(data, "nickname")
+        if not 1 <= len(nickname) <= 20:
+            return None, "儿童昵称须为 1-20 个字符"
+        result["nickname"] = nickname
+    if not partial or "track" in data:
+        track = text_field(data, "track", lower=True)
+        if track not in CHILD_TRACKS:
+            return None, "学习模式无效"
+        result["track"] = track
+    if not partial or "age_band" in data:
+        age_band = text_field(data, "age_band")
+        if age_band not in CHILD_AGE_BANDS:
+            return None, "年龄段无效"
+        result["age_band"] = age_band
+    if not partial or "grade_band" in data:
+        grade_band = text_field(data, "grade_band", lower=True)
+        if grade_band and grade_band not in CHILD_GRADE_BANDS:
+            return None, "年级段无效"
+        result["grade_band"] = grade_band or None
+    if not partial or "avatar" in data:
+        avatar = text_field(data, "avatar", lower=True) or "fox"
+        if avatar not in CHILD_AVATARS:
+            return None, "头像无效"
+        result["avatar"] = avatar
+    if not partial or "daily_limit" in data:
+        try:
+            daily_limit = int(data.get("daily_limit", 15))
+        except (TypeError, ValueError):
+            return None, "每日时长无效"
+        if not 5 <= daily_limit <= 60:
+            return None, "每日学习时长须为 5-60 分钟"
+        result["daily_limit"] = daily_limit
+    return result, None
+
+
+@app.route("/api/children", methods=["GET", "POST"])
+def api_children():
+    u = auth_user()
+    if not u:
+        return jsonify({"error": "未登录"}), 401
+    parent_id = u["user_id"]
+    if request.method == "GET":
+        conn = db()
+        rows = conn.execute(
+            "SELECT p.*,d.data FROM child_profiles p "
+            "LEFT JOIN child_progress d ON d.child_id=p.id "
+            "WHERE p.parent_user_id=? ORDER BY p.id",
+            (parent_id,),
+        ).fetchall()
+        conn.close()
+        children = []
+        for row in rows:
+            try:
+                progress = json.loads(row["data"] or "{}")
+            except (TypeError, json.JSONDecodeError):
+                progress = {}
+            children.append(child_profile_payload(row, progress))
+        return jsonify({"children": children})
+
+    values, error = parse_child_profile(request.get_json(silent=True) or {})
+    if error or values is None:
+        return jsonify({"error": error}), 400
+    if values["track"] == "kindergarten" and values["age_band"] not in {"3-4", "4-5", "5-6"}:
+        return jsonify({"error": "幼儿园模式适合 3-6 岁"}), 400
+    if values["track"] == "primary" and values["age_band"] not in {"6-8", "8-10", "10-12"}:
+        return jsonify({"error": "小学模式适合 6-12 岁"}), 400
+    stamp = now_iso()
+    conn = db()
+    cur = conn.execute(
+        "INSERT INTO child_profiles(parent_user_id,nickname,avatar,age_band,grade_band,"
+        "track,daily_limit,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?)",
+        (
+            parent_id, values["nickname"], values["avatar"], values["age_band"],
+            values["grade_band"], values["track"], values["daily_limit"], stamp, stamp,
+        ),
+    )
+    child_id = cur.lastrowid
+    conn.execute(
+        "INSERT INTO child_progress(child_id,data,updated_at) VALUES(?,?,?)",
+        (child_id, "{}", stamp),
+    )
+    row = conn.execute("SELECT * FROM child_profiles WHERE id=?", (child_id,)).fetchone()
+    conn.commit()
+    conn.close()
+    ANALYTICS_CACHE.clear()
+    return jsonify({"child": child_profile_payload(row, {})}), 201
+
+
+@app.route("/api/children/<int:child_id>", methods=["PUT", "DELETE"])
+def api_child_detail(child_id):
+    u = auth_user()
+    if not u:
+        return jsonify({"error": "未登录"}), 401
+    parent_id = u["user_id"]
+    conn = db()
+    row = owned_child(conn, child_id, parent_id)
+    if not row:
+        conn.close()
+        return jsonify({"error": "儿童档案不存在"}), 404
+    if request.method == "DELETE":
+        conn.execute("DELETE FROM child_profiles WHERE id=?", (child_id,))
+        conn.commit()
+        conn.close()
+        ANALYTICS_CACHE.clear()
+        return jsonify({"ok": True})
+
+    values, error = parse_child_profile(request.get_json(silent=True) or {}, partial=True)
+    if error or values is None:
+        conn.close()
+        return jsonify({"error": error}), 400
+    if not values:
+        conn.close()
+        return jsonify({"error": "没有可更新的字段"}), 400
+    merged_track = values.get("track", row["track"])
+    merged_age = values.get("age_band", row["age_band"])
+    if merged_track == "kindergarten" and merged_age not in {"3-4", "4-5", "5-6"}:
+        conn.close()
+        return jsonify({"error": "幼儿园模式适合 3-6 岁"}), 400
+    if merged_track == "primary" and merged_age not in {"6-8", "8-10", "10-12"}:
+        conn.close()
+        return jsonify({"error": "小学模式适合 6-12 岁"}), 400
+    values["updated_at"] = now_iso()
+    columns = list(values)
+    conn.execute(
+        "UPDATE child_profiles SET " + ",".join(name + "=?" for name in columns) + " WHERE id=?",
+        [values[name] for name in columns] + [child_id],
+    )
+    updated = conn.execute("SELECT * FROM child_profiles WHERE id=?", (child_id,)).fetchone()
+    conn.commit()
+    conn.close()
+    return jsonify({"child": child_profile_payload(updated)})
+
+
+@app.route("/api/children/<int:child_id>/progress", methods=["GET", "PUT"])
+def api_child_progress(child_id):
+    u = auth_user()
+    if not u:
+        return jsonify({"error": "未登录"}), 401
+    parent_id = u["user_id"]
+    conn = db()
+    if not owned_child(conn, child_id, parent_id):
+        conn.close()
+        return jsonify({"error": "儿童档案不存在"}), 404
+    if request.method == "GET":
+        row = conn.execute(
+            "SELECT data,updated_at FROM child_progress WHERE child_id=?", (child_id,)
+        ).fetchone()
+        conn.close()
+        try:
+            progress = json.loads(row["data"] if row else "{}")
+        except (TypeError, json.JSONDecodeError):
+            progress = {}
+        return jsonify({"progress": progress, "updated_at": row["updated_at"] if row else None})
+
+    body = request.get_json(silent=True) or {}
+    progress = body.get("progress", body)
+    if not isinstance(progress, dict):
+        conn.close()
+        return jsonify({"error": "学习进度必须是对象"}), 400
+    raw = json.dumps(progress, ensure_ascii=False, separators=(",", ":"))
+    if len(raw.encode("utf-8")) > MAX_CHILD_PROGRESS_BYTES:
+        conn.close()
+        return jsonify({"error": "儿童学习进度不能超过 256 KB"}), 413
+    stamp = now_iso()
+    conn.execute(
+        "INSERT INTO child_progress(child_id,data,updated_at) VALUES(?,?,?) "
+        "ON CONFLICT(child_id) DO UPDATE SET data=excluded.data,updated_at=excluded.updated_at",
+        (child_id, raw, stamp),
+    )
+    conn.commit()
+    conn.close()
+    record_activity(parent_id, "study")
+    return jsonify({"ok": True, "updated_at": stamp})
+
+
+@app.route("/api/children/<int:child_id>/events", methods=["POST"])
+def api_child_event(child_id):
+    u = auth_user()
+    if not u:
+        return jsonify({"error": "未登录"}), 401
+    parent_id = u["user_id"]
+    data = request.get_json(silent=True) or {}
+    if not isinstance(data, dict):
+        return jsonify({"error": "请求格式错误"}), 400
+    event_type = text_field(data, "event_type", lower=True)
+    module = text_field(data, "module", lower=True)
+    if event_type not in CHILD_EVENT_TYPES or not re.fullmatch(r"[a-z0-9_-]{1,40}", module):
+        return jsonify({"error": "事件类型或模块无效"}), 400
+    try:
+        score = data.get("score")
+        score = None if score is None else max(0, min(100, int(score)))
+        duration = max(0, min(3600, int(data.get("duration_seconds", 0))))
+    except (TypeError, ValueError):
+        return jsonify({"error": "分数或时长无效"}), 400
+    metadata = data.get("metadata", {})
+    if not isinstance(metadata, dict):
+        metadata = {}
+    metadata_raw = json.dumps(metadata, ensure_ascii=False, separators=(",", ":"))
+    if len(metadata_raw.encode("utf-8")) > 8192:
+        return jsonify({"error": "事件附加数据过大"}), 413
+    conn = db()
+    if not owned_child(conn, child_id, parent_id):
+        conn.close()
+        return jsonify({"error": "儿童档案不存在"}), 404
+    conn.execute(
+        "INSERT INTO child_events(child_id,parent_user_id,event_type,module,score,"
+        "duration_seconds,metadata,activity_date,created_at) VALUES(?,?,?,?,?,?,?,?,?)",
+        (
+            child_id, parent_id, event_type, module, score, duration, metadata_raw,
+            local_today().isoformat(), now_iso(),
+        ),
+    )
+    conn.commit()
+    conn.close()
+    record_activity(parent_id, "study")
+    ANALYTICS_CACHE.clear()
+    return jsonify({"ok": True}), 201
+
+
 # ----------------------------- 后台接口 -----------------------------
 @app.route("/api/admin/login", methods=["POST"])
 def api_admin_login():
@@ -923,6 +1232,12 @@ def api_admin_analytics():
     activities = conn.execute(
         "SELECT user_id,activity_date FROM user_activity"
     ).fetchall()
+    children = conn.execute(
+        "SELECT id,track,age_band FROM child_profiles"
+    ).fetchall()
+    child_events = conn.execute(
+        "SELECT child_id,event_type,module,score,activity_date FROM child_events"
+    ).fetchall()
     conn.close()
 
     today = local_today()
@@ -995,6 +1310,29 @@ def api_admin_analytics():
     wau = users_in_period(active_dates, 7)
     mau = users_in_period(active_dates, 30)
     total_users = len(users)
+    child_tracks = {"kindergarten": 0, "primary": 0}
+    child_ages = {}
+    for child in children:
+        child_tracks[child["track"]] = child_tracks.get(child["track"], 0) + 1
+        child_ages[child["age_band"]] = child_ages.get(child["age_band"], 0) + 1
+    child_active_today = set()
+    child_active_7d = set()
+    child_completed = 0
+    child_scores = []
+    seven_day_start = today - datetime.timedelta(days=6)
+    for event in child_events:
+        try:
+            event_day = datetime.date.fromisoformat(event["activity_date"])
+        except (TypeError, ValueError):
+            continue
+        if event_day == today:
+            child_active_today.add(event["child_id"])
+        if seven_day_start <= event_day <= today:
+            child_active_7d.add(event["child_id"])
+        if event["event_type"] in {"lesson_complete", "challenge_complete"}:
+            child_completed += 1
+        if event["score"] is not None:
+            child_scores.append(event["score"])
     trend = []
     for offset in range(trend_days - 1, -1, -1):
         day = today - datetime.timedelta(days=offset)
@@ -1034,6 +1372,15 @@ def api_admin_analytics():
             },
             "retention": {"d1": retention(1), "d7": retention(7)},
             "sources": source_counts,
+            "children": {
+                "total_profiles": len(children),
+                "tracks": child_tracks,
+                "age_bands": child_ages,
+                "active_today": len(child_active_today),
+                "active_7d": len(child_active_7d),
+                "completed_activities": child_completed,
+                "average_score": round(sum(child_scores) / len(child_scores), 1) if child_scores else 0,
+            },
             "trend": trend,
             "tracking_note": "行为事件从本版本开始按日汇总；旧用户的最近登录和学习日已用于历史兼容。",
         }
@@ -1091,6 +1438,43 @@ def user_app_page(page):
     if not os.path.exists(p):
         abort(404)
     return send_html(p)
+
+
+@app.route("/kids", methods=["GET"])
+def kids_hub_page():
+    if not os.path.exists(KIDS_HUB_HTML):
+        abort(404)
+    return send_html(KIDS_HUB_HTML)
+
+
+@app.route("/kids/kindergarten", methods=["GET"])
+def kindergarten_page():
+    if not os.path.exists(KINDERGARTEN_HTML):
+        abort(404)
+    return send_html(KINDERGARTEN_HTML)
+
+
+@app.route("/kids/primary", methods=["GET"])
+def primary_page():
+    if not os.path.exists(PRIMARY_HTML):
+        abort(404)
+    return send_html(PRIMARY_HTML)
+
+
+@app.route("/assets/kids.css", methods=["GET"])
+def kids_css_asset():
+    if not os.path.exists(KIDS_CSS):
+        abort(404)
+    return send_file(KIDS_CSS, mimetype="text/css", conditional=True, max_age=3600)
+
+
+@app.route("/assets/kids-common.js", methods=["GET"])
+def kids_common_js_asset():
+    if not os.path.exists(KIDS_COMMON_JS):
+        abort(404)
+    return send_file(
+        KIDS_COMMON_JS, mimetype="application/javascript", conditional=True, max_age=3600
+    )
 
 
 @app.route("/admin", methods=["GET"])

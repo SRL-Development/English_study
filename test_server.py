@@ -61,6 +61,9 @@ class ServerApiTests(unittest.TestCase):
         server.APP_ROLE = "user"
         self.assertEqual(self.client.get("/login").status_code, 200)
         self.assertEqual(self.client.get("/app/home").status_code, 200)
+        self.assertEqual(self.client.get("/kids").status_code, 200)
+        self.assertEqual(self.client.get("/kids/kindergarten").status_code, 200)
+        self.assertEqual(self.client.get("/kids/primary").status_code, 200)
         self.assertEqual(self.client.get("/admin/login").status_code, 404)
         self.assertEqual(self.client.post("/api/admin/login", json={}).status_code, 404)
 
@@ -71,6 +74,8 @@ class ServerApiTests(unittest.TestCase):
         self.assertEqual(self.client.get("/admin/login").status_code, 200)
         self.assertEqual(self.client.get("/login").status_code, 404)
         self.assertEqual(self.client.get("/app/home").status_code, 404)
+        self.assertEqual(self.client.get("/kids").status_code, 404)
+        self.assertEqual(self.client.get("/api/children").status_code, 404)
         health = self.client.get("/api/health")
         self.assertEqual(health.status_code, 200)
         self.assertEqual(health.json["role"], "admin")
@@ -179,6 +184,87 @@ class ServerApiTests(unittest.TestCase):
     def test_tts_rejects_invalid_voice_before_synthesis(self):
         response = self.client.get(
             "/api/tts", query_string={"text": "hello", "voice": "../../bad"}
+        )
+        self.assertEqual(response.status_code, 400)
+
+    def test_child_profiles_progress_events_and_admin_metrics(self):
+        token = self.register().json["token"]
+        headers = {"Authorization": "Bearer " + token}
+        created = self.client.post(
+            "/api/children",
+            json={
+                "nickname": "小星星",
+                "avatar": "fox",
+                "age_band": "4-5",
+                "grade_band": "k2",
+                "track": "kindergarten",
+                "daily_limit": 15,
+            },
+            headers=headers,
+        )
+        self.assertEqual(created.status_code, 201)
+        child_id = created.json["child"]["id"]
+
+        listed = self.client.get("/api/children", headers=headers)
+        self.assertEqual(listed.status_code, 200)
+        self.assertEqual(listed.json["children"][0]["nickname"], "小星星")
+
+        progress = {
+            "kindergarten": {
+                "completed": ["k-hello"],
+                "stars": 3,
+                "stickers": ["👋"],
+            },
+            "activityDays": {server.local_today().isoformat(): 1},
+        }
+        saved = self.client.put(
+            f"/api/children/{child_id}/progress",
+            json={"progress": progress},
+            headers=headers,
+        )
+        self.assertEqual(saved.status_code, 200)
+        loaded = self.client.get(
+            f"/api/children/{child_id}/progress", headers=headers
+        )
+        self.assertEqual(loaded.json["progress"]["kindergarten"]["stars"], 3)
+
+        event = self.client.post(
+            f"/api/children/{child_id}/events",
+            json={
+                "event_type": "lesson_complete",
+                "module": "k-hello",
+                "score": 100,
+                "duration_seconds": 75,
+                "metadata": {"word": "hello"},
+            },
+            headers=headers,
+        )
+        self.assertEqual(event.status_code, 201)
+
+        admin_headers = {"Authorization": "Bearer " + server.make_admin_token()}
+        analytics = self.client.get(
+            "/api/admin/analytics", headers=admin_headers
+        )
+        self.assertEqual(analytics.status_code, 200)
+        self.assertEqual(analytics.json["children"]["total_profiles"], 1)
+        self.assertEqual(analytics.json["children"]["tracks"]["kindergarten"], 1)
+        self.assertEqual(analytics.json["children"]["active_today"], 1)
+        self.assertEqual(analytics.json["children"]["completed_activities"], 1)
+        self.assertEqual(analytics.json["children"]["average_score"], 100)
+
+    def test_child_profile_rejects_wrong_age_track(self):
+        token = self.register().json["token"]
+        response = self.client.post(
+            "/api/children",
+            json={
+                "nickname": "小朋友",
+                "avatar": "bear",
+                "age_band": "10-12",
+                "grade_band": "g5-6",
+                "track": "kindergarten",
+                "daily_limit": 15,
+            },
+            headers={"Authorization": "Bearer " + token},
         )
         self.assertEqual(response.status_code, 400)
 

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#5cc8ff">
+<title>EnglishLab Family · 儿童英语成长中心</title>
+<link rel="stylesheet" href="/assets/kids.css">
+</head>
+<body>
+<div class="kids-shell">
+  <header class="kids-top">
+    <a class="kids-brand" href="/app/home"><span class="kids-mark">E</span><span>EnglishLab Family<small>play · explore · grow</small></span></a>
+    <div class="top-actions"><a class="pill" href="/app/home">← <span>返回成人学习台</span></a><button type="button" class="icon-btn" onclick="openProfileModal()" title="添加儿童档案">＋</button></div>
+  </header>
+  <main class="kids-main">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">A joyful English journey</div>
+        <h1>每个孩子，都有自己的英语冒险。</h1>
+        <p>幼儿在动画故事里听、看、说，小学生在世界地图中完成挑战。家长掌握学习节奏，孩子只需要保持好奇。</p>
+        <div class="hero-actions"><button type="button" class="btn btn-light" onclick="continueSelected()">继续上次学习 →</button><button type="button" class="btn btn-ghost" onclick="openProfileModal()">创建儿童档案</button></div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="orbit"></div><div class="planet"></div><div class="hero-friend">🦊</div></div>
+    </section>
+
+    <div class="section-head"><div><h2>选择学习世界</h2><p>不同年龄使用独立的内容、节奏和交互方式。</p></div><span class="mini">儿童档案由家长账号管理</span></div>
+    <section class="program-grid">
+      <article class="program-card kinder"><span class="program-art">🎈</span><div><span class="tag">3–6 岁 · 动画陪伴</span><h3>动画英语岛</h3><p>跟着角色进入故事，用歌曲、点选和开口跟读认识英语。</p><div class="features"><span>互动动画</span><span>自然拼读启蒙</span><span>星星贴纸</span></div></div><button type="button" class="btn btn-coral" onclick="enterTrack('kindergarten')">进入动画岛 →</button></article>
+      <article class="program-card primary"><span class="program-art">🚀</span><div><span class="tag">6–12 岁 · 游戏挑战</span><h3>英语挑战世界</h3><p>沿着任务地图闯关，把词汇、听力、拼写和阅读练成真正的能力。</p><div class="features"><span>关卡地图</span><span>五类挑战</span><span>金币徽章</span></div></div><button type="button" class="btn btn-primary" onclick="enterTrack('primary')">开始挑战 →</button></article>
+    </section>
+
+    <div class="section-head"><div><h2>孩子档案</h2><p>选择孩子继续进度，或创建新的学习路径。</p></div></div>
+    <section class="profile-grid" id="profileGrid"></section>
+
+    <div class="section-head"><div><h2>家长视角</h2><p>看成长，不用盯着每一道题。</p></div></div>
+    <section class="insight-grid">
+      <article class="panel"><h3>最近 7 天学习节奏</h3><div class="panel-sub" id="weekSummary">选择一个孩子查看学习记录</div><div class="week-bars" id="weekBars"></div></article>
+      <article class="panel"><h3>儿童友好设计</h3><div class="panel-sub">默认遵循最小必要采集</div><div class="safety-list"><div class="safety-item"><i>🛡️</i><span>孩子不填写手机号、邮箱、精确生日或真实姓名。</span></div><div class="safety-item"><i>⏱️</i><span>每个档案可设置每日 5–60 分钟学习时长。</span></div><div class="safety-item"><i>🌱</i><span>不做公开排行榜，不用失败惩罚制造焦虑。</span></div></div></article>
+    </section>
+  </main>
+</div>
+
+<div class="modal-mask" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+  <div class="modal">
+    <h2 id="profileTitle">创建儿童档案</h2><p class="modal-desc">只需要昵称和年龄段，不收集儿童联系方式。</p>
+    <div class="field"><label for="childName">孩子昵称</label><input type="text" id="childName" maxlength="20" placeholder="例如：小星星"></div>
+    <div class="field"><label>选择头像</label><div class="avatar-pick" id="avatarPick"></div></div>
+    <div class="field"><label for="childTrack">学习模式</label><select id="childTrack" onchange="renderAgeOptions()"><option value="kindergarten">幼儿园 · 动画英语岛</option><option value="primary">小学 · 英语挑战世界</option></select></div>
+    <div class="field"><label for="childAge">年龄段</label><select id="childAge"></select></div>
+    <div class="field"><label for="childGrade">年级段</label><select id="childGrade"></select></div>
+    <div class="field"><label for="dailyLimit">每日学习时长</label><select id="dailyLimit"><option value="10">10 分钟</option><option value="15" selected>15 分钟</option><option value="20">20 分钟</option><option value="30">30 分钟</option></select></div>
+    <div class="form-error" id="formError"></div>
+    <div class="modal-actions"><button type="button" class="btn btn-ghost" onclick="closeProfileModal()">取消</button><button type="button" class="btn btn-primary" id="saveProfileBtn" onclick="saveProfile()">保存档案</button></div>
+    <div class="parent-gate">档案设置仅供家长操作</div>
+  </div>
+</div>
+<div class="loading" id="kidsLoading"><div class="loader-card"><div class="loader-friend">🦊</div><b>正在打开成长中心…</b></div></div>
+<div class="toast" id="kidsToast"></div>
+<script src="/assets/kids-common.js"></script>
+<script>
+const AGE_OPTIONS={kindergarten:[['3-4','3–4 岁'],['4-5','4–5 岁'],['5-6','5–6 岁']],primary:[['6-8','6–8 岁'],['8-10','8–10 岁'],['10-12','10–12 岁']]};
+const GRADE_OPTIONS={kindergarten:[['k1','小班'],['k2','中班'],['k3','大班']],primary:[['g1-2','一–二年级'],['g3-4','三–四年级'],['g5-6','五–六年级']]};
+let children=[],selectedAvatar='fox',editingId=0,currentUser=null;
+function renderAgeOptions(){const track=document.getElementById('childTrack').value;document.getElementById('childAge').innerHTML=AGE_OPTIONS[track].map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('');document.getElementById('childGrade').innerHTML=GRADE_OPTIONS[track].map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('');}
+function renderAvatarPick(){document.getElementById('avatarPick').innerHTML=Object.entries(KidsAPI.avatars).map(([id,emoji])=>`<button type="button" class="avatar-choice ${selectedAvatar===id?'on':''}" onclick="selectAvatar('${id}')" aria-label="${id}">${emoji}</button>`).join('');}
+function selectAvatar(id){selectedAvatar=id;renderAvatarPick();}
+function trackName(track){return track==='kindergarten'?'动画英语岛':'英语挑战世界';}
+function progressStats(child){const p=KidsAPI.normalizeProgress(child.progress||{});const mode=child.track==='kindergarten'?p.kindergarten:p.primary;return{stars:Number(mode.stars||0),done:(mode.completed||[]).length,reward:child.track==='kindergarten'?(mode.stickers||[]).length:Number(mode.coins||0)};}
+function renderProfiles(){const grid=document.getElementById('profileGrid'),current=KidsAPI.currentChildId();let html=children.map(child=>{const s=progressStats(child),active=child.id===current;return`<article class="profile-card ${active?'active':''}"><div class="profile-top"><div class="avatar">${KidsAPI.avatar(child.avatar)}</div><div><div class="profile-name">${KidsAPI.escapeHTML(child.nickname)}</div><div class="profile-meta">${trackName(child.track)} · ${KidsAPI.escapeHTML(child.age_band)} 岁 · 每日 ${child.daily_limit} 分钟</div></div></div><div class="profile-stats"><div><b>${s.done}</b><span>已完成</span></div><div><b>⭐ ${s.stars}</b><span>成长星</span></div><div><b>${child.track==='kindergarten'?'🎟️':'🪙'} ${s.reward}</b><span>${child.track==='kindergarten'?'贴纸':'金币'}</span></div></div><div class="profile-actions"><button class="btn btn-primary" onclick="enterChild(${child.id})">继续学习</button><button class="btn btn-ghost" onclick="editProfile(${child.id})">设置</button></div></article>`;}).join('');html+=`<article class="profile-card add-profile" onclick="openProfileModal()"><div><div class="plus">＋</div><b>添加儿童档案</b><span>创建独立学习进度</span></div></article>`;grid.innerHTML=html;renderWeek();}
+function renderWeek(){const current=children.find(x=>x.id===KidsAPI.currentChildId())||children[0],labels=['一','二','三','四','五','六','日'];if(!current){document.getElementById('weekBars').innerHTML=labels.map(x=>`<div class="day-bar"><i style="height:8px"></i><span>周${x}</span></div>`).join('');return;}const p=KidsAPI.normalizeProgress(current.progress||{}),now=new Date(),monday=new Date(now);monday.setDate(now.getDate()-((now.getDay()+6)%7));let total=0;document.getElementById('weekBars').innerHTML=labels.map((label,i)=>{const d=new Date(monday);d.setDate(monday.getDate()+i);const key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),n=Number(p.activityDays[key]||0);total+=n;return`<div class="day-bar"><i style="height:${Math.max(8,Math.min(130,n*24))}px"></i><span>周${label}</span></div>`;}).join('');document.getElementById('weekSummary').textContent=`${current.nickname} 本周完成 ${total} 次学习活动`;
+}
+function openProfileModal(track){editingId=0;selectedAvatar='fox';document.getElementById('profileTitle').textContent='创建儿童档案';document.getElementById('childName').value='';document.getElementById('childTrack').value=track||new URLSearchParams(location.search).get('track')||'kindergarten';document.getElementById('dailyLimit').value='15';renderAgeOptions();renderAvatarPick();document.getElementById('formError').textContent='';document.getElementById('profileModal').classList.add('show');}
+function closeProfileModal(){document.getElementById('profileModal').classList.remove('show');}
+function editProfile(id){const c=children.find(x=>x.id===id);if(!c)return;editingId=id;selectedAvatar=c.avatar;document.getElementById('profileTitle').textContent='调整儿童档案';document.getElementById('childName').value=c.nickname;document.getElementById('childTrack').value=c.track;renderAgeOptions();document.getElementById('childAge').value=c.age_band;document.getElementById('childGrade').value=c.grade_band||'';document.getElementById('dailyLimit').value=String(c.daily_limit);renderAvatarPick();document.getElementById('profileModal').classList.add('show');}
+async function saveProfile(){const btn=document.getElementById('saveProfileBtn'),payload={nickname:document.getElementById('childName').value.trim(),avatar:selectedAvatar,track:document.getElementById('childTrack').value,age_band:document.getElementById('childAge').value,grade_band:document.getElementById('childGrade').value,daily_limit:Number(document.getElementById('dailyLimit').value)};btn.disabled=true;btn.textContent='正在保存…';document.getElementById('formError').textContent='';try{const child=editingId?await KidsAPI.updateChild(editingId,payload):await KidsAPI.createChild(payload);if(!editingId)KidsAPI.setCurrentChild(child.id);closeProfileModal();await loadChildren();KidsAPI.toast(editingId?'档案已更新':'档案创建成功');}catch(e){document.getElementById('formError').textContent=e.message;}finally{btn.disabled=false;btn.textContent='保存档案';}}
+function enterChild(id){const child=children.find(x=>x.id===id);if(!child)return;KidsAPI.setCurrentChild(id);location.href=child.track==='kindergarten'?'/kids/kindergarten':'/kids/primary';}
+function enterTrack(track){const child=children.find(x=>x.track===track);if(child)enterChild(child.id);else openProfileModal(track);}
+function continueSelected(){const child=children.find(x=>x.id===KidsAPI.currentChildId())||children[0];if(child)enterChild(child.id);else openProfileModal();}
+async function loadChildren(){children=await KidsAPI.listChildren();if(children.length&&!KidsAPI.currentChildId())KidsAPI.setCurrentChild(children[0].id);renderProfiles();}
+async function boot(){try{currentUser=await KidsAPI.requireUser();if(!currentUser)return;await loadChildren();const params=new URLSearchParams(location.search);if(params.get('new')==='1'||!children.length)openProfileModal(params.get('track')||'');}catch(e){KidsAPI.toast(e.message);}finally{KidsAPI.showLoading(false);}}
+document.getElementById('profileModal').addEventListener('click',e=>{if(e.target.id==='profileModal')closeProfileModal();});
+boot();
+</script>
+</body>
+</html>
