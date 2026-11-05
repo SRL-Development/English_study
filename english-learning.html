@@ -272,14 +272,14 @@
   /* 用户账号门户：与管理后台使用完全不同的视觉与 URL */
   .auth{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:#f5f6fa;padding:24px;overflow:auto}
   .auth.show{display:flex}
-  .auth-shell{width:min(980px,100%);min-height:600px;background:#fff;border-radius:28px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1.05fr .95fr;overflow:hidden;border:1px solid #e8eaf1}
+  .auth-shell{width:min(1080px,100%);min-height:640px;background:#fff;border-radius:28px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1fr 1.12fr;overflow:hidden;border:1px solid #e8eaf1}
   .auth-story{background:linear-gradient(145deg,#11182d 0%,#23205f 52%,#4f46e5 100%);color:#fff;padding:52px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
   .auth-story:before,.auth-story:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.13)}
   .auth-story:before{width:340px;height:340px;right:-180px;top:-120px}.auth-story:after{width:220px;height:220px;left:-110px;bottom:-100px}
   .auth-brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:760;position:relative;z-index:1}.auth-mark{width:42px;height:42px;border-radius:13px;background:#fff;color:var(--pri);display:grid;place-items:center;font-size:19px;font-weight:850;box-shadow:0 10px 24px rgba(0,0,0,.18)}
   .auth-pitch{position:relative;z-index:1}.auth-pitch .eyebrow{font-size:12px;letter-spacing:1.8px;text-transform:uppercase;color:#c7d2fe;font-weight:700}.auth-pitch h2{font-size:36px;line-height:1.22;margin:12px 0 14px;letter-spacing:-1px}.auth-pitch p{color:#d6d8ef;font-size:14px;line-height:1.8;max-width:390px}
   .auth-proof{display:grid;gap:11px;position:relative;z-index:1}.auth-proof span{display:flex;align-items:center;gap:9px;color:#eef0ff;font-size:13px}.auth-proof i{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center;font-style:normal;color:#a7f3d0;font-size:11px}
-  .auth-card{width:100%;padding:54px 52px;display:flex;flex-direction:column;justify-content:center}
+  .auth-card{width:100%;padding:38px 44px;display:flex;flex-direction:column;justify-content:center}
   .auth-logo{font-size:26px;font-weight:800;color:var(--navy);letter-spacing:-.6px}
   .auth-sub{font-size:13px;color:var(--sub);margin:7px 0 24px}
   .auth-tabs{display:flex;gap:8px;margin-bottom:16px}
@@ -288,10 +288,14 @@
   .field-label{display:block;font-size:12px;font-weight:650;color:#475467;margin:0 0 6px}
   .auth-body input{width:100%;box-sizing:border-box;padding:13px 14px;margin-bottom:13px;border:1px solid #dfe2ea;border-radius:11px;font-size:14px;outline:none;background:#fbfcfe;transition:.18s}
   .auth-body input:focus{border-color:var(--pri);box-shadow:0 0 0 4px rgba(79,70,229,.09);background:#fff}
+  .auth-body.auth-reg{display:none}
   .auth-btn{width:100%;padding:13px;border:none;border-radius:11px;background:linear-gradient(135deg,#3730a3,var(--pri));color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 10px 22px rgba(79,70,229,.2)}
   .auth-btn:hover{opacity:.92}
   .auth-err{color:#c0392b;font-size:13px;min-height:20px;margin-top:7px;text-align:center}.auth-terms{font-size:11px;color:#98a2b3;text-align:center;margin-top:14px;line-height:1.6}
-  @media(max-width:760px){.auth{padding:0;background:#fff;align-items:stretch}.auth-shell{display:block;min-height:100vh;border-radius:0;border:0}.auth-story{padding:28px 24px 34px;min-height:260px}.auth-pitch h2{font-size:28px;margin:28px 0 10px}.auth-pitch p{margin-bottom:0}.auth-proof{display:none}.auth-card{padding:30px 24px 44px}.auth-logo{font-size:23px}}
+  .learning-choice{margin:0 0 18px}.learning-choice-head{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:9px}.learning-choice-head b{font-size:13px;color:var(--navy)}.learning-choice-head span{font-size:10px;color:var(--sub)}
+  .learning-stage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.learning-stage{border:1px solid #dfe3ec;background:#fafbfe;border-radius:13px;padding:10px 8px;cursor:pointer;text-align:left;color:var(--navy);transition:.18s;min-height:72px}.learning-stage:hover{border-color:#a7a1f5;transform:translateY(-1px)}.learning-stage.on{border-color:var(--pri);background:#f1f0ff;box-shadow:0 0 0 3px rgba(79,70,229,.08)}.learning-stage i{font-style:normal;font-size:20px;display:block;margin-bottom:3px}.learning-stage b{display:block;font-size:12px}.learning-stage small{display:block;font-size:9px;color:var(--sub);margin-top:2px;line-height:1.35}
+  .learning-age{display:none;align-items:center;gap:10px;margin-top:9px;padding:9px 11px;border-radius:11px;background:#f7f8fb}.learning-age.show{display:flex}.learning-age label{font-size:11px;font-weight:700;color:#475467;white-space:nowrap}.learning-age select{flex:1;border:1px solid #dfe3ec;background:#fff;border-radius:9px;padding:8px 10px;font-size:12px;color:var(--navy);outline:0}
+  @media(max-width:760px){.auth{padding:0;background:#fff;align-items:stretch}.auth-shell{display:block;min-height:100vh;border-radius:0;border:0}.auth-story{padding:24px 24px 28px;min-height:220px}.auth-pitch h2{font-size:28px;margin:24px 0 10px}.auth-pitch p{margin-bottom:0}.auth-proof{display:none}.auth-card{padding:28px 20px 44px}.auth-logo{font-size:23px}.learning-stage{min-height:68px;padding:9px 7px}.learning-stage small{display:none}}
 </style>
 </head>
 <body>
@@ -524,36 +528,45 @@
     <section class="auth-story">
       <div class="auth-brand"><span class="auth-mark">E</span><span>EnglishLab</span></div>
       <div class="auth-pitch">
-        <div class="eyebrow">English for real work</div>
-        <h2>学会工作中<br>真正用得上的英语</h2>
-        <p>从行业词汇、听说训练到 AI 场景对话，用每天 15 分钟建立可复用的职场表达能力。</p>
+        <div class="eyebrow">One account · the right journey</div>
+        <h2>一个入口，进入<br>适合你的英语世界</h2>
+        <p>幼儿在动画中启蒙，小学生在游戏里闯关，青少年与成人按真实场景提升。选择年龄后，系统自动带你进入对应学习空间。</p>
       </div>
-      <div class="auth-proof"><span><i>✓</i>按英语基础与行业方向定制</span><span><i>✓</i>学习进度云端安全同步</span><span><i>✓</i>网页与微信小程序跨端使用</span></div>
+      <div class="auth-proof"><span><i>✓</i>3–6 岁动画故事与开口启蒙</span><span><i>✓</i>6–12 岁任务地图与游戏挑战</span><span><i>✓</i>13 岁以上综合与场景化学习</span></div>
     </section>
     <section class="auth-card">
       <div class="auth-logo" id="authTitle">欢迎回来</div>
       <div class="auth-sub" id="authSubtitle">登录你的学习账号，继续今天的进度</div>
+      <div class="learning-choice">
+        <div class="learning-choice-head"><b>选择学习者年龄</b><span>登录后自动进入对应课程</span></div>
+        <div class="learning-stage-grid">
+          <button type="button" class="learning-stage" id="stageKindergarten" onclick="selectLearningStage('kindergarten')"><i>🎈</i><b>3–6 岁</b><small>动画英语启蒙</small></button>
+          <button type="button" class="learning-stage" id="stagePrimary" onclick="selectLearningStage('primary')"><i>🚀</i><b>6–12 岁</b><small>游戏闯关学习</small></button>
+          <button type="button" class="learning-stage" id="stageGeneral" onclick="selectLearningStage('general')"><i>🎓</i><b>13 岁以上</b><small>综合与场景英语</small></button>
+        </div>
+        <div class="learning-age" id="learningAgeRow"><label for="learningAge">具体年龄段</label><select id="learningAge" onchange="rememberAgeBand()"></select></div>
+      </div>
       <div class="auth-tabs">
-        <button class="atab on" id="atLogin" onclick="setAuthTab('login')">账号登录</button>
-        <button class="atab" id="atReg" onclick="setAuthTab('reg')">免费注册</button>
+        <button type="button" class="atab on" id="atLogin" onclick="setAuthTab('login')">账号登录</button>
+        <button type="button" class="atab" id="atReg" onclick="setAuthTab('reg')">免费注册</button>
       </div>
       <div class="auth-body" id="authLogin">
         <label class="field-label" for="aIdent">手机号或邮箱</label>
-        <input id="aIdent" placeholder="输入已注册的手机号或邮箱" autocomplete="username">
+        <input type="text" id="aIdent" placeholder="输入已注册的手机号或邮箱" autocomplete="username">
         <label class="field-label" for="aPw">登录密码</label>
         <input id="aPw" type="password" placeholder="输入密码" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
-        <button class="auth-btn" id="loginSubmit" onclick="doLogin()">登录并继续学习</button>
+        <button type="button" class="auth-btn" id="loginSubmit" onclick="doLogin()">登录并继续学习</button>
       </div>
-      <div class="auth-body" id="authReg" style="display:none">
+      <div class="auth-body auth-reg" id="authReg">
         <label class="field-label" for="rIdentity">手机号或邮箱</label>
-        <input id="rIdentity" placeholder="输入手机号或邮箱" autocomplete="username">
-        <label class="field-label" for="rNick">昵称</label><input id="rNick" placeholder="怎么称呼你（可选）" autocomplete="nickname">
+        <input type="text" id="rIdentity" placeholder="输入手机号或邮箱" autocomplete="username">
+        <label class="field-label" for="rNick">昵称</label><input type="text" id="rNick" placeholder="怎么称呼你（可选）" autocomplete="nickname">
         <label class="field-label" for="rPw">设置密码</label><input id="rPw" type="password" placeholder="8-128 位密码" autocomplete="new-password" onkeydown="if(event.key==='Enter')doRegister()">
-        <button class="auth-btn" id="registerSubmit" onclick="doRegister()">创建账号并开始学习</button>
+        <button type="button" class="auth-btn" id="registerSubmit" onclick="doRegister()">创建账号并开始学习</button>
       </div>
       <div class="auth-err" id="aErr"></div>
       <div class="auth-terms">继续即表示你同意用于账号与学习进度同步的必要数据处理</div>
-    </div>
+    </section>
   </div>
 </div>
 <script>
@@ -804,6 +817,49 @@ function escHtml(value){ return String(value??'').replace(/[&<>'"]/g,ch=>({'&':'
 let TOKEN=localStorage.getItem(KEY+'token')||'';
 let backendMode=false;   // true=连接后端(需登录)  false=离线(仅本机)
 let ME=null;             // 当前登录用户 {id,phone,email,nickname}
+const LEARNING_AGE_OPTIONS={
+  kindergarten:[['3-4','3–4 岁 · 小班'],['4-5','4–5 岁 · 中班'],['5-6','5–6 岁 · 大班']],
+  primary:[['6-8','6–8 岁 · 一至二年级'],['8-10','8–10 岁 · 三至四年级'],['10-12','10–12 岁 · 五至六年级']],
+  general:[['13+','13 岁以上']]
+};
+let selectedLearningStage=localStorage.getItem(KEY+'learning_stage')||'general';
+if(!LEARNING_AGE_OPTIONS[selectedLearningStage])selectedLearningStage='general';
+let selectedAgeBand=localStorage.getItem(KEY+'age_band')||LEARNING_AGE_OPTIONS[selectedLearningStage][0][0];
+if(!LEARNING_AGE_OPTIONS[selectedLearningStage].some(x=>x[0]===selectedAgeBand))selectedAgeBand=LEARNING_AGE_OPTIONS[selectedLearningStage][0][0];
+function selectLearningStage(stage){
+  if(!LEARNING_AGE_OPTIONS[stage])return;
+  selectedLearningStage=stage;
+  const valid=LEARNING_AGE_OPTIONS[stage].some(x=>x[0]===selectedAgeBand);
+  if(!valid)selectedAgeBand=LEARNING_AGE_OPTIONS[stage][0][0];
+  localStorage.setItem(KEY+'learning_stage',selectedLearningStage);
+  localStorage.setItem(KEY+'age_band',selectedAgeBand);
+  renderLearningStage();
+}
+function rememberAgeBand(){const el=document.getElementById('learningAge');if(el){selectedAgeBand=el.value;localStorage.setItem(KEY+'age_band',selectedAgeBand);}}
+function renderLearningStage(){
+  const ids={kindergarten:'stageKindergarten',primary:'stagePrimary',general:'stageGeneral'};
+  Object.entries(ids).forEach(([stage,id])=>document.getElementById(id)?.classList.toggle('on',stage===selectedLearningStage));
+  const age=document.getElementById('learningAge'),row=document.getElementById('learningAgeRow');
+  if(age){age.innerHTML=LEARNING_AGE_OPTIONS[selectedLearningStage].map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('');age.value=selectedAgeBand;}
+  if(row)row.classList.toggle('show',selectedLearningStage!=='general');
+}
+function learningSelectionPayload(){return{learning_stage:selectedLearningStage,age_band:selectedAgeBand};}
+function rememberLearningEntry(result){
+  const user=result?.user||{};
+  if(user.learning_stage&&LEARNING_AGE_OPTIONS[user.learning_stage])selectedLearningStage=user.learning_stage;
+  if(user.age_band)selectedAgeBand=user.age_band;
+  localStorage.setItem(KEY+'learning_stage',selectedLearningStage);
+  localStorage.setItem(KEY+'age_band',selectedAgeBand);
+  if(result?.child_id)localStorage.setItem('englishlab_child_id',String(result.child_id));
+  renderLearningStage();
+}
+function routeLearningEntry(result,force){
+  rememberLearningEntry(result);
+  const stage=result?.user?.learning_stage||selectedLearningStage;
+  const landing=result?.landing||(stage==='kindergarten'?'/kids/kindergarten':stage==='primary'?'/kids/primary':'/app/home');
+  if(landing&&location.pathname!==landing&&(force||stage!=='general')){location.replace(landing);return true;}
+  return false;
+}
 function plainObject(value){ return value&&typeof value==='object'&&!Array.isArray(value)?value:{}; }
 function countMap(value){ const out={}; Object.entries(plainObject(value)).forEach(([k,v])=>{ const n=Number(v); if(Number.isFinite(n)&&n>=0)out[k]=n; }); return out; }
 function applyDefaults(d,seed){
@@ -859,7 +915,7 @@ async function bootstrap(){
   }
   try{
     const res=await api('/api/me');
-    if(res.status===200){ backendMode=true; ME=res.body.user; await pullData(); hideAuth(); renderAcct(); enterApp(); }
+    if(res.status===200){ backendMode=true; ME=res.body.user; if(routeLearningEntry(res.body,false))return; await pullData(); hideAuth(); renderAcct(); enterApp(); }
     else if(res.status===401){ backendMode=true; ME=null; TOKEN=''; localStorage.removeItem(KEY+'token'); showAuth(entry); renderAcct(); }
     else { enterAppOffline(); }
   }catch(e){ console.warn('bootstrap fallback',e); enterAppOffline(); }
@@ -892,12 +948,12 @@ function setAuthTab(tab){
   document.getElementById('authSubtitle').textContent=login?'登录你的学习账号，继续今天的进度':'创建免费账号，让学习进度跨设备同步';
   if(location.pathname==='/'||location.pathname==='/login'||location.pathname==='/register') history.replaceState(null,'',login?'/login':'/register');
 }
-function showAuth(tab){ setAuthTab(tab||'login'); document.getElementById('auth').classList.add('show'); setLoading(false); }
+function showAuth(tab){ setAuthTab(tab||'login'); renderLearningStage(); document.getElementById('auth').classList.add('show'); setLoading(false); }
 function hideAuth(){ document.getElementById('auth').classList.remove('show'); if(location.pathname==='/'||location.pathname==='/login'||location.pathname==='/register') history.replaceState(null,'',PAGE_ROUTES.dash); }
-async function afterAuth(token,user){
+async function afterAuth(token,user,result){
   setLoading(true);
   TOKEN=token; localStorage.setItem(KEY+'token',token); ME=user; backendMode=true;
-  try{ await pullData(); hideAuth(); renderAcct(); enterApp(); }
+  try{ if(routeLearningEntry(result||{user},true))return; await pullData(); hideAuth(); renderAcct(); enterApp(); }
   finally{ setLoading(false); }
 }
 async function doLogin(){
@@ -907,8 +963,8 @@ async function doLogin(){
   if(!ident||!pw){ document.getElementById('aErr').textContent='请输入账号与密码'; return; }
   const btn=document.getElementById('loginSubmit'); btn.disabled=true; btn.textContent='正在登录…';
   try{
-    const res=await api('/api/login',{method:'POST',body:JSON.stringify({identifier:ident,password:pw})});
-    if(res.status===200&&res.body&&res.body.token){ await afterAuth(res.body.token,res.body.user); toast('登录成功'); }
+    const res=await api('/api/login',{method:'POST',body:JSON.stringify(Object.assign({identifier:ident,password:pw},learningSelectionPayload()))});
+    if(res.status===200&&res.body&&res.body.token){ await afterAuth(res.body.token,res.body.user,res.body); toast('登录成功'); }
     else { document.getElementById('aErr').textContent=(res.body&&res.body.error)||'登录失败'; }
   }catch(e){ document.getElementById('aErr').textContent='网络错误，无法连接服务器'; }
   finally{ btn.disabled=false; btn.textContent='登录并继续学习'; }
@@ -924,8 +980,8 @@ async function doRegister(){
   if(!pw||pw.length<8||pw.length>128){ document.getElementById('aErr').textContent='密码须为 8-128 位'; return; }
   const btn=document.getElementById('registerSubmit'); btn.disabled=true; btn.textContent='正在创建账号…';
   try{
-    const res=await api('/api/register',{method:'POST',body:JSON.stringify({phone,email,nickname:nick,password:pw})});
-    if(res.status===200&&res.body&&res.body.token){ await afterAuth(res.body.token,res.body.user); toast('注册成功，欢迎！'); }
+    const res=await api('/api/register',{method:'POST',body:JSON.stringify(Object.assign({phone,email,nickname:nick,password:pw},learningSelectionPayload()))});
+    if(res.status===200&&res.body&&res.body.token){ await afterAuth(res.body.token,res.body.user,res.body); toast('注册成功，欢迎！'); }
     else { document.getElementById('aErr').textContent=(res.body&&res.body.error)||'注册失败'; }
   }catch(e){ document.getElementById('aErr').textContent='网络错误，无法连接服务器'; }
   finally{ btn.disabled=false; btn.textContent='创建账号并开始学习'; }

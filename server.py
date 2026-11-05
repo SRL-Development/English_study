@@ -168,6 +168,8 @@ def init_db():
             email TEXT UNIQUE,
             nickname TEXT,
             password_hash TEXT,
+            learning_stage TEXT NOT NULL DEFAULT 'general',
+            preferred_age_band TEXT,
             created_at TEXT,
             last_login TEXT)"""
     )
@@ -261,6 +263,15 @@ def init_db():
         c.execute("ALTER TABLE users ADD COLUMN email_verified INTEGER DEFAULT 0")
     except Exception:
         pass
+    # 统一入口：保存用户最后选择的分龄学习路径，旧账号默认进入青少年/成人学习台。
+    try:
+        c.execute("ALTER TABLE users ADD COLUMN learning_stage TEXT NOT NULL DEFAULT 'general'")
+    except Exception:
+        pass
+    try:
+        c.execute("ALTER TABLE users ADD COLUMN preferred_age_band TEXT")
+    except Exception:
+        pass
     conn.commit()
     conn.close()
 
@@ -330,7 +341,8 @@ def auth_user():
     tok = ah[7:].strip()
     conn = db()
     row = conn.execute(
-        "SELECT t.user_id,t.expires_at,u.id,u.phone,u.email,u.nickname "
+        "SELECT t.user_id,t.expires_at,u.id,u.phone,u.email,u.nickname,"
+        "u.learning_stage,u.preferred_age_band "
         "FROM tokens t JOIN users u ON u.id=t.user_id WHERE t.token=?",
         (tok,),
     ).fetchone()
@@ -649,6 +661,86 @@ def verify_html(ok, msg):
 
 
 # ----------------------------- 账号接口 -----------------------------
+LEARNING_STAGES = {"kindergarten", "primary", "general"}
+LEARNING_STAGE_AGES = {
+    "kindergarten": {"3-4", "4-5", "5-6"},
+    "primary": {"6-8", "8-10", "10-12"},
+    "general": {"13+"},
+}
+DEFAULT_GRADE_BY_AGE = {
+    "3-4": "k1", "4-5": "k2", "5-6": "k3",
+    "6-8": "g1-2", "8-10": "g3-4", "10-12": "g5-6",
+}
+DEFAULT_AGE_BY_STAGE = {"kindergarten": "3-4", "primary": "6-8", "general": "13+"}
+
+
+def learning_selection(data, *, fallback_stage="general", fallback_age=None):
+    stage = text_field(data, "learning_stage", lower=True) or fallback_stage
+    if stage not in LEARNING_STAGES:
+        return None, None, "学习年龄段无效"
+    default_age = "13+" if stage == "general" else None
+    age_band = text_field(data, "age_band") or fallback_age or default_age
+    if age_band not in LEARNING_STAGE_AGES[stage]:
+        return None, None, "请选择与学习阶段匹配的年龄段"
+    return stage, age_band, None
+
+
+def normalized_saved_learning(stage, age_band):
+    stage = stage if stage in LEARNING_STAGES else "general"
+    if age_band not in LEARNING_STAGE_AGES[stage]:
+        age_band = DEFAULT_AGE_BY_STAGE[stage]
+    return stage, age_band
+
+
+def learning_landing(stage):
+    if stage == "kindergarten":
+        return "/kids/kindergarten"
+    if stage == "primary":
+        return "/kids/primary"
+    return "/app/home"
+
+
+def ensure_learning_profile(conn, user_id, nickname, stage, age_band):
+    """Return the child profile for a child stage, creating one when necessary."""
+    if stage == "general":
+        return None
+    row = conn.execute(
+        "SELECT * FROM child_profiles WHERE parent_user_id=? AND track=? ORDER BY id LIMIT 1",
+        (user_id, stage),
+    ).fetchone()
+    stamp = now_iso()
+    grade_band = DEFAULT_GRADE_BY_AGE[age_band]
+    if row:
+        conn.execute(
+            "UPDATE child_profiles SET age_band=?,grade_band=?,updated_at=? WHERE id=?",
+            (age_band, grade_band, stamp, row["id"]),
+        )
+        return row["id"]
+    cur = conn.execute(
+        "INSERT INTO child_profiles(parent_user_id,nickname,avatar,age_band,grade_band,"
+        "track,daily_limit,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?)",
+        (
+            user_id, nickname or "小朋友", "fox", age_band, grade_band,
+            stage, 15, stamp, stamp,
+        ),
+    )
+    child_id = cur.lastrowid
+    conn.execute(
+        "INSERT INTO child_progress(child_id,data,updated_at) VALUES(?,?,?)",
+        (child_id, "{}", stamp),
+    )
+    return child_id
+
+
+def learning_auth_fields(stage, age_band, child_id=None):
+    return {
+        "learning_stage": stage,
+        "age_band": age_band,
+        "landing": learning_landing(stage),
+        "child_id": child_id,
+    }
+
+
 @app.route("/api/register", methods=["POST"])
 def api_register():
     data = request.get_json(silent=True) or {}
@@ -658,7 +750,10 @@ def api_register():
     email = text_field(data, "email", lower=True)
     password = data.get("password") or ""
     nickname = text_field(data, "nickname")
+    learning_stage, age_band, learning_error = learning_selection(data)
 
+    if learning_error:
+        return jsonify({"error": learning_error}), 400
     if not isinstance(password, str) or not 8 <= len(password) <= 128:
         return jsonify({"error": "密码须为 8-128 位"}), 400
     if len(nickname) > 40:
@@ -675,18 +770,23 @@ def api_register():
     conn = db()
     try:
         cur = conn.execute(
-            "INSERT INTO users(phone,email,nickname,password_hash,created_at,last_login) "
-            "VALUES(?,?,?,?,?,?)",
+            "INSERT INTO users(phone,email,nickname,password_hash,learning_stage,"
+            "preferred_age_band,created_at,last_login) VALUES(?,?,?,?,?,?,?,?)",
             (
                 ph,
                 em,
                 nickname or None,
                 generate_password_hash(password),
+                learning_stage,
+                age_band,
                 now_iso(),
                 now_iso(),
             ),
         )
         uid = cur.lastrowid
+        child_id = ensure_learning_profile(
+            conn, uid, nickname, learning_stage, age_band
+        )
         conn.commit()
     except sqlite3.IntegrityError:
         conn.close()
@@ -708,11 +808,17 @@ def api_register():
         ).start()
         email_sent = bool(MAIL_USERNAME and MAIL_PASSWORD)
 
+    entry = learning_auth_fields(learning_stage, age_band, child_id)
     return jsonify(
         {
             "token": tok,
             "email_sent": email_sent,
-            "user": {"id": uid, "phone": ph, "email": em, "nickname": nickname},
+            "landing": entry["landing"],
+            "child_id": entry["child_id"],
+            "user": {
+                "id": uid, "phone": ph, "email": em, "nickname": nickname,
+                "learning_stage": learning_stage, "age_band": age_band,
+            },
         }
     )
 
@@ -757,8 +863,27 @@ def api_login():
     conn.close()
     if not u or not u["password_hash"] or not check_password_hash(u["password_hash"], password):
         return jsonify({"error": "账号或密码错误"}), 401
+    requested_stage = text_field(data, "learning_stage", lower=True)
+    fallback_stage, fallback_age = normalized_saved_learning(
+        u["learning_stage"], u["preferred_age_band"]
+    )
+    selection_data = data if requested_stage else {
+        "learning_stage": fallback_stage,
+        "age_band": fallback_age or ("13+" if fallback_stage == "general" else ""),
+    }
+    learning_stage, age_band, learning_error = learning_selection(
+        selection_data, fallback_stage=fallback_stage, fallback_age=fallback_age
+    )
+    if learning_error:
+        return jsonify({"error": learning_error}), 400
     conn = db()
-    conn.execute("UPDATE users SET last_login=? WHERE id=?", (now_iso(), u["id"]))
+    conn.execute(
+        "UPDATE users SET last_login=?,learning_stage=?,preferred_age_band=? WHERE id=?",
+        (now_iso(), learning_stage, age_band, u["id"]),
+    )
+    child_id = ensure_learning_profile(
+        conn, u["id"], u["nickname"], learning_stage, age_band
+    )
     conn.commit()
     conn.close()
     tok = make_token(u["id"])
@@ -766,11 +891,15 @@ def api_login():
     return jsonify(
         {
             "token": tok,
+            "landing": learning_landing(learning_stage),
+            "child_id": child_id,
             "user": {
                 "id": u["id"],
                 "phone": u["phone"],
                 "email": u["email"],
                 "nickname": u["nickname"],
+                "learning_stage": learning_stage,
+                "age_band": age_band,
             },
         }
     )
@@ -793,14 +922,25 @@ def api_me():
     u = auth_user()
     if not u:
         return jsonify({"error": "未登录"}), 401
+    stage, age_band = normalized_saved_learning(
+        u["learning_stage"], u["preferred_age_band"]
+    )
+    conn = db()
+    child_id = ensure_learning_profile(conn, u["id"], u["nickname"], stage, age_band)
+    conn.commit()
+    conn.close()
     return jsonify(
         {
+            "landing": learning_landing(stage),
+            "child_id": child_id,
             "user": {
                 "id": u["id"],
                 "phone": u["phone"],
                 "email": u["email"],
                 "nickname": u["nickname"],
-            }
+                "learning_stage": stage,
+                "age_band": age_band,
+            },
         }
     )
 

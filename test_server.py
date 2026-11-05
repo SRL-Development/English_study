@@ -152,6 +152,51 @@ class ServerApiTests(unittest.TestCase):
         self.assertEqual(login.status_code, 200)
         self.assertTrue(login.json["token"])
 
+    def test_unified_login_routes_by_age_and_creates_child_profile(self):
+        registered = self.register(
+            learning_stage="kindergarten", age_band="4-5", nickname="小星星"
+        )
+        self.assertEqual(registered.status_code, 200)
+        self.assertEqual(registered.json["landing"], "/kids/kindergarten")
+        self.assertEqual(registered.json["user"]["learning_stage"], "kindergarten")
+        self.assertTrue(registered.json["child_id"])
+        first_child_id = registered.json["child_id"]
+
+        headers = {"Authorization": "Bearer " + registered.json["token"]}
+        me = self.client.get("/api/me", headers=headers)
+        self.assertEqual(me.status_code, 200)
+        self.assertEqual(me.json["landing"], "/kids/kindergarten")
+        self.assertEqual(me.json["child_id"], first_child_id)
+
+        login = self.client.post(
+            "/api/login",
+            json={
+                "identifier": "learner@example.com",
+                "password": "safe-pass-123",
+                "learning_stage": "primary",
+                "age_band": "8-10",
+            },
+        )
+        self.assertEqual(login.status_code, 200)
+        self.assertEqual(login.json["landing"], "/kids/primary")
+        self.assertEqual(login.json["user"]["age_band"], "8-10")
+        self.assertNotEqual(login.json["child_id"], first_child_id)
+
+        conn = server.db()
+        rows = conn.execute(
+            "SELECT track,age_band FROM child_profiles ORDER BY id"
+        ).fetchall()
+        conn.close()
+        self.assertEqual(
+            [(row["track"], row["age_band"]) for row in rows],
+            [("kindergarten", "4-5"), ("primary", "8-10")],
+        )
+
+    def test_unified_login_rejects_mismatched_age_stage(self):
+        response = self.register(learning_stage="primary", age_band="4-5")
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("匹配", response.json["error"])
+
     def test_password_and_progress_validation(self):
         self.assertEqual(self.register(password="short").status_code, 400)
         registered = self.register()
