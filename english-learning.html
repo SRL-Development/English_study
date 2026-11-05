@@ -288,7 +288,7 @@
   .field-label{display:block;font-size:12px;font-weight:650;color:#475467;margin:0 0 6px}
   .auth-body input{width:100%;box-sizing:border-box;padding:13px 14px;margin-bottom:13px;border:1px solid #dfe2ea;border-radius:11px;font-size:14px;outline:none;background:#fbfcfe;transition:.18s}
   .auth-body input:focus{border-color:var(--pri);box-shadow:0 0 0 4px rgba(79,70,229,.09);background:#fff}
-  .auth-body.auth-reg{display:none}
+  .auth-body.is-hidden{display:none}
   .auth-btn{width:100%;padding:13px;border:none;border-radius:11px;background:linear-gradient(135deg,#3730a3,var(--pri));color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 10px 22px rgba(79,70,229,.2)}
   .auth-btn:hover{opacity:.92}
   .auth-err{color:#c0392b;font-size:13px;min-height:20px;margin-top:7px;text-align:center}.auth-terms{font-size:11px;color:#98a2b3;text-align:center;margin-top:14px;line-height:1.6}
@@ -557,7 +557,7 @@
         <input id="aPw" type="password" placeholder="输入密码" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
         <button type="button" class="auth-btn" id="loginSubmit" onclick="doLogin()">登录并继续学习</button>
       </div>
-      <div class="auth-body auth-reg" id="authReg">
+      <div class="auth-body is-hidden" id="authReg">
         <label class="field-label" for="rIdentity">手机号或邮箱</label>
         <input type="text" id="rIdentity" placeholder="输入手机号或邮箱" autocomplete="username">
         <label class="field-label" for="rNick">昵称</label><input type="text" id="rNick" placeholder="怎么称呼你（可选）" autocomplete="nickname">
@@ -943,7 +943,7 @@ function setAuthTab(tab){
   document.getElementById('aErr').textContent='';
   const login=tab==='login';
   document.getElementById('atLogin').classList.toggle('on',login); document.getElementById('atReg').classList.toggle('on',!login);
-  document.getElementById('authLogin').style.display=login?'':'none'; document.getElementById('authReg').style.display=login?'none':'';
+  document.getElementById('authLogin').classList.toggle('is-hidden',!login); document.getElementById('authReg').classList.toggle('is-hidden',login);
   document.getElementById('authTitle').textContent=login?'欢迎回来':'开始你的学习计划';
   document.getElementById('authSubtitle').textContent=login?'登录你的学习账号，继续今天的进度':'创建免费账号，让学习进度跨设备同步';
   if(location.pathname==='/'||location.pathname==='/login'||location.pathname==='/register') history.replaceState(null,'',login?'/login':'/register');

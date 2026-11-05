@@ -57,6 +57,14 @@ class ServerApiTests(unittest.TestCase):
         self.assertEqual(self.client.get("/admin/login").status_code, 200)
         self.assertEqual(self.client.get("/admin/dashboard").status_code, 200)
 
+    def test_register_tab_has_working_visibility_contract(self):
+        with open(server.HTML, "r", encoding="utf-8") as source:
+            page = source.read()
+        self.assertIn('class="auth-body is-hidden" id="authReg"', page)
+        self.assertIn("classList.toggle('is-hidden',login)", page)
+        self.assertIn("classList.toggle('is-hidden',!login)", page)
+        self.assertNotIn(".auth-body.auth-reg{display:none}", page)
+
     def test_container_roles_are_http_isolated(self):
         server.APP_ROLE = "user"
         self.assertEqual(self.client.get("/login").status_code, 200)
