@@ -1656,6 +1656,8 @@ def primary_page():
     return send_html(PRIMARY_HTML)
 
 
+@app.route("/kids/runtime-style", methods=["GET"])
+@app.route("/assets/kids-style", methods=["GET"])
 @app.route("/assets/kids.css", methods=["GET"])
 def kids_css_asset():
     if not os.path.exists(KIDS_CSS):
@@ -1663,6 +1665,8 @@ def kids_css_asset():
     return send_file(KIDS_CSS, mimetype="text/css", conditional=True, max_age=3600)
 
 
+@app.route("/kids/runtime-app", methods=["GET"])
+@app.route("/assets/kids-app", methods=["GET"])
 @app.route("/assets/kids-common.js", methods=["GET"])
 def kids_common_js_asset():
     if not os.path.exists(KIDS_COMMON_JS):
