@@ -190,6 +190,12 @@ def init_db():
             expires_at TEXT)"""
     )
     c.execute(
+        """CREATE TABLE IF NOT EXISTS app_settings(
+            setting_key TEXT PRIMARY KEY,
+            setting_value TEXT NOT NULL,
+            updated_at TEXT NOT NULL)"""
+    )
+    c.execute(
         """CREATE TABLE IF NOT EXISTS user_activity(
             user_id INTEGER NOT NULL,
             activity_date TEXT NOT NULL,
@@ -1260,15 +1266,64 @@ def api_child_event(child_id):
 
 
 # ----------------------------- 后台接口 -----------------------------
+def stored_admin_password_hash():
+    conn = db()
+    row = conn.execute(
+        "SELECT setting_value FROM app_settings WHERE setting_key='admin_password_hash'"
+    ).fetchone()
+    conn.close()
+    return row["setting_value"] if row else ""
+
+
+def admin_password_matches(password):
+    password_hash = stored_admin_password_hash()
+    if password_hash:
+        try:
+            return check_password_hash(password_hash, password)
+        except (TypeError, ValueError):
+            return False
+    return bool(ADMIN_PASSWORD) and secrets.compare_digest(password, ADMIN_PASSWORD)
+
+
 @app.route("/api/admin/login", methods=["POST"])
 def api_admin_login():
-    if not ADMIN_PASSWORD:
+    if not ADMIN_PASSWORD and not stored_admin_password_hash():
         return jsonify({"error": "后台未启用：请先配置 ADMIN_PASSWORD"}), 503
     data = request.get_json(silent=True) or {}
     pw = text_field(data, "password") if isinstance(data, dict) else ""
-    if not secrets.compare_digest(pw, ADMIN_PASSWORD):
+    if not admin_password_matches(pw):
         return jsonify({"error": "管理员密码错误"}), 401
     return jsonify({"token": make_admin_token()})
+
+
+@app.route("/api/admin/password", methods=["POST"])
+def api_admin_password():
+    if not auth_admin():
+        return jsonify({"error": "未授权"}), 401
+    data = request.get_json(silent=True) or {}
+    if not isinstance(data, dict):
+        return jsonify({"error": "请求格式错误"}), 400
+    current_password = text_field(data, "current_password")
+    new_password = text_field(data, "new_password")
+    if not admin_password_matches(current_password):
+        return jsonify({"error": "当前管理密码错误"}), 400
+    if not isinstance(new_password, str) or not 10 <= len(new_password) <= 128:
+        return jsonify({"error": "新管理密码须为 10-128 位"}), 400
+    if secrets.compare_digest(current_password, new_password):
+        return jsonify({"error": "新密码不能与当前密码相同"}), 400
+    token = request.headers.get("Authorization", "")[7:].strip()
+    stamp = now_iso()
+    conn = db()
+    conn.execute(
+        "INSERT INTO app_settings(setting_key,setting_value,updated_at) VALUES(?,?,?) "
+        "ON CONFLICT(setting_key) DO UPDATE SET "
+        "setting_value=excluded.setting_value,updated_at=excluded.updated_at",
+        ("admin_password_hash", generate_password_hash(new_password), stamp),
+    )
+    conn.execute("DELETE FROM admin_tokens WHERE token<>?", (token,))
+    conn.commit()
+    conn.close()
+    return jsonify({"ok": True, "message": "管理密码已更新"})
 
 
 @app.route("/api/admin/users", methods=["GET"])

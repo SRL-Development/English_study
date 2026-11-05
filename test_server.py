@@ -107,6 +107,37 @@ class ServerApiTests(unittest.TestCase):
             response = self.client.post("/api/admin/login", json={"password": "admin123"})
         self.assertEqual(response.status_code, 503)
 
+    def test_admin_can_change_password_and_hash_is_persistent(self):
+        with mock.patch.object(server, "ADMIN_PASSWORD", "initial-admin-123"):
+            login = self.client.post(
+                "/api/admin/login", json={"password": "initial-admin-123"}
+            )
+            self.assertEqual(login.status_code, 200)
+            headers = {"Authorization": "Bearer " + login.json["token"]}
+            changed = self.client.post(
+                "/api/admin/password",
+                json={
+                    "current_password": "initial-admin-123",
+                    "new_password": "new-admin-password-456",
+                },
+                headers=headers,
+            )
+            self.assertEqual(changed.status_code, 200)
+            old_login = self.client.post(
+                "/api/admin/login", json={"password": "initial-admin-123"}
+            )
+            new_login = self.client.post(
+                "/api/admin/login", json={"password": "new-admin-password-456"}
+            )
+        self.assertEqual(old_login.status_code, 401)
+        self.assertEqual(new_login.status_code, 200)
+        conn = server.db()
+        stored = conn.execute(
+            "SELECT setting_value FROM app_settings WHERE setting_key='admin_password_hash'"
+        ).fetchone()["setting_value"]
+        conn.close()
+        self.assertNotIn("new-admin-password-456", stored)
+
     def test_admin_analytics_and_user_details(self):
         registered = self.register()
         user_token = registered.json["token"]
@@ -204,6 +235,18 @@ class ServerApiTests(unittest.TestCase):
         response = self.register(learning_stage="primary", age_band="4-5")
         self.assertEqual(response.status_code, 400)
         self.assertIn("匹配", response.json["error"])
+
+    def test_user_login_bootstrap_endpoints_and_page_are_available(self):
+        registered = self.register(learning_stage="general", age_band="13+")
+        headers = {"Authorization": "Bearer " + registered.json["token"]}
+        self.assertEqual(self.client.get("/api/me", headers=headers).status_code, 200)
+        self.assertEqual(self.client.get("/api/data", headers=headers).status_code, 200)
+        page = self.client.get("/app/home")
+        self.assertEqual(page.status_code, 200)
+        html = page.get_data(as_text=True)
+        self.assertIn('id="appLoading"', html)
+        self.assertIn('id="bootError"', html)
+        self.assertIn("retryBootstrap()", html)
 
     def test_password_and_progress_validation(self):
         self.assertEqual(self.register(password="short").status_code, 400)

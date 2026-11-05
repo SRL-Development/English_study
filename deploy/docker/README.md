@@ -23,6 +23,8 @@ sudo bash deploy/nginx/configure.sh
 `.env` 至少填写 `ADMIN_PASSWORD`、`MAIL_SECRET`、`SITE_BASE_URL`、
 `SITE_DOMAIN`、`ADMIN_DOMAIN` 和 `LETSENCRYPT_EMAIL`。两个域名必须先解析到
 云主机公网 IP；阿里云安全组开放 TCP `22/80/443`，不要开放 `5000/5001`。
+`ADMIN_PASSWORD` 是首次登录密码；登录管理后台后可在「安全设置」修改，修改后的
+密码以哈希形式保存在 `english-study-data` 数据卷中，后续镜像升级不会重置。
 
 ## 后续一键升级
 

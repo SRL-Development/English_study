@@ -78,6 +78,7 @@
   .streak-card{background:linear-gradient(145deg,#fff9ed,#fff);display:flex;flex-direction:column;justify-content:center}.streak-top{display:flex;align-items:center;gap:10px}.streak-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#fff0cd;font-size:22px}.streak-card strong{font-size:25px}.streak-card p{font-size:12px;color:var(--sub);margin:8px 0 0}
   .lesson-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 20px}.lesson-card{border:1px solid var(--line);border-radius:18px;background:#fff;padding:17px;cursor:pointer;transition:.2s;box-shadow:0 6px 20px rgba(16,24,40,.035)}.lesson-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(16,24,40,.08);border-color:#d6d2ff}.lesson-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.lesson-icon{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;font-size:18px}.lesson-icon.vocab{background:#ebe9ff}.lesson-icon.speak{background:#e4f8f0}.lesson-icon.grammar{background:#fff0db}.lesson-state{font-size:11px;border-radius:999px;padding:4px 8px;background:#f2f4f7;color:var(--sub)}.lesson-card h3{font-size:15px;margin:0 0 5px}.lesson-card p{font-size:12px;color:var(--sub);margin:0}.lesson-foot{display:flex;justify-content:space-between;color:var(--sub);font-size:11px;margin-top:15px;padding-top:12px;border-top:1px solid #eef0f4}.lesson-foot b{color:var(--pri)}
   .loading-shell{position:fixed;inset:0;z-index:240;display:none;align-items:center;justify-content:center;background:linear-gradient(145deg,#f6f7fb,#efedff)}.loading-shell.show{display:flex}.loading-card{display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--sub);font-size:13px}.loading-mark{width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,#312e81,var(--pri-2));color:#fff;display:grid;place-items:center;font-size:22px;font-weight:850;box-shadow:0 16px 40px rgba(79,70,229,.25);animation:loadPulse 1.2s ease-in-out infinite}.loading-dots{display:flex;gap:5px}.loading-dots i{width:6px;height:6px;border-radius:50%;background:var(--pri);animation:loadDot 1s infinite}.loading-dots i:nth-child(2){animation-delay:.15s}.loading-dots i:nth-child(3){animation-delay:.3s}@keyframes loadPulse{50%{transform:translateY(-3px)}}@keyframes loadDot{50%{opacity:.25}}
+  .boot-error{position:fixed;inset:0;z-index:250;display:none;place-items:center;background:rgba(245,246,250,.96);padding:22px}.boot-error.show{display:grid}.boot-error-card{width:min(430px,100%);background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-lg);padding:28px;text-align:center}.boot-error-card .icon{font-size:38px}.boot-error-card h2{font-size:20px;margin:10px 0 7px}.boot-error-card p{font-size:12px;color:var(--sub);line-height:1.7;margin:0 0 18px}.boot-error-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}
   .view-error{border:1px solid #f4c7c9;background:#fff4f4;border-radius:16px;padding:18px;color:#9b2c31}.view-error b{display:block;margin-bottom:5px}.view-error button{margin-top:10px;border:0;border-radius:10px;background:#fff;color:#9b2c31;padding:8px 12px;font-weight:700;cursor:pointer}
   /* filters */
   .filters{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;margin-bottom:4px}
@@ -497,6 +498,7 @@
 </div>
 
 <div class="loading-shell show" id="appLoading"><div class="loading-card"><div class="loading-mark">E</div><div>正在准备你的学习计划</div><div class="loading-dots"><i></i><i></i><i></i></div></div></div>
+<div class="boot-error" id="bootError"><div class="boot-error-card"><div class="icon">🛠️</div><h2>学习页面暂时没有准备好</h2><p id="bootErrorText">请重试，或重新登录刷新账号状态。</p><div class="boot-error-actions"><button type="button" class="btn-ghost" onclick="retryBootstrap()">重新加载</button><button type="button" class="btn-ghost btn-red" onclick="resetUserSession()">重新登录</button></div></div></div>
 
 <div class="mask" id="mask"><div class="modal"><h3 id="mTitle">确认</h3><p id="mText"></p><div class="mbtns"><button onclick="closeMask()">取消</button><button class="danger" id="mOk">确定</button></div></div></div>
 <div class="toast" id="toast"></div>
@@ -904,8 +906,13 @@ async function api(path,opts={}){
   }finally{ clearTimeout(timer); }
 }
 function setLoading(show){ const el=document.getElementById('appLoading'); if(el)el.classList.toggle('show',!!show); }
+function hideBootError(){document.getElementById('bootError')?.classList.remove('show');}
+function showBootError(message){setLoading(false);const box=document.getElementById('bootError'),text=document.getElementById('bootErrorText');if(text)text.textContent=message||'请重试，或重新登录刷新账号状态。';box?.classList.add('show');}
+function retryBootstrap(){hideBootError();bootstrap();}
+function resetUserSession(){api('/api/logout',{method:'POST'}).catch(()=>{});TOKEN='';localStorage.removeItem(KEY+'token');location.replace('/login');}
 async function bootstrap(){
   const entry=location.pathname==='/register'?'reg':'login';
+  hideBootError();
   setLoading(true);
   if(!TOKEN){
     if(location.pathname!=='/register') history.replaceState(null,'','/login');
@@ -917,8 +924,8 @@ async function bootstrap(){
     const res=await api('/api/me');
     if(res.status===200){ backendMode=true; ME=res.body.user; if(routeLearningEntry(res.body,false))return; await pullData(); hideAuth(); renderAcct(); enterApp(); }
     else if(res.status===401){ backendMode=true; ME=null; TOKEN=''; localStorage.removeItem(KEY+'token'); showAuth(entry); renderAcct(); }
-    else { enterAppOffline(); }
-  }catch(e){ console.warn('bootstrap fallback',e); enterAppOffline(); }
+    else { showBootError((res.body&&res.body.error)||('服务器响应异常（'+res.status+'）')); }
+  }catch(e){ console.warn('bootstrap failed',e); showBootError(e&&e.name==='AbortError'?'服务器响应超时，请检查 USER 容器和 Nginx。':'无法加载账号数据，请检查 USER 容器日志。'); }
   finally{ setLoading(false); }
 }
 function enterAppOffline(){ backendMode=false; ME=null; hideAuth(); renderAcct(); enterApp(); }
