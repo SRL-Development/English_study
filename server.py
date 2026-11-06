@@ -81,6 +81,7 @@ KINDERGARTEN_HTML = os.path.join(BASE, "kindergarten.html")
 PRIMARY_HTML = os.path.join(BASE, "primary.html")
 KIDS_CSS = os.path.join(BASE, "kids.css")
 KIDS_COMMON_JS = os.path.join(BASE, "kids-common.js")
+VOCABULARY_DATA_JS = os.path.join(BASE, "vocabulary-data.js")
 APP_ROLE = os.environ.get("APP_ROLE", "all").strip().lower()
 if APP_ROLE not in {"all", "user", "admin"}:
     APP_ROLE = "all"
@@ -1781,6 +1782,18 @@ def kids_common_js_asset():
         abort(404)
     return send_file(
         KIDS_COMMON_JS, mimetype="application/javascript", conditional=True, max_age=3600
+    )
+
+
+@app.route("/assets/vocabulary-data.js", methods=["GET"])
+def vocabulary_data_js_asset():
+    if not os.path.exists(VOCABULARY_DATA_JS):
+        abort(404)
+    return send_file(
+        VOCABULARY_DATA_JS,
+        mimetype="application/javascript",
+        conditional=True,
+        max_age=3600,
     )
 
 

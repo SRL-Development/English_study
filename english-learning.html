@@ -172,6 +172,8 @@
   .btn-red{color:var(--red);border-color:#f6c9ca;background:var(--red-soft)}
   .file-in{display:none}
   .empty{text-align:center;color:var(--sub);font-size:13px;padding:24px}
+  .vocab-more{display:none;width:100%;margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--pri);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
+  .vocab-more:hover{background:var(--pri-soft)}
   /* modal */
   .mask{position:fixed;inset:0;background:rgba(20,28,40,.45);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
   .mask.show{display:flex}
@@ -352,7 +354,7 @@
 
   <!-- 词汇术语库 -->
   <div class="view" id="viewVocab">
-    <div class="page-head"><div><span class="eyebrow">Vocabulary</span><h2>词汇术语库</h2><p>按阶段和行业建立你的高频词汇体系，学过的内容自动同步。</p></div></div>
+    <div class="page-head"><div><span class="eyebrow">Vocabulary · 500+ words</span><h2>词汇术语库</h2><p>按阶段和行业建立你的高频词汇体系，学过的内容自动同步。</p></div></div>
     <div class="filters" id="vocabFilters"></div>
     <div class="card">
       <div class="flash" id="flash" onclick="flipCard()">
@@ -376,8 +378,9 @@
       </div>
     </div>
     <div class="sec-h" style="margin-top:20px"><svg viewBox="0 0 24 24"><path d="M4 5h16v3H4zm0 5.5h16v3H4zm0 5.5h10v3H4z"/></svg>词库浏览 <span style="font-size:12px;color:var(--sub);font-weight:400" id="vocabCount"></span></div>
-    <input class="search" id="vocabSearch" placeholder="搜索英文或中文…" oninput="renderVocabList()">
+    <input class="search" id="vocabSearch" placeholder="搜索英文或中文…" oninput="resetVocabList()">
     <div class="list" id="vocabList"></div>
+    <button class="vocab-more" id="vocabMore" type="button" onclick="loadMoreVocab()">加载更多词汇</button>
   </div>
 
   <!-- 听说训练 -->
@@ -589,6 +592,7 @@
     </section>
   </div>
 </div>
+<script src="/assets/vocabulary-data.js?v=1.3.9"></script>
 <script>
 /* ============ 数据层：词库 ============ */
 const CATS = [
@@ -717,6 +721,7 @@ const VOCAB = [
   {en:'Forecast',ph:'/ˈfɔːkɑːst/',zh:'预测',cat:'finance',ex:'Sales forecast.'},
   {en:'Tax',ph:'/tæks/',zh:'税',cat:'finance',ex:'File your tax.'}
 ];
+Array.prototype.push.apply(VOCAB, window.EXTRA_VOCAB || []);
 const SENTENCES = [
   {en:'Could you please send me the contract by Friday?',zh:'能否在周五前把合同发给我？',cat:'business'},
   {en:"Let's review the blueprint before we start welding.",zh:'开始焊接前我们先看一下蓝图。',cat:'engineering'},
@@ -825,6 +830,7 @@ const LEVELS=[
   {id:3,name:'大学',desc:'全部行业术语 + 进阶语法，覆盖专业英文与高阶表达。'}
 ];
 function vLv(t){
+  if(t.lv!=null) return t.lv;
   if(t.cat==='daily'){ const b0=['Hi','Thanks','Sorry','Please','Excuse me',"What's up",'See you later','Nice to meet you',"I don't understand",'Could you help me',"I'm fine",'Have a good day','Where is the station']; return b0.includes(t.en)?0:1; }
   if(t.cat==='business'){ const a3=['Negotiation','Revenue','Partnership','Supply chain','Market share','Quarter','Stakeholder','Bottom line']; return a3.includes(t.en)?3:2; }
   if(t.cat==='medical'){ const b2=['Temperature','Emergency','Hygiene']; return b2.includes(t.en)?2:3; }
@@ -1181,9 +1187,11 @@ function renderVocabList(){
   const q=(document.getElementById('vocabSearch').value||'').toLowerCase().trim();
   let arr=filteredVocab();
   if(q) arr=arr.filter(t=>(t.en+' '+t.zh).toLowerCase().includes(q));
-  document.getElementById('vocabCount').textContent='（'+arr.length+' 词）';
-  if(arr.length===0){ document.getElementById('vocabList').innerHTML='<div class="empty">没有匹配的词汇</div>'; return; }
-  const h=arr.map(t=>{
+  const more=document.getElementById('vocabMore');
+  const visible=arr.slice(0,state.vocabLimit);
+  document.getElementById('vocabCount').textContent=arr.length>visible.length?'（显示 '+visible.length+' / '+arr.length+' 词）':'（'+arr.length+' 词）';
+  if(arr.length===0){ document.getElementById('vocabList').innerHTML='<div class="empty">没有匹配的词汇</div>'; more.style.display='none'; return; }
+  const h=visible.map(t=>{
     const id=termId(t);
     let pill='';
     if(P.mastered[id]) pill='<span class="pill m">掌握</span>';
@@ -1193,7 +1201,11 @@ function renderVocabList(){
       '<div class="zh">'+t.zh+'</div>'+pill+'</div>';
   }).join('');
   document.getElementById('vocabList').innerHTML=h;
+  more.style.display=visible.length<arr.length?'block':'none';
+  more.textContent='加载更多（还剩 '+(arr.length-visible.length)+' 词）';
 }
+function resetVocabList(){ state.vocabLimit=60; renderVocabList(); }
+function loadMoreVocab(){ state.vocabLimit+=60; renderVocabList(); }
 
 function filteredSpeak(){
   let a=SENTENCES;
@@ -1411,7 +1423,7 @@ function renderView(name){
 function refreshAll(){ renderLevelBar(); renderToday(); renderView(state.active||'dash'); }
 
 /* ============ 交互 ============ */
-const state={ active:pageFromLocation(), vcat:'all', flipIdx:0, flipped:false, sIdx:0, mode:'dictation', gcat:'all', gOpen:null, gIdx:0, fcat:'all', fIdx:0, fScore:{c:0,t:0}, level:'all', chatScene:'daily', chatLog:[] };
+const state={ active:pageFromLocation(), vcat:'all', vocabLimit:60, flipIdx:0, flipped:false, sIdx:0, mode:'dictation', gcat:'all', gOpen:null, gIdx:0, fcat:'all', fIdx:0, fScore:{c:0,t:0}, level:'all', chatScene:'daily', chatLog:[] };
 
 function switchTab(name,updateUrl=true){
   const map={vocab:'viewVocab',speak:'viewSpeak',dash:'viewDash',gram:'viewGram',set:'viewSet'};
@@ -1429,7 +1441,7 @@ function switchTab(name,updateUrl=true){
   requestAnimationFrame(()=>renderView(name));
 }
 window.addEventListener('popstate',()=>switchTab(pageFromLocation(),false));
-function setVCat(id){ state.vcat=id; state.flipIdx=0; P.focus=id; save(P); renderVocabFilters(); renderFlash(); renderVocabList(); renderLevelBar(); }
+function setVCat(id){ state.vcat=id; state.vocabLimit=60; state.flipIdx=0; P.focus=id; save(P); renderVocabFilters(); renderFlash(); renderVocabList(); renderLevelBar(); }
 
 function flipCard(){
   state.flipped=!state.flipped;
