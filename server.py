@@ -15,6 +15,7 @@
   6) 静态托管：/ 返回 english-learning.html（或 index.html）、/admin 返回 admin.html
   7) 邮件通知：/api/register 注册成功后，向用户邮箱发送欢迎/激活邮件（阿里云邮箱 SMTP）
   8) 邮箱激活：/api/verify-email 点击邮件链接标记邮箱已验证
+  9) 开放语料：30,000 词汇 + 30,000 英中例句的筛选、搜索和分页 API
 
 数据库：SQLite 文件 app.db（随服务自动创建；可通过 APP_DATA_DIR / APP_DB_PATH 指定）。
 
@@ -53,6 +54,7 @@ import smtplib
 import time
 import gzip
 import xml.etree.ElementTree as ET
+from pathlib import Path
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from urllib.parse import quote, urlparse
@@ -82,6 +84,7 @@ PRIMARY_HTML = os.path.join(BASE, "primary.html")
 KIDS_CSS = os.path.join(BASE, "kids.css")
 KIDS_COMMON_JS = os.path.join(BASE, "kids-common.js")
 VOCABULARY_DATA_JS = os.path.join(BASE, "vocabulary-data.js")
+CONTENT_DB = os.path.join(BASE, "content", "content.db")
 APP_ROLE = os.environ.get("APP_ROLE", "all").strip().lower()
 if APP_ROLE not in {"all", "user", "admin"}:
     APP_ROLE = "all"
@@ -156,6 +159,15 @@ def db():
     conn.execute("PRAGMA foreign_keys=ON")
     conn.execute("PRAGMA busy_timeout=10000")
     conn.execute("PRAGMA synchronous=NORMAL")
+    return conn
+
+
+def content_db():
+    """Open the versioned, read-only learning corpus bundled in the image."""
+    if not os.path.exists(CONTENT_DB):
+        return None
+    conn = sqlite3.connect(Path(CONTENT_DB).resolve().as_uri() + "?mode=ro", uri=True, timeout=5)
+    conn.row_factory = sqlite3.Row
     return conn
 
 
@@ -1667,6 +1679,154 @@ def api_admin_logout():
         conn.commit()
         conn.close()
     return jsonify({"ok": True})
+
+
+# ----------------------------- 大型开放学习语料 -----------------------------
+CONTENT_EXAMS = {
+    "kaoyan": "考研",
+    "cet6": "六级",
+    "cet4": "四级",
+    "gre": "GRE",
+    "toefl": "托福",
+    "ielts": "雅思",
+}
+
+
+def content_pagination(default_limit=20):
+    try:
+        page = max(1, min(1000, int(request.args.get("page", 1))))
+        limit = max(10, min(50, int(request.args.get("limit", default_limit))))
+    except (TypeError, ValueError):
+        page, limit = 1, default_limit
+    return page, limit
+
+
+@app.route("/api/content/stats", methods=["GET"])
+def api_content_stats():
+    conn = content_db()
+    if conn is None:
+        return jsonify({"error": "学习语料尚未安装"}), 503
+    metadata = {
+        row["key"]: row["value"]
+        for row in conn.execute("SELECT key,value FROM metadata").fetchall()
+    }
+    exam_counts = {}
+    for key, label in CONTENT_EXAMS.items():
+        exam_counts[key] = conn.execute(
+            "SELECT COUNT(*) AS n FROM vocabulary WHERE instr(tags, ?) > 0", (label,)
+        ).fetchone()["n"]
+    conn.close()
+    return jsonify(
+        {
+            "vocabulary": int(metadata.get("vocabulary_count", 0)),
+            "sentences": int(metadata.get("sentence_count", 0)),
+            "version": metadata.get("version", ""),
+            "exam_counts": exam_counts,
+            "sources": {
+                "dictionary": "ECDICT (MIT)",
+                "sentences": "Tatoeba (CC BY 2.0 FR)",
+            },
+        }
+    )
+
+
+@app.route("/api/content/vocabulary", methods=["GET"])
+def api_content_vocabulary():
+    conn = content_db()
+    if conn is None:
+        return jsonify({"error": "学习语料尚未安装"}), 503
+    page, limit = content_pagination()
+    query = (request.args.get("q") or "").strip()[:80]
+    exam = (request.args.get("exam") or "").strip().lower()
+    level_raw = (request.args.get("level") or "").strip()
+    clauses, params = [], []
+    if query:
+        clauses.append("(word LIKE ? COLLATE NOCASE OR translation LIKE ?)")
+        like = f"%{query}%"
+        params.extend([like, like])
+    if exam in CONTENT_EXAMS:
+        clauses.append("instr(tags, ?) > 0")
+        params.append(CONTENT_EXAMS[exam])
+    if level_raw in {"1", "2", "3"}:
+        clauses.append("level = ?")
+        params.append(int(level_raw))
+    where = " WHERE " + " AND ".join(clauses) if clauses else ""
+    total = conn.execute(
+        "SELECT COUNT(*) AS n FROM vocabulary" + where, params
+    ).fetchone()["n"]
+    order = "frequency_rank ASC, word COLLATE NOCASE ASC"
+    order_params = []
+    if query:
+        order = (
+            "CASE WHEN word = ? COLLATE NOCASE THEN 0 "
+            "WHEN word LIKE ? COLLATE NOCASE THEN 1 ELSE 2 END, " + order
+        )
+        order_params = [query, f"{query}%"]
+    rows = conn.execute(
+        "SELECT id,word,phonetic,translation,definition,pos,tags,level,frequency_rank "
+        "FROM vocabulary" + where + " ORDER BY " + order + " LIMIT ? OFFSET ?",
+        params + order_params + [limit, (page - 1) * limit],
+    ).fetchall()
+    conn.close()
+    return jsonify(
+        {
+            "items": [dict(row) for row in rows],
+            "pagination": {
+                "page": page,
+                "limit": limit,
+                "pages": max(1, (total + limit - 1) // limit),
+                "total": total,
+            },
+        }
+    )
+
+
+@app.route("/api/content/sentences", methods=["GET"])
+def api_content_sentences():
+    conn = content_db()
+    if conn is None:
+        return jsonify({"error": "学习语料尚未安装"}), 503
+    page, limit = content_pagination()
+    query = (request.args.get("q") or "").strip()[:80]
+    level_raw = (request.args.get("level") or "").strip()
+    clauses, params = [], []
+    if query:
+        clauses.append("(english LIKE ? COLLATE NOCASE OR chinese LIKE ?)")
+        like = f"%{query}%"
+        params.extend([like, like])
+    if level_raw in {"1", "2", "3"}:
+        clauses.append("level = ?")
+        params.append(int(level_raw))
+    where = " WHERE " + " AND ".join(clauses) if clauses else ""
+    total = conn.execute(
+        "SELECT COUNT(*) AS n FROM sentences" + where, params
+    ).fetchone()["n"]
+    rows = conn.execute(
+        "SELECT id,english,chinese,level,source_id FROM sentences"
+        + where
+        + " ORDER BY id ASC LIMIT ? OFFSET ?",
+        params + [limit, (page - 1) * limit],
+    ).fetchall()
+    conn.close()
+    items = []
+    for row in rows:
+        item = dict(row)
+        item["source_url"] = (
+            "https://tatoeba.org/en/sentences/show/" + str(row["source_id"])
+        )
+        items.append(item)
+    return jsonify(
+        {
+            "items": items,
+            "pagination": {
+                "page": page,
+                "limit": limit,
+                "pages": max(1, (total + limit - 1) // limit),
+                "total": total,
+            },
+            "attribution": "Tatoeba community · CC BY 2.0 FR",
+        }
+    )
 
 
 # ----------------------------- 静态托管 -----------------------------

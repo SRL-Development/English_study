@@ -21,6 +21,9 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python -m unittest -v test_server.py
       - run: node test_frontend.js
+      - name: Audit corpus builder dependencies
+        working-directory: tools/content-builder
+        run: npm ci --ignore-scripts && npm audit --audit-level=moderate
       - name: Check deployment scripts
         run: |
           bash -n deploy/1panel/update.sh
@@ -138,9 +141,15 @@ jobs:
                 grep -Fq 'adult-cinema' /tmp/adult.html
                 grep -Fq 'recordAdultAttempt' /tmp/adult.html
                 grep -Fq 'heat-grid' /tmp/adult.html
-                grep -Fq '/assets/vocabulary-data.js?v=1.3.9' /tmp/adult.html
+                grep -Fq 'id="corpusResults"' /tmp/adult.html
+                grep -Fq '/assets/vocabulary-data.js?v=1.4.0' /tmp/adult.html
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/assets/vocabulary-data.js" -o /tmp/vocabulary-data.js
                 grep -Fq 'EXTRA_VOCAB' /tmp/vocabulary-data.js
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/api/content/stats" -o /tmp/content-stats.json
+                grep -Fq '"vocabulary":30000' /tmp/content-stats.json
+                grep -Fq '"sentences":30000' /tmp/content-stats.json
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/api/content/vocabulary?q=analysis&limit=20" -o /tmp/content-words.json
+                grep -Fq '"translation"' /tmp/content-words.json
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/runtime-style" -o /tmp/kids.css
                 grep -Fq '.kids-shell' /tmp/kids.css
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/runtime-app" -o /tmp/kids.js

@@ -25,6 +25,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY server.py assess-proxy.py admin.html english-learning.html index.html \
     kids-hub.html kindergarten.html primary.html kids.css kids-common.js \
     vocabulary-data.js ./
+COPY content/content.db ./content/content.db
+COPY content/licenses ./content/licenses
+COPY OPEN_DATA_LICENSES.md ./OPEN_DATA_LICENSES.md
 
 RUN groupadd --system --gid 10001 app \
     && useradd --system --uid 10001 --gid app --home-dir /app app \

@@ -1,0 +1,13 @@
+{
+  "name": "english-study-content-builder",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build-corpus.mjs"
+  },
+  "dependencies": {
+    "csv-parse": "^7.0.3",
+    "sql.js": "^1.13.0",
+    "unbzip2-stream": "^1.4.3"
+  }
+}

@@ -174,6 +174,14 @@
   .empty{text-align:center;color:var(--sub);font-size:13px;padding:24px}
   .vocab-more{display:none;width:100%;margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--pri);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
   .vocab-more:hover{background:var(--pri-soft)}
+  .corpus-panel{margin-top:26px;padding:20px;background:linear-gradient(145deg,#fff 0%,#f7f8ff 100%);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+  .corpus-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}
+  .corpus-head h3{font-size:20px;margin:3px 0 6px}.corpus-head p{font-size:13px;color:var(--sub);line-height:1.6;margin:0}.corpus-total{font-size:12px;color:var(--pri);font-weight:700;white-space:nowrap;background:var(--pri-soft);padding:8px 11px;border-radius:10px}
+  .corpus-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}.corpus-tabs button{padding:11px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--sub);font-family:inherit;font-weight:700;cursor:pointer}.corpus-tabs button.on{background:var(--pri);border-color:var(--pri);color:#fff}
+  .corpus-filters{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;-webkit-overflow-scrolling:touch}.corpus-filters button{flex:none;border:1px solid var(--line);background:#fff;color:var(--sub);border-radius:20px;padding:7px 12px;font-family:inherit;font-size:12px;cursor:pointer}.corpus-filters button.on{border-color:var(--pri);background:var(--pri-soft);color:var(--pri);font-weight:700}
+  .corpus-status{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12px;color:var(--sub);margin:4px 0 10px}.corpus-results{display:flex;flex-direction:column;gap:9px}.corpus-item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;grid-template-columns:42px minmax(0,1fr);gap:11px}.corpus-play{width:38px;height:38px;border:0;border-radius:11px;background:var(--pri-soft);color:var(--pri);font-size:16px;cursor:pointer}.corpus-word{font-size:17px;font-weight:800;word-break:break-word}.corpus-phonetic{font-size:12px;font-weight:500;color:var(--sub);margin-left:7px}.corpus-translation{font-size:13px;line-height:1.6;margin-top:4px}.corpus-definition{font-size:12px;color:var(--sub);line-height:1.55;margin-top:4px}.corpus-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.corpus-tags span{font-size:10px;background:#f1f3f8;color:#536078;padding:3px 7px;border-radius:8px}.corpus-source{font-size:10px;color:var(--sub);margin-top:7px}.corpus-source a{color:var(--pri)}
+  .corpus-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.corpus-actions button{border:1px solid var(--line);background:#fff;color:var(--sub);border-radius:9px;padding:6px 9px;font-family:inherit;font-size:11px;font-weight:600;cursor:pointer}.corpus-actions button.on{border-color:var(--pri);background:var(--pri-soft);color:var(--pri)}
+  .corpus-pager{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:14px}.corpus-pager button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 15px;border-radius:10px;font-family:inherit;cursor:pointer}.corpus-pager button:disabled{opacity:.4;cursor:not-allowed}.corpus-pager span{font-size:12px;color:var(--sub)}
   /* modal */
   .mask{position:fixed;inset:0;background:rgba(20,28,40,.45);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
   .mask.show{display:flex}
@@ -194,6 +202,7 @@
   }
   @media(max-width:760px){.home-layout{grid-template-columns:1fr}.lesson-grid{grid-template-columns:1fr}.family-banner{grid-template-columns:1fr}.family-actions{justify-content:space-between}.today-main{align-items:flex-start;flex-direction:column}.today-cta{width:100%}.today-progress-track{width:100%}.today-progress{width:100%}.continue-card{align-items:flex-start}.course-orbit{width:86px;height:86px}.profile-grid{grid-template-columns:1fr}.page-head h2{font-size:22px}.page-head{margin-top:6px}}
   @media(max-width:460px){.wrap{padding:16px 16px 98px}.today{padding:20px;border-radius:22px}.today-copy h3{font-size:23px}.today-row{display:grid;grid-template-columns:1fr}.tcard{min-width:0;display:grid;grid-template-columns:1fr auto;align-items:center;padding:10px 12px}.tcard .lab,.tcard .val{grid-column:1}.tcard .val{font-size:18px}.tcard .act{grid-column:2;grid-row:1/span 2;margin:0}.continue-card{display:block}.course-orbit{margin-top:18px}.topbar{margin-bottom:13px}.brand p{max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+  @media(max-width:460px){.corpus-panel{padding:15px;margin-left:-2px;margin-right:-2px}.corpus-head{display:block}.corpus-total{display:inline-block;margin-top:10px}.corpus-item{padding:12px;grid-template-columns:38px minmax(0,1fr)}.corpus-word{font-size:16px}}
   /* grammar */
   .gcard{background:var(--bg);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:8px}
   .gcard .ghead{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;font-weight:600;gap:8px}
@@ -354,7 +363,7 @@
 
   <!-- 词汇术语库 -->
   <div class="view" id="viewVocab">
-    <div class="page-head"><div><span class="eyebrow">Vocabulary · 500+ words</span><h2>词汇术语库</h2><p>按阶段和行业建立你的高频词汇体系，学过的内容自动同步。</p></div></div>
+    <div class="page-head"><div><span class="eyebrow">Vocabulary · 30,000+ words</span><h2>词汇术语库</h2><p>从高频词卡进入考研、雅思、托福、GRE 与学术英语，学习记录自动同步。</p></div></div>
     <div class="filters" id="vocabFilters"></div>
     <div class="card">
       <div class="flash" id="flash" onclick="flipCard()">
@@ -381,6 +390,16 @@
     <input class="search" id="vocabSearch" placeholder="搜索英文或中文…" oninput="resetVocabList()">
     <div class="list" id="vocabList"></div>
     <button class="vocab-more" id="vocabMore" type="button" onclick="loadMoreVocab()">加载更多词汇</button>
+    <section class="corpus-panel" aria-labelledby="corpusTitle">
+      <div class="corpus-head"><div><span class="eyebrow">Graduate &amp; Academic Corpus</span><h3 id="corpusTitle">考研以上全量词汇与语句</h3><p>覆盖考研、六级、雅思、托福、GRE 与学术英语；服务端检索，不让大词库拖慢手机。</p></div><div class="corpus-total" id="corpusTotal">正在读取语料…</div></div>
+      <div class="corpus-tabs"><button class="on" id="corpusWordTab" type="button" onclick="setCorpusType('vocabulary')">30,000 词汇</button><button id="corpusSentenceTab" type="button" onclick="setCorpusType('sentences')">30,000 双语句</button></div>
+      <div class="corpus-filters" id="corpusFilters"></div>
+      <input class="search" id="corpusSearch" placeholder="搜索英文、中文释义或语句…" oninput="queueCorpusSearch()">
+      <div class="corpus-status"><span id="corpusStatus">准备加载</span><span id="corpusLevelHint">跟随顶部阶段筛选</span></div>
+      <div class="corpus-results" id="corpusResults"><div class="empty">正在加载全量语料…</div></div>
+      <div class="corpus-pager"><button id="corpusPrev" type="button" onclick="changeCorpusPage(-1)">上一页</button><span id="corpusPage">1 / 1</span><button id="corpusNext" type="button" onclick="changeCorpusPage(1)">下一页</button></div>
+      <div class="corpus-source">开放数据：<a href="https://github.com/skywind3000/ECDICT" target="_blank" rel="noopener">ECDICT · MIT</a> / <a href="https://tatoeba.org/" target="_blank" rel="noopener">Tatoeba · CC BY 2.0 FR</a></div>
+    </section>
   </div>
 
   <!-- 听说训练 -->
@@ -592,7 +611,7 @@
     </section>
   </div>
 </div>
-<script src="/assets/vocabulary-data.js?v=1.3.9"></script>
+<script src="/assets/vocabulary-data.js?v=1.4.0"></script>
 <script>
 /* ============ 数据层：词库 ============ */
 const CATS = [
@@ -601,7 +620,8 @@ const CATS = [
   {id:'engineering', name:'工程技术'},
   {id:'it', name:'IT互联网'},
   {id:'medical', name:'医疗健康'},
-  {id:'finance', name:'金融财务'}
+  {id:'finance', name:'金融财务'},
+  {id:'academic', name:'考研学术'}
 ];
 const ADULT_CLIPS = [
   {id:'meeting',title:'会议开场',tag:'Business · 45s',scene:'🏢',left:'👩‍💼',right:'👨‍💼',lines:[
@@ -924,6 +944,7 @@ function applyDefaults(d,seed){
   d.seen=plainObject(d.seen);
   d.gramCount=countMap(d.gramCount);
   d.wrongBook=plainObject(d.wrongBook);
+  d.corpusWords=plainObject(d.corpusWords);
   const goal=Number(d.dailyGoal); d.dailyGoal=Number.isFinite(goal)?Math.min(100,Math.max(1,Math.round(goal))):10;
   if(d.level!==undefined && ![0,1,2,3,'all'].includes(d.level)) delete d.level;
   if(typeof d.focus!=='string')d.focus='all';
@@ -1151,7 +1172,7 @@ function renderVocabFilters(){
   document.getElementById('vocabFilters').innerHTML=h;
 }
 function filteredVocab(){
-  let arr=VOCAB;
+  let arr=VOCAB.concat(Object.values(P.corpusWords||{}));
   if(state.vcat!=='all') arr=arr.filter(t=>t.cat===state.vcat);
   if(state.level!=='all') arr=arr.filter(t=>vLv(t)<=state.level);
   const reviews=wrongEntries('vocab').map(e=>Object.assign({_review:true},e.payload)).filter(t=>(state.vcat==='all'||t.cat===state.vcat)&&(state.level==='all'||vLv(t)<=state.level));
@@ -1206,6 +1227,91 @@ function renderVocabList(){
 }
 function resetVocabList(){ state.vocabLimit=60; renderVocabList(); }
 function loadMoreVocab(){ state.vocabLimit+=60; renderVocabList(); }
+
+const CORPUS_EXAMS=[['all','全部'],['kaoyan','考研'],['cet6','六级'],['ielts','雅思'],['toefl','托福'],['gre','GRE']];
+function corpusLevelValue(){
+  if(state.corpusType==='sentences'&&state.corpusSentenceLevel!=='all')return state.corpusSentenceLevel;
+  if(state.level==='all')return '';
+  return Math.max(1,Number(state.level)||1);
+}
+function renderCorpusFilters(){
+  const box=document.getElementById('corpusFilters');if(!box)return;
+  if(state.corpusType==='vocabulary'){
+    box.innerHTML=CORPUS_EXAMS.map(item=>{const count=item[0]==='all'?state.corpusVocabularyCount:Number(state.corpusExamCounts[item[0]]||0);return '<button type="button" class="'+(state.corpusExam===item[0]?'on':'')+'" onclick="setCorpusExam(\''+item[0]+'\')">'+item[1]+(count?' · '+count.toLocaleString():'')+'</button>';}).join('');
+  }else{
+    const levels=[['all','全部语句'],[1,'基础'],[2,'进阶'],[3,'学术长句']];
+    box.innerHTML=levels.map(item=>'<button type="button" class="'+(String(state.corpusSentenceLevel)===String(item[0])?'on':'')+'" onclick="setCorpusSentenceLevel(\''+item[0]+'\')">'+item[1]+'</button>').join('');
+  }
+  document.getElementById('corpusWordTab').className=state.corpusType==='vocabulary'?'on':'';
+  document.getElementById('corpusSentenceTab').className=state.corpusType==='sentences'?'on':'';
+}
+async function loadCorpusStats(){
+  const result=await api('/api/content/stats');
+  if(result.status!==200||!result.body)return;
+  const words=Number(result.body.vocabulary||0),sentences=Number(result.body.sentences||0);
+  state.corpusVocabularyCount=words;state.corpusExamCounts=result.body.exam_counts||{};
+  document.getElementById('corpusTotal').textContent=(words+sentences).toLocaleString()+' 条学习内容';
+  document.getElementById('corpusWordTab').textContent=words.toLocaleString()+' 词汇';
+  document.getElementById('corpusSentenceTab').textContent=sentences.toLocaleString()+' 双语句';
+  renderCorpusFilters();
+}
+function corpusParams(){
+  const query=(document.getElementById('corpusSearch').value||'').trim();
+  const params=['page='+state.corpusPage,'limit=20'];
+  if(query)params.push('q='+encodeURIComponent(query));
+  const level=corpusLevelValue();if(level)params.push('level='+level);
+  if(state.corpusType==='vocabulary'&&state.corpusExam!=='all')params.push('exam='+state.corpusExam);
+  return params.join('&');
+}
+async function loadCorpus(){
+  const run=++state.corpusRun;
+  const results=document.getElementById('corpusResults');if(!results)return;
+  results.innerHTML='<div class="empty">正在检索全量语料…</div>';
+  document.getElementById('corpusStatus').textContent='正在加载';
+  const endpoint=state.corpusType==='vocabulary'?'/api/content/vocabulary':'/api/content/sentences';
+  try{
+    const response=await api(endpoint+'?'+corpusParams());
+    if(run!==state.corpusRun)return;
+    if(response.status!==200||!response.body)throw new Error(response.body&&response.body.error||'语料加载失败');
+    const body=response.body,paging=body.pagination||{page:1,pages:1,total:0};
+    state.corpusItems=Array.isArray(body.items)?body.items:[];state.corpusPages=Number(paging.pages||1);state.corpusPage=Number(paging.page||1);
+    document.getElementById('corpusStatus').textContent='找到 '+Number(paging.total||0).toLocaleString()+' 条结果';
+    document.getElementById('corpusPage').textContent=state.corpusPage+' / '+state.corpusPages;
+    document.getElementById('corpusPrev').disabled=state.corpusPage<=1;
+    document.getElementById('corpusNext').disabled=state.corpusPage>=state.corpusPages;
+    renderCorpusItems();
+  }catch(error){
+    if(run!==state.corpusRun)return;
+    results.innerHTML='<div class="empty">'+escHtml(error.message||'语料加载失败，请稍后重试')+'</div>';
+    document.getElementById('corpusStatus').textContent='加载失败';
+  }
+}
+function renderCorpusItems(){
+  const box=document.getElementById('corpusResults'),items=state.corpusItems||[];
+  if(!items.length){box.innerHTML='<div class="empty">没有匹配内容，请更换关键词或筛选条件</div>';return;}
+  if(state.corpusType==='vocabulary'){
+    box.innerHTML=items.map((item,index)=>{
+      const tags=String(item.tags||'').split(',').filter(Boolean).concat(['L'+Number(item.level||1)]);
+      const saved=!!P.corpusWords['academic|'+item.word],mastered=!!P.mastered['academic|'+item.word];
+      return '<article class="corpus-item"><button class="corpus-play" type="button" onclick="speakCorpus('+index+')" aria-label="朗读 '+escHtml(item.word)+'">▶</button><div><div class="corpus-word">'+escHtml(item.word)+'<span class="corpus-phonetic">'+escHtml(item.phonetic||'')+'</span></div><div class="corpus-translation">'+escHtml(item.translation||'')+'</div>'+(item.definition?'<div class="corpus-definition">'+escHtml(item.definition)+'</div>':'')+'<div class="corpus-tags">'+tags.map(tag=>'<span>'+escHtml(tag)+'</span>').join('')+'</div><div class="corpus-actions"><button type="button" class="'+(saved?'on':'')+'" onclick="saveCorpusWord('+index+')">'+(saved?'✓ 已加入词卡':'+ 加入词卡')+'</button><button type="button" class="'+(mastered?'on':'')+'" onclick="masterCorpusWord('+index+')">'+(mastered?'★ 已掌握':'★ 标记掌握')+'</button></div></div></article>';
+    }).join('');
+  }else{
+    box.innerHTML=items.map((item,index)=>'<article class="corpus-item"><button class="corpus-play" type="button" onclick="speakCorpus('+index+')" aria-label="朗读语句">▶</button><div><div class="corpus-word">'+escHtml(item.english)+'</div><div class="corpus-translation">'+escHtml(item.chinese)+'</div><div class="corpus-tags"><span>L'+Number(item.level||1)+'</span></div><div class="corpus-source"><a href="'+escHtml(item.source_url||'https://tatoeba.org/')+'" target="_blank" rel="noopener">查看 Tatoeba 原句与署名</a></div></div></article>').join('');
+  }
+}
+function speakCorpus(index){const item=(state.corpusItems||[])[index];if(item)speak(item.word||item.english||'');}
+function corpusTerm(item){return{en:item.word,ph:item.phonetic||'',zh:item.translation||'',cat:'academic',ex:item.definition||('Learn the word “'+item.word+'”.'),lv:Number(item.level||3)};}
+function saveCorpusWord(index){const item=(state.corpusItems||[])[index];if(!item||!item.word)return;const term=corpusTerm(item),key=termId(term);if(P.corpusWords[key]){delete P.corpusWords[key];delete P.difficult[key];toast('已移出个人词卡');}else{P.corpusWords[key]=term;P.difficult[key]=1;toast('已加入个人词卡');}save(P);renderCorpusItems();renderVocabFilters();}
+function masterCorpusWord(index){const item=(state.corpusItems||[])[index];if(!item||!item.word)return;const term=corpusTerm(item),key=termId(term);P.corpusWords[key]=term;if(P.mastered[key]){delete P.mastered[key];toast('已取消掌握标记');}else{P.mastered[key]=1;delete P.difficult[key];toast('已标记掌握');}save(P);renderCorpusItems();}
+function setCorpusType(type){state.corpusType=type==='sentences'?'sentences':'vocabulary';state.corpusPage=1;renderCorpusFilters();loadCorpus();}
+function setCorpusExam(exam){state.corpusExam=exam;state.corpusPage=1;renderCorpusFilters();loadCorpus();}
+function setCorpusSentenceLevel(level){state.corpusSentenceLevel=level==='all'?'all':Number(level);state.corpusPage=1;renderCorpusFilters();loadCorpus();}
+function queueCorpusSearch(){clearTimeout(state.corpusTimer);state.corpusTimer=setTimeout(()=>{state.corpusPage=1;loadCorpus();},350);}
+function changeCorpusPage(step){const next=Math.max(1,Math.min(state.corpusPages,state.corpusPage+step));if(next===state.corpusPage)return;state.corpusPage=next;loadCorpus();document.querySelector('.corpus-panel').scrollIntoView({behavior:'smooth',block:'start'});}
+function ensureCorpus(){
+  renderCorpusFilters();
+  if(!state.corpusStarted){state.corpusStarted=true;loadCorpusStats().catch(()=>{});loadCorpus();}
+}
 
 function filteredSpeak(){
   let a=SENTENCES;
@@ -1396,7 +1502,7 @@ function renderLevelBar(){
   const f=state.vcat==='all'?'综合（所有行业）':catName(state.vcat);
   document.getElementById('focusDesc').textContent='🎯 已为你聚焦：'+f+'　（可在词库区随时切换）';
 }
-function setLevel(id){ state.level=(id==='all')?'all':Number(id); P.level=state.level; gramQueue=[];fillQueue=[];state.gIdx=0;state.fIdx=0;save(P); renderLevelBar(); refreshAll(); }
+function setLevel(id){ state.level=(id==='all')?'all':Number(id); P.level=state.level; gramQueue=[];fillQueue=[];state.gIdx=0;state.fIdx=0;state.corpusPage=1;save(P); renderLevelBar(); refreshAll(); if(state.active==='vocab'&&state.corpusStarted)loadCorpus(); }
 
 /* ============ 统一刷新入口 ============ */
 function renderView(name){
@@ -1404,7 +1510,7 @@ function renderView(name){
   const view=document.getElementById(viewMap[name]);
   if(view)view.querySelectorAll('.view-error').forEach(el=>el.remove());
   try{
-    if(name==='vocab'){ renderVocabFilters(); renderFlash(); renderVocabList(); }
+    if(name==='vocab'){ renderVocabFilters(); renderFlash(); renderVocabList(); ensureCorpus(); }
     else if(name==='speak'){ renderSpeak(); renderAdultClips(); renderChatScenes(); }
     else if(name==='dash'){ renderDashboard(); }
     else if(name==='gram'){ renderGramFilters(); renderGram(); renderWrongBook();renderGramQuiz(); renderFillFilters(); renderFill(); }
@@ -1423,7 +1529,7 @@ function renderView(name){
 function refreshAll(){ renderLevelBar(); renderToday(); renderView(state.active||'dash'); }
 
 /* ============ 交互 ============ */
-const state={ active:pageFromLocation(), vcat:'all', vocabLimit:60, flipIdx:0, flipped:false, sIdx:0, mode:'dictation', gcat:'all', gOpen:null, gIdx:0, fcat:'all', fIdx:0, fScore:{c:0,t:0}, level:'all', chatScene:'daily', chatLog:[] };
+const state={ active:pageFromLocation(), vcat:'all', vocabLimit:60, flipIdx:0, flipped:false, corpusType:'vocabulary', corpusExam:'all', corpusSentenceLevel:'all', corpusPage:1, corpusPages:1, corpusItems:[], corpusRun:0, corpusTimer:null, corpusStarted:false, corpusVocabularyCount:0, corpusExamCounts:{}, sIdx:0, mode:'dictation', gcat:'all', gOpen:null, gIdx:0, fcat:'all', fIdx:0, fScore:{c:0,t:0}, level:'all', chatScene:'daily', chatLog:[] };
 
 function switchTab(name,updateUrl=true){
   const map={vocab:'viewVocab',speak:'viewSpeak',dash:'viewDash',gram:'viewGram',set:'viewSet'};
@@ -1713,7 +1819,7 @@ function confirmClear(){ pendingClear=true; openMask('清空全部进度？','�
 function openMask(t,txt,ok){ document.getElementById('mTitle').textContent=t; document.getElementById('mText').textContent=txt; document.getElementById('mOk').textContent=ok; document.getElementById('mask').classList.add('show'); }
 function closeMask(){ document.getElementById('mask').classList.remove('show'); pendingClear=false; }
 document.getElementById('mOk').addEventListener('click',()=>{
-  if(pendingClear){ P={studyDays:{},speakCount:{},mastered:{},difficult:{},seen:{},gramCount:{},wrongBook:{},dailyGoal:10,seeded:false}; P=load(); save(P); refreshAll(); toast('已清空并重置示例'); }
+  if(pendingClear){ P={studyDays:{},speakCount:{},mastered:{},difficult:{},seen:{},gramCount:{},wrongBook:{},corpusWords:{},dailyGoal:10,seeded:false}; P=load(); save(P); refreshAll(); toast('已清空并重置示例'); }
   closeMask();
 });
 let toastTimer=null;

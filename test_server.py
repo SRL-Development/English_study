@@ -58,6 +58,36 @@ class ServerApiTests(unittest.TestCase):
         self.assertEqual(self.client.get("/admin/login").status_code, 200)
         self.assertEqual(self.client.get("/admin/dashboard").status_code, 200)
 
+    def test_large_vocabulary_and_sentence_corpus(self):
+        stats = self.client.get("/api/content/stats")
+        self.assertEqual(stats.status_code, 200)
+        self.assertEqual(stats.json["vocabulary"], 30000)
+        self.assertEqual(stats.json["sentences"], 30000)
+        self.assertGreater(stats.json["exam_counts"]["kaoyan"], 1000)
+        self.assertGreater(stats.json["exam_counts"]["gre"], 3000)
+
+        words = self.client.get("/api/content/vocabulary?q=analysis&limit=20")
+        self.assertEqual(words.status_code, 200)
+        self.assertGreater(words.json["pagination"]["total"], 0)
+        self.assertTrue(words.json["items"][0]["word"])
+        self.assertTrue(words.json["items"][0]["translation"])
+
+        graduate_words = self.client.get(
+            "/api/content/vocabulary?exam=kaoyan&level=2&limit=20"
+        )
+        self.assertEqual(graduate_words.status_code, 200)
+        self.assertGreater(graduate_words.json["pagination"]["total"], 0)
+        self.assertTrue(
+            all("考研" in item["tags"] for item in graduate_words.json["items"])
+        )
+
+        sentences = self.client.get("/api/content/sentences?level=3&limit=20")
+        self.assertEqual(sentences.status_code, 200)
+        self.assertEqual(len(sentences.json["items"]), 20)
+        self.assertTrue(sentences.json["items"][0]["english"])
+        self.assertTrue(sentences.json["items"][0]["chinese"])
+        self.assertIn("tatoeba.org", sentences.json["items"][0]["source_url"])
+
     def test_register_tab_has_working_visibility_contract(self):
         with open(server.HTML, "r", encoding="utf-8") as source:
             page = source.read()
@@ -73,12 +103,13 @@ class ServerApiTests(unittest.TestCase):
         self.assertEqual(self.client.get("/kids").status_code, 200)
         self.assertEqual(self.client.get("/kids/kindergarten").status_code, 200)
         self.assertEqual(self.client.get("/kids/primary").status_code, 200)
+        self.assertEqual(self.client.get("/api/content/stats").status_code, 200)
         vocabulary_asset = self.client.get("/assets/vocabulary-data.js")
         self.assertEqual(vocabulary_asset.status_code, 200)
         self.assertTrue(vocabulary_asset.content_type.startswith("application/javascript"))
         self.assertIn("EXTRA_VOCAB", vocabulary_asset.get_data(as_text=True))
         adult_page = self.client.get("/app/vocabulary").get_data(as_text=True)
-        self.assertIn('/assets/vocabulary-data.js?v=1.3.9', adult_page)
+        self.assertIn('/assets/vocabulary-data.js?v=1.4.0', adult_page)
         kids_page = self.client.get("/kids").get_data(as_text=True)
         self.assertIn('data-kids-inline="style"', kids_page)
         self.assertIn('data-kids-inline="runtime"', kids_page)
@@ -116,6 +147,7 @@ class ServerApiTests(unittest.TestCase):
         self.assertEqual(self.client.get("/api/children").status_code, 404)
         self.assertEqual(self.client.get("/kids/runtime-style").status_code, 404)
         self.assertEqual(self.client.get("/assets/vocabulary-data.js").status_code, 404)
+        self.assertEqual(self.client.get("/api/content/stats").status_code, 404)
         health = self.client.get("/api/health")
         self.assertEqual(health.status_code, 200)
         self.assertEqual(health.json["role"], "admin")

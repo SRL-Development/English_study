@@ -58,8 +58,11 @@ assert(adult.includes('class="heat-grid"'), 'heat map must use the Safari-safe g
 assert(adult.includes('id="gramInput"'), 'grammar practice must use inline blank input');
 assert(adult.includes('recordAdultAttempt'), 'adult mistakes must be persisted');
 assert((adult.match(/\{q:'/g) || []).length >= 20, 'grammar bank must contain at least 20 questions');
-assert(adult.includes('/assets/vocabulary-data.js?v=1.3.9'), 'adult page must load the expanded vocabulary bank');
+assert(adult.includes('/assets/vocabulary-data.js?v=1.4.0'), 'adult page must load the expanded vocabulary bank');
 assert(adult.includes('vocabLimit:60'), 'large vocabulary lists must render in mobile-friendly batches');
+assert(adult.includes('id="corpusResults"'), 'adult vocabulary page must expose the large server-side corpus');
+assert(adult.includes('/api/content/vocabulary'), 'adult vocabulary page must search the server-side word bank');
+assert(adult.includes('/api/content/sentences'), 'adult vocabulary page must search bilingual sentences');
 const vocabSandbox = { window: {} };
 vocabSandbox.window = vocabSandbox;
 vm.createContext(vocabSandbox);

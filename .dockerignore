@@ -7,6 +7,7 @@
 __pycache__/
 *.py[cod]
 *.db
+!content/content.db
 *.db-*
 tts_cache/
 data/

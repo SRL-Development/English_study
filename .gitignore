@@ -26,6 +26,7 @@ venv/
 
 # Node and editor files
 node_modules/
+tools/content-builder/.cache/
 .vscode/
 .idea/
 *.log

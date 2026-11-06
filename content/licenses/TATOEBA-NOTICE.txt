@@ -1,0 +1,10 @@
+Sentence data contributed by the Tatoeba community.
+
+Project: https://tatoeba.org/
+Downloads: https://tatoeba.org/downloads
+License: Creative Commons Attribution 2.0 France
+License URL: https://creativecommons.org/licenses/by/2.0/fr/
+
+The bundled database retains the source sentence ID. The application links
+each displayed sentence to https://tatoeba.org/en/sentences/show/{source_id}
+for source attribution and contributor information.
