@@ -20,6 +20,7 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - run: python -m unittest -v test_server.py
+      - run: node test_frontend.js
       - name: Check deployment scripts
         run: |
           bash -n deploy/1panel/update.sh
@@ -127,11 +128,16 @@ jobs:
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/kindergarten" -o /tmp/kindergarten.html
                 grep -q '动画英语岛' /tmp/kindergarten.html
                 grep -Fq 'cartoon-feature' /tmp/kindergarten.html
+                grep -Fq 'wrongPreview' /tmp/kindergarten.html
+                grep -Fq 'playCartoonScene' /tmp/kindergarten.html
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/primary" -o /tmp/primary.html
                 grep -q '英语挑战世界' /tmp/primary.html
+                grep -Fq 'playCurrent(this)' /tmp/primary.html
+                grep -Fq 'wrongPreview' /tmp/primary.html
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/app/home" -o /tmp/adult.html
                 grep -Fq 'adult-cinema' /tmp/adult.html
-                grep -Fq 'currentGramOptions' /tmp/adult.html
+                grep -Fq 'recordAdultAttempt' /tmp/adult.html
+                grep -Fq 'heat-grid' /tmp/adult.html
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/runtime-style" -o /tmp/kids.css
                 grep -Fq '.kids-shell' /tmp/kids.css
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/runtime-app" -o /tmp/kids.js

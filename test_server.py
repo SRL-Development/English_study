@@ -80,11 +80,16 @@ class ServerApiTests(unittest.TestCase):
         self.assertIn("window.KidsAPI", kids_page)
         self.assertIn("switchToAdult", kids_page)
         self.assertIn("deleteProfileModal", kids_page)
+        self.assertIn("recordAttempt", kids_page)
         self.assertNotIn('/kids/runtime-style?v=', kids_page)
         self.assertNotIn('/kids/runtime-app?v=', kids_page)
         kindergarten_page = self.client.get("/kids/kindergarten").get_data(as_text=True)
         self.assertIn("cartoon-feature", kindergarten_page)
         self.assertIn("playCartoonScene", kindergarten_page)
+        self.assertIn("wrongPreview", kindergarten_page)
+        primary_page = self.client.get("/kids/primary").get_data(as_text=True)
+        self.assertIn("wrongPreview", primary_page)
+        self.assertIn("playCurrent(this)", primary_page)
         kids_style = self.client.get("/kids/runtime-style")
         kids_app = self.client.get("/kids/runtime-app")
         self.assertEqual(kids_style.status_code, 200)
@@ -303,8 +308,10 @@ class ServerApiTests(unittest.TestCase):
         self.assertIn('id="bootError"', html)
         self.assertIn("retryBootstrap()", html)
         self.assertIn('class="adult-cinema"', html)
-        self.assertIn("currentGramOptions", html)
-        self.assertIn("gramShuffleOffset", html)
+        self.assertIn("checkGram", html)
+        self.assertIn("recordAdultAttempt", html)
+        self.assertIn("heat-grid", html)
+        self.assertIn("-webkit-fill-available", html)
         self.assertIn("overflow-x:hidden", html)
 
     def test_password_and_progress_validation(self):
@@ -318,7 +325,17 @@ class ServerApiTests(unittest.TestCase):
         )
         self.assertEqual(invalid.status_code, 400)
 
-        payload = {"studyDays": {"2026-11-03": 3}}
+        payload = {
+            "studyDays": {"2026-11-03": 3},
+            "wrongBook": {
+                "grammar|g1": {
+                    "type": "grammar",
+                    "id": "g1",
+                    "streak": 0,
+                    "payload": {"q": "She ___ ready.", "answer": "is"},
+                }
+            },
+        }
         saved = self.client.put(
             "/api/data", json={"data": json.dumps(payload)}, headers=headers
         )

@@ -5,9 +5,10 @@
   const AVATARS={fox:'🦊',bear:'🐻',owl:'🦉',bunny:'🐰',panda:'🐼',lion:'🦁'};
   let token=localStorage.getItem(TOKEN_KEY)||'';
   let toastTimer=null;
+  let activeAudio=null,speechRun=0;
 
   function escapeHTML(value){
-    return String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+    return String(value==null?'':value).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   }
   async function request(path,opts={}){
     const controller=new AbortController();
@@ -85,12 +86,33 @@
     for(let i=result.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]];}
     return result;
   }
+  function playServerSpeech(text,run){
+    return new Promise(resolve=>{
+      if(run!==speechRun){resolve(false);return;}
+      if(activeAudio){activeAudio.pause();activeAudio.src='';}
+      const audio=new Audio('/api/tts?text='+encodeURIComponent(text));
+      activeAudio=audio;audio.preload='auto';
+      audio.onended=()=>resolve(true);audio.onerror=()=>{toast('语音暂时不可用，请稍后重试');resolve(false);};
+      const promise=audio.play();if(promise&&promise.catch)promise.catch(()=>{toast('请再次点击播放按钮');resolve(false);});
+    });
+  }
   function speak(text,rate=.85){
-    if(!text)return;
-    if('speechSynthesis'in window){
-      speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=rate;u.pitch=1.08;speechSynthesis.speak(u);return;
-    }
-    const audio=new Audio('/api/tts?text='+encodeURIComponent(text));audio.play().catch(()=>{});
+    if(!text)return Promise.resolve(false);
+    const run=++speechRun;
+    if(activeAudio){activeAudio.pause();activeAudio.src='';activeAudio=null;}
+    return new Promise(resolve=>{
+      if(!('speechSynthesis'in window)||!window.SpeechSynthesisUtterance){playServerSpeech(text,run).then(resolve);return;}
+      const synth=window.speechSynthesis;
+      let started=false,finished=false;
+      const done=value=>{if(finished)return;finished=true;clearTimeout(fallbackTimer);resolve(value);};
+      const fallback=()=>{if(finished||run!==speechRun)return;finished=true;try{synth.cancel();}catch(e){}playServerSpeech(text,run).then(resolve);};
+      const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=rate;utterance.pitch=1.03;
+      const voices=typeof synth.getVoices==='function'?synth.getVoices():[];utterance.voice=voices.find(v=>/^en[-_](US|GB)/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang))||null;
+      utterance.onstart=()=>{started=true;clearTimeout(fallbackTimer);};
+      utterance.onend=()=>done(true);utterance.onerror=fallback;
+      const fallbackTimer=setTimeout(()=>{if(!started)fallback();},1200);
+      try{if(synth.paused)synth.resume();if(synth.speaking||synth.pending)synth.cancel();synth.speak(utterance);}catch(e){fallback();}
+    });
   }
   function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
   function normalizeProgress(value){
@@ -102,7 +124,29 @@
     if(!Array.isArray(p.primary.completed))p.primary.completed=[];
     if(!p.primary.scores||typeof p.primary.scores!=='object')p.primary.scores={};
     if(!p.activityDays||typeof p.activityDays!=='object')p.activityDays={};
+    if(!p.wrongBook||typeof p.wrongBook!=='object'||Array.isArray(p.wrongBook))p.wrongBook={};
+    if(!Number.isFinite(Number(p.reviewCounter)))p.reviewCounter=0;
     return p;
   }
-  window.KidsAPI={request,requireUser,listChildren,createChild,updateChild,deleteChild,loadProgress,saveProgress,event,switchLearningMode,switchToAdult,currentChildId,setCurrentChild,clearCurrentChild,selectedChild,avatar,shuffled,speak,today,normalizeProgress,escapeHTML,toast,showLoading,avatars:AVATARS};
+  function wrongEntries(progress,scope){
+    const p=normalizeProgress(progress);
+    return Object.values(p.wrongBook).filter(x=>x&&x.scope===scope).sort((a,b)=>String(b.lastWrong||'').localeCompare(String(a.lastWrong||'')));
+  }
+  function recordAttempt(progress,scope,id,payload,correct,userAnswer=''){
+    const p=normalizeProgress(progress),key=scope+'|'+id,existing=p.wrongBook[key];
+    if(correct){
+      if(!existing)return{removed:false,streak:0};
+      existing.streak=Number(existing.streak||0)+1;existing.attempts=Number(existing.attempts||0)+1;existing.lastAnswer=userAnswer;
+      if(existing.streak>=10){delete p.wrongBook[key];return{removed:true,streak:10};}
+      return{removed:false,streak:existing.streak};
+    }
+    p.wrongBook[key]={key,scope,id,payload:JSON.parse(JSON.stringify(payload||{})),streak:0,attempts:Number(existing&&existing.attempts||0)+1,lastAnswer:userAnswer,lastWrong:new Date().toISOString()};
+    return{removed:false,streak:0};
+  }
+  function interleaveReviews(base,reviews,every=3){
+    const result=Array.from(base||[]),items=Array.from(reviews||[]);
+    items.forEach((item,index)=>result.splice(Math.min(result.length,(index+1)*every),0,item));
+    return result;
+  }
+  window.KidsAPI={request,requireUser,listChildren,createChild,updateChild,deleteChild,loadProgress,saveProgress,event,switchLearningMode,switchToAdult,currentChildId,setCurrentChild,clearCurrentChild,selectedChild,avatar,shuffled,speak,today,normalizeProgress,wrongEntries,recordAttempt,interleaveReviews,escapeHTML,toast,showLoading,avatars:AVATARS};
 })();
