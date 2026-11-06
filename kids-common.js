@@ -39,7 +39,7 @@
   async function listChildren(){const r=await request('/api/children');if(r.status!==200)throw new Error(r.body.error||'档案加载失败');return r.body.children||[];}
   async function createChild(data){const r=await request('/api/children',{method:'POST',body:JSON.stringify(data)});if(r.status!==201)throw new Error(r.body.error||'创建失败');return r.body.child;}
   async function updateChild(id,data){const r=await request('/api/children/'+id,{method:'PUT',body:JSON.stringify(data)});if(r.status!==200)throw new Error(r.body.error||'更新失败');return r.body.child;}
-  async function deleteChild(id){const r=await request('/api/children/'+id,{method:'DELETE'});if(r.status!==200)throw new Error(r.body.error||'删除失败');return true;}
+  async function deleteChild(id){const r=await request('/api/children/'+id,{method:'DELETE'});if(r.status!==200)throw new Error(r.body.error||'删除失败');return r.body;}
   async function loadProgress(id){const r=await request('/api/children/'+id+'/progress');if(r.status!==200)throw new Error(r.body.error||'进度加载失败');return r.body.progress||{};}
   async function saveProgress(id,progress){const r=await request('/api/children/'+id+'/progress',{method:'PUT',body:JSON.stringify({progress})});if(r.status!==200)throw new Error(r.body.error||'进度保存失败');return r.body;}
   async function event(id,eventType,module,detail={}){try{await request('/api/children/'+id+'/events',{method:'POST',body:JSON.stringify({event_type:eventType,module,score:detail.score,duration_seconds:detail.duration||0,metadata:detail.metadata||{}})});}catch(e){}}
@@ -65,6 +65,7 @@
   }
   function currentChildId(){const n=Number(localStorage.getItem(CHILD_KEY)||0);return Number.isInteger(n)&&n>0?n:0;}
   function setCurrentChild(id){localStorage.setItem(CHILD_KEY,String(id));}
+  function clearCurrentChild(){localStorage.removeItem(CHILD_KEY);}
   async function selectedChild(requiredTrack){
     await requireUser();
     const children=await listChildren();
@@ -79,6 +80,11 @@
     setCurrentChild(child.id);return child;
   }
   function avatar(id){return AVATARS[id]||AVATARS.fox;}
+  function shuffled(items){
+    const result=Array.from(items||[]);
+    for(let i=result.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]];}
+    return result;
+  }
   function speak(text,rate=.85){
     if(!text)return;
     if('speechSynthesis'in window){
@@ -98,5 +104,5 @@
     if(!p.activityDays||typeof p.activityDays!=='object')p.activityDays={};
     return p;
   }
-  window.KidsAPI={request,requireUser,listChildren,createChild,updateChild,deleteChild,loadProgress,saveProgress,event,switchLearningMode,switchToAdult,currentChildId,setCurrentChild,selectedChild,avatar,speak,today,normalizeProgress,escapeHTML,toast,showLoading,avatars:AVATARS};
+  window.KidsAPI={request,requireUser,listChildren,createChild,updateChild,deleteChild,loadProgress,saveProgress,event,switchLearningMode,switchToAdult,currentChildId,setCurrentChild,clearCurrentChild,selectedChild,avatar,shuffled,speak,today,normalizeProgress,escapeHTML,toast,showLoading,avatars:AVATARS};
 })();

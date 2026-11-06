@@ -79,8 +79,12 @@ class ServerApiTests(unittest.TestCase):
         self.assertIn(".kids-shell", kids_page)
         self.assertIn("window.KidsAPI", kids_page)
         self.assertIn("switchToAdult", kids_page)
+        self.assertIn("deleteProfileModal", kids_page)
         self.assertNotIn('/kids/runtime-style?v=', kids_page)
         self.assertNotIn('/kids/runtime-app?v=', kids_page)
+        kindergarten_page = self.client.get("/kids/kindergarten").get_data(as_text=True)
+        self.assertIn("cartoon-feature", kindergarten_page)
+        self.assertIn("playCartoonScene", kindergarten_page)
         kids_style = self.client.get("/kids/runtime-style")
         kids_app = self.client.get("/kids/runtime-app")
         self.assertEqual(kids_style.status_code, 200)
@@ -298,6 +302,10 @@ class ServerApiTests(unittest.TestCase):
         self.assertIn('id="appLoading"', html)
         self.assertIn('id="bootError"', html)
         self.assertIn("retryBootstrap()", html)
+        self.assertIn('class="adult-cinema"', html)
+        self.assertIn("currentGramOptions", html)
+        self.assertIn("gramShuffleOffset", html)
+        self.assertIn("overflow-x:hidden", html)
 
     def test_password_and_progress_validation(self):
         self.assertEqual(self.register(password="short").status_code, 400)
@@ -414,6 +422,25 @@ class ServerApiTests(unittest.TestCase):
             headers={"Authorization": "Bearer " + token},
         )
         self.assertEqual(response.status_code, 400)
+
+    def test_deleting_last_active_child_switches_account_to_general(self):
+        registered = self.register(
+            learning_stage="kindergarten", age_band="4-5", nickname="小星星"
+        )
+        headers = {"Authorization": "Bearer " + registered.json["token"]}
+        child_id = registered.json["child_id"]
+        deleted = self.client.delete(f"/api/children/{child_id}", headers=headers)
+        self.assertEqual(deleted.status_code, 200)
+        self.assertEqual(deleted.json["remaining"], 0)
+        self.assertTrue(deleted.json["switched_to_general"])
+        self.assertEqual(deleted.json["landing"], "/app/home")
+
+        me = self.client.get("/api/me", headers=headers)
+        self.assertEqual(me.status_code, 200)
+        self.assertEqual(me.json["user"]["learning_stage"], "general")
+        self.assertEqual(me.json["landing"], "/app/home")
+        children = self.client.get("/api/children", headers=headers)
+        self.assertEqual(children.json["children"], [])
 
 
 if __name__ == "__main__":

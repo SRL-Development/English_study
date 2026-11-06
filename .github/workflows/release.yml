@@ -126,10 +126,18 @@ jobs:
                   | grep -Fq 'data-kids-inline="runtime"'
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids" \
                   | grep -Fq 'switchToAdult'
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids" \
+                  | grep -Fq 'deleteProfileModal'
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/kindergarten" \
                   | grep -q '动画英语岛'
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/kindergarten" \
+                  | grep -Fq 'cartoon-feature'
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/primary" \
                   | grep -q '英语挑战世界'
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/app/home" \
+                  | grep -Fq 'adult-cinema'
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/app/home" \
+                  | grep -Fq 'currentGramOptions'
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/runtime-style" \
                   | grep -Fq '.kids-shell'
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/runtime-app" \

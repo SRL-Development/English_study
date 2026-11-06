@@ -14,7 +14,9 @@
     --r:18px;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;padding:0}
+  html,body{margin:0;padding:0;width:100%;max-width:100%;overflow-x:hidden}
+  img,video,svg{max-width:100%}
+  button,input,select,textarea{max-width:100%;min-width:0}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
     background:radial-gradient(circle at 8% -4%,#e7e4ff 0,transparent 28%),radial-gradient(circle at 94% 5%,#e8f8f2 0,transparent 22%),var(--bg); color:var(--ink); font-size:15px; line-height:1.55;
@@ -270,6 +272,11 @@
 .mic-btn.sm{background:var(--pri-soft);color:var(--pri)}
 .chat-actions{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
 .chat-status{font-size:12px;color:var(--sub);margin-left:auto}
+  /* 站内原创成人场景片段 */
+  .adult-cinema{background:linear-gradient(145deg,#10182e,#27215d 58%,#4e46b7);color:#fff;border-radius:22px;padding:22px;margin-bottom:18px;box-shadow:0 20px 50px rgba(31,34,89,.2);overflow:hidden}
+  .cinema-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:14px}.cinema-head h3{font-size:21px;margin:3px 0}.cinema-head p{font-size:12px;color:#d8dcf7;margin:0;line-height:1.6}.cinema-kicker{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#aeb8ff;font-weight:750}.clip-play{border:0;border-radius:12px;background:#fff;color:#35309b;padding:11px 15px;font-weight:700;white-space:nowrap;cursor:pointer}
+  .clip-tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0 11px;scrollbar-width:none}.clip-tabs::-webkit-scrollbar{display:none}.clip-tab{flex:0 0 auto;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:rgba(255,255,255,.08);color:#e8eaff;padding:9px 12px;text-align:left;cursor:pointer}.clip-tab b,.clip-tab span{display:block}.clip-tab b{font-size:12px}.clip-tab span{font-size:9px;color:#bfc5e8;margin-top:2px}.clip-tab.on{background:#fff;color:#27215d}.clip-tab.on span{color:#6d7294}
+  .clip-stage{min-height:260px}.clip-scene{height:260px;border-radius:18px;background:linear-gradient(180deg,#bfe3ff 0 59%,#e6d2ad 59%);position:relative;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}.clip-scene:before{content:"";position:absolute;left:8%;right:8%;bottom:27%;height:8px;border-radius:8px;background:rgba(82,65,54,.25)}.clip-scene-icon{position:absolute;left:50%;top:18%;transform:translateX(-50%);font-size:56px;filter:drop-shadow(0 8px 8px rgba(41,49,85,.14))}.clip-character{position:absolute;bottom:62px;width:110px;height:120px;display:grid;place-items:center;transition:.25s}.clip-character span{font-size:68px;filter:drop-shadow(0 9px 8px rgba(28,34,58,.18))}.clip-character.left{left:13%}.clip-character.right{right:13%}.clip-character.speaking{animation:clipTalk .65s ease-in-out infinite alternate}.clip-character.speaking:after{content:"";position:absolute;inset:5px;border:3px solid rgba(81,70,229,.38);border-radius:50%;animation:clipPulse 1s infinite}.clip-caption{position:absolute;left:14px;right:14px;bottom:13px;background:rgba(12,18,42,.9);border-radius:12px;padding:9px 13px;text-align:center}.clip-caption b,.clip-caption span{display:block}.clip-caption b{font-size:14px}.clip-caption span{font-size:10px;color:#cdd2e8;margin-top:2px}@keyframes clipTalk{to{transform:translateY(-7px) rotate(-2deg)}}@keyframes clipPulse{to{transform:scale(1.15);opacity:0}}
   /* 用户账号门户：与管理后台使用完全不同的视觉与 URL */
   .auth{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:#f5f6fa;padding:24px;overflow:auto}
   .auth.show{display:flex}
@@ -296,7 +303,8 @@
   .learning-choice{margin:0 0 18px}.learning-choice-head{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:9px}.learning-choice-head b{font-size:13px;color:var(--navy)}.learning-choice-head span{font-size:10px;color:var(--sub)}
   .learning-stage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.learning-stage{border:1px solid #dfe3ec;background:#fafbfe;border-radius:13px;padding:10px 8px;cursor:pointer;text-align:left;color:var(--navy);transition:.18s;min-height:72px}.learning-stage:hover{border-color:#a7a1f5;transform:translateY(-1px)}.learning-stage.on{border-color:var(--pri);background:#f1f0ff;box-shadow:0 0 0 3px rgba(79,70,229,.08)}.learning-stage i{font-style:normal;font-size:20px;display:block;margin-bottom:3px}.learning-stage b{display:block;font-size:12px}.learning-stage small{display:block;font-size:9px;color:var(--sub);margin-top:2px;line-height:1.35}
   .learning-age{display:none;align-items:center;gap:10px;margin-top:9px;padding:9px 11px;border-radius:11px;background:#f7f8fb}.learning-age.show{display:flex}.learning-age label{font-size:11px;font-weight:700;color:#475467;white-space:nowrap}.learning-age select{flex:1;border:1px solid #dfe3ec;background:#fff;border-radius:9px;padding:8px 10px;font-size:12px;color:var(--navy);outline:0}
-  @media(max-width:760px){.auth{padding:0;background:#fff;align-items:stretch}.auth-shell{display:block;min-height:100vh;border-radius:0;border:0}.auth-story{padding:24px 24px 28px;min-height:220px}.auth-pitch h2{font-size:28px;margin:24px 0 10px}.auth-pitch p{margin-bottom:0}.auth-proof{display:none}.auth-card{padding:28px 20px 44px}.auth-logo{font-size:23px}.learning-stage{min-height:68px;padding:9px 7px}.learning-stage small{display:none}}
+  @media(max-width:760px){.auth{padding:0;background:#fff;align-items:stretch}.auth-shell{display:block;min-height:100dvh;border-radius:0;border:0}.auth-story{padding:24px 24px 28px;min-height:220px}.auth-pitch h2{font-size:28px;margin:24px 0 10px}.auth-pitch p{margin-bottom:0}.auth-proof{display:none}.auth-card{padding:28px 20px calc(44px + env(safe-area-inset-bottom))}.auth-logo{font-size:23px}.learning-stage{min-height:68px;padding:9px 7px}.learning-stage small{display:none}.card,.today,.family-banner,.adult-cinema{max-width:100%}.cinema-head{align-items:stretch;flex-direction:column}.clip-play{width:100%}.clip-stage,.clip-scene{min-height:235px;height:235px}.clip-character{bottom:61px;width:86px;height:100px}.clip-character span{font-size:55px}.clip-character.left{left:5%}.clip-character.right{right:5%}.clip-scene-icon{font-size:46px}.chat-input-row{align-items:stretch;flex-wrap:wrap}.chat-input-row .dict-input{flex:1 1 100%;width:100%}.chat-log{height:min(52dvh,320px)}.heat{overflow-x:auto}.heat-leg{min-width:330px}.set-row{gap:10px;align-items:flex-start}.tabs{padding-bottom:max(env(safe-area-inset-bottom),4px)}}
+  @media(max-width:420px){.wrap{padding-left:12px;padding-right:12px}.topbar{align-items:flex-start}.brand{min-width:0}.brand>div:last-child{min-width:0}.brand p{max-width:145px}.sync{padding:6px 8px}.sync span:last-child{max-width:72px;overflow:hidden;text-overflow:ellipsis}.learning-stage-grid{grid-template-columns:1fr}.learning-stage{min-height:56px}.learning-stage i{display:inline;margin-right:7px}.today-copy h3{font-size:21px}.adult-cinema{margin-left:-2px;margin-right:-2px;padding:16px;border-radius:18px}.clip-caption{left:8px;right:8px}.clip-caption b{font-size:12px}.gopt{overflow-wrap:anywhere}.fbtns{gap:8px}.fbtns button{min-width:0}.modal{max-height:calc(100dvh - 24px);overflow:auto}}
 </style>
 </head>
 <body>
@@ -371,6 +379,11 @@
   <!-- 听说训练 -->
   <div class="view" id="viewSpeak">
     <div class="page-head"><div><span class="eyebrow">Speaking</span><h2>听说训练</h2><p>从听写、跟读到 AI 对话，让表达真正变成肌肉记忆。</p></div></div>
+    <section class="adult-cinema" aria-labelledby="adultCinemaTitle">
+      <div class="cinema-head"><div><span class="cinema-kicker">English scene clips</span><h3 id="adultCinemaTitle">成人场景英语片段</h3><p>角色动画、英中字幕和发音同步，适合手机随时练习。</p></div><button type="button" class="clip-play" onclick="playAdultClip()">▶ 播放当前片段</button></div>
+      <div class="clip-tabs" id="adultClipTabs"></div>
+      <div class="clip-stage" id="adultClipStage"></div>
+    </section>
     <div class="mode-switch">
       <button id="modeDict" class="on" onclick="setMode('dictation')"><svg viewBox="0 0 24 24"><path d="M4 6h12v3H4zm0 4.5h16v3H4zm0 4.5h8v3H4z"/></svg>听写输入</button>
       <button id="modeSpeak" onclick="setMode('speak')"><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>语音跟读</button>
@@ -580,6 +593,20 @@ const CATS = [
   {id:'it', name:'IT互联网'},
   {id:'medical', name:'医疗健康'},
   {id:'finance', name:'金融财务'}
+];
+const ADULT_CLIPS = [
+  {id:'meeting',title:'会议开场',tag:'Business · 45s',scene:'🏢',left:'👩‍💼',right:'👨‍💼',lines:[
+    {who:'left',en:'Good morning. Shall we get started?',zh:'早上好，我们开始吧？'},
+    {who:'right',en:'Yes. Let me walk you through the proposal.',zh:'好的，我来带大家过一遍这份方案。'},
+    {who:'left',en:'Great. Please focus on the timeline and budget.',zh:'很好，请重点说明时间表和预算。'}]},
+  {id:'cafe',title:'咖啡店点单',tag:'Daily · 40s',scene:'☕',left:'🧑',right:'🧑‍🍳',lines:[
+    {who:'right',en:'Hi! What can I get for you today?',zh:'你好，今天想点什么？'},
+    {who:'left',en:'Could I have a latte with less sugar, please?',zh:'请给我一杯少糖拿铁，好吗？'},
+    {who:'right',en:'Of course. Would you like it hot or iced?',zh:'当然可以。您要热的还是冰的？'}]},
+  {id:'incident',title:'IT 故障沟通',tag:'IT · 50s',scene:'🖥️',left:'👨‍💻',right:'👩‍💻',lines:[
+    {who:'left',en:'The checkout service is responding slowly.',zh:'结账服务的响应很慢。'},
+    {who:'right',en:'I am checking the logs and database latency now.',zh:'我正在检查日志和数据库延迟。'},
+    {who:'left',en:'Please keep the support team updated.',zh:'请随时向客服团队同步进展。'}]}
 ];
 const VOCAB = [
   // 日常交流
@@ -1133,13 +1160,14 @@ function filteredSpeak(){
 }
 function renderSpeak(){
   const arr=filteredSpeak();
-  if(arr.length===0){ document.getElementById('sentZh').textContent='该阶段暂无听说句子，切到更高阶段试试'; document.getElementById('sentCat').textContent=''; document.getElementById('sentIdx').textContent='0 / 0'; document.getElementById('speakResult').className='result'; document.getElementById('dictInput').value=''; const mic=document.getElementById('micBtn'); mic.className='mic-btn'; mic.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>点击开始跟读'; return; }
+  if(arr.length===0){ document.getElementById('sentZh').textContent='该阶段暂无听说句子，切到更高阶段试试'; document.getElementById('sentCat').textContent=''; document.getElementById('sentIdx').textContent='0 / 0'; const result=document.getElementById('speakResult'); result.className='result'; result.innerHTML=''; document.getElementById('dictInput').value=''; const mic=document.getElementById('micBtn'); mic.className='mic-btn'; mic.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>点击开始跟读'; return; }
   if(state.sIdx>=arr.length) state.sIdx=0;
   const s=arr[state.sIdx];
   document.getElementById('sentZh').textContent=s.zh;
   document.getElementById('sentCat').textContent='行业：'+catName(s.cat);
   document.getElementById('sentIdx').textContent=(state.sIdx+1)+' / '+arr.length;
   document.getElementById('speakResult').className='result';
+  document.getElementById('speakResult').innerHTML='';
   document.getElementById('dictInput').value='';
   const mic=document.getElementById('micBtn'); mic.className='mic-btn'; mic.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 003-3V6a3 3 0 00-6 0v5a3 3 0 003 3zm5-3a5 5 0 01-10 0H5a7 7 0 006 6.9V21h2v-3.1A7 7 0 0019 11h-2z"/></svg>点击开始跟读';
 }
@@ -1234,25 +1262,37 @@ function renderGram(){
 }
 function toggleGram(id){ state.gOpen=(state.gOpen===id)?null:id; renderGram(); }
 function setGCat(id){ state.gcat=id; state.gOpen=null; renderGramFilters(); renderGram(); }
-let gramScore={c:0,t:0};
+let gramScore={c:0,t:0},gramOptionView={key:'',items:[]};
+const gramShuffleOffset=Math.floor(Math.random()*4);
 function filteredQuiz(){ let a=GRAMMAR_QUIZ; if(state.level!=='all') a=a.filter(q=>qzLv(q)<=state.level); return a; }
+function currentGramOptions(q){
+  const key=String(state.level)+'|'+state.gIdx+'|'+q.q;
+  if(gramOptionView.key!==key){
+    const source=q.o.map((text,sourceIndex)=>({text,sourceIndex}));
+    const shift=source.length?(state.gIdx*3+gramShuffleOffset)%source.length:0;
+    gramOptionView={key,items:source.slice(shift).concat(source.slice(0,shift))};
+  }
+  return gramOptionView.items;
+}
 function renderGramQuiz(){
   const all=filteredQuiz();
-  if(all.length===0){ document.getElementById('gramQ').innerHTML='<div class="empty">该阶段暂无题目</div>'; document.getElementById('gramOpts').innerHTML=''; document.getElementById('gramResult').className='result'; document.getElementById('gramIdx').textContent='0 / 0'; return; }
+  if(all.length===0){ document.getElementById('gramQ').innerHTML='<div class="empty">该阶段暂无题目</div>'; document.getElementById('gramOpts').innerHTML=''; const result=document.getElementById('gramResult'); result.className='result'; result.innerHTML=''; document.getElementById('gramIdx').textContent='0 / 0'; return; }
   if(state.gIdx>=all.length) state.gIdx=0;
   const q=all[state.gIdx];
+  const options=currentGramOptions(q);
   document.getElementById('gramQ').innerHTML='<div class="gq">'+q.q+'</div>';
-  document.getElementById('gramOpts').innerHTML=q.o.map((o,i)=>'<button class="gopt" id="gopt'+i+'" onclick="answerGram('+i+')"><span class="k">'+(String.fromCharCode(65+i))+'</span>'+o+'</button>').join('');
+  document.getElementById('gramOpts').innerHTML=options.map((option,i)=>'<button class="gopt" id="gopt'+i+'" onclick="answerGram('+i+')"><span class="k">'+(String.fromCharCode(65+i))+'</span>'+option.text+'</button>').join('');
   document.getElementById('gramResult').className='result';
+  document.getElementById('gramResult').innerHTML='';
   const rate=gramScore.t?Math.round(gramScore.c/gramScore.t*100)+'%':'—';
   document.getElementById('gramProg').textContent='正确率 '+rate+'（'+gramScore.c+'/'+gramScore.t+'）';
   document.getElementById('gramIdx').textContent=(state.gIdx+1)+' / '+all.length;
 }
 function answerGram(i){
-  const q=filteredQuiz()[state.gIdx]; const correct=(i===q.a);
-  for(let k=0;k<q.o.length;k++){
+  const q=filteredQuiz()[state.gIdx],options=currentGramOptions(q); const correct=(options[i].sourceIndex===q.a);
+  for(let k=0;k<options.length;k++){
     const b=document.getElementById('gopt'+k); if(!b)continue; b.onclick=null;
-    if(k===q.a) b.classList.add('ok'); else if(k===i) b.classList.add('no');
+    if(options[k].sourceIndex===q.a) b.classList.add('ok'); else if(k===i) b.classList.add('no');
   }
   const r=document.getElementById('gramResult'); r.className='result '+(correct?'ok':'no');
   r.innerHTML='<span class="score">'+(correct?'答对 ✓':'答错 ✗')+'</span>'+q.why;
@@ -1279,6 +1319,7 @@ function renderFill(){
   document.getElementById('fillZh').textContent=it.zh;
   document.getElementById('fillInput').value='';
   document.getElementById('fillResult').className='result';
+  document.getElementById('fillResult').innerHTML='';
   const rate=state.fScore.t?Math.round(state.fScore.c/state.fScore.t*100)+'%':'—';
   document.getElementById('fillProg').textContent='正确率 '+rate+'（'+state.fScore.c+'/'+state.fScore.t+'）';
   document.getElementById('fillIdx').textContent=(state.fIdx+1)+' / '+arr.length;
@@ -1301,7 +1342,7 @@ function checkFill(){
 }
 function showFillHint(){
   const arr=filteredFill(); const it=arr[state.fIdx];
-  const r=document.getElementById('fillResult'); r.className='result';
+  const r=document.getElementById('fillResult'); r.className='result show';
   r.innerHTML='💡 提示：'+(it.hint||('首字母 '+norm(it.ans).charAt(0)+'…'));
 }
 function nextFill(){ const arr=filteredFill(); state.fIdx=(state.fIdx+1)%arr.length; renderFill(); }
@@ -1325,7 +1366,7 @@ function renderView(name){
   if(view)view.querySelectorAll('.view-error').forEach(el=>el.remove());
   try{
     if(name==='vocab'){ renderVocabFilters(); renderFlash(); renderVocabList(); }
-    else if(name==='speak'){ renderSpeak(); renderChatScenes(); }
+    else if(name==='speak'){ renderSpeak(); renderAdultClips(); renderChatScenes(); }
     else if(name==='dash'){ renderDashboard(); }
     else if(name==='gram'){ renderGramFilters(); renderGram(); renderGramQuiz(); renderFillFilters(); renderFill(); }
     else if(name==='set'){
@@ -1376,6 +1417,26 @@ function speak(text){
   const u=new SpeechSynthesisUtterance(text);
   u.lang='en-US'; u.rate=0.92; window.speechSynthesis.speak(u);
 }
+let activeAdultClip=0,adultClipTimer=null,adultClipLine=0;
+function adultClipHTML(clip,lineIndex){
+  const line=clip.lines[Math.max(0,Math.min(lineIndex,clip.lines.length-1))];
+  return '<div class="clip-scene"><span class="clip-scene-icon">'+clip.scene+'</span><div class="clip-character left '+(line.who==='left'?'speaking':'')+'"><span>'+clip.left+'</span></div><div class="clip-character right '+(line.who==='right'?'speaking':'')+'"><span>'+clip.right+'</span></div><div class="clip-caption"><b>'+escHtml(line.en)+'</b><span>'+escHtml(line.zh)+'</span></div></div>';
+}
+function renderAdultClips(){
+  const tabs=document.getElementById('adultClipTabs'),stage=document.getElementById('adultClipStage');
+  if(!tabs||!stage)return;
+  tabs.innerHTML=ADULT_CLIPS.map((clip,i)=>'<button type="button" class="clip-tab '+(i===activeAdultClip?'on':'')+'" onclick="selectAdultClip('+i+')"><b>'+escHtml(clip.title)+'</b><span>'+escHtml(clip.tag)+'</span></button>').join('');
+  stage.innerHTML=adultClipHTML(ADULT_CLIPS[activeAdultClip],adultClipLine);
+}
+function selectAdultClip(index){
+  clearTimeout(adultClipTimer);if('speechSynthesis' in window)window.speechSynthesis.cancel();activeAdultClip=index;adultClipLine=0;renderAdultClips();
+}
+function playAdultClip(){
+  clearTimeout(adultClipTimer);adultClipLine=0;
+  const clip=ADULT_CLIPS[activeAdultClip];
+  const playLine=()=>{const line=clip.lines[adultClipLine];renderAdultClips();speak(line.en);adultClipTimer=setTimeout(()=>{adultClipLine++;if(adultClipLine<clip.lines.length)playLine();else{adultClipLine=0;renderAdultClips();}},Math.max(2700,line.en.length*72));};
+  playLine();
+}
 function markStudied(n){
   const k=todayStr(); P.studyDays[k]=(P.studyDays[k]||0)+n; save(P);
 }
@@ -1407,6 +1468,7 @@ function setMode(m){
   document.getElementById('dictArea').style.display=m==='dictation'?'block':'none';
   document.getElementById('speakArea').style.display=m==='speak'?'block':'none';
   document.getElementById('speakResult').className='result';
+  document.getElementById('speakResult').innerHTML='';
 }
 function playSentence(){ const a=filteredSpeak(); if(a[state.sIdx]) speak(a[state.sIdx].en); }
 function norm(s){ return (s||'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim(); }
@@ -1467,7 +1529,7 @@ function checkDict(){
   const target=filteredSpeak()[state.sIdx].en;
   const r=document.getElementById('speakResult');
   P.speakCount[todayStr()]=(P.speakCount[todayStr()]||0)+1; save(P);
-  r.className='result';
+  r.className='result show';
   r.innerHTML=renderPronReport(target,inp,'dictation');
   renderToday(); renderDashboard();
 }
@@ -1492,7 +1554,7 @@ function finishSpeak(heard,err){
   if(err){ r.className='result no'; r.innerHTML='识别失败：'+err+'。请检查麦克风授权，或先用「听写输入」。'; return; }
   const target=filteredSpeak()[state.sIdx].en;
   P.speakCount[todayStr()]=(P.speakCount[todayStr()]||0)+1; save(P);
-  r.className='result';
+  r.className='result show';
   r.innerHTML=renderPronReport(target,heard||'','speak');
   renderToday(); renderDashboard();
 }
@@ -1578,12 +1640,13 @@ function startAssess(){
   }).catch(err=>{ toast('无法访问麦克风：'+(err.message||err)); });
 }
 function assessPronunciation(blob, refText){
-  const r=document.getElementById('speakResult'); r.className='result'; r.innerHTML='<div class="pr-report"><div class="pr-tip">⏳ 正在评测发音…</div></div>';
+  const r=document.getElementById('speakResult'); r.className='result show'; r.innerHTML='<div class="pr-report"><div class="pr-tip">⏳ 正在评测发音…</div></div>';
   const fd=new FormData(); fd.append('audio',blob); fd.append('text',refText); fd.append('lang','en-US');
   fetch(P.assessEndpoint,{method:'POST',body:fd}).then(x=>x.json()).then(d=>{ renderAssessResult(d, refText); }).catch(e=>{ r.innerHTML='<div class="pr-report no"><div class="pr-tip">评测服务调用失败：'+escHtml(e.message||e)+'。请检查服务地址与网络。</div></div>'; });
 }
 function renderAssessResult(d, refText){
   const r=document.getElementById('speakResult');
+  r.className='result show';
   const overall=d.overall!=null?Math.round(d.overall):'—';
   let wordsHtml='';
   if(Array.isArray(d.words)&&d.words.length){ wordsHtml='<div class="pr-block"><div class="pr-label">逐词发音分</div><div class="pr-words">'+d.words.map(w=>{ const sc=Number.isFinite(Number(w.score))?Math.round(Number(w.score)):0; const cls=sc>=80?'w-match':(sc>=60?'w-extra':'w-miss'); return '<span class="w '+cls+'" title="'+sc+' 分">'+escHtml(w.word)+'</span>'; }).join(' ')+'</div></div>'; }

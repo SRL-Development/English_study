@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#314bc0">
 <title>英语挑战世界 · EnglishLab Family</title>
-<link rel="stylesheet" href="/kids/runtime-style?v=1.3.6">
+<link rel="stylesheet" href="/kids/runtime-style?v=1.3.7">
 </head>
 <body>
 <div class="learn-shell kids-shell">
@@ -25,7 +25,7 @@
 </div>
 <div class="loading" id="kidsLoading"><div class="loader-card"><div class="loader-friend">🚀</div><b>正在加载挑战地图…</b></div></div>
 <div class="toast" id="kidsToast"></div>
-<script src="/kids/runtime-app?v=1.3.6"></script>
+<script src="/kids/runtime-app?v=1.3.7"></script>
 <script>
 const WORLDS=[
  {id:'campus',name:'校园新手村',desc:'问候、物品与课堂英语',icon:'🎒',levels:[
@@ -62,7 +62,7 @@ const WORLDS=[
   ]}
  ]}
 ];
-let child=null,progress=null,activeLevel=null,questions=[],questionIndex=0,attempts=0,correctCount=0,selectedWords=[],levelStarted=0;
+let child=null,progress=null,activeLevel=null,questions=[],questionIndex=0,attempts=0,correctCount=0,selectedWords=[],visibleOptions=[],levelStarted=0;
 const flatLevels=()=>WORLDS.flatMap(w=>w.levels);
 function pstate(){return progress.primary;}
 function isUnlocked(id){const levels=flatLevels(),idx=levels.findIndex(x=>x.id===id);return idx===0||pstate().completed.includes(levels[idx-1].id)||pstate().completed.includes(id);}
@@ -73,9 +73,9 @@ function scoreStars(score){const n=score>=90?3:score>=70?2:1;return'★'.repeat(
 function startChallenge(id){activeLevel=flatLevels().find(x=>x.id===id);if(!activeLevel)return;questions=activeLevel.questions||[activeLevel];questionIndex=0;attempts=0;correctCount=0;selectedWords=[];levelStarted=Date.now();document.getElementById('challengeName').textContent=activeLevel.title;document.getElementById('challengeModal').classList.add('show');KidsAPI.event(child.id,'lesson_start',id);renderQuestion();}
 function closeChallenge(){document.getElementById('challengeModal').classList.remove('show');activeLevel=null;}
 function currentQuestion(){return questions[questionIndex];}
-function renderQuestion(){const q=currentQuestion(),body=document.getElementById('challengeBody');selectedWords=[];document.getElementById('challengeProgress').textContent=`挑战 ${questionIndex+1} / ${questions.length} · ${typeLabel(q.type)}`;let action='';if(q.type==='choice'||q.type==='story'||q.type==='listen'){action=`<div class="choice-grid">${q.options.map((x,i)=>`<button class="choice" onclick="answerChoice(this,${i})">${KidsAPI.escapeHTML(x)}</button>`).join('')}</div>`;}else if(q.type==='spell'){action=`<input class="answer-input" id="answerInput" autocomplete="off" placeholder="输入英文单词"><div class="activity-actions" style="margin-top:14px"><button class="btn btn-primary" onclick="submitText()">提交答案</button></div>`;}else if(q.type==='sentence'){action=`<div class="sentence-build" id="sentenceBuild"><span style="color:#8793a6;font-size:12px">点击下方单词组成句子</span></div><div class="word-bank">${q.words.map((x,i)=>`<button class="word-chip" id="word-${i}" onclick="pickWord(${i})">${KidsAPI.escapeHTML(x)}</button>`).join('')}</div><div class="activity-actions"><button class="btn btn-ghost" onclick="clearSentence()">重排</button><button class="btn btn-primary" onclick="submitSentence()">检查句子</button></div>`;}body.innerHTML=`<div class="challenge-type">${typeLabel(q.type)}</div><div class="challenge-question">${KidsAPI.escapeHTML(q.question)}</div>${q.context?`<div class="challenge-context">${KidsAPI.escapeHTML(q.context)}</div>`:''}${q.type==='listen'?'<button class="btn btn-ghost" onclick="playCurrent()" style="margin-bottom:18px">🔊 播放英语</button>':''}${action}<div class="feedback" id="feedback"></div>`;if(q.type==='listen')setTimeout(playCurrent,300);if(q.type==='spell')setTimeout(()=>document.getElementById('answerInput')?.focus(),100);}
+function renderQuestion(){const q=currentQuestion(),body=document.getElementById('challengeBody');selectedWords=[];visibleOptions=[];document.getElementById('challengeProgress').textContent=`挑战 ${questionIndex+1} / ${questions.length} · ${typeLabel(q.type)}`;let action='';if(q.type==='choice'||q.type==='story'||q.type==='listen'){visibleOptions=KidsAPI.shuffled(q.options);action=`<div class="choice-grid">${visibleOptions.map((x,i)=>`<button class="choice" onclick="answerChoice(this,${i})">${KidsAPI.escapeHTML(x)}</button>`).join('')}</div>`;}else if(q.type==='spell'){action=`<input class="answer-input" id="answerInput" autocomplete="off" placeholder="输入英文单词"><div class="activity-actions" style="margin-top:14px"><button class="btn btn-primary" onclick="submitText()">提交答案</button></div>`;}else if(q.type==='sentence'){action=`<div class="sentence-build" id="sentenceBuild"><span style="color:#8793a6;font-size:12px">点击下方单词组成句子</span></div><div class="word-bank">${q.words.map((x,i)=>`<button class="word-chip" id="word-${i}" onclick="pickWord(${i})">${KidsAPI.escapeHTML(x)}</button>`).join('')}</div><div class="activity-actions"><button class="btn btn-ghost" onclick="clearSentence()">重排</button><button class="btn btn-primary" onclick="submitSentence()">检查句子</button></div>`;}body.innerHTML=`<div class="challenge-type">${typeLabel(q.type)}</div><div class="challenge-question">${KidsAPI.escapeHTML(q.question)}</div>${q.context?`<div class="challenge-context">${KidsAPI.escapeHTML(q.context)}</div>`:''}${q.type==='listen'?'<button class="btn btn-ghost" onclick="playCurrent()" style="margin-bottom:18px">🔊 播放英语</button>':''}${action}<div class="feedback" id="feedback"></div>`;if(q.type==='listen')setTimeout(playCurrent,300);if(q.type==='spell')setTimeout(()=>document.getElementById('answerInput')?.focus(),100);}
 function playCurrent(){const q=currentQuestion();KidsAPI.speak(q.speech||q.answer,.78);}
-function answerChoice(btn,index){const q=currentQuestion(),value=q.options[index],ok=value===q.answer;document.querySelectorAll('.choice').forEach(x=>x.disabled=true);btn.classList.add(ok?'correct':'wrong');if(!ok){attempts++;document.querySelectorAll('.choice').forEach((x,i)=>{if(q.options[i]===q.answer)x.classList.add('correct');});}finishQuestion(ok);}
+function answerChoice(btn,index){const q=currentQuestion(),value=visibleOptions[index],ok=value===q.answer;document.querySelectorAll('.choice').forEach(x=>x.disabled=true);btn.classList.add(ok?'correct':'wrong');if(!ok){attempts++;document.querySelectorAll('.choice').forEach((x,i)=>{if(visibleOptions[i]===q.answer)x.classList.add('correct');});}finishQuestion(ok);}
 function normalizeText(v){return String(v||'').toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9' ]/g,'').replace(/\s+/g,' ').trim();}
 function submitText(){const q=currentQuestion(),input=document.getElementById('answerInput'),ok=normalizeText(input.value)===normalizeText(q.answer);if(!ok)attempts++;input.style.borderColor=ok?'var(--mint)':'var(--coral)';finishQuestion(ok);}
 function pickWord(i){const q=currentQuestion();if(selectedWords.includes(i))return;selectedWords.push(i);document.getElementById('word-'+i).classList.add('used');document.getElementById('sentenceBuild').innerHTML=selectedWords.map(x=>`<button class="word-chip" onclick="removeWord(${x})">${KidsAPI.escapeHTML(q.words[x])}</button>`).join('');}

@@ -1186,11 +1186,36 @@ def api_child_detail(child_id):
         conn.close()
         return jsonify({"error": "儿童档案不存在"}), 404
     if request.method == "DELETE":
+        deleted_track = row["track"]
         conn.execute("DELETE FROM child_profiles WHERE id=?", (child_id,))
+        remaining = conn.execute(
+            "SELECT COUNT(*) AS total FROM child_profiles WHERE parent_user_id=?",
+            (parent_id,),
+        ).fetchone()["total"]
+        remaining_same_track = conn.execute(
+            "SELECT COUNT(*) AS total FROM child_profiles "
+            "WHERE parent_user_id=? AND track=?",
+            (parent_id, deleted_track),
+        ).fetchone()["total"]
+        switched_to_general = False
+        if u["learning_stage"] == deleted_track and not remaining_same_track:
+            conn.execute(
+                "UPDATE users SET learning_stage='general',preferred_age_band='13+' "
+                "WHERE id=?",
+                (parent_id,),
+            )
+            switched_to_general = True
         conn.commit()
         conn.close()
         ANALYTICS_CACHE.clear()
-        return jsonify({"ok": True})
+        return jsonify(
+            {
+                "ok": True,
+                "remaining": remaining,
+                "switched_to_general": switched_to_general,
+                "landing": "/app/home" if switched_to_general else "/kids",
+            }
+        )
 
     values, error = parse_child_profile(request.get_json(silent=True) or {}, partial=True)
     if error or values is None:
