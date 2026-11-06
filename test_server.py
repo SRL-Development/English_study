@@ -78,6 +78,7 @@ class ServerApiTests(unittest.TestCase):
         self.assertIn('data-kids-inline="runtime"', kids_page)
         self.assertIn(".kids-shell", kids_page)
         self.assertIn("window.KidsAPI", kids_page)
+        self.assertIn("switchToAdult", kids_page)
         self.assertNotIn('/kids/runtime-style?v=', kids_page)
         self.assertNotIn('/kids/runtime-app?v=', kids_page)
         kids_style = self.client.get("/kids/runtime-style")
@@ -152,6 +153,21 @@ class ServerApiTests(unittest.TestCase):
         ).fetchone()["setting_value"]
         conn.close()
         self.assertNotIn("new-admin-password-456", stored)
+
+    def test_admin_password_can_be_recovered_without_old_password(self):
+        old_token = server.make_admin_token()
+        server.save_admin_password("recovered-admin-password-789")
+        with mock.patch.object(server, "ADMIN_PASSWORD", "obsolete-env-password"):
+            recovered = self.client.post(
+                "/api/admin/login", json={"password": "recovered-admin-password-789"}
+            )
+        self.assertEqual(recovered.status_code, 200)
+        conn = server.db()
+        old_session = conn.execute(
+            "SELECT 1 FROM admin_tokens WHERE token=?", (old_token,)
+        ).fetchone()
+        conn.close()
+        self.assertIsNone(old_session)
 
     def test_admin_analytics_and_user_details(self):
         registered = self.register()
@@ -236,6 +252,18 @@ class ServerApiTests(unittest.TestCase):
         self.assertEqual(login.json["user"]["age_band"], "8-10")
         self.assertNotEqual(login.json["child_id"], first_child_id)
 
+        switched = self.client.put(
+            "/api/learning-mode",
+            json={"learning_stage": "general", "age_band": "13+"},
+            headers=headers,
+        )
+        self.assertEqual(switched.status_code, 200)
+        self.assertEqual(switched.json["landing"], "/app/home")
+        self.assertEqual(switched.json["user"]["learning_stage"], "general")
+        me_after_switch = self.client.get("/api/me", headers=headers)
+        self.assertEqual(me_after_switch.json["landing"], "/app/home")
+        self.assertEqual(me_after_switch.json["user"]["learning_stage"], "general")
+
         conn = server.db()
         rows = conn.execute(
             "SELECT track,age_band FROM child_profiles ORDER BY id"
@@ -250,6 +278,14 @@ class ServerApiTests(unittest.TestCase):
         response = self.register(learning_stage="primary", age_band="4-5")
         self.assertEqual(response.status_code, 400)
         self.assertIn("匹配", response.json["error"])
+
+        registered = self.register(email="other@example.com")
+        invalid_switch = self.client.put(
+            "/api/learning-mode",
+            json={"learning_stage": "general", "age_band": "4-5"},
+            headers={"Authorization": "Bearer " + registered.json["token"]},
+        )
+        self.assertEqual(invalid_switch.status_code, 400)
 
     def test_user_login_bootstrap_endpoints_and_page_are_available(self):
         registered = self.register(learning_stage="general", age_band="13+")

@@ -38,6 +38,7 @@
 import os
 import re
 import json
+import sys
 import sqlite3
 import secrets
 import datetime
@@ -951,6 +952,45 @@ def api_me():
     )
 
 
+@app.route("/api/learning-mode", methods=["PUT"])
+def api_learning_mode():
+    """Persist an authenticated learner's selected experience before navigation."""
+    u = auth_user()
+    if not u:
+        return jsonify({"error": "未登录"}), 401
+    data = request.get_json(silent=True) or {}
+    if not isinstance(data, dict):
+        return jsonify({"error": "请求格式错误"}), 400
+    stage, age_band, learning_error = learning_selection(data)
+    if learning_error:
+        return jsonify({"error": learning_error}), 400
+    conn = db()
+    conn.execute(
+        "UPDATE users SET learning_stage=?,preferred_age_band=? WHERE id=?",
+        (stage, age_band, u["user_id"]),
+    )
+    child_id = ensure_learning_profile(
+        conn, u["user_id"], u["nickname"], stage, age_band
+    )
+    conn.commit()
+    conn.close()
+    return jsonify(
+        {
+            "ok": True,
+            "landing": learning_landing(stage),
+            "child_id": child_id,
+            "user": {
+                "id": u["user_id"],
+                "phone": u["phone"],
+                "email": u["email"],
+                "nickname": u["nickname"],
+                "learning_stage": stage,
+                "age_band": age_band,
+            },
+        }
+    )
+
+
 # ----------------------------- 云端进度接口 -----------------------------
 @app.route("/api/data", methods=["GET"])
 def api_data_get():
@@ -1285,6 +1325,25 @@ def admin_password_matches(password):
     return bool(ADMIN_PASSWORD) and secrets.compare_digest(password, ADMIN_PASSWORD)
 
 
+def save_admin_password(new_password, preserve_token=None):
+    """Store a new admin password hash and revoke sessions except an optional caller."""
+    if not isinstance(new_password, str) or not 10 <= len(new_password) <= 128:
+        raise ValueError("新管理密码须为 10-128 位")
+    conn = db()
+    conn.execute(
+        "INSERT INTO app_settings(setting_key,setting_value,updated_at) VALUES(?,?,?) "
+        "ON CONFLICT(setting_key) DO UPDATE SET "
+        "setting_value=excluded.setting_value,updated_at=excluded.updated_at",
+        ("admin_password_hash", generate_password_hash(new_password), now_iso()),
+    )
+    if preserve_token:
+        conn.execute("DELETE FROM admin_tokens WHERE token<>?", (preserve_token,))
+    else:
+        conn.execute("DELETE FROM admin_tokens")
+    conn.commit()
+    conn.close()
+
+
 @app.route("/api/admin/login", methods=["POST"])
 def api_admin_login():
     if not ADMIN_PASSWORD and not stored_admin_password_hash():
@@ -1312,17 +1371,7 @@ def api_admin_password():
     if secrets.compare_digest(current_password, new_password):
         return jsonify({"error": "新密码不能与当前密码相同"}), 400
     token = request.headers.get("Authorization", "")[7:].strip()
-    stamp = now_iso()
-    conn = db()
-    conn.execute(
-        "INSERT INTO app_settings(setting_key,setting_value,updated_at) VALUES(?,?,?) "
-        "ON CONFLICT(setting_key) DO UPDATE SET "
-        "setting_value=excluded.setting_value,updated_at=excluded.updated_at",
-        ("admin_password_hash", generate_password_hash(new_password), stamp),
-    )
-    conn.execute("DELETE FROM admin_tokens WHERE token<>?", (token,))
-    conn.commit()
-    conn.close()
+    save_admin_password(new_password, preserve_token=token)
     return jsonify({"ok": True, "message": "管理密码已更新"})
 
 
@@ -2222,5 +2271,23 @@ def api_tts():
     return send_file(cache_path, mimetype="audio/mpeg", conditional=True)
 
 
+def reset_admin_password_cli():
+    """Interactive recovery that keeps the password out of shell history."""
+    import getpass
+
+    first = getpass.getpass("请输入新管理密码（10-128 位）: ")
+    second = getpass.getpass("请再次输入新管理密码: ")
+    if first != second:
+        raise SystemExit("两次输入不一致，未修改密码。")
+    try:
+        save_admin_password(first)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
+    print("管理密码已重置，所有旧管理员会话已退出。")
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    if len(sys.argv) > 1 and sys.argv[1] == "reset-admin-password":
+        reset_admin_password_cli()
+    else:
+        app.run(host="0.0.0.0", port=int(os.environ.get("APP_PORT", "5000")))

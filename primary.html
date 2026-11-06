@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#314bc0">
 <title>英语挑战世界 · EnglishLab Family</title>
-<link rel="stylesheet" href="/kids/runtime-style?v=1.3.5">
+<link rel="stylesheet" href="/kids/runtime-style?v=1.3.6">
 </head>
 <body>
 <div class="learn-shell kids-shell">
-  <div class="learn-top"><header class="kids-top"><a class="kids-brand" href="/kids"><span class="kids-mark">🚀</span><span>英语挑战世界<small>learn · quest · level up</small></span></a><div class="top-actions"><div class="reward-row"><span class="reward" id="starCount">⭐ 0</span><span class="reward" id="coinCount">🪙 0</span><span class="reward" id="levelCount">🏆 0</span></div><div class="learner-chip"><span class="mini-avatar" id="childAvatar">🦊</span><span id="childName">挑战者</span></div><a class="icon-btn" href="/kids" title="家长中心">⌂</a></div></header></div>
+  <div class="learn-top"><header class="kids-top"><a class="kids-brand" href="/kids"><span class="kids-mark">🚀</span><span>英语挑战世界<small>learn · quest · level up</small></span></a><div class="top-actions"><div class="reward-row"><span class="reward" id="starCount">⭐ 0</span><span class="reward" id="coinCount">🪙 0</span><span class="reward" id="levelCount">🏆 0</span></div><div class="learner-chip"><span class="mini-avatar" id="childAvatar">🦊</span><span id="childName">挑战者</span></div><a class="pill" href="/app/home" onclick="return KidsAPI.switchToAdult(event,this)" title="返回成人学习台">← <span>成人学习</span></a><a class="icon-btn" href="/kids" title="家长中心">⌂</a></div></header></div>
   <main class="learn-main">
     <section class="quest-hero"><div><div class="eyebrow">English Quest Academy</div><h1 id="heroGreeting">准备好今天的挑战了吗？</h1><p>完成词汇、听力、拼写、句子和阅读任务，解锁新的英语世界。</p></div><div class="quest-avatar">🧭</div></section>
     <section class="learn-intro"><div><h1>冒险地图</h1><p>每个世界有 4 个训练关和 1 个综合 Boss 关。</p></div><div class="overall"><div class="overall-top"><span>总进度</span><span id="progressText">0 / 15</span></div><div class="progress-track"><i id="progressBar"></i></div></div></section>
@@ -25,7 +25,7 @@
 </div>
 <div class="loading" id="kidsLoading"><div class="loader-card"><div class="loader-friend">🚀</div><b>正在加载挑战地图…</b></div></div>
 <div class="toast" id="kidsToast"></div>
-<script src="/kids/runtime-app?v=1.3.5"></script>
+<script src="/kids/runtime-app?v=1.3.6"></script>
 <script>
 const WORLDS=[
  {id:'campus',name:'校园新手村',desc:'问候、物品与课堂英语',icon:'🎒',levels:[

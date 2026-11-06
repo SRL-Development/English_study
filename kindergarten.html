@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffca45">
 <title>动画英语岛 · EnglishLab Family</title>
-<link rel="stylesheet" href="/kids/runtime-style?v=1.3.5">
+<link rel="stylesheet" href="/kids/runtime-style?v=1.3.6">
 </head>
 <body>
 <div class="learn-shell kids-shell">
-  <div class="learn-top"><header class="kids-top"><a class="kids-brand" href="/kids"><span class="kids-mark">🎈</span><span>动画英语岛<small>story · song · speak</small></span></a><div class="top-actions"><div class="reward-row"><span class="reward" id="starCount">⭐ 0</span><span class="reward" id="stickerCount">🎟️ 0</span></div><div class="learner-chip"><span class="mini-avatar" id="childAvatar">🦊</span><span id="childName">小朋友</span></div><a class="icon-btn" href="/kids" title="家长中心">⌂</a></div></header></div>
+  <div class="learn-top"><header class="kids-top"><a class="kids-brand" href="/kids"><span class="kids-mark">🎈</span><span>动画英语岛<small>story · song · speak</small></span></a><div class="top-actions"><div class="reward-row"><span class="reward" id="starCount">⭐ 0</span><span class="reward" id="stickerCount">🎟️ 0</span></div><div class="learner-chip"><span class="mini-avatar" id="childAvatar">🦊</span><span id="childName">小朋友</span></div><a class="pill" href="/app/home" onclick="return KidsAPI.switchToAdult(event,this)" title="返回成人学习台">← <span>成人学习</span></a><a class="icon-btn" href="/kids" title="家长中心">⌂</a></div></header></div>
   <main class="learn-main">
     <section class="learn-intro"><div><div class="eyebrow eyebrow-coral">Cartoon English Island</div><h1>今天去哪里冒险？</h1><p>每一站都包含听一听、找一找和开口说。</p></div><div class="overall"><div class="overall-top"><span>岛屿探索进度</span><span id="progressText">0 / 15</span></div><div class="progress-track"><i id="progressBar"></i></div></div></section>
     <div class="world-tabs" id="worldTabs"></div>
@@ -25,7 +25,7 @@
 </div>
 <div class="loading" id="kidsLoading"><div class="loader-card"><div class="loader-friend">🎈</div><b>正在准备动画岛…</b></div></div>
 <div class="toast" id="kidsToast"></div>
-<script src="/kids/runtime-app?v=1.3.5"></script>
+<script src="/kids/runtime-app?v=1.3.6"></script>
 <script>
 const WORLDS=[
  {id:'hello',name:'你好小镇',desc:'用问候和颜色认识第一群朋友',icon:'🏡',skin:'sunny',lessons:[

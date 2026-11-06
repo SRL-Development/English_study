@@ -43,6 +43,26 @@
   async function loadProgress(id){const r=await request('/api/children/'+id+'/progress');if(r.status!==200)throw new Error(r.body.error||'进度加载失败');return r.body.progress||{};}
   async function saveProgress(id,progress){const r=await request('/api/children/'+id+'/progress',{method:'PUT',body:JSON.stringify({progress})});if(r.status!==200)throw new Error(r.body.error||'进度保存失败');return r.body;}
   async function event(id,eventType,module,detail={}){try{await request('/api/children/'+id+'/events',{method:'POST',body:JSON.stringify({event_type:eventType,module,score:detail.score,duration_seconds:detail.duration||0,metadata:detail.metadata||{}})});}catch(e){}}
+  async function switchLearningMode(stage,ageBand){
+    const r=await request('/api/learning-mode',{method:'PUT',body:JSON.stringify({learning_stage:stage,age_band:ageBand})});
+    if(r.status!==200)throw new Error(r.body.error||'学习模式切换失败');
+    localStorage.setItem('wb_eng_learning_stage',stage);
+    localStorage.setItem('wb_eng_age_band',ageBand);
+    return r.body;
+  }
+  async function switchToAdult(event,control){
+    if(event)event.preventDefault();
+    if(control){control.setAttribute('aria-busy','true');control.classList.add('busy');}
+    showLoading(true);
+    try{
+      const result=await switchLearningMode('general','13+');
+      location.replace(result.landing||'/app/home');
+    }catch(error){
+      showLoading(false);toast(error.message||'无法返回成人学习台');
+      if(control){control.removeAttribute('aria-busy');control.classList.remove('busy');}
+    }
+    return false;
+  }
   function currentChildId(){const n=Number(localStorage.getItem(CHILD_KEY)||0);return Number.isInteger(n)&&n>0?n:0;}
   function setCurrentChild(id){localStorage.setItem(CHILD_KEY,String(id));}
   async function selectedChild(requiredTrack){
@@ -78,5 +98,5 @@
     if(!p.activityDays||typeof p.activityDays!=='object')p.activityDays={};
     return p;
   }
-  window.KidsAPI={request,requireUser,listChildren,createChild,updateChild,deleteChild,loadProgress,saveProgress,event,currentChildId,setCurrentChild,selectedChild,avatar,speak,today,normalizeProgress,escapeHTML,toast,showLoading,avatars:AVATARS};
+  window.KidsAPI={request,requireUser,listChildren,createChild,updateChild,deleteChild,loadProgress,saveProgress,event,switchLearningMode,switchToAdult,currentChildId,setCurrentChild,selectedChild,avatar,speak,today,normalizeProgress,escapeHTML,toast,showLoading,avatars:AVATARS};
 })();

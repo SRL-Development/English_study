@@ -39,6 +39,16 @@ sudo bash deploy/docker/update.sh
 sudo english-study-update
 ```
 
+如果忘记后台管理密码，在云主机执行以下命令。命令会交互式输入两次新密码，
+密码不会出现在 Shell 历史中：
+
+```bash
+cd /opt/english-study
+sudo docker compose -f compose.server.yaml exec admin python server.py reset-admin-password
+```
+
+重置后所有旧管理员会话自动失效，USER 账号、学习进度和统计数据不受影响。
+
 升级脚本不执行 `git pull`，只拉取已经通过 CI 测试的 USER/ADMIN 镜像；升级前在线备份
 SQLite，升级后核对双端角色、版本和构建号，失败则自动回滚旧镜像。
 

@@ -124,6 +124,8 @@ jobs:
                   | grep -Fq 'data-kids-inline="style"'
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids" \
                   | grep -Fq 'data-kids-inline="runtime"'
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids" \
+                  | grep -Fq 'switchToAdult'
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/kindergarten" \
                   | grep -q '动画英语岛'
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/primary" \
