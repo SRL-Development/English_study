@@ -118,30 +118,24 @@ jobs:
             if curl -fsS "http://127.0.0.1:${{ matrix.port }}/api/health" \
               | grep -q '"role":"${{ matrix.role }}"'; then
               if [[ "${{ matrix.role }}" == "user" ]]; then
-                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids" \
-                  | grep -q 'EnglishLab Family'
-                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids" \
-                  | grep -Fq 'data-kids-inline="style"'
-                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids" \
-                  | grep -Fq 'data-kids-inline="runtime"'
-                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids" \
-                  | grep -Fq 'switchToAdult'
-                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids" \
-                  | grep -Fq 'deleteProfileModal'
-                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/kindergarten" \
-                  | grep -q '动画英语岛'
-                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/kindergarten" \
-                  | grep -Fq 'cartoon-feature'
-                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/primary" \
-                  | grep -q '英语挑战世界'
-                curl -fsS "http://127.0.0.1:${{ matrix.port }}/app/home" \
-                  | grep -Fq 'adult-cinema'
-                curl -fsS "http://127.0.0.1:${{ matrix.port }}/app/home" \
-                  | grep -Fq 'currentGramOptions'
-                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/runtime-style" \
-                  | grep -Fq '.kids-shell'
-                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/runtime-app" \
-                  | grep -Fq 'KidsAPI'
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids" -o /tmp/kids.html
+                grep -q 'EnglishLab Family' /tmp/kids.html
+                grep -Fq 'data-kids-inline="style"' /tmp/kids.html
+                grep -Fq 'data-kids-inline="runtime"' /tmp/kids.html
+                grep -Fq 'switchToAdult' /tmp/kids.html
+                grep -Fq 'deleteProfileModal' /tmp/kids.html
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/kindergarten" -o /tmp/kindergarten.html
+                grep -q '动画英语岛' /tmp/kindergarten.html
+                grep -Fq 'cartoon-feature' /tmp/kindergarten.html
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/primary" -o /tmp/primary.html
+                grep -q '英语挑战世界' /tmp/primary.html
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/app/home" -o /tmp/adult.html
+                grep -Fq 'adult-cinema' /tmp/adult.html
+                grep -Fq 'currentGramOptions' /tmp/adult.html
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/runtime-style" -o /tmp/kids.css
+                grep -Fq '.kids-shell' /tmp/kids.css
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/runtime-app" -o /tmp/kids.js
+                grep -Fq 'KidsAPI' /tmp/kids.js
               else
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/admin/login" \
                   | grep -q '运营控制台'
