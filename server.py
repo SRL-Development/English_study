@@ -1605,6 +1605,40 @@ def send_html(path):
     return response
 
 
+def send_kids_html(path):
+    """Inline the kids runtime so reverse proxies cannot drop CSS or JavaScript assets."""
+    if not all(os.path.exists(item) for item in (path, KIDS_CSS, KIDS_COMMON_JS)):
+        abort(404)
+    with open(path, "r", encoding="utf-8") as source:
+        page = source.read()
+    with open(KIDS_CSS, "r", encoding="utf-8") as source:
+        styles = source.read()
+    with open(KIDS_COMMON_JS, "r", encoding="utf-8") as source:
+        runtime = source.read().replace("</script", "<\\/script")
+    page, style_count = re.subn(
+        r'<link\s+rel="stylesheet"\s+href="/kids/runtime-style[^\"]*">',
+        lambda _: '<style data-kids-inline="style">\n' + styles + "\n</style>",
+        page,
+        count=1,
+    )
+    page, script_count = re.subn(
+        r'<script\s+src="/kids/runtime-app[^\"]*"></script>',
+        lambda _: '<script data-kids-inline="runtime">\n' + runtime + "\n</script>",
+        page,
+        count=1,
+    )
+    if style_count != 1 or script_count != 1:
+        abort(500, description="儿童页面资源模板不完整")
+    version = html.escape(APP_VERSION, quote=True)
+    build = html.escape(APP_BUILD[:12], quote=True)
+    page = page.replace("<body>", f'<body data-app-version="{version}" data-app-build="{build}">', 1)
+    response = Response(page, content_type="text/html; charset=utf-8")
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
+
+
 @app.route("/")
 def index():
     p = HTML if os.path.exists(HTML) else HTML_FALLBACK
@@ -1639,21 +1673,21 @@ def user_app_page(page):
 def kids_hub_page():
     if not os.path.exists(KIDS_HUB_HTML):
         abort(404)
-    return send_html(KIDS_HUB_HTML)
+    return send_kids_html(KIDS_HUB_HTML)
 
 
 @app.route("/kids/kindergarten", methods=["GET"])
 def kindergarten_page():
     if not os.path.exists(KINDERGARTEN_HTML):
         abort(404)
-    return send_html(KINDERGARTEN_HTML)
+    return send_kids_html(KINDERGARTEN_HTML)
 
 
 @app.route("/kids/primary", methods=["GET"])
 def primary_page():
     if not os.path.exists(PRIMARY_HTML):
         abort(404)
-    return send_html(PRIMARY_HTML)
+    return send_kids_html(PRIMARY_HTML)
 
 
 @app.route("/kids/runtime-style", methods=["GET"])
@@ -1706,6 +1740,7 @@ def api_health():
             "role": APP_ROLE,
             "version": APP_VERSION,
             "build": APP_BUILD,
+            "kids_runtime": "inline",
         }
     )
 

@@ -38,14 +38,18 @@ health() {
 
 wait_for_health() {
   local expected_build="${1:-}"
-  local user_health admin_health
+  local user_health admin_health kids_page
   for _ in {1..45}; do
     user_health="$(health 5000 2>/dev/null || true)"
     admin_health="$(health 5001 2>/dev/null || true)"
+    kids_page="$(curl -fsS --max-time 8 http://127.0.0.1:5000/kids 2>/dev/null || true)"
     if [[ "$user_health" == *'"role":"user"'* \
       && "$admin_health" == *'"role":"admin"'* \
       && "$user_health" == *'"version"'* \
-      && "$admin_health" == *'"version"'* ]]; then
+      && "$admin_health" == *'"version"'* \
+      && "$user_health" == *'"kids_runtime":"inline"'* \
+      && "$kids_page" == *'data-kids-inline="style"'* \
+      && "$kids_page" == *'data-kids-inline="runtime"'* ]]; then
       if [[ -z "$expected_build" \
         || ("$user_health" == *"$expected_build"* && "$admin_health" == *"$expected_build"*) ]]; then
         printf '%s\n%s\n' "$user_health" "$admin_health"
