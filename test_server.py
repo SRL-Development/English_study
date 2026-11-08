@@ -58,6 +58,17 @@ class ServerApiTests(unittest.TestCase):
         self.assertEqual(self.client.get("/admin/login").status_code, 200)
         self.assertEqual(self.client.get("/admin/dashboard").status_code, 200)
 
+    def test_browser_gzip_requests_do_not_break_streamed_static_assets(self):
+        for path, marker in (
+            ("/assets/vocabulary-data.js", b"EXTRA_VOCAB"),
+            ("/kids/runtime-style", b".kids-shell"),
+            ("/kids/runtime-app", b"KidsAPI"),
+        ):
+            response = self.client.get(path, headers={"Accept-Encoding": "gzip, deflate, br"})
+            self.assertEqual(response.status_code, 200, path)
+            self.assertIn(marker, response.get_data())
+            response.close()
+
     def test_large_vocabulary_and_sentence_corpus(self):
         stats = self.client.get("/api/content/stats")
         self.assertEqual(stats.status_code, 200)
@@ -88,6 +99,184 @@ class ServerApiTests(unittest.TestCase):
         self.assertTrue(sentences.json["items"][0]["chinese"])
         self.assertIn("tatoeba.org", sentences.json["items"][0]["source_url"])
 
+    def test_curriculum_catalog_and_answers_are_not_exposed_before_submission(self):
+        catalog = self.client.get("/api/curriculum")
+        self.assertEqual(catalog.status_code, 200)
+        self.assertEqual(
+            {stage["id"] for stage in catalog.json["stages"]}, set(server.CURRICULUM_ORDER)
+        )
+        for stage in catalog.json["stages"]:
+            self.assertGreaterEqual(stage["unit_count"], 12)
+            detail = self.client.get("/api/curriculum/" + stage["id"])
+            self.assertEqual(detail.status_code, 200)
+            unit_id = detail.json["units"][0]["id"]
+            lesson = self.client.get("/api/curriculum/" + stage["id"] + "/" + unit_id)
+            self.assertEqual(lesson.status_code, 200)
+            self.assertGreaterEqual(len(lesson.json["unit"]["questions"]), 4)
+            for question in lesson.json["unit"]["questions"]:
+                self.assertNotIn("answer", question)
+                self.assertNotIn("explanation", question)
+        self.assertEqual(self.client.get("/api/curriculum/unknown").status_code, 404)
+        self.assertEqual(self.client.get("/api/curriculum/junior?band=999").status_code, 400)
+        self.assertEqual(self.client.get("/api/curriculum/progress").status_code, 401)
+        self.assertEqual(self.client.get("/api/curriculum/review").status_code, 401)
+
+    def test_secondary_and_university_modes_route_without_creating_child_profiles(self):
+        registered = self.register(learning_stage="junior", age_band="12-13")
+        self.assertEqual(registered.status_code, 200)
+        self.assertEqual(registered.json["landing"], "/courses/junior")
+        self.assertIsNone(registered.json["child_id"])
+        headers = {"Authorization": "Bearer " + registered.json["token"]}
+        for stage, age in (("senior", "16-17"), ("university", "18+")):
+            response = self.client.put(
+                "/api/learning-mode", json={"learning_stage": stage, "age_band": age}, headers=headers
+            )
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.json["landing"], "/courses/" + stage)
+            self.assertIsNone(response.json["child_id"])
+        conn = server.db()
+        self.assertEqual(conn.execute("SELECT COUNT(*) AS n FROM child_profiles").fetchone()["n"], 0)
+        conn.close()
+
+    def test_curriculum_grading_progress_and_retry_are_scoped_to_the_user(self):
+        registered = self.register()
+        headers = {"Authorization": "Bearer " + registered.json["token"]}
+        data_before = self.client.get("/api/data", headers=headers).json
+        unit = server.load_curriculum("junior")["units"][0]
+        path = "/api/curriculum/junior/" + unit["id"] + "/attempt"
+        answers = {question["id"]: question["answer"] for question in unit["questions"]}
+        self.assertEqual(self.client.post(path, json={"answers": answers}).status_code, 401)
+        response = self.client.post(
+            path, json={"answers": answers, "request_id": "first-complete-attempt"}, headers=headers
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json["score"], 100)
+        self.assertTrue(response.json["completed"])
+        self.assertTrue(all(item["correct"] for item in response.json["feedback"]))
+        repeated = self.client.post(
+            path, json={"answers": answers, "request_id": "first-complete-attempt"}, headers=headers
+        )
+        self.assertEqual(repeated.json, response.json)
+        progress = self.client.get("/api/curriculum/progress", headers=headers)
+        self.assertEqual(progress.json["summary"]["completed"], 1)
+        self.assertEqual(progress.json["summary"]["attempts"], 1)
+        self.assertEqual(self.client.get("/api/data", headers=headers).json, data_before)
+
+        other = self.register(email="second@example.com")
+        other_headers = {"Authorization": "Bearer " + other.json["token"]}
+        other_progress = self.client.get("/api/curriculum/progress", headers=other_headers)
+        self.assertEqual(other_progress.json["units"], [])
+        self.assertEqual(
+            self.client.post(path, json={"answers": {"unknown": "a"}}, headers=headers).status_code, 400
+        )
+
+    def test_curriculum_grading_accepts_grammar_aliases_and_normalizes_input(self):
+        registered = self.register()
+        headers = {"Authorization": "Bearer " + registered.json["token"]}
+        curriculum = server.load_curriculum("senior")
+        unit = next(item for item in curriculum["units"] if item["id"] == "s-09")
+        question = next(item for item in unit["questions"] if item["id"] == "q2")
+        self.assertEqual(question["answer"], ["Although", "Though", "Even though"])
+        path = "/api/curriculum/senior/" + unit["id"] + "/attempt"
+        for alias in ["although", "  THOUGH.  ", "ＥＶＥＮ　ＴＨＯＵＧＨ。"]:
+            response = self.client.post(
+                path, json={"answers": {question["id"]: alias}}, headers=headers
+            )
+            self.assertEqual(response.status_code, 200)
+            self.assertTrue(response.json["feedback"][0]["correct"], alias)
+            self.assertFalse(response.json["completed"])
+        incorrect = self.client.post(
+            path, json={"answers": {question["id"]: "Because"}}, headers=headers
+        )
+        self.assertFalse(incorrect.json["feedback"][0]["correct"])
+        self.assertEqual(incorrect.json["feedback"][0]["answer"], question["answer"])
+        self.assertTrue(incorrect.json["feedback"][0]["explanation"])
+
+    def test_curriculum_rejects_invalid_child_ids_without_database_errors(self):
+        registered = self.register()
+        headers = {"Authorization": "Bearer " + registered.json["token"]}
+        for invalid_id in [True, "9223372036854775808", "9" * 100, "²", 0]:
+            selection = self.client.put(
+                "/api/learning-mode",
+                json={"learning_stage": "primary", "child_id": invalid_id},
+                headers=headers,
+            )
+            self.assertEqual(selection.status_code, 400, repr(invalid_id))
+            progress = self.client.get(
+                "/api/curriculum/progress", query_string={"child_id": invalid_id}, headers=headers
+            )
+            self.assertEqual(progress.status_code, 400, repr(invalid_id))
+
+    def test_curriculum_schema_migration_is_repeatable_and_preserves_legacy_users(self):
+        legacy_path = os.path.join(self.tmp.name, "legacy.db")
+        with mock.patch.object(server, "DB", legacy_path):
+            conn = server.db()
+            conn.execute(
+                "CREATE TABLE users(id INTEGER PRIMARY KEY,phone TEXT,email TEXT,nickname TEXT,"
+                "password_hash TEXT,created_at TEXT,last_login TEXT)"
+            )
+            conn.execute("INSERT INTO users(id,email,nickname) VALUES(1,'legacy@example.com','旧账号')")
+            conn.commit()
+            conn.close()
+            server.init_db()
+            server.init_db()
+            conn = server.db()
+            legacy = conn.execute("SELECT * FROM users WHERE id=1").fetchone()
+            self.assertEqual(legacy["email"], "legacy@example.com")
+            self.assertEqual(legacy["learning_stage"], "general")
+            self.assertIsNone(legacy["preferred_child_id"])
+            tables = {row["name"] for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+            self.assertTrue({"course_progress", "course_mistakes", "course_attempt_receipts"}.issubset(tables))
+            conn.close()
+
+    def test_curriculum_mistakes_require_ten_consecutive_correct_reviews(self):
+        registered = self.register(learning_stage="primary", age_band="8-10")
+        headers = {"Authorization": "Bearer " + registered.json["token"]}
+        child_id = registered.json["child_id"]
+        unit = server.load_curriculum("primary")["units"][0]
+        question = unit["questions"][0]
+        path = "/api/curriculum/primary/" + unit["id"] + "/attempt"
+
+        def submit(answer):
+            return self.client.post(
+                path,
+                json={"child_id": child_id, "answers": {question["id"]: answer}},
+                headers=headers,
+            )
+
+        wrong = submit("definitely incorrect response")
+        self.assertEqual(wrong.status_code, 200)
+        self.assertFalse(wrong.json["completed"])
+        self.assertFalse(wrong.json["feedback"][0]["correct"])
+        self.assertTrue(wrong.json["feedback"][0]["explanation"])
+        review_path = "/api/curriculum/review?stage=primary&child_id=" + str(child_id)
+        review = self.client.get(review_path, headers=headers)
+        self.assertEqual(len(review.json["items"]), 1)
+        self.assertNotIn("answer", review.json["items"][0]["question"])
+        correct_answer = question["answer"]
+        for _ in range(9):
+            submit(correct_answer)
+        review = self.client.get(review_path, headers=headers)
+        self.assertEqual(review.json["items"][0]["streak"], 9)
+        submit("wrong again")
+        review = self.client.get(review_path, headers=headers)
+        self.assertEqual(review.json["items"][0]["streak"], 0)
+        for _ in range(10):
+            submit(correct_answer)
+        self.assertEqual(self.client.get(review_path, headers=headers).json["items"], [])
+        self.assertEqual(
+            self.client.get("/api/curriculum/progress", headers=headers).json["units"], []
+        )
+        other = self.register(email="other-parent@example.com")
+        other_headers = {"Authorization": "Bearer " + other.json["token"]}
+        self.assertEqual(self.client.get(review_path, headers=other_headers).status_code, 404)
+        self.assertEqual(
+            self.client.post(
+                path, json={"child_id": child_id, "answers": {question["id"]: correct_answer}}, headers=other_headers
+            ).status_code,
+            404,
+        )
+
     def test_register_tab_has_working_visibility_contract(self):
         with open(server.HTML, "r", encoding="utf-8") as source:
             page = source.read()
@@ -103,6 +292,7 @@ class ServerApiTests(unittest.TestCase):
         self.assertEqual(self.client.get("/kids").status_code, 200)
         self.assertEqual(self.client.get("/kids/kindergarten").status_code, 200)
         self.assertEqual(self.client.get("/kids/primary").status_code, 200)
+        self.assertEqual(self.client.get("/api/curriculum").status_code, 200)
         self.assertEqual(self.client.get("/api/content/stats").status_code, 200)
         vocabulary_asset = self.client.get("/assets/vocabulary-data.js")
         self.assertEqual(vocabulary_asset.status_code, 200)
@@ -148,6 +338,8 @@ class ServerApiTests(unittest.TestCase):
         self.assertEqual(self.client.get("/kids/runtime-style").status_code, 404)
         self.assertEqual(self.client.get("/assets/vocabulary-data.js").status_code, 404)
         self.assertEqual(self.client.get("/api/content/stats").status_code, 404)
+        self.assertEqual(self.client.get("/api/curriculum").status_code, 404)
+        self.assertEqual(self.client.get("/courses").status_code, 404)
         health = self.client.get("/api/health")
         self.assertEqual(health.status_code, 200)
         self.assertEqual(health.json["role"], "admin")
@@ -334,6 +526,61 @@ class ServerApiTests(unittest.TestCase):
             headers={"Authorization": "Bearer " + registered.json["token"]},
         )
         self.assertEqual(invalid_switch.status_code, 400)
+
+    def test_learning_mode_selects_owned_child_without_mutating_another_profile(self):
+        registered = self.register(learning_stage="primary", age_band="6-8")
+        headers = {"Authorization": "Bearer " + registered.json["token"]}
+        first_id = registered.json["child_id"]
+        created = self.client.post(
+            "/api/children",
+            json={
+                "nickname": "姐姐", "avatar": "fox", "age_band": "10-12",
+                "grade_band": "g5-6", "track": "primary", "daily_limit": 15,
+            },
+            headers=headers,
+        )
+        self.assertEqual(created.status_code, 201)
+        second_id = created.json["child"]["id"]
+        selected = self.client.put(
+            "/api/learning-mode",
+            json={"learning_stage": "primary", "child_id": second_id},
+            headers=headers,
+        )
+        self.assertEqual(selected.status_code, 200)
+        self.assertEqual(selected.json["child_id"], second_id)
+        self.assertEqual(selected.json["user"]["age_band"], "10-12")
+        me = self.client.get("/api/me", headers=headers)
+        self.assertEqual(me.json["child_id"], second_id)
+        children = self.client.get("/api/children", headers=headers).json["children"]
+        age_by_id = {child["id"]: child["age_band"] for child in children}
+        self.assertEqual(age_by_id, {first_id: "6-8", second_id: "10-12"})
+
+        wrong_age = self.client.put(
+            "/api/learning-mode",
+            json={"learning_stage": "primary", "child_id": second_id, "age_band": "6-8"},
+            headers=headers,
+        )
+        self.assertEqual(wrong_age.status_code, 400)
+        wrong_track = self.client.put(
+            "/api/learning-mode",
+            json={"learning_stage": "kindergarten", "child_id": second_id},
+            headers=headers,
+        )
+        self.assertEqual(wrong_track.status_code, 400)
+        other = self.register(email="unrelated@example.com")
+        other_headers = {"Authorization": "Bearer " + other.json["token"]}
+        self.assertEqual(
+            self.client.put(
+                "/api/learning-mode", json={"learning_stage": "primary", "child_id": second_id}, headers=other_headers
+            ).status_code,
+            404,
+        )
+        self.assertEqual(self.client.delete("/api/children/" + str(second_id), headers=headers).status_code, 200)
+        me_after_delete = self.client.get("/api/me", headers=headers)
+        self.assertEqual(me_after_delete.json["child_id"], first_id)
+        remaining = self.client.get("/api/children", headers=headers).json["children"]
+        self.assertEqual(len(remaining), 1)
+        self.assertEqual(remaining[0]["age_band"], "6-8")
 
     def test_user_login_bootstrap_endpoints_and_page_are_available(self):
         registered = self.register(learning_stage="general", age_band="13+")

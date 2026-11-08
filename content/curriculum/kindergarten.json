@@ -1,0 +1,1484 @@
+{
+  "id": "kindergarten",
+  "title": "幼儿英语探索",
+  "subtitle": "听故事 · 玩游戏 · 自信开口",
+  "age": "3–6 岁",
+  "description": "家长陪伴的兴趣启蒙路径，以动作、声音、图像和简短故事建立英语体验。每次 5–8 分钟，可听可说，不要求识字或书写。",
+  "alignment": {
+    "label": "兴趣启蒙与幼小衔接",
+    "url": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/t20220420_619921.html",
+    "note": "幼儿阶段采用适龄游戏与口语启蒙设计；不是国家幼儿英语课程标准，也不对应任何出版社教材单元。"
+  },
+  "bands": [
+    {
+      "id": "3-4",
+      "label": "3–4 岁 · 感知与模仿"
+    },
+    {
+      "id": "4-5",
+      "label": "4–5 岁 · 情境与表达"
+    },
+    {
+      "id": "5-6",
+      "label": "5–6 岁 · 拼读与衔接"
+    }
+  ],
+  "units": [
+    {
+      "id": "kg-01",
+      "title": "你好，小狐狸",
+      "band": "3-4",
+      "theme": "人与自我",
+      "goal": "听懂问候，并用自己的名字回应。",
+      "minutes": 7,
+      "skills": [
+        "听力感知",
+        "口头模仿",
+        "互动游戏"
+      ],
+      "knowledge": [
+        "听到 Hello 时挥手回应，建立声音与动作的联系。",
+        "用 My name is ... 介绍自己；允许只说自己的名字。",
+        "用 Goodbye 结束活动，感受轮流交流。"
+      ],
+      "vocabulary": [
+        {
+          "en": "hello",
+          "zh": "你好"
+        },
+        {
+          "en": "goodbye",
+          "zh": "再见"
+        },
+        {
+          "en": "name",
+          "zh": "名字"
+        },
+        {
+          "en": "friend",
+          "zh": "朋友"
+        },
+        {
+          "en": "wave",
+          "zh": "挥手"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Hello! My name is Fox.",
+          "zh": "你好！我叫小狐狸。"
+        },
+        {
+          "en": "Hello, Fox. My name is Mia.",
+          "zh": "你好，小狐狸。我叫米娅。"
+        },
+        {
+          "en": "Goodbye, Mia!",
+          "zh": "再见，米娅！"
+        }
+      ],
+      "reading": {
+        "en": "Fox meets a new friend. They wave and say hello.",
+        "zh": "小狐狸遇见了新朋友。他们挥手说你好。"
+      },
+      "writing": {
+        "prompt": "家长与孩子拿玩偶互相问候，再挥手说再见。",
+        "sample": "Hello! My name is ...",
+        "checklist": [
+          "愿意看向对方或挥手",
+          "尝试发出 hello 的声音",
+          "活动结束时回应 goodbye"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "听一听：小狐狸在打招呼，哪一个是“你好”？",
+          "options": [
+            "Goodbye",
+            "Hello",
+            "Sleep"
+          ],
+          "answer": "Hello",
+          "explanation": "Hello 用于见面打招呼。",
+          "listen_text": "Hello!"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "听一听：小狐狸要离开了，它说了什么？",
+          "options": [
+            "Goodbye",
+            "Hello",
+            "Name"
+          ],
+          "answer": "Goodbye",
+          "explanation": "Goodbye 用于告别，可以同时挥挥手。",
+          "listen_text": "Goodbye!"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听一听：My name is Fox. 小狐狸在告诉我们什么？",
+          "options": [
+            "它的颜色",
+            "它的食物",
+            "它的名字"
+          ],
+          "answer": "它的名字",
+          "explanation": "My name is ... 表示“我的名字是……”。",
+          "listen_text": "My name is Fox."
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "要和朋友友好交流，我们可以做什么？",
+          "options": [
+            "一直打断朋友",
+            "轮流打招呼",
+            "背对朋友"
+          ],
+          "answer": "轮流打招呼",
+          "explanation": "交流需要轮流，也可以用动作回应。",
+          "listen_text": "Hello, friend!"
+        }
+      ]
+    },
+    {
+      "id": "kg-02",
+      "title": "颜色躲猫猫",
+      "band": "3-4",
+      "theme": "人与自然",
+      "goal": "听辨红、蓝、黄，并指认身边的颜色。",
+      "minutes": 7,
+      "skills": [
+        "听力感知",
+        "口头模仿",
+        "互动游戏"
+      ],
+      "knowledge": [
+        "在真实物品中辨认 red、blue、yellow，不以认字为目标。",
+        "听到 Look! 时顺着成人手势观察。",
+        "用 a red ball 的声音组合感受“颜色＋物品”。"
+      ],
+      "vocabulary": [
+        {
+          "en": "red",
+          "zh": "红色"
+        },
+        {
+          "en": "blue",
+          "zh": "蓝色"
+        },
+        {
+          "en": "yellow",
+          "zh": "黄色"
+        },
+        {
+          "en": "ball",
+          "zh": "球"
+        },
+        {
+          "en": "look",
+          "zh": "看"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Look! A red ball.",
+          "zh": "看！一个红球。"
+        },
+        {
+          "en": "A blue ball?",
+          "zh": "一个蓝球吗？"
+        },
+        {
+          "en": "No. A red ball!",
+          "zh": "不是。一个红球！"
+        }
+      ],
+      "reading": {
+        "en": "A red ball hides behind a box. Fox finds a blue ball, too.",
+        "zh": "一个红球躲在盒子后面。小狐狸也找到一个蓝球。"
+      },
+      "writing": {
+        "prompt": "准备安全的彩色物品，让孩子按听到的颜色找物品。",
+        "sample": "Red! A red ball.",
+        "checklist": [
+          "能按声音指认一种颜色",
+          "允许用指认代替开口",
+          "不把小物品放入口中"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "听一听：red 是哪一种颜色？",
+          "options": [
+            "蓝色",
+            "黄色",
+            "红色"
+          ],
+          "answer": "红色",
+          "explanation": "Red 表示红色，可以找一件红色物品。",
+          "listen_text": "Red."
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "听一听：blue 是哪一种颜色？",
+          "options": [
+            "蓝色",
+            "红色",
+            "黄色"
+          ],
+          "answer": "蓝色",
+          "explanation": "Blue 表示蓝色。",
+          "listen_text": "Blue."
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听一听：yellow ball 是什么？",
+          "options": [
+            "红色的球",
+            "黄色的球",
+            "蓝色的球"
+          ],
+          "answer": "黄色的球",
+          "explanation": "Yellow 修饰 ball，表示黄色的球。",
+          "listen_text": "A yellow ball."
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "听到 Look! 我们可以做什么？",
+          "options": [
+            "闭眼睡觉",
+            "马上跑开",
+            "看向成人指的物品"
+          ],
+          "answer": "看向成人指的物品",
+          "explanation": "Look 是邀请你“看一看”。",
+          "listen_text": "Look!"
+        }
+      ]
+    },
+    {
+      "id": "kg-03",
+      "title": "动物来做客",
+      "band": "3-4",
+      "theme": "人与自然",
+      "goal": "通过动作和声音认识常见动物。",
+      "minutes": 7,
+      "skills": [
+        "听力感知",
+        "口头模仿",
+        "互动游戏"
+      ],
+      "knowledge": [
+        "用动物玩偶和叫声连接 cat、dog、bird、duck 的意义。",
+        "在安全空间模仿 jump，不要求高难度动作。",
+        "用 It's a ... 命名动物，也可以只说动物名。"
+      ],
+      "vocabulary": [
+        {
+          "en": "cat",
+          "zh": "猫"
+        },
+        {
+          "en": "dog",
+          "zh": "狗"
+        },
+        {
+          "en": "bird",
+          "zh": "鸟"
+        },
+        {
+          "en": "duck",
+          "zh": "鸭子"
+        },
+        {
+          "en": "jump",
+          "zh": "跳"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What's this?",
+          "zh": "这是什么？"
+        },
+        {
+          "en": "It's a cat.",
+          "zh": "它是一只猫。"
+        },
+        {
+          "en": "Hello, cat! Jump, jump!",
+          "zh": "你好，小猫！跳一跳！"
+        }
+      ],
+      "reading": {
+        "en": "A cat and a dog visit Fox. A little bird sings in the tree.",
+        "zh": "一只猫和一只狗来看小狐狸。一只小鸟在树上唱歌。"
+      },
+      "writing": {
+        "prompt": "家长模仿一种动物，孩子指认玩偶或说出动物名。",
+        "sample": "It's a cat!",
+        "checklist": [
+          "能听辨一种动物",
+          "尝试模仿动物动作",
+          "爱护真实动物，不拉扯它们"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "听一听：cat 是哪一种动物？",
+          "options": [
+            "狗",
+            "猫",
+            "鸭子"
+          ],
+          "answer": "猫",
+          "explanation": "Cat 表示猫。",
+          "listen_text": "Cat."
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "听一听：dog 是哪一种动物？",
+          "options": [
+            "鸟",
+            "鸭子",
+            "狗"
+          ],
+          "answer": "狗",
+          "explanation": "Dog 表示狗。",
+          "listen_text": "Dog."
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听一听：It's a bird. 我们听到了谁？",
+          "options": [
+            "一只鸟",
+            "一只猫",
+            "一只狗"
+          ],
+          "answer": "一只鸟",
+          "explanation": "Bird 表示鸟，It's a bird 是“它是一只鸟”。",
+          "listen_text": "It's a bird."
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "听一听：Jump! 可以做哪个动作？",
+          "options": [
+            "躺下",
+            "安全地轻轻跳一下",
+            "喝水"
+          ],
+          "answer": "安全地轻轻跳一下",
+          "explanation": "Jump 表示跳；先确认身边有足够空间。",
+          "listen_text": "Jump!"
+        }
+      ]
+    },
+    {
+      "id": "kg-04",
+      "title": "我的小家",
+      "band": "3-4",
+      "theme": "人与社会",
+      "goal": "认识家庭成员，用简短表达传递关爱。",
+      "minutes": 7,
+      "skills": [
+        "听力感知",
+        "口头模仿",
+        "互动游戏"
+      ],
+      "knowledge": [
+        "用孩子熟悉的称呼介绍 mum、dad、family，尊重不同家庭组成。",
+        "用照片或玩偶理解 home，不要求展示真实家庭信息。",
+        "用 I love you 表达关爱，也可用拥抱动作回应。"
+      ],
+      "vocabulary": [
+        {
+          "en": "mum",
+          "zh": "妈妈"
+        },
+        {
+          "en": "dad",
+          "zh": "爸爸"
+        },
+        {
+          "en": "family",
+          "zh": "家人"
+        },
+        {
+          "en": "home",
+          "zh": "家"
+        },
+        {
+          "en": "love",
+          "zh": "爱"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "This is my family.",
+          "zh": "这是我的家人。"
+        },
+        {
+          "en": "Hello, Mum. Hello, Dad.",
+          "zh": "你好，妈妈。你好，爸爸。"
+        },
+        {
+          "en": "I love you!",
+          "zh": "我爱你们！"
+        }
+      ],
+      "reading": {
+        "en": "Fox goes home to his family. They say, 'We love you, Fox.'",
+        "zh": "小狐狸回到家人身边。他们说：“我们爱你，小狐狸。”"
+      },
+      "writing": {
+        "prompt": "用玩偶介绍家人，孩子选择想问候的人并说一句关爱的话。",
+        "sample": "Hello! I love you.",
+        "checklist": [
+          "能指认自己选择的家庭成员",
+          "愿意用声音或动作表达关爱",
+          "不强迫孩子分享家庭隐私"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "听一听：mum 指的是谁？",
+          "options": [
+            "老师",
+            "朋友",
+            "妈妈"
+          ],
+          "answer": "妈妈",
+          "explanation": "Mum 是妈妈的常用口语称呼。",
+          "listen_text": "Mum."
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "听一听：dad 指的是谁？",
+          "options": [
+            "爸爸",
+            "小鸟",
+            "妈妈"
+          ],
+          "answer": "爸爸",
+          "explanation": "Dad 是爸爸的常用口语称呼。",
+          "listen_text": "Dad."
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听一听：I love you. 是什么表达？",
+          "options": [
+            "我饿了",
+            "我爱你",
+            "请坐"
+          ],
+          "answer": "我爱你",
+          "explanation": "I love you 可以对关爱的人说。",
+          "listen_text": "I love you."
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "听一听：family 指什么？",
+          "options": [
+            "一支笔",
+            "一颗球",
+            "家人"
+          ],
+          "answer": "家人",
+          "explanation": "Family 指家人；每个家庭都可能不同。",
+          "listen_text": "My family."
+        }
+      ]
+    },
+    {
+      "id": "kg-05",
+      "title": "小小身体操",
+      "band": "4-5",
+      "theme": "人与自我",
+      "goal": "听懂简单身体指令，并指出身体部位。",
+      "minutes": 7,
+      "skills": [
+        "听力感知",
+        "口头模仿",
+        "互动游戏"
+      ],
+      "knowledge": [
+        "把 head、hand、foot 与自己的身体部位连接。",
+        "听 Touch your ... 完成动作，避免触碰眼睛内部。",
+        "用 one hand、two hands 感受单复数声音变化。"
+      ],
+      "vocabulary": [
+        {
+          "en": "head",
+          "zh": "头"
+        },
+        {
+          "en": "hand",
+          "zh": "手"
+        },
+        {
+          "en": "foot",
+          "zh": "脚"
+        },
+        {
+          "en": "eyes",
+          "zh": "眼睛"
+        },
+        {
+          "en": "touch",
+          "zh": "触碰"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Touch your head.",
+          "zh": "摸摸你的头。"
+        },
+        {
+          "en": "Here is my head!",
+          "zh": "我的头在这里！"
+        },
+        {
+          "en": "Clap your hands. Well done!",
+          "zh": "拍拍手。做得好！"
+        }
+      ],
+      "reading": {
+        "en": "Fox touches his head and claps his hands. Then he rests his feet.",
+        "zh": "小狐狸摸摸头，拍拍手。然后他让双脚休息一下。"
+      },
+      "writing": {
+        "prompt": "家长发出两种动作指令，孩子按顺序完成；再交换角色。",
+        "sample": "Touch your head. Clap your hands.",
+        "checklist": [
+          "能指出一种身体部位",
+          "听完指令再行动",
+          "保护眼睛，不用手指戳眼睛"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "听一听：Touch your head. 应该摸哪里？",
+          "options": [
+            "脚",
+            "头",
+            "手"
+          ],
+          "answer": "头",
+          "explanation": "Head 是头；Touch your head 是摸摸你的头。",
+          "listen_text": "Touch your head."
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "听一听：hands 是身体的什么部位？",
+          "options": [
+            "双手",
+            "双眼",
+            "双脚"
+          ],
+          "answer": "双手",
+          "explanation": "Hands 是 hand 的复数，指多只手或双手。",
+          "listen_text": "Hands."
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听一听：Clap your hands. 应该做什么？",
+          "options": [
+            "跺脚",
+            "睡觉",
+            "拍手"
+          ],
+          "answer": "拍手",
+          "explanation": "Clap your hands 是“拍拍手”。",
+          "listen_text": "Clap your hands."
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "身体游戏中怎样保护自己？",
+          "options": [
+            "快速推开别人",
+            "留出空间，轻轻做动作",
+            "用力戳眼睛"
+          ],
+          "answer": "留出空间，轻轻做动作",
+          "explanation": "动作游戏先保证安全，轻触头部即可。",
+          "listen_text": "Touch gently."
+        }
+      ]
+    },
+    {
+      "id": "kg-06",
+      "title": "水果野餐",
+      "band": "4-5",
+      "theme": "人与自我",
+      "goal": "用 I like ... 表达喜好，并练习礼貌请求。",
+      "minutes": 7,
+      "skills": [
+        "听力感知",
+        "口头模仿",
+        "互动游戏"
+      ],
+      "knowledge": [
+        "通过玩具水果听辨名称，避免误食游戏材料。",
+        "用 I like ... 表达自己的偏好，不比较谁更好。",
+        "请求时加入 please，收到帮助后说 thank you。"
+      ],
+      "vocabulary": [
+        {
+          "en": "apple",
+          "zh": "苹果"
+        },
+        {
+          "en": "banana",
+          "zh": "香蕉"
+        },
+        {
+          "en": "orange",
+          "zh": "橙子"
+        },
+        {
+          "en": "pear",
+          "zh": "梨"
+        },
+        {
+          "en": "please",
+          "zh": "请"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "I like apples.",
+          "zh": "我喜欢苹果。"
+        },
+        {
+          "en": "A banana, please.",
+          "zh": "请给我一根香蕉。"
+        },
+        {
+          "en": "Here you are. Thank you!",
+          "zh": "给你。谢谢！"
+        }
+      ],
+      "reading": {
+        "en": "Fox packs apples and pears for a picnic. Mia brings a banana to share.",
+        "zh": "小狐狸为野餐装好苹果和梨。米娅带来一根香蕉一起分享。"
+      },
+      "writing": {
+        "prompt": "用水果玩具点餐；孩子说喜欢的水果，家长练习礼貌递接。",
+        "sample": "A pear, please. Thank you!",
+        "checklist": [
+          "能指认一种水果",
+          "尝试用 please 请求",
+          "真实进食由成人协助并注意过敏"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "听一听：apple 是什么水果？",
+          "options": [
+            "香蕉",
+            "梨",
+            "苹果"
+          ],
+          "answer": "苹果",
+          "explanation": "Apple 表示苹果。",
+          "listen_text": "Apple."
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "听一听：A banana, please. 小狐狸想要什么？",
+          "options": [
+            "一根香蕉",
+            "一个苹果",
+            "一个梨"
+          ],
+          "answer": "一根香蕉",
+          "explanation": "Banana 是香蕉，please 让请求更礼貌。",
+          "listen_text": "A banana, please."
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听一听：I like pears. 说话的人喜欢什么？",
+          "options": [
+            "橙子",
+            "梨",
+            "苹果"
+          ],
+          "answer": "梨",
+          "explanation": "I like ... 表达喜欢；pears 是梨。",
+          "listen_text": "I like pears."
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "收到朋友递来的水果，可以说什么？",
+          "options": [
+            "Go away!",
+            "No!",
+            "Thank you!"
+          ],
+          "answer": "Thank you!",
+          "explanation": "Thank you 表达感谢。",
+          "listen_text": "Thank you!"
+        }
+      ]
+    },
+    {
+      "id": "kg-07",
+      "title": "晴天还是雨天",
+      "band": "4-5",
+      "theme": "人与自然",
+      "goal": "观察天气，按情境选择简单物品。",
+      "minutes": 7,
+      "skills": [
+        "听力感知",
+        "口头模仿",
+        "互动游戏"
+      ],
+      "knowledge": [
+        "用窗外观察或图片理解 sunny 与 rainy。",
+        "用 It's sunny/rainy 描述天气。",
+        "根据天气选物品，知道户外活动先听成人安排。"
+      ],
+      "vocabulary": [
+        {
+          "en": "sunny",
+          "zh": "晴朗的"
+        },
+        {
+          "en": "rainy",
+          "zh": "下雨的"
+        },
+        {
+          "en": "cloud",
+          "zh": "云"
+        },
+        {
+          "en": "hat",
+          "zh": "帽子"
+        },
+        {
+          "en": "umbrella",
+          "zh": "雨伞"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "How is the weather?",
+          "zh": "天气怎么样？"
+        },
+        {
+          "en": "It's rainy.",
+          "zh": "下雨了。"
+        },
+        {
+          "en": "Take your umbrella, please.",
+          "zh": "请带上雨伞。"
+        }
+      ],
+      "reading": {
+        "en": "It is sunny in the morning. When rain comes, Fox opens his umbrella.",
+        "zh": "早晨天气晴朗。下雨时，小狐狸撑开雨伞。"
+      },
+      "writing": {
+        "prompt": "家长展示天气图，孩子为玩偶选择帽子或雨伞，并说天气。",
+        "sample": "It's rainy. An umbrella, please.",
+        "checklist": [
+          "能听辨晴天或雨天",
+          "能为雨天选择雨伞",
+          "知道雷雨时不在户外撑伞游戏"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "听一听：It's sunny. 天气怎样？",
+          "options": [
+            "下雪",
+            "晴朗",
+            "下雨"
+          ],
+          "answer": "晴朗",
+          "explanation": "Sunny 表示晴朗的。",
+          "listen_text": "It's sunny."
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "听一听：It's rainy. 天气怎样？",
+          "options": [
+            "下雨",
+            "晴朗",
+            "炎热"
+          ],
+          "answer": "下雨",
+          "explanation": "Rainy 表示下雨的。",
+          "listen_text": "It's rainy."
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听一听：umbrella 是什么？",
+          "options": [
+            "太阳",
+            "帽子",
+            "雨伞"
+          ],
+          "answer": "雨伞",
+          "explanation": "Umbrella 表示雨伞。",
+          "listen_text": "Umbrella."
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "听到 Take your hat. 应该拿什么？",
+          "options": [
+            "雨伞",
+            "帽子",
+            "苹果"
+          ],
+          "answer": "帽子",
+          "explanation": "Hat 表示帽子。",
+          "listen_text": "Take your hat."
+        }
+      ]
+    },
+    {
+      "id": "kg-08",
+      "title": "玩具分享会",
+      "band": "4-5",
+      "theme": "人与社会",
+      "goal": "听懂轮流和分享，在玩具游戏中礼貌交流。",
+      "minutes": 7,
+      "skills": [
+        "听力感知",
+        "口头模仿",
+        "互动游戏"
+      ],
+      "knowledge": [
+        "在玩具交换中理解 my turn 与 your turn。",
+        "用 Can I play? 表达参与愿望。",
+        "尊重别人的物品，分享应当得到同意。"
+      ],
+      "vocabulary": [
+        {
+          "en": "toy",
+          "zh": "玩具"
+        },
+        {
+          "en": "car",
+          "zh": "小汽车"
+        },
+        {
+          "en": "train",
+          "zh": "火车"
+        },
+        {
+          "en": "share",
+          "zh": "分享"
+        },
+        {
+          "en": "turn",
+          "zh": "轮次"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Can I play, please?",
+          "zh": "我可以一起玩吗？"
+        },
+        {
+          "en": "Yes. It's your turn.",
+          "zh": "可以。轮到你了。"
+        },
+        {
+          "en": "Let's share the train.",
+          "zh": "我们一起玩火车吧。"
+        }
+      ],
+      "reading": {
+        "en": "Mia plays with a toy train. Fox waits for his turn, and they share the game.",
+        "zh": "米娅玩玩具火车。小狐狸等待轮到自己，他们一起玩游戏。"
+      },
+      "writing": {
+        "prompt": "玩具车轮流行驶；家长先示范等待，再邀请孩子说 Your turn。",
+        "sample": "Your turn! Can I play, please?",
+        "checklist": [
+          "能等一次轮次",
+          "尝试礼貌加入游戏",
+          "交换玩具前得到同意"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "听一听：train 是什么玩具？",
+          "options": [
+            "娃娃",
+            "球",
+            "火车"
+          ],
+          "answer": "火车",
+          "explanation": "Train 表示火车。",
+          "listen_text": "A toy train."
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "听一听：It's your turn. 是什么意思？",
+          "options": [
+            "轮到你了",
+            "该睡觉了",
+            "请喝水"
+          ],
+          "answer": "轮到你了",
+          "explanation": "Your turn 表示轮到你。",
+          "listen_text": "It's your turn."
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "想加入朋友的游戏，哪句话更合适？",
+          "options": [
+            "Give it to me!",
+            "Can I play, please?",
+            "Go away!"
+          ],
+          "answer": "Can I play, please?",
+          "explanation": "先礼貌询问，等待对方同意。",
+          "listen_text": "Can I play, please?"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "听一听：Let's share. 大家准备做什么？",
+          "options": [
+            "把玩具藏起来",
+            "一直抢玩具",
+            "一起分享"
+          ],
+          "answer": "一起分享",
+          "explanation": "Share 表示分享；分享和轮流让游戏更愉快。",
+          "listen_text": "Let's share."
+        }
+      ]
+    },
+    {
+      "id": "kg-09",
+      "title": "声音小火车：s、a、t",
+      "band": "5-6",
+      "theme": "人与自我",
+      "goal": "感知字母常见发音，用声音拼合简单词。",
+      "minutes": 7,
+      "skills": [
+        "听力感知",
+        "口头模仿",
+        "互动游戏"
+      ],
+      "knowledge": [
+        "先听 /s/、/æ/、/t/ 的声音，不把字母名称当作拼读声音。",
+        "用 s-a-t 的声音缓慢拼合 sat，家长示范即可。",
+        "通过 sun、ant、tap 听辨开头音，允许口头或动作作答。"
+      ],
+      "vocabulary": [
+        {
+          "en": "sun",
+          "zh": "太阳"
+        },
+        {
+          "en": "ant",
+          "zh": "蚂蚁"
+        },
+        {
+          "en": "tap",
+          "zh": "轻拍"
+        },
+        {
+          "en": "sat",
+          "zh": "坐过（sit 的过去式）"
+        },
+        {
+          "en": "sound",
+          "zh": "声音"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Listen: s, s, sun.",
+          "zh": "听：s，s，太阳。"
+        },
+        {
+          "en": "A, a, ant!",
+          "zh": "a，a，蚂蚁！"
+        },
+        {
+          "en": "T, t, tap. Let's tap softly.",
+          "zh": "t，t，轻拍。我们轻轻拍一拍。"
+        }
+      ],
+      "reading": {
+        "en": "An ant sits in the sun. Fox taps softly and listens to the sounds.",
+        "zh": "一只蚂蚁坐在阳光下。小狐狸轻轻拍一拍，听一听声音。"
+      },
+      "writing": {
+        "prompt": "家长慢读 sun、ant、tap，让孩子举起对应图卡，再尝试发开头音。",
+        "sample": "S, s, sun. T, t, tap.",
+        "checklist": [
+          "愿意听辨开头音",
+          "不以字母书写为考核",
+          "声音游戏短时进行，及时休息"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "听一听：sun 的开头声音更接近哪一个？",
+          "options": [
+            "/t/",
+            "/s/",
+            "/m/"
+          ],
+          "answer": "/s/",
+          "explanation": "Sun 的开头音是 /s/，像轻轻漏气的声音。",
+          "listen_text": "Sun."
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "听一听：ant 的开头声音更接近哪一个？",
+          "options": [
+            "/æ/",
+            "/t/",
+            "/s/"
+          ],
+          "answer": "/æ/",
+          "explanation": "Ant 的开头音是 /æ/，嘴巴张开一些。",
+          "listen_text": "Ant."
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听一听：tap 的开头声音更接近哪一个？",
+          "options": [
+            "/s/",
+            "/æ/",
+            "/t/"
+          ],
+          "answer": "/t/",
+          "explanation": "Tap 的开头音是 /t/。",
+          "listen_text": "Tap."
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "听一听：哪个词和 sun 的开头声音相同？",
+          "options": [
+            "Tap",
+            "Sit",
+            "Ant"
+          ],
+          "answer": "Sit",
+          "explanation": "Sun 和 sit 都以 /s/ 开头。",
+          "listen_text": "Sun. Sit."
+        }
+      ]
+    },
+    {
+      "id": "kg-10",
+      "title": "一天的小任务",
+      "band": "5-6",
+      "theme": "人与自我",
+      "goal": "听懂日常作息，用短句描述一个习惯。",
+      "minutes": 7,
+      "skills": [
+        "听力感知",
+        "口头模仿",
+        "互动游戏"
+      ],
+      "knowledge": [
+        "把 wake up、wash、eat、play、sleep 和一天的动作顺序连接。",
+        "用 I wash my hands 表达卫生习惯。",
+        "听懂 first、then 的顺序提示，先完成两步任务。"
+      ],
+      "vocabulary": [
+        {
+          "en": "wake up",
+          "zh": "醒来"
+        },
+        {
+          "en": "wash",
+          "zh": "清洗"
+        },
+        {
+          "en": "eat",
+          "zh": "吃"
+        },
+        {
+          "en": "play",
+          "zh": "玩"
+        },
+        {
+          "en": "sleep",
+          "zh": "睡觉"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "First, wash your hands.",
+          "zh": "首先，洗洗手。"
+        },
+        {
+          "en": "Then, let's eat.",
+          "zh": "然后，我们吃饭吧。"
+        },
+        {
+          "en": "After we play, we rest.",
+          "zh": "玩过之后，我们休息。"
+        }
+      ],
+      "reading": {
+        "en": "Fox wakes up and washes his hands. He eats breakfast before he plays.",
+        "zh": "小狐狸醒来后洗洗手。他在玩耍前吃早餐。"
+      },
+      "writing": {
+        "prompt": "用动作排一排“醒来、洗手、吃饭、玩耍、睡觉”，说出其中两项。",
+        "sample": "First, wash. Then, eat.",
+        "checklist": [
+          "能听懂两步顺序",
+          "愿意模仿洗手动作",
+          "形成饭前洗手的意识"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "听一听：wash your hands 是什么动作？",
+          "options": [
+            "睡觉",
+            "吃饭",
+            "洗手"
+          ],
+          "answer": "洗手",
+          "explanation": "Wash 表示清洗；hands 是双手。",
+          "listen_text": "Wash your hands."
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "听一听：wake up 是什么时候的动作？",
+          "options": [
+            "醒来时",
+            "入睡时",
+            "下雨时"
+          ],
+          "answer": "醒来时",
+          "explanation": "Wake up 表示醒来。",
+          "listen_text": "Wake up."
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听一听：First, wash. Then, eat. 应先做什么？",
+          "options": [
+            "吃饭",
+            "清洗",
+            "玩耍"
+          ],
+          "answer": "清洗",
+          "explanation": "First 表示首先，所以先清洗再吃饭。",
+          "listen_text": "First, wash. Then, eat."
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "听一听：sleep 指什么？",
+          "options": [
+            "跑步",
+            "唱歌",
+            "睡觉"
+          ],
+          "answer": "睡觉",
+          "explanation": "Sleep 表示睡觉，保持充足睡眠有助于成长。",
+          "listen_text": "Sleep."
+        }
+      ]
+    },
+    {
+      "id": "kg-11",
+      "title": "森林小侦探",
+      "band": "5-6",
+      "theme": "人与自然",
+      "goal": "听辨位置词，在安全的寻物游戏中描述位置。",
+      "minutes": 7,
+      "skills": [
+        "听力感知",
+        "口头模仿",
+        "互动游戏"
+      ],
+      "knowledge": [
+        "用盒子与大玩偶比较 in、on、under 的空间关系。",
+        "用 It's in/on/under ... 回答 Where is ...。",
+        "先听位置再寻物，玩具不藏在高处或危险位置。"
+      ],
+      "vocabulary": [
+        {
+          "en": "in",
+          "zh": "在……里面"
+        },
+        {
+          "en": "on",
+          "zh": "在……上面"
+        },
+        {
+          "en": "under",
+          "zh": "在……下面"
+        },
+        {
+          "en": "tree",
+          "zh": "树"
+        },
+        {
+          "en": "box",
+          "zh": "盒子"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Where is the bird?",
+          "zh": "小鸟在哪里？"
+        },
+        {
+          "en": "It's in the tree.",
+          "zh": "它在树上。"
+        },
+        {
+          "en": "The toy is under the box.",
+          "zh": "玩具在盒子下面。"
+        }
+      ],
+      "reading": {
+        "en": "A bird sings in the tree. A toy fox hides under a big box.",
+        "zh": "一只小鸟在树上唱歌。一只玩具狐狸藏在大盒子下面。"
+      },
+      "writing": {
+        "prompt": "把大玩偶放在盒子里、盒子上或盒子下，让孩子听句子找玩偶。",
+        "sample": "It's in the box.",
+        "checklist": [
+          "能听辨一个位置词",
+          "能用手势说明位置",
+          "不钻入密闭箱体，不攀高取物"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "听一听：in the box 表示在哪里？",
+          "options": [
+            "盒子下面",
+            "盒子里面",
+            "盒子上面"
+          ],
+          "answer": "盒子里面",
+          "explanation": "In 表示在内部。",
+          "listen_text": "In the box."
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "听一听：on the box 表示在哪里？",
+          "options": [
+            "盒子上面",
+            "盒子里面",
+            "盒子下面"
+          ],
+          "answer": "盒子上面",
+          "explanation": "On 表示在表面上。",
+          "listen_text": "On the box."
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听一听：under the box 表示在哪里？",
+          "options": [
+            "盒子外面",
+            "盒子里面",
+            "盒子下面"
+          ],
+          "answer": "盒子下面",
+          "explanation": "Under 表示在下面。",
+          "listen_text": "Under the box."
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "听到 Where is the toy? 是在问什么？",
+          "options": [
+            "玩具什么颜色",
+            "玩具在哪里",
+            "玩具有多大"
+          ],
+          "answer": "玩具在哪里",
+          "explanation": "Where 用来询问位置。",
+          "listen_text": "Where is the toy?"
+        }
+      ]
+    },
+    {
+      "id": "kg-12",
+      "title": "我的第一场英语小剧场",
+      "band": "5-6",
+      "theme": "人与社会",
+      "goal": "在故事表演中综合使用问候、请求、感谢和告别。",
+      "minutes": 7,
+      "skills": [
+        "听力感知",
+        "口头模仿",
+        "互动游戏"
+      ],
+      "knowledge": [
+        "按“问候—请求—感谢—告别”完成简短互动。",
+        "听 Are you ready? 用 Yes! 回应，建立参加活动的信心。",
+        "在家长提示下复用旧词，不要求逐字背诵。"
+      ],
+      "vocabulary": [
+        {
+          "en": "welcome",
+          "zh": "欢迎"
+        },
+        {
+          "en": "story",
+          "zh": "故事"
+        },
+        {
+          "en": "ready",
+          "zh": "准备好的"
+        },
+        {
+          "en": "together",
+          "zh": "一起"
+        },
+        {
+          "en": "thank you",
+          "zh": "谢谢"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Welcome! Are you ready?",
+          "zh": "欢迎！你准备好了吗？"
+        },
+        {
+          "en": "Yes! A red ball, please.",
+          "zh": "准备好了！请给我一个红球。"
+        },
+        {
+          "en": "Here you are. Thank you!",
+          "zh": "给你。谢谢！"
+        },
+        {
+          "en": "Goodbye! See you!",
+          "zh": "再见！回头见！"
+        }
+      ],
+      "reading": {
+        "en": "Fox and Mia put on a little show. They play together and thank their family.",
+        "zh": "小狐狸和米娅表演一场小节目。他们一起玩，并感谢家人。"
+      },
+      "writing": {
+        "prompt": "和家长演一次小商店或玩具故事，孩子任选角色说出两句英语。",
+        "sample": "Hello! A ball, please. Thank you. Goodbye!",
+        "checklist": [
+          "能参与至少两个交流轮次",
+          "愿意用熟悉词表达",
+          "家长鼓励表达意思，不纠缠口音"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "听一听：Welcome! 表达什么？",
+          "options": [
+            "快离开",
+            "我饿了",
+            "欢迎"
+          ],
+          "answer": "欢迎",
+          "explanation": "Welcome 表示欢迎别人。",
+          "listen_text": "Welcome!"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "听一听：Are you ready? 可以怎样回应？",
+          "options": [
+            "Yes!",
+            "Goodbye!",
+            "Under!"
+          ],
+          "answer": "Yes!",
+          "explanation": "Are you ready? 问是否准备好，可以回答 Yes。",
+          "listen_text": "Are you ready?"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "表演中想要一个球，哪句话合适？",
+          "options": [
+            "A ball, please.",
+            "Sleep now.",
+            "It's rainy."
+          ],
+          "answer": "A ball, please.",
+          "explanation": "物品名加 please 可以构成简单礼貌请求。",
+          "listen_text": "A ball, please."
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "收到球之后，说什么表示感谢？",
+          "options": [
+            "Red ball.",
+            "Good night.",
+            "Thank you!"
+          ],
+          "answer": "Thank you!",
+          "explanation": "Thank you 表示感谢，能让交流更友好。",
+          "listen_text": "Thank you!"
+        }
+      ]
+    }
+  ]
+}

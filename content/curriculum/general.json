@@ -1,0 +1,1484 @@
+{
+  "id": "general",
+  "title": "成人英语",
+  "subtitle": "生活开口 · 职场沟通 · 行业与国际交流",
+  "age": "成人学习者",
+  "description": "以真实任务组织生活、商务、行业和国际交流课程，让词汇与语法用于明确表达、确认信息和解决问题。",
+  "alignment": {
+    "label": "成人通用英语与专门用途英语任务路径",
+    "url": "https://xuanshu.hep.com.cn/front/book/findBookDetails?bookId=5fbe19395710f1bcc39a1b3e",
+    "note": "原创任务课程，参考通用英语、专门用途英语与跨文化沟通方向；行业案例用于语言学习，不替代专业操作、医疗或财务建议。"
+  },
+  "bands": [
+    {
+      "id": "daily",
+      "label": "生活英语 · 常用场景"
+    },
+    {
+      "id": "business",
+      "label": "商务英语 · 职场协作"
+    },
+    {
+      "id": "industry",
+      "label": "行业英语 · 专业沟通"
+    },
+    {
+      "id": "international",
+      "label": "国际交流 · 跨文化协作"
+    }
+  ],
+  "units": [
+    {
+      "id": "a-01",
+      "title": "出行：把变更确认清楚",
+      "band": "daily",
+      "theme": "生活出行 · 交通与住宿",
+      "goal": "询问新的时间地点，复述确认避免误会。",
+      "minutes": 20,
+      "skills": [
+        "时间理解",
+        "询问信息",
+        "听力定位",
+        "简短消息"
+      ],
+      "knowledge": [
+        "Could you tell me…? 后接陈述语序，适合礼貌询问信息。",
+        "confirm 表示确认；时间、地点和是否需要额外操作应分别询问。",
+        "复述可用 So, just to confirm…，不要只回答 OK。"
+      ],
+      "vocabulary": [
+        {
+          "en": "departure",
+          "zh": "出发"
+        },
+        {
+          "en": "platform",
+          "zh": "站台"
+        },
+        {
+          "en": "delay",
+          "zh": "延误"
+        },
+        {
+          "en": "reservation",
+          "zh": "预订"
+        },
+        {
+          "en": "confirm",
+          "zh": "确认"
+        },
+        {
+          "en": "transfer",
+          "zh": "换乘"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Could you tell me which platform the delayed train will use?",
+          "zh": "能告诉我延误的列车将在哪个站台发车吗？"
+        },
+        {
+          "en": "It will leave from platform six at half past ten.",
+          "zh": "列车将在十点半从六号站台发车。"
+        },
+        {
+          "en": "So, just to confirm, platform six at ten thirty. Is my ticket still valid?",
+          "zh": "我确认一下，十点半在六号站台。我的票仍然有效吗？"
+        }
+      ],
+      "reading": {
+        "en": "At the station, a traveller heard an announcement about a delayed train but missed the platform number. Instead of following the largest crowd, she went to the information desk. She asked for the departure time, the platform and whether she needed a new ticket. The member of staff explained that the ticket remained valid. She repeated the details to check her understanding and then sent a short update to the friend meeting her. The message included the revised arrival time rather than only saying that the train was late.",
+        "zh": "一位旅客听到列车延误广播，却没听清站台。她没有跟随人群，而到问讯处询问出发时间、站台和是否需要换票。工作人员说明原票仍有效。她复述确认后，给接站朋友发消息，明确写出新到达时间，而不只是说晚点了。"
+      },
+      "writing": {
+        "prompt": "给接站朋友写一条 40–60 词消息，包含变更、预计到达时间和下一步联系方法。",
+        "sample": "My train has been delayed and will now arrive at eleven forty. My original ticket is still valid, so I do not need to change it. Please meet me near the main exit. I will send another message when the train leaves the previous station.",
+        "checklist": [
+          "是否有具体新时间",
+          "是否说明接站地点",
+          "是否有后续联系安排"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "旅客怎样检查自己是否听懂？",
+          "options": [
+            "只跟着最大的人群走",
+            "完全不问任何问题",
+            "复述时间和站台",
+            "重新购买所有车票"
+          ],
+          "answer": "复述时间和站台",
+          "explanation": "repeated the details 是主动确认，可发现听错的数字或地点。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "Could you tell me where the train ___? （leave 的第三人称单数）",
+          "answer": "leaves",
+          "explanation": "间接疑问句用陈述语序，单数主语 train 使用 leaves。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：列车从哪个站台发车？",
+          "listen_text": "The delayed train will depart from platform six at ten thirty.",
+          "options": [
+            "Platform six",
+            "Platform ten",
+            "Platform three",
+            "Platform thirty"
+          ],
+          "answer": "Platform six",
+          "explanation": "six 是站台，ten thirty 是时间，注意分辨数字功能。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "a valid ticket is a ticket that ___.",
+          "options": [
+            "has no travel details",
+            "can still be used for the journey",
+            "must always be replaced",
+            "belongs to the staff"
+          ],
+          "answer": "can still be used for the journey",
+          "explanation": "valid 表示仍有效、可用于所需服务。"
+        }
+      ]
+    },
+    {
+      "id": "a-02",
+      "title": "预约就诊：准确描述与提问",
+      "band": "daily",
+      "theme": "生活服务 · 就诊沟通",
+      "goal": "说明症状持续时间，确认预约与语言协助。",
+      "minutes": 20,
+      "skills": [
+        "情况描述",
+        "服务询问",
+        "听力细节",
+        "信息整理"
+      ],
+      "knowledge": [
+        "have had + 症状 + for… 用于描述持续至今的情况。",
+        "预约沟通需说明主要不适、持续时间及所需服务，不自行作诊断。",
+        "听不懂时可请求解释：Could you explain that in simpler words?"
+      ],
+      "vocabulary": [
+        {
+          "en": "appointment",
+          "zh": "预约"
+        },
+        {
+          "en": "symptom",
+          "zh": "症状"
+        },
+        {
+          "en": "duration",
+          "zh": "持续时间"
+        },
+        {
+          "en": "interpreter",
+          "zh": "口译员"
+        },
+        {
+          "en": "medical history",
+          "zh": "病史"
+        },
+        {
+          "en": "reception",
+          "zh": "接待处"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "I would like to book an appointment. I have had a sore throat for three days.",
+          "zh": "我想预约就诊，我嗓子疼了三天。"
+        },
+        {
+          "en": "We have an appointment tomorrow morning. Do you need language assistance?",
+          "zh": "明天上午有预约时段，您需要语言协助吗？"
+        },
+        {
+          "en": "Yes, please. Could you tell me what information I should bring?",
+          "zh": "需要，谢谢。能告诉我应该带哪些资料吗？"
+        }
+      ],
+      "reading": {
+        "en": "Before contacting a clinic, a learner wrote down the main problem, when it began and any questions she wanted to ask. During the call, she described what she was experiencing rather than naming a disease she had found online. The receptionist offered an appointment and explained what records to bring. When a term was unfamiliar, she asked for a simpler explanation and repeated the appointment time. She also requested language assistance. Preparing key information helped her communicate clearly, while diagnosis and treatment remained questions for the qualified clinician.",
+        "zh": "联系诊所前，学习者记下主要问题、开始时间和想问的问题。电话中她描述真实感受，而不用网上查到的病名自行诊断。接待人员安排预约并说明携带资料。遇到陌生词，她请求简单解释、复述时间，并申请语言协助。准备关键信息使沟通清楚，诊断和治疗则交由合格医务人员判断。"
+      },
+      "writing": {
+        "prompt": "写一份就诊沟通便条，列出症状、持续时间和三个需要询问的问题。",
+        "sample": "Main concern: a sore throat for three days. I would like to explain when it started and ask what information the clinician needs. Could you explain unfamiliar terms in simple language? Is language assistance available? What records should I bring to the appointment?",
+        "checklist": [
+          "是否描述感受而非自行确诊",
+          "持续时间是否明确",
+          "是否提出澄清和协助需求"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "学习者通话前准备了什么？",
+          "options": [
+            "从网上复制的确诊证明",
+            "自行开具的治疗方案",
+            "其他患者的私人记录",
+            "主要问题、开始时间和提问清单"
+          ],
+          "answer": "主要问题、开始时间和提问清单",
+          "explanation": "文章强调整理真实信息支持专业沟通，没有自行诊断。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "I have had a sore throat ___ three days.",
+          "answer": "for",
+          "explanation": "for 后接持续时长；since 后通常接起始时间点。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：预约安排在什么时候？",
+          "listen_text": "Your appointment is tomorrow morning at nine fifteen. Please check in at reception.",
+          "options": [
+            "Today at nine",
+            "Tomorrow at nine fifteen",
+            "Tomorrow evening",
+            "Next Friday afternoon"
+          ],
+          "answer": "Tomorrow at nine fifteen",
+          "explanation": "tomorrow morning 与 nine fifteen 共同给出预约时间。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "an interpreter helps people ___.",
+          "options": [
+            "change their medical records",
+            "choose a diagnosis online",
+            "communicate between languages",
+            "replace the clinician"
+          ],
+          "answer": "communicate between languages",
+          "explanation": "interpreter 指口译人员，帮助跨语言沟通。"
+        }
+      ]
+    },
+    {
+      "id": "a-03",
+      "title": "消费沟通：清楚提出解决诉求",
+      "band": "daily",
+      "theme": "生活消费 · 退换与售后",
+      "goal": "说明问题、提供凭据并礼貌要求可行解决方案。",
+      "minutes": 20,
+      "skills": [
+        "问题描述",
+        "礼貌协商",
+        "听力辨析",
+        "售后邮件"
+      ],
+      "knowledge": [
+        "描述过去购买用一般过去时；描述目前故障用现在时。",
+        "refund 与 replacement 分别是退款和更换，提出诉求时应明确。",
+        "投诉结构可用购买信息—问题—已有尝试—请求解决方案。"
+      ],
+      "vocabulary": [
+        {
+          "en": "receipt",
+          "zh": "收据"
+        },
+        {
+          "en": "refund",
+          "zh": "退款"
+        },
+        {
+          "en": "replacement",
+          "zh": "更换品"
+        },
+        {
+          "en": "faulty",
+          "zh": "有故障的"
+        },
+        {
+          "en": "warranty",
+          "zh": "保修"
+        },
+        {
+          "en": "resolve",
+          "zh": "解决"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "I bought this charger last week, but it no longer works.",
+          "zh": "我上周买了这个充电器，但它现在不能用了。"
+        },
+        {
+          "en": "Do you have the receipt and the original packaging?",
+          "zh": "您有收据和原包装吗？"
+        },
+        {
+          "en": "Yes. Could you explain the replacement or refund options?",
+          "zh": "有，能说明更换或退款的选择吗？"
+        }
+      ],
+      "reading": {
+        "en": "A customer contacted support about headphones that stopped connecting after a week. His first message only said that the product was terrible. Before sending it, he rewrote the message with the order number, purchase date and a short description of the problem. He explained that he had already tried the instructions in the manual and asked about replacement options. The support agent could then check the order and explain the next steps. A clear request did not guarantee a particular outcome, but it made the problem easier to understand and resolve.",
+        "zh": "顾客的耳机一周后无法连接，初稿只抱怨产品很差。发送前他补充订单号、购买日期、问题描述和已经尝试过的说明书操作，并询问更换方案。客服因此能核对订单并解释后续步骤。清楚请求不能保证特定结果，却有助理解和解决问题。"
+      },
+      "writing": {
+        "prompt": "写一封 60–80 词的售后邮件，给出购买信息、故障和明确诉求。",
+        "sample": "Hello, I purchased these headphones last Monday, order number 4821. They stopped connecting yesterday. I have followed the troubleshooting steps in the manual, but the problem remains. Could you explain whether a replacement is available and what information you need from me? I can provide the receipt and a short video.",
+        "checklist": [
+          "是否有订单或购买日期",
+          "是否描述具体故障",
+          "诉求是否礼貌明确"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "修改后的消息为什么更有帮助？",
+          "options": [
+            "提供了客服可核查的具体信息",
+            "用了更多愤怒词语",
+            "删除了所有购买信息",
+            "保证一定立即退款"
+          ],
+          "answer": "提供了客服可核查的具体信息",
+          "explanation": "订单、日期、问题和已尝试步骤使客服能核对并安排后续。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "I ___ the headphones last Monday. （purchase 的过去式）",
+          "answer": "purchased",
+          "explanation": "last Monday 是过去时间，规则过去式为 purchased。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：顾客首先询问什么方案？",
+          "listen_text": "I have already followed the instructions, and I would like to ask about a replacement.",
+          "options": [
+            "A new colour only",
+            "A longer manual",
+            "A replacement",
+            "A different shop address"
+          ],
+          "answer": "A replacement",
+          "explanation": "would like to ask about 后的 replacement 才是当前诉求。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "refund 与 replacement 的区别是什么？",
+          "options": [
+            "两者都只指维修说明",
+            "前者退还款项，后者提供更换品",
+            "前者是收据，后者是订单",
+            "两者没有任何区别"
+          ],
+          "answer": "前者退还款项，后者提供更换品",
+          "explanation": "明确区分两词，才能清楚表达希望获得的解决方式。"
+        }
+      ]
+    },
+    {
+      "id": "a-04",
+      "title": "会议：把讨论变成行动",
+      "band": "business",
+      "theme": "职场协作 · 会议与任务",
+      "goal": "明确议程、责任人、截止时间和待确认事项。",
+      "minutes": 25,
+      "skills": [
+        "会议听力",
+        "任务确认",
+        "要点记录",
+        "纪要写作"
+      ],
+      "knowledge": [
+        "action item 是具体行动项，应包含任务、负责人和截止时间。",
+        "by Friday 表示最迟周五，on Friday 表示周五当天。",
+        "区分已决定事項与仍需确认的问题，避免把讨论当成承诺。"
+      ],
+      "vocabulary": [
+        {
+          "en": "agenda",
+          "zh": "议程"
+        },
+        {
+          "en": "action item",
+          "zh": "行动项"
+        },
+        {
+          "en": "owner",
+          "zh": "负责人"
+        },
+        {
+          "en": "deadline",
+          "zh": "截止时间"
+        },
+        {
+          "en": "pending",
+          "zh": "待处理的"
+        },
+        {
+          "en": "minutes",
+          "zh": "会议纪要"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Before we finish, can we confirm the action items?",
+          "zh": "结束前，我们确认一下行动项好吗？"
+        },
+        {
+          "en": "I will send the revised schedule by Thursday afternoon.",
+          "zh": "我将在周四下午前发送修订日程。"
+        },
+        {
+          "en": "Thank you. The budget is still pending approval, so please mark that separately.",
+          "zh": "谢谢，预算仍待审批，请单独标记。"
+        }
+      ],
+      "reading": {
+        "en": "A project meeting ended with everyone agreeing that the schedule needed revision. Two days later, no new version had appeared because each person thought someone else was responsible. At the next meeting, the coordinator wrote action items on a shared screen. Each item named an owner and a deadline. Decisions were separated from questions still awaiting approval. Before closing, the coordinator asked each owner to confirm the task in their own words. The summary was shorter than the previous meeting notes, but it gave the team a clearer basis for action.",
+        "zh": "项目会上大家都同意修订日程，两天后仍无新稿，因为每个人以为别人负责。下次协调者在共享屏幕写行动项，逐项明确责任人与截止时间，区分已决事项和待审批问题，并请负责人复述任务。纪要更短，却更能指导行动。"
+      },
+      "writing": {
+        "prompt": "写三条会议纪要，分别包含一项决定、一项行动和一项待确认问题。",
+        "sample": "Decision: the team will revise the launch schedule. Action: Mei will send the new draft by Thursday afternoon. Pending issue: the budget requires approval from the finance manager. Owners should confirm any change to their deadline before the next meeting.",
+        "checklist": [
+          "行动是否有负责人",
+          "截止时间是否明确",
+          "待审批事项是否与决定分开"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "第一次会后任务没有推进的直接原因是什么？",
+          "options": [
+            "所有成员都拒绝修订",
+            "会议没有持续一整天",
+            "缺少明确负责人",
+            "团队没有任何日程"
+          ],
+          "answer": "缺少明确负责人",
+          "explanation": "每个人以为别人负责，说明共识尚未转化为责任明确的行动。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "Please send the revised schedule ___ Friday. （最迟周五）",
+          "answer": "by",
+          "explanation": "by 表示截止到该时间，on 只表示当天发生。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：预算目前是什么状态？",
+          "listen_text": "The schedule has been approved, but the budget is still pending approval.",
+          "options": [
+            "Fully cancelled",
+            "Already paid",
+            "Approved last month",
+            "Pending approval"
+          ],
+          "answer": "Pending approval",
+          "explanation": "but 后指出预算仍待审批，不能与已获批的日程混淆。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "Which item is a complete action item?",
+          "options": [
+            "Mei will send the draft by Thursday.",
+            "The project is interesting.",
+            "Someone should do something soon.",
+            "We discussed the schedule."
+          ],
+          "answer": "Mei will send the draft by Thursday.",
+          "explanation": "完整行动项包含谁、做什么、何时完成。"
+        }
+      ]
+    },
+    {
+      "id": "a-05",
+      "title": "邮件：简洁但不含糊",
+      "band": "business",
+      "theme": "职场沟通 · 邮件与反馈",
+      "goal": "用清楚主题和具体请求提高邮件可读性。",
+      "minutes": 25,
+      "skills": [
+        "邮件阅读",
+        "礼貌请求",
+        "听力细节",
+        "商务写作"
+      ],
+      "knowledge": [
+        "主题行应包含任务和必要期限，避免只有 Important 或 Hello。",
+        "Could you…? 可表达礼貌请求，但仍应写清交付物。",
+        "附件需在正文说明名称和用途，避免只写 See attached。"
+      ],
+      "vocabulary": [
+        {
+          "en": "attachment",
+          "zh": "附件"
+        },
+        {
+          "en": "revision",
+          "zh": "修订"
+        },
+        {
+          "en": "approval",
+          "zh": "批准"
+        },
+        {
+          "en": "clarification",
+          "zh": "澄清"
+        },
+        {
+          "en": "concise",
+          "zh": "简洁的"
+        },
+        {
+          "en": "recipient",
+          "zh": "收件人"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Could you review the attached proposal by Wednesday?",
+          "zh": "能否在周三前审阅附件方案？"
+        },
+        {
+          "en": "Which section needs particular attention?",
+          "zh": "需要特别关注哪一部分？"
+        },
+        {
+          "en": "Please focus on the cost assumptions in section three.",
+          "zh": "请重点关注第三节的成本假设。"
+        }
+      ],
+      "reading": {
+        "en": "An employee needed feedback on a proposal. Her first email had the subject Hello and asked colleagues to share their thoughts. Several recipients were unsure whether she wanted a quick impression or formal approval. She revised the subject to identify the proposal and deadline. In the message, she asked readers to check two cost assumptions and explained that the attachment was a discussion draft. She also stated where to leave comments. The clearer email reduced follow-up questions because recipients knew what decision was needed and what they were not being asked to approve.",
+        "zh": "员工初稿邮件主题为 Hello，只请同事谈想法，收件人不清楚是初步反馈还是正式批准。修改后主题注明方案和期限，正文明确请检查两个成本假设，说明附件是讨论稿、评论应写在哪里。清楚的请求减少来回澄清，也避免把反馈误作批准。"
+      },
+      "writing": {
+        "prompt": "写一封 70–90 词的方案审阅邮件，包含主题、两项具体检查点和截止时间。",
+        "sample": "Subject: Review request—delivery proposal by Wednesday. Hi team, could you review the attached discussion draft by Wednesday afternoon? Please check the delivery assumptions in section two and the cost estimate in section three. Add comments in the shared document. This review is for feedback, not final approval. Thank you.",
+        "checklist": [
+          "主题是否说明任务和期限",
+          "检查点是否具体",
+          "是否区分反馈与批准"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "收件人最初不确定什么？",
+          "options": [
+            "对方需要初步想法还是正式批准",
+            "邮件是否含有任何单词",
+            "员工在哪个城市",
+            "所有附件是否已删除"
+          ],
+          "answer": "对方需要初步想法还是正式批准",
+          "explanation": "文章明确对比 quick impression 与 formal approval。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "Could you ___ the cost assumptions by Wednesday? （review）",
+          "answer": "review",
+          "explanation": "Could you 后接动词原形 review，构成礼貌请求。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：重点检查哪一部分？",
+          "listen_text": "Please focus on the cost assumptions in section three and leave comments in the shared document.",
+          "options": [
+            "The title only",
+            "Section one",
+            "The cost assumptions in section three",
+            "The sender's address"
+          ],
+          "answer": "The cost assumptions in section three",
+          "explanation": "focus on 后说明重点；shared document 是评论位置。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "an attachment is ___.",
+          "options": [
+            "the subject line itself",
+            "the sender's job title",
+            "a meeting deadline",
+            "a file included with a message"
+          ],
+          "answer": "a file included with a message",
+          "explanation": "attachment 是随邮件附上的文件，需要在正文说明用途。"
+        }
+      ]
+    },
+    {
+      "id": "a-06",
+      "title": "谈判：先明确条件再承诺",
+      "band": "business",
+      "theme": "商务洽谈 · 需求与条件",
+      "goal": "区分报价、条件和承诺，用条件句提出方案。",
+      "minutes": 25,
+      "skills": [
+        "需求分析",
+        "条件协商",
+        "听力辨析",
+        "确认写作"
+      ],
+      "knowledge": [
+        "If you confirm…, we can… 可提出有条件方案。",
+        "estimate 是估计，confirmed quote 是已确认报价，需明确有效条件。",
+        "口头讨论后用书面摘要确认数量、范围、时间与未决事项。"
+      ],
+      "vocabulary": [
+        {
+          "en": "quotation",
+          "zh": "报价"
+        },
+        {
+          "en": "scope",
+          "zh": "范围"
+        },
+        {
+          "en": "condition",
+          "zh": "条件"
+        },
+        {
+          "en": "lead time",
+          "zh": "交付周期"
+        },
+        {
+          "en": "commitment",
+          "zh": "承诺"
+        },
+        {
+          "en": "negotiate",
+          "zh": "协商"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Can you guarantee delivery within two weeks?",
+          "zh": "能保证两周内交付吗？"
+        },
+        {
+          "en": "We can confirm the date after the final specification is approved.",
+          "zh": "最终规格批准后，我们才能确认日期。"
+        },
+        {
+          "en": "Then please send a revised quotation stating the conditions clearly.",
+          "zh": "那么请发送修订报价，清楚列明条件。"
+        }
+      ],
+      "reading": {
+        "en": "A buyer asked a supplier to shorten the delivery time. The supplier's representative wanted to help but knew that the product specification was still changing. Rather than promise an unconfirmed date, she explained which decisions affected production. She offered two options: keep the customised design with a longer lead time, or choose a standard version that could be prepared sooner. The buyer compared the options with the project team. After the call, the representative sent a summary identifying the scope, conditions and next approval step. The discussion moved forward because both sides could see what each promise depended on.",
+        "zh": "买方要求缩短交付周期，但产品规格仍在变化。供应商代表没有承诺未经确认的日期，而是说明哪些决定影响生产，提出定制版交期较长、标准版可更早准备两种选择。会后她书面确认范围、条件和下一审批步骤，使双方看清每项承诺的前提。"
+      },
+      "writing": {
+        "prompt": "写一份 80 词左右的谈判后确认，包含两个方案和下一决策点。",
+        "sample": "Thank you for today's discussion. Option A keeps the customised design and requires a longer lead time. Option B uses the standard version and can be prepared sooner. We will confirm the delivery date after receiving your approved specification. Please let us know which option your team prefers by Friday.",
+        "checklist": [
+          "方案差异是否清楚",
+          "是否写明承诺前提",
+          "是否有下一步和时间"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "代表为什么没有立即保证日期？",
+          "options": [
+            "她不愿与买方交流",
+            "生产不受任何条件影响",
+            "双方已经取消订单",
+            "规格尚未确定会影响生产"
+          ],
+          "answer": "规格尚未确定会影响生产",
+          "explanation": "product specification was still changing 是不能确认交期的具体原因。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "If you approve the specification, we ___ confirm the delivery date. （can）",
+          "answer": "can",
+          "explanation": "can 表示在条件满足后能够采取行动，if 从句用现在时。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：哪个方案可以更早准备？",
+          "listen_text": "The standard version can be prepared sooner, while the customised design needs a longer lead time.",
+          "options": [
+            "The customised design",
+            "The standard version",
+            "Neither option",
+            "An unspecified third option"
+          ],
+          "answer": "The standard version",
+          "explanation": "sooner 对应 standard version；customised design 需要更长周期。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "lead time 指什么？",
+          "options": [
+            "the title of a manager",
+            "the amount of a discount",
+            "the period needed before delivery",
+            "the number of meeting notes"
+          ],
+          "answer": "the period needed before delivery",
+          "explanation": "lead time 是从确认或开始到完成交付所需时间。"
+        }
+      ]
+    },
+    {
+      "id": "a-07",
+      "title": "工程英语：交接与偏差说明",
+      "band": "industry",
+      "theme": "工程沟通 · 检查与交接",
+      "goal": "准确报告观察结果，区分事实、判断和需确认事项。",
+      "minutes": 30,
+      "skills": [
+        "技术阅读",
+        "数据表达",
+        "听力确认",
+        "交接记录"
+      ],
+      "knowledge": [
+        "技术交接应包含对象、测量值、单位、条件和来源。",
+        "observed 表示观察到，suspected 表示怀疑，两者证据强度不同。",
+        "安全相关操作遵循现场规程；英语练习聚焦信息传递和澄清。"
+      ],
+      "vocabulary": [
+        {
+          "en": "specification",
+          "zh": "规格"
+        },
+        {
+          "en": "tolerance",
+          "zh": "公差"
+        },
+        {
+          "en": "measurement",
+          "zh": "测量"
+        },
+        {
+          "en": "deviation",
+          "zh": "偏差"
+        },
+        {
+          "en": "inspection",
+          "zh": "检查"
+        },
+        {
+          "en": "handover",
+          "zh": "交接"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "The recorded measurement differs from the drawing.",
+          "zh": "记录的测量值与图纸不同。"
+        },
+        {
+          "en": "Have the unit and drawing revision been confirmed?",
+          "zh": "单位和图纸版本确认了吗？"
+        },
+        {
+          "en": "Not yet. I have marked the item for review rather than guessing the cause.",
+          "zh": "还没有，我已将该项标为待审核，没有猜测原因。"
+        }
+      ],
+      "reading": {
+        "en": "During a project handover, an engineer noticed that a measurement in the inspection sheet differed from the drawing. The difference might have indicated a problem, but the sheet did not identify the drawing revision or measurement conditions. She asked the previous team to confirm these details before interpreting the result. In her handover note, she recorded the observed difference, the source of each figure and the question awaiting review. She avoided writing that the component had failed because the available evidence did not yet support that conclusion. The note helped the next team investigate efficiently without confusing an observation with a confirmed cause.",
+        "zh": "项目交接时，工程师发现检查表测量值与图纸不同，但未注明图纸版本和测量条件。她要求先确认背景，再解释结果。交接记录列出观察差异、各数字来源和待审问题，不在证据不足时直接判定部件失效。下一团队因此能高效核查，避免混淆现象与已证实原因。"
+      },
+      "writing": {
+        "prompt": "写一份技术交接说明，包含观察、数据来源、未确认条件和下一责任人。",
+        "sample": "The inspection sheet records a value different from the drawing. The drawing revision and measurement conditions have not yet been confirmed. This note reports an observed difference, not a confirmed failure. The inspection lead will verify the source documents and update the review record before a decision is made.",
+        "checklist": [
+          "是否标清单位和来源",
+          "是否区分观察与结论",
+          "未决项是否指定核查责任"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "工程师为什么没有直接写部件失效？",
+          "options": [
+            "交接记录不能写任何事实",
+            "图纸永远不会变化",
+            "现有证据尚未支持该结论",
+            "她已确定测量没有意义"
+          ],
+          "answer": "现有证据尚未支持该结论",
+          "explanation": "版本和条件待确认，不能把差异直接等同已确认的失效原因。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "The drawing revision has not ___ confirmed yet.",
+          "answer": "been",
+          "explanation": "现在完成时被动为 has/have been + 过去分词。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：解释测量值前需确认哪两项？",
+          "listen_text": "Please confirm the measurement unit and the drawing revision before interpreting the difference.",
+          "options": [
+            "The unit and drawing revision",
+            "The lunch menu and date",
+            "Only the component colour",
+            "The number of emails"
+          ],
+          "answer": "The unit and drawing revision",
+          "explanation": "unit 和 drawing revision 是技术数据比较的必要背景。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "a deviation is ___.",
+          "options": [
+            "a confirmed explanation for every fault",
+            "a difference from a specified or expected value",
+            "an instruction to ignore measurements",
+            "a new employee"
+          ],
+          "answer": "a difference from a specified or expected value",
+          "explanation": "deviation 指偏差，本身并不自动说明根本原因。"
+        }
+      ]
+    },
+    {
+      "id": "a-08",
+      "title": "IT 英语：故障沟通与状态更新",
+      "band": "industry",
+      "theme": "IT 服务 · 事件响应沟通",
+      "goal": "用影响、现状、行动和下次更新时间组织故障消息。",
+      "minutes": 30,
+      "skills": [
+        "状态阅读",
+        "不确定性表达",
+        "听力定位",
+        "事件更新"
+      ],
+      "knowledge": [
+        "incident update 应说明影响范围、已知事实、正在执行的工作和下次更新。",
+        "investigating 表示调查中，resolved 表示已解决，不能随意混用。",
+        "避免在证据不足时承诺恢复时间，可先承诺下一次状态更新时间。"
+      ],
+      "vocabulary": [
+        {
+          "en": "incident",
+          "zh": "故障事件"
+        },
+        {
+          "en": "latency",
+          "zh": "延迟"
+        },
+        {
+          "en": "impact",
+          "zh": "影响"
+        },
+        {
+          "en": "investigate",
+          "zh": "调查"
+        },
+        {
+          "en": "mitigation",
+          "zh": "缓解措施"
+        },
+        {
+          "en": "restore",
+          "zh": "恢复"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What should we tell users while the cause is still unknown?",
+          "zh": "原因还不清楚时，应怎样告知用户？"
+        },
+        {
+          "en": "State the affected service and what the team is checking.",
+          "zh": "说明受影响服务以及团队正在检查什么。"
+        },
+        {
+          "en": "We will provide the next update at three, even if the investigation continues.",
+          "zh": "即使调查仍在继续，我们也会三点再次更新。"
+        }
+      ],
+      "reading": {
+        "en": "Users reported slow responses from an online booking service. The support team knew that requests were delayed but had not confirmed the cause. An initial draft blamed the database and promised recovery within ten minutes. The incident coordinator revised it. The update described the affected function, said that the team was investigating and gave a time for the next message. Internal notes kept technical hypotheses separate from confirmed facts. After a mitigation improved response times, the team continued monitoring before declaring the incident resolved. Clear communication helped users plan around the disruption without relying on an unsupported promise.",
+        "zh": "在线预约响应变慢，团队知道请求延迟但未确认原因。初稿把问题归咎数据库并承诺十分钟恢复，协调者改为说明受影响功能、调查状态和下次更新时间。内部笔记区分假设与事实。缓解后响应改善，团队继续监控再宣布解决。清楚沟通帮助用户安排工作，避免依赖无依据承诺。"
+      },
+      "writing": {
+        "prompt": "写一则 60–80 词的用户故障更新，包含影响、现状、行动与下一更新时间。",
+        "sample": "We are investigating delayed responses in the booking service. Some users may need longer to complete a request. The team is checking the affected components, and the cause has not yet been confirmed. We will publish another update at three this afternoon. Thank you for your patience.",
+        "checklist": [
+          "影响范围是否清楚",
+          "是否把原因假设写成事实",
+          "是否有具体下次更新时间"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "协调者为何修改初稿？",
+          "options": [
+            "原因与恢复承诺缺乏确认依据",
+            "用户不需要任何信息",
+            "所有技术假设都已证实",
+            "故障已经彻底解决"
+          ],
+          "answer": "原因与恢复承诺缺乏确认依据",
+          "explanation": "团队尚未确认原因，不能提前指认数据库并承诺十分钟恢复。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "The team is ___ the cause of the delay. （investigate 的进行式）",
+          "answer": "investigating",
+          "explanation": "is + 动词 -ing 表示正在调查，investigate 去 e 加 -ing。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：下一次状态更新时间是什么？",
+          "listen_text": "The investigation is continuing, and our next update will be published at three this afternoon.",
+          "options": [
+            "In ten minutes",
+            "Tomorrow morning",
+            "At three this afternoon",
+            "After one month"
+          ],
+          "answer": "At three this afternoon",
+          "explanation": "三点是更新承诺，不是恢复时间；两者不能混淆。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "mitigation in an incident means ___.",
+          "options": [
+            "a final explanation of every cause",
+            "an announcement that nothing happened",
+            "a replacement for monitoring",
+            "an action that reduces the impact"
+          ],
+          "answer": "an action that reduces the impact",
+          "explanation": "mitigation 是缓解影响的措施，不必然表示根因已消除。"
+        }
+      ]
+    },
+    {
+      "id": "a-09",
+      "title": "财务英语：解释预算与差异",
+      "band": "industry",
+      "theme": "财务沟通 · 预算报告",
+      "goal": "清楚比较预算与实际值，说明差异来源与待核实项。",
+      "minutes": 30,
+      "skills": [
+        "数字阅读",
+        "比较说明",
+        "听力细节",
+        "报告写作"
+      ],
+      "knowledge": [
+        "budget 是计划值，actual 是实际值，variance 是二者差异。",
+        "比较百分比前应明确基数、期间和币种。",
+        "报告可分事实、解释、待核查项，避免用数字本身证明原因。"
+      ],
+      "vocabulary": [
+        {
+          "en": "budget",
+          "zh": "预算"
+        },
+        {
+          "en": "actual",
+          "zh": "实际的"
+        },
+        {
+          "en": "variance",
+          "zh": "差异"
+        },
+        {
+          "en": "forecast",
+          "zh": "预测"
+        },
+        {
+          "en": "expense",
+          "zh": "费用"
+        },
+        {
+          "en": "reconcile",
+          "zh": "核对；对账"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Why are transport expenses above the budget?",
+          "zh": "交通费用为什么高于预算？"
+        },
+        {
+          "en": "Two deliveries were brought forward from next month.",
+          "zh": "两次交付从下月提前了。"
+        },
+        {
+          "en": "Please separate the timing difference from any lasting increase in cost.",
+          "zh": "请把时间差异与持续成本上升区分开。"
+        }
+      ],
+      "reading": {
+        "en": "A monthly report showed transport expenses above budget. The manager first assumed that prices had increased. During review, the finance team found that two deliveries scheduled for the following month had taken place early. A separate supplier charge still required confirmation. The revised note explained the timing difference and identified the amount awaiting reconciliation. It did not claim that every extra expense was temporary. The team also checked that the comparison used the same currency and reporting period. By separating actual figures, possible explanations and unresolved items, the report helped colleagues ask better questions about the next forecast.",
+        "zh": "月报交通费用超预算，经理初以为价格上涨。财务复核发现两次原定下月的交付提前，另有供应商收费待确认。修订说明区分时间差异与待对账金额，不把所有额外支出都称为暂时性，并核对币种和期间。事实、解释与未决项分开后，同事能更准确讨论下一预测。"
+      },
+      "writing": {
+        "prompt": "写一段 80 词左右的预算差异说明，分清已知原因与待核查金额。",
+        "sample": "Transport expenses exceeded this month's budget partly because two deliveries were completed earlier than planned. This is a timing difference rather than confirmed permanent cost growth. One supplier charge remains under review. The finance team will reconcile that amount and update the forecast using the same currency and reporting period.",
+        "checklist": [
+          "计划与实际是否区分",
+          "原因是否有依据",
+          "是否明确期间与待核查项"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "已确认的部分超支原因是什么？",
+          "options": [
+            "所有价格永久翻倍",
+            "两次交付提前发生",
+            "报告完全没有预算",
+            "所有供应商收费均无效"
+          ],
+          "answer": "两次交付提前发生",
+          "explanation": "两次交付从下月提前，产生期间差异；另一收费仍待确认。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "Actual expenses were higher ___ the budget.",
+          "answer": "than",
+          "explanation": "higher than 是比较级结构，比较实际费用与预算。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：比较前需要保持哪两项一致？",
+          "listen_text": "Before comparing the figures, confirm that they use the same currency and reporting period.",
+          "options": [
+            "Only the font",
+            "Only the supplier name",
+            "Only the meeting room",
+            "Currency and reporting period"
+          ],
+          "answer": "Currency and reporting period",
+          "explanation": "currency 与 reporting period 影响数字可比性，是明确的两项条件。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "variance in a budget report refers to ___.",
+          "options": [
+            "the difference between planned and actual figures",
+            "the name of a supplier",
+            "a guaranteed investment gain",
+            "a type of bank account"
+          ],
+          "answer": "the difference between planned and actual figures",
+          "explanation": "variance 是差异值，需要进一步解释其来源。"
+        }
+      ]
+    },
+    {
+      "id": "a-10",
+      "title": "国际会议：简明介绍与跟进",
+      "band": "international",
+      "theme": "国际交流 · 专业介绍",
+      "goal": "用问题、工作和价值介绍自己，并提出具体后续联系。",
+      "minutes": 25,
+      "skills": [
+        "自我介绍",
+        "开放提问",
+        "听力目的",
+        "跟进邮件"
+      ],
+      "knowledge": [
+        "专业介绍可按姓名角色—研究或工作问题—希望交流的内容组织。",
+        "开放问题常用 How、What，能引出比 yes/no 更丰富的信息。",
+        "跟进邮件应提及交流内容和明确下一步，避免泛泛说保持联系。"
+      ],
+      "vocabulary": [
+        {
+          "en": "conference",
+          "zh": "会议"
+        },
+        {
+          "en": "specialise",
+          "zh": "专门研究"
+        },
+        {
+          "en": "collaboration",
+          "zh": "合作"
+        },
+        {
+          "en": "follow-up",
+          "zh": "后续跟进"
+        },
+        {
+          "en": "relevant",
+          "zh": "相关的"
+        },
+        {
+          "en": "exchange",
+          "zh": "交流"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "I work on making public-service forms easier to understand.",
+          "zh": "我的工作是让公共服务表格更易理解。"
+        },
+        {
+          "en": "What kinds of users do you involve in testing?",
+          "zh": "你们邀请哪些用户参与测试？"
+        },
+        {
+          "en": "Could I send you our checklist and ask for your comments next week?",
+          "zh": "我能下周发给您检查清单并请您提意见吗？"
+        }
+      ],
+      "reading": {
+        "en": "At an international conference, a participant found it difficult to introduce her project in a noisy reception area. Her first explanation included every technical detail. She shortened it to the problem her team addressed, one example and a question for the listener. The conversation became easier because the other participant could connect the issue with his own work. Before leaving, they agreed that she would send a short checklist the following week. Her follow-up email referred to their discussion and asked for comments on two items. A specific next step turned a brief introduction into a useful professional exchange.",
+        "zh": "国际会议招待会上，一名参与者初次介绍包含过多技术细节。她改为说明解决的问题、一个例子和向听者提出的问题，对方更容易联系自身工作。离开前双方约定下周发送短清单。跟进邮件提及讨论，并请对两个项目反馈。具体下一步使短暂认识变为有价值交流。"
+      },
+      "writing": {
+        "prompt": "写一封 60–80 词的会议后跟进邮件，提及共同话题并提出一项具体请求。",
+        "sample": "It was a pleasure discussing accessible public-service forms with you at the conference. As agreed, I have attached our short checklist. Could you comment on the sections about instructions and error messages next week? Your experience with user testing would be especially helpful. Thank you for continuing the conversation.",
+        "checklist": [
+          "是否说明在哪里交流过",
+          "请求是否具体",
+          "是否给出合理时间"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "缩短介绍后，交流为何更容易？",
+          "options": [
+            "听者不再允许提问",
+            "技术细节变成唯一话题",
+            "对方能将问题联系自身工作",
+            "她不再说明任何项目内容"
+          ],
+          "answer": "对方能将问题联系自身工作",
+          "explanation": "文章明确说明 listener connected the issue with his own work。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "Our team specialises ___ user testing.",
+          "answer": "in",
+          "explanation": "固定搭配 specialise in 表示专门从事或研究某领域。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：发件人希望对方反馈哪方面？",
+          "listen_text": "Could you comment on the instructions and error messages in our checklist?",
+          "options": [
+            "Instructions and error messages",
+            "The conference menu",
+            "Travel reservations",
+            "Every technical detail"
+          ],
+          "answer": "Instructions and error messages",
+          "explanation": "comment on 后给出两个具体反馈对象。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "a useful follow-up email should ___.",
+          "options": [
+            "repeat only the sender's name",
+            "connect the earlier conversation with a specific next step",
+            "demand an immediate partnership",
+            "avoid all reference to the meeting"
+          ],
+          "answer": "connect the earlier conversation with a specific next step",
+          "explanation": "跟进需承接既有交流并说明可执行下一步。"
+        }
+      ]
+    },
+    {
+      "id": "a-11",
+      "title": "跨时区协作：明确时间与责任",
+      "band": "international",
+      "theme": "跨国工作 · 时间协调",
+      "goal": "准确写出时区、日期和异步协作规则。",
+      "minutes": 25,
+      "skills": [
+        "时间换算意识",
+        "协商安排",
+        "听力细节",
+        "协作说明"
+      ],
+      "knowledge": [
+        "跨时区约会要写日期、时间和时区，不能只写 tomorrow 或 at nine。",
+        "异步沟通应说明期望响应时间，区分紧急事项和普通更新。",
+        "Could we rotate…? 可协商轮换不方便时段，关注合作公平。"
+      ],
+      "vocabulary": [
+        {
+          "en": "time zone",
+          "zh": "时区"
+        },
+        {
+          "en": "asynchronous",
+          "zh": "异步的"
+        },
+        {
+          "en": "availability",
+          "zh": "可用时间"
+        },
+        {
+          "en": "rotate",
+          "zh": "轮换"
+        },
+        {
+          "en": "urgent",
+          "zh": "紧急的"
+        },
+        {
+          "en": "response window",
+          "zh": "响应时间范围"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Does nine o'clock mean your local time or mine?",
+          "zh": "九点是你的当地时间还是我的？"
+        },
+        {
+          "en": "Let's include the time zone in the invitation and check the converted time.",
+          "zh": "我们在邀请里注明时区，并核对转换后的时间。"
+        },
+        {
+          "en": "Could we rotate the early meeting so the inconvenience is shared?",
+          "zh": "我们能轮换早会时段，分担不便吗？"
+        }
+      ],
+      "reading": {
+        "en": "A team working across three countries repeatedly missed calls because invitations used local time without a time-zone label. Members also felt pressure to answer ordinary messages immediately. The coordinator introduced a shared calendar with explicit time zones and asked everyone to confirm the converted date as well as the hour. Routine updates moved to a shared document with an agreed response window. Urgent issues used a separate channel. The team rotated the least convenient meeting slot rather than assigning it permanently to one office. These small agreements reduced confusion and made collaboration more predictable for people with different daily schedules.",
+        "zh": "跨三国团队的邀请未标时区，多次错过电话，成员又觉得普通消息也需立即回复。协调者采用明确时区的共享日历，要求核对转换后的日期和时间；日常更新转入共享文档，约定响应窗口，紧急事项单独处理，并轮换最不方便的会议时段。规则减少混乱，让不同日程的人更可预期地合作。"
+      },
+      "writing": {
+        "prompt": "写一份 80 词左右的跨时区协作约定，包含邀请时间格式、普通响应窗口及紧急渠道。",
+        "sample": "All invitations must include the date, time and time zone. Members should confirm the converted local time before accepting. Routine updates belong in the shared document, with replies expected within one working day. Urgent issues use the agreed phone channel. We will rotate the least convenient meeting slot each month.",
+        "checklist": [
+          "是否标明日期与时区",
+          "是否区分紧急和普通信息",
+          "是否考虑不同成员的公平性"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "团队怎样分担不方便的会议时间？",
+          "options": [
+            "永久让同一办公室承担",
+            "取消所有沟通",
+            "要求所有人全天在线",
+            "轮换最不方便的会议时段"
+          ],
+          "answer": "轮换最不方便的会议时段",
+          "explanation": "rotated the least convenient meeting slot 明确表明轮换安排。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "Please include the date, time ___ time zone in the invitation.",
+          "answer": "and",
+          "explanation": "and 连接并列的 date、time 和 time zone。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：普通更新应在多久内回复？",
+          "listen_text": "Please respond to routine updates within one working day; urgent issues use the phone channel.",
+          "options": [
+            "Within one minute",
+            "Within one working day",
+            "Only after a month",
+            "Immediately at any hour"
+          ],
+          "answer": "Within one working day",
+          "explanation": "one working day 是普通更新的响应范围，电话用于紧急事项。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "asynchronous communication allows people to ___.",
+          "options": [
+            "avoid all deadlines",
+            "use only phone calls",
+            "respond at different times",
+            "ignore every shared document"
+          ],
+          "answer": "respond at different times",
+          "explanation": "asynchronous 指无需同时在线，但仍可约定响应时间。"
+        }
+      ]
+    },
+    {
+      "id": "a-12",
+      "title": "文化交流：用具体故事介绍中国",
+      "band": "international",
+      "theme": "跨文化表达 · 中国生活与文化",
+      "goal": "用个人例子介绍文化实践，避免把差异说成固定标签。",
+      "minutes": 25,
+      "skills": [
+        "文化说明",
+        "询问比较",
+        "听力理解",
+        "故事表达"
+      ],
+      "knowledge": [
+        "介绍文化时可用 In my family/community… 限定范围，避免 Everyone always… 的绝对化。",
+        "解释习俗可采用实践—意义—变化—提问的结构。",
+        "文化比较中询问对方经历，避免把交流变成单向知识讲解。"
+      ],
+      "vocabulary": [
+        {
+          "en": "custom",
+          "zh": "习俗"
+        },
+        {
+          "en": "reunion",
+          "zh": "团聚"
+        },
+        {
+          "en": "symbolise",
+          "zh": "象征"
+        },
+        {
+          "en": "hospitality",
+          "zh": "好客"
+        },
+        {
+          "en": "diverse",
+          "zh": "多样的"
+        },
+        {
+          "en": "adapt",
+          "zh": "调整；适应"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "How does your family celebrate the festival?",
+          "zh": "你的家人怎样庆祝这个节日？"
+        },
+        {
+          "en": "We prepare a meal together, but our traditions have changed as relatives moved away.",
+          "zh": "我们一起准备饭菜，但随着亲人搬远，传统也有所变化。"
+        },
+        {
+          "en": "What celebrations bring your family together?",
+          "zh": "你们家在什么庆祝活动中团聚？"
+        }
+      ],
+      "reading": {
+        "en": "At a language exchange, a learner was asked to describe a festival in China. Instead of claiming that every family celebrated in the same way, he explained what happened in his own home. Relatives prepared a meal together, younger family members helped older people connect to a video call, and someone told a story about earlier celebrations. He explained the importance of reunion while acknowledging that travel and work had changed the arrangements. Then he asked his partner about a meaningful family gathering. Specific stories made the discussion warmer and showed that cultural practices can share values while taking different forms.",
+        "zh": "语言交流中，学习者介绍中国节日，没有声称所有家庭都一样，而讲述自己家一起做饭、晚辈帮助长辈视频连线、家人回忆往昔的经历。他解释团聚意义，也承认出行和工作改变了安排，再请伙伴介绍有意义的家庭聚会。具体故事让交流亲切，并呈现文化实践可以共享价值、形式却多样。"
+      },
+      "writing": {
+        "prompt": "用 80–100 词介绍你家或社区的一项文化活动，说明意义、变化，并向读者提问。",
+        "sample": "In my family, a festival meal is a chance to reconnect. We prepare several dishes together and invite relatives who live far away to join a video call. The arrangement has changed, but sharing stories remains important. What event brings your family together, and how has it changed over time?",
+        "checklist": [
+          "是否用具体个人例子",
+          "是否避免绝对化文化标签",
+          "是否邀请对方分享经历"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "学习者如何避免把中国家庭一概而论？",
+          "options": [
+            "限定为自己家庭的经历并承认变化",
+            "声称人人做法完全相同",
+            "拒绝讨论任何习俗",
+            "只重复节日英文名称"
+          ],
+          "answer": "限定为自己家庭的经历并承认变化",
+          "explanation": "in his own home 和 acknowledging changes 限定陈述范围，呈现多样性。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "Our arrangements have ___ as relatives moved away. （change 的过去分词）",
+          "answer": "changed",
+          "explanation": "现在完成时 have + 过去分词，change 的过去分词是 changed。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：家人如何邀请远方亲属参与？",
+          "listen_text": "We invite relatives who live far away to join the celebration through a video call.",
+          "options": [
+            "By cancelling the meal",
+            "By sending a work report",
+            "Through a video call",
+            "By changing everyone's name"
+          ],
+          "answer": "Through a video call",
+          "explanation": "through a video call 表示参与方式，远方亲属是被邀请对象。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "diverse practices means practices that ___.",
+          "options": [
+            "never change",
+            "must be identical",
+            "belong to only one person",
+            "take a variety of forms"
+          ],
+          "answer": "take a variety of forms",
+          "explanation": "diverse 表示多样的，有共同价值也可能有不同形式。"
+        }
+      ]
+    }
+  ]
+}

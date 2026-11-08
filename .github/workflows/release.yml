@@ -150,6 +150,11 @@ jobs:
                 grep -Fq '"sentences":30000' /tmp/content-stats.json
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/api/content/vocabulary?q=analysis&limit=20" -o /tmp/content-words.json
                 grep -Fq '"translation"' /tmp/content-words.json
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/courses/senior" -o /tmp/courses.html
+                grep -Fq '全学段课程中心' /tmp/courses.html
+                curl -fsS "http://127.0.0.1:${{ matrix.port }}/api/curriculum" -o /tmp/curriculum.json
+                grep -Fq '"senior"' /tmp/curriculum.json
+                grep -Fq '"university"' /tmp/curriculum.json
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/runtime-style" -o /tmp/kids.css
                 grep -Fq '.kids-shell' /tmp/kids.css
                 curl -fsS "http://127.0.0.1:${{ matrix.port }}/kids/runtime-app" -o /tmp/kids.js

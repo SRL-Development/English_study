@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 
 const read = name => fs.readFileSync(name, 'utf8');
-const userFiles = ['english-learning.html', 'kids-hub.html', 'kindergarten.html', 'primary.html', 'kids-common.js', 'vocabulary-data.js'];
+const userFiles = ['english-learning.html', 'courses.html', 'kids-hub.html', 'kindergarten.html', 'primary.html', 'kids-common.js', 'vocabulary-data.js'];
 
 for (const file of userFiles) {
   const source = read(file);
@@ -93,5 +93,34 @@ for (const term of baseVocabulary) {
 }
 assert(read('kindergarten.html').includes('playFeaturedCartoon(this)'));
 assert(read('primary.html').includes('playCurrent(this)'));
+
+const curriculumUnits = new Set();
+for (const stage of ['kindergarten','primary','junior','senior','university','general']) {
+  const data = JSON.parse(read(`content/curriculum/${stage}.json`));
+  assert.equal(data.id, stage);
+  assert(data.units.length >= 12, `${stage} needs substantive course units`);
+  const bands = new Set(data.bands.map(band => String(band.id)));
+  for (const unit of data.units) {
+    assert(!curriculumUnits.has(unit.id), `duplicate unit: ${unit.id}`);
+    curriculumUnits.add(unit.id);
+    assert(bands.has(String(unit.band)), `${unit.id}: invalid grade`);
+    assert(unit.goal && unit.knowledge.length >= 3 && unit.vocabulary.length >= 5 && unit.dialogue.length >= 3, `${unit.id}: incomplete lesson`);
+    assert(unit.reading.en && unit.reading.zh && unit.writing.prompt && unit.writing.sample && unit.writing.checklist.length, `${unit.id}: missing reading or expression task`);
+    const questionIds = new Set();
+    assert(unit.questions.length >= 4, `${unit.id}: missing practice`);
+    for (const question of unit.questions) {
+      assert(!questionIds.has(question.id), `${unit.id}: duplicate question`);
+      questionIds.add(question.id);
+      const accepted = Array.isArray(question.answer) ? question.answer : [question.answer];
+      assert(accepted.length && accepted.every(answer => typeof answer === 'string' && answer.trim()), `${unit.id}: missing answer`);
+      assert(question.explanation && question.prompt, `${unit.id}: missing feedback`);
+      if (question.type === 'choice') {
+        assert.equal(new Set(question.options).size, question.options.length, `${unit.id}: duplicate choices`);
+        assert(accepted.every(answer => question.options.includes(answer)), `${unit.id}: answer absent from choices`);
+      }
+    }
+  }
+}
+assert.equal(curriculumUnits.size, 72);
 
 console.log('frontend checks passed');

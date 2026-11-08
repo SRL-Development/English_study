@@ -1,0 +1,1494 @@
+{
+  "id": "primary",
+  "title": "小学英语成长",
+  "subtitle": "主题探究 · 拼读阅读 · 游戏挑战",
+  "age": "6–12 岁",
+  "description": "按一至六年级组织的主题课程。一、二年级以听说体验和衔接为主，三至六年级逐步发展拼读、阅读、表达与学习策略；每单元配有原创短文、对话与反馈练习。",
+  "alignment": {
+    "label": "义务教育英语课程标准（2022 年版）主题与能力衔接",
+    "url": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/t20220420_619921.html",
+    "note": "围绕人与自我、人与社会、人与自然设计原创单元。年级为平台建议路径，不代表各地统一开课年级，不宣称与某版教材逐课同步。"
+  },
+  "bands": [
+    {
+      "id": "1",
+      "label": "1 年级"
+    },
+    {
+      "id": "2",
+      "label": "2 年级"
+    },
+    {
+      "id": "3",
+      "label": "3 年级"
+    },
+    {
+      "id": "4",
+      "label": "4 年级"
+    },
+    {
+      "id": "5",
+      "label": "5 年级"
+    },
+    {
+      "id": "6",
+      "label": "6 年级"
+    }
+  ],
+  "units": [
+    {
+      "id": "p-01",
+      "title": "我的名字与朋友",
+      "band": "1",
+      "theme": "人与自我",
+      "goal": "在见面场景中问候并介绍名字。",
+      "minutes": 10,
+      "skills": [
+        "听力理解",
+        "情境表达",
+        "拼读体验"
+      ],
+      "knowledge": [
+        "用 Hello/Good morning 进行日常问候。",
+        "用 My name is ... 介绍名字，留意句末停顿。",
+        "倾听别人的名字，轮流问答，不要求一、二年级大量抄写。"
+      ],
+      "vocabulary": [
+        {
+          "en": "hello",
+          "zh": "你好"
+        },
+        {
+          "en": "name",
+          "zh": "名字"
+        },
+        {
+          "en": "friend",
+          "zh": "朋友"
+        },
+        {
+          "en": "teacher",
+          "zh": "老师"
+        },
+        {
+          "en": "school",
+          "zh": "学校"
+        },
+        {
+          "en": "goodbye",
+          "zh": "再见"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Hello! My name is Lin.",
+          "zh": "你好！我叫林。"
+        },
+        {
+          "en": "Hi, Lin. I'm Ben.",
+          "zh": "你好，林。我是本。"
+        },
+        {
+          "en": "Nice to meet you, Ben.",
+          "zh": "很高兴认识你，本。"
+        }
+      ],
+      "reading": {
+        "en": "My name is Lin. I go to a new school. Ben is my friend. We say hello to our teacher.",
+        "zh": "我叫林。我去一所新学校。本是我的朋友。我们向老师问好。"
+      },
+      "writing": {
+        "prompt": "向玩偶或同伴做简短自我介绍；可口头完成。",
+        "sample": "Hello! My name is Lin. Nice to meet you.",
+        "checklist": [
+          "有问候语",
+          "说出名字",
+          "留出让对方回答的时间"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "别人说 Hello!，怎样回应最合适？",
+          "options": [
+            "Goodbye!",
+            "Hello!",
+            "Sleep!"
+          ],
+          "answer": "Hello!",
+          "explanation": "Hello 是问候；见面时可以用同样的问候回应。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "My ___ is Lin. 介绍名字应选择哪个词？",
+          "options": [
+            "name",
+            "school",
+            "friend"
+          ],
+          "answer": "name",
+          "explanation": "My name is ... 表示“我的名字是……”。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "短文里谁是 Lin 的朋友？",
+          "options": [
+            "The teacher",
+            "Mia",
+            "Ben"
+          ],
+          "answer": "Ben",
+          "explanation": "短文说 Ben is my friend，所以朋友是 Ben。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "听句子并选含义：Nice to meet you.",
+          "options": [
+            "请坐",
+            "很高兴认识你",
+            "请开门"
+          ],
+          "answer": "很高兴认识你",
+          "explanation": "初次认识对方时常用 Nice to meet you。",
+          "listen_text": "Nice to meet you."
+        }
+      ]
+    },
+    {
+      "id": "p-02",
+      "title": "教室里的颜色",
+      "band": "1",
+      "theme": "人与社会",
+      "goal": "听辨文具与颜色，用简单词组描述物品。",
+      "minutes": 10,
+      "skills": [
+        "听力理解",
+        "情境表达",
+        "拼读体验"
+      ],
+      "knowledge": [
+        "用 a red pen 感受“颜色＋名词”的顺序。",
+        "用 This is ... 指认近处物品。",
+        "听辨 pen /p/ 与 bag /b/ 的开头声音，先听后说。"
+      ],
+      "vocabulary": [
+        {
+          "en": "book",
+          "zh": "书"
+        },
+        {
+          "en": "pen",
+          "zh": "钢笔"
+        },
+        {
+          "en": "bag",
+          "zh": "书包"
+        },
+        {
+          "en": "desk",
+          "zh": "课桌"
+        },
+        {
+          "en": "red",
+          "zh": "红色"
+        },
+        {
+          "en": "blue",
+          "zh": "蓝色"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What's this?",
+          "zh": "这是什么？"
+        },
+        {
+          "en": "It's a blue bag.",
+          "zh": "它是一个蓝色书包。"
+        },
+        {
+          "en": "This is my red pen.",
+          "zh": "这是我的红色钢笔。"
+        }
+      ],
+      "reading": {
+        "en": "This is my classroom. My bag is blue. A red pen is on my desk. I put my book in the bag.",
+        "zh": "这是我的教室。我的书包是蓝色的。一支红色钢笔在我的课桌上。我把书放进书包。"
+      },
+      "writing": {
+        "prompt": "用指认和短句介绍自己的两件文具。",
+        "sample": "This is my bag. It is blue.",
+        "checklist": [
+          "指认一种文具",
+          "说出一种颜色",
+          "能听懂同伴的简单介绍"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "a blue bag 的意思是什么？",
+          "options": [
+            "红色书包",
+            "蓝色钢笔",
+            "蓝色书包"
+          ],
+          "answer": "蓝色书包",
+          "explanation": "Blue 是蓝色，bag 是书包；颜色放在名词前。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "___ is my pen. 指近处的钢笔应选什么？",
+          "options": [
+            "This",
+            "They",
+            "Those"
+          ],
+          "answer": "This",
+          "explanation": "This is ... 用来介绍近处的单个物品。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "短文中红色钢笔在哪里？",
+          "options": [
+            "In the bag",
+            "On the desk",
+            "Under the book"
+          ],
+          "answer": "On the desk",
+          "explanation": "短文说 A red pen is on my desk。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "听一听：pen 的开头音是什么？",
+          "options": [
+            "/m/",
+            "/s/",
+            "/p/"
+          ],
+          "answer": "/p/",
+          "explanation": "Pen 以 /p/ 开头；轻轻闭唇再送气。",
+          "listen_text": "Pen."
+        }
+      ]
+    },
+    {
+      "id": "p-03",
+      "title": "动物观察员",
+      "band": "2",
+      "theme": "人与自然",
+      "goal": "描述常见动物并表达喜欢。",
+      "minutes": 10,
+      "skills": [
+        "听力理解",
+        "情境表达",
+        "拼读体验"
+      ],
+      "knowledge": [
+        "用 It's a ... 命名动物，用 big/small 描述大小。",
+        "用 I like ... 表达喜好，尊重不同选择。",
+        "通过 cat、cap、map 感知短元音 /æ/，不逐字母读名称。"
+      ],
+      "vocabulary": [
+        {
+          "en": "rabbit",
+          "zh": "兔子"
+        },
+        {
+          "en": "panda",
+          "zh": "熊猫"
+        },
+        {
+          "en": "bird",
+          "zh": "鸟"
+        },
+        {
+          "en": "small",
+          "zh": "小的"
+        },
+        {
+          "en": "big",
+          "zh": "大的"
+        },
+        {
+          "en": "like",
+          "zh": "喜欢"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Look at the rabbit.",
+          "zh": "看那只兔子。"
+        },
+        {
+          "en": "It is small. I like it.",
+          "zh": "它很小。我喜欢它。"
+        },
+        {
+          "en": "I like the big panda.",
+          "zh": "我喜欢那只大熊猫。"
+        }
+      ],
+      "reading": {
+        "en": "We visit an animal park. A small rabbit eats leaves. A big panda rests under a tree. We watch quietly and do not feed the animals.",
+        "zh": "我们参观一个动物园。一只小兔子吃叶子。一只大熊猫在树下休息。我们安静观看，不给动物喂食。"
+      },
+      "writing": {
+        "prompt": "选择一种动物，口头说两句描述，并说一条爱护动物的做法。",
+        "sample": "It is a rabbit. It is small. I watch quietly.",
+        "checklist": [
+          "说出动物名",
+          "有一个描述词",
+          "知道不随意喂食"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "small rabbit 描述的是哪种动物？",
+          "options": [
+            "大熊猫",
+            "小兔子",
+            "小鸟"
+          ],
+          "answer": "小兔子",
+          "explanation": "Small 是小的，rabbit 是兔子。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "I ___ pandas. 表达喜欢应选哪个词？",
+          "options": [
+            "like",
+            "name",
+            "blue"
+          ],
+          "answer": "like",
+          "explanation": "I like ... 表示我喜欢……。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "短文里熊猫在做什么？",
+          "options": [
+            "Swimming",
+            "Flying",
+            "Resting"
+          ],
+          "answer": "Resting",
+          "explanation": "短文说 A big panda rests under a tree。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "哪个词和 cat 的中间声音相同？",
+          "options": [
+            "Bike",
+            "Map",
+            "Home"
+          ],
+          "answer": "Map",
+          "explanation": "Cat 与 map 的中间元音都发 /æ/。"
+        }
+      ]
+    },
+    {
+      "id": "p-04",
+      "title": "健康早餐",
+      "band": "2",
+      "theme": "人与自我",
+      "goal": "说出早餐食物，并礼貌提出需求。",
+      "minutes": 10,
+      "skills": [
+        "听力理解",
+        "情境表达",
+        "拼读体验"
+      ],
+      "knowledge": [
+        "用 I'd like ... 表达想要的食物，可从短语开始。",
+        "用 please 和 thank you 完成礼貌请求。",
+        "认识 egg 之前用 an，注意从声音感知 a/an。"
+      ],
+      "vocabulary": [
+        {
+          "en": "bread",
+          "zh": "面包"
+        },
+        {
+          "en": "milk",
+          "zh": "牛奶"
+        },
+        {
+          "en": "egg",
+          "zh": "鸡蛋"
+        },
+        {
+          "en": "water",
+          "zh": "水"
+        },
+        {
+          "en": "breakfast",
+          "zh": "早餐"
+        },
+        {
+          "en": "please",
+          "zh": "请"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What would you like?",
+          "zh": "你想要什么？"
+        },
+        {
+          "en": "I'd like an egg, please.",
+          "zh": "请给我一个鸡蛋。"
+        },
+        {
+          "en": "Here you are. Thank you.",
+          "zh": "给你。谢谢。"
+        }
+      ],
+      "reading": {
+        "en": "It is breakfast time. I have bread and an egg. My sister drinks milk. We wash our hands before we eat.",
+        "zh": "早餐时间到了。我吃面包和一个鸡蛋。我的姐姐喝牛奶。我们吃东西之前洗手。"
+      },
+      "writing": {
+        "prompt": "为玩偶安排早餐，口头提出一种需求并表示感谢。",
+        "sample": "I'd like bread and water, please. Thank you.",
+        "checklist": [
+          "说出食物名",
+          "礼貌请求",
+          "饭前洗手"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "___ egg 前面应选哪个词？",
+          "options": [
+            "A",
+            "The a",
+            "An"
+          ],
+          "answer": "An",
+          "explanation": "Egg 以元音音素开头，表示一个鸡蛋用 an egg。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "想礼貌要一杯水，哪句话合适？",
+          "options": [
+            "Water, please.",
+            "Go water!",
+            "No breakfast!"
+          ],
+          "answer": "Water, please.",
+          "explanation": "物品名加 please 可以构成礼貌请求。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "短文里谁喝牛奶？",
+          "options": [
+            "My brother",
+            "My sister",
+            "My teacher"
+          ],
+          "answer": "My sister",
+          "explanation": "短文说 My sister drinks milk。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "吃早餐前，短文中的孩子做了什么？",
+          "options": [
+            "Played outside",
+            "Went to sleep",
+            "Washed their hands"
+          ],
+          "answer": "Washed their hands",
+          "explanation": "They wash their hands before they eat，即饭前洗手。"
+        }
+      ]
+    },
+    {
+      "id": "p-05",
+      "title": "我的一周",
+      "band": "3",
+      "theme": "人与自我",
+      "goal": "介绍上学日的简单作息，理解一般现在时。",
+      "minutes": 15,
+      "skills": [
+        "听力理解",
+        "情境表达",
+        "阅读与写作"
+      ],
+      "knowledge": [
+        "用 I usually ... 描述经常发生的活动。",
+        "星期名称首字母大写；具体星期前用 on。",
+        "在 /iː/ 与 /ɪ/ 的听辨中感受 read 与 sit 的元音差异。"
+      ],
+      "vocabulary": [
+        {
+          "en": "Monday",
+          "zh": "星期一"
+        },
+        {
+          "en": "Tuesday",
+          "zh": "星期二"
+        },
+        {
+          "en": "morning",
+          "zh": "上午"
+        },
+        {
+          "en": "lesson",
+          "zh": "课"
+        },
+        {
+          "en": "read",
+          "zh": "阅读"
+        },
+        {
+          "en": "usually",
+          "zh": "通常"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What do you do on Monday?",
+          "zh": "你星期一做什么？"
+        },
+        {
+          "en": "I read in the morning.",
+          "zh": "我上午阅读。"
+        },
+        {
+          "en": "We have an art lesson, too.",
+          "zh": "我们还有一节美术课。"
+        }
+      ],
+      "reading": {
+        "en": "On Monday, I go to school with my friend. We read a short story in the morning. On Tuesday, we have an art lesson. I usually draw a picture after school.",
+        "zh": "星期一，我和朋友一起上学。我们上午读一个短故事。星期二，我们有一节美术课。我通常放学后画画。"
+      },
+      "writing": {
+        "prompt": "用三至四句介绍两个上学日的活动；也可录音完成。",
+        "sample": "On Monday, I read at school. On Tuesday, I have an art lesson. I usually draw after school.",
+        "checklist": [
+          "星期名称大写",
+          "on 后接星期",
+          "至少写出两个具体活动"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "We have music ___ Monday.",
+          "options": [
+            "in",
+            "on",
+            "at"
+          ],
+          "answer": "on",
+          "explanation": "具体星期前用 on：on Monday。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "哪一句表达日常习惯？",
+          "options": [
+            "I usually read after school.",
+            "I am a Monday.",
+            "I read yesterday tomorrow."
+          ],
+          "answer": "I usually read after school.",
+          "explanation": "Usually 表示通常，配合一般现在时表达习惯。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "短文中的美术课在什么时候？",
+          "options": [
+            "On Sunday",
+            "On Monday",
+            "On Tuesday"
+          ],
+          "answer": "On Tuesday",
+          "explanation": "短文明确说 On Tuesday, we have an art lesson。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "星期的正确书写是什么？",
+          "options": [
+            "monday",
+            "Monday",
+            "MONday"
+          ],
+          "answer": "Monday",
+          "explanation": "星期名称属于专有名词，首字母应大写。"
+        }
+      ]
+    },
+    {
+      "id": "p-06",
+      "title": "校园寻宝",
+      "band": "3",
+      "theme": "人与社会",
+      "goal": "询问和描述位置，阅读简单校园地图。",
+      "minutes": 15,
+      "skills": [
+        "听力理解",
+        "情境表达",
+        "阅读与写作"
+      ],
+      "knowledge": [
+        "用 Where is ...? 询问单个地点的位置。",
+        "区分 behind、next to、between 的空间关系。",
+        "用 It's ... 回答位置，注意句子中的 is。"
+      ],
+      "vocabulary": [
+        {
+          "en": "library",
+          "zh": "图书馆"
+        },
+        {
+          "en": "playground",
+          "zh": "操场"
+        },
+        {
+          "en": "between",
+          "zh": "在……之间"
+        },
+        {
+          "en": "behind",
+          "zh": "在……后面"
+        },
+        {
+          "en": "next to",
+          "zh": "紧挨着"
+        },
+        {
+          "en": "where",
+          "zh": "在哪里"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Where is the library?",
+          "zh": "图书馆在哪里？"
+        },
+        {
+          "en": "It's next to the playground.",
+          "zh": "它紧挨着操场。"
+        },
+        {
+          "en": "The small garden is behind it.",
+          "zh": "小花园在它后面。"
+        }
+      ],
+      "reading": {
+        "en": "Our school has a new library. It is next to the playground. A small garden is behind the library. We read there quietly before our next lesson.",
+        "zh": "我们学校有一座新图书馆。它紧挨着操场。一个小花园在图书馆后面。下一节课之前，我们在那里安静阅读。"
+      },
+      "writing": {
+        "prompt": "画一张虚构校园地图，用三句话介绍地点。",
+        "sample": "The library is next to the playground. A garden is behind the library. My classroom is near the gate.",
+        "checklist": [
+          "地点清楚",
+          "至少两个位置表达",
+          "用 is 连接地点和位置"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "Where ___ the library?",
+          "options": [
+            "are",
+            "do",
+            "is"
+          ],
+          "answer": "is",
+          "explanation": "Library 是单数，Where is ...? 用于询问单个地点。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "next to 的意思是什么？",
+          "options": [
+            "紧挨着",
+            "在很远处",
+            "在……里面"
+          ],
+          "answer": "紧挨着",
+          "explanation": "Next to 表示位置紧邻。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "短文里花园在哪座建筑后面？",
+          "options": [
+            "The classroom",
+            "The library",
+            "The gate"
+          ],
+          "answer": "The library",
+          "explanation": "短文说 A small garden is behind the library。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "两座楼中间的操场可以用哪个词描述？",
+          "options": [
+            "Under",
+            "Before",
+            "Between"
+          ],
+          "answer": "Between",
+          "explanation": "Between 表示在两个物体或地点之间。"
+        }
+      ]
+    },
+    {
+      "id": "p-07",
+      "title": "周末正在进行",
+      "band": "4",
+      "theme": "人与自我",
+      "goal": "描述正在发生的活动，理解现在进行时。",
+      "minutes": 15,
+      "skills": [
+        "听力理解",
+        "情境表达",
+        "阅读与写作"
+      ],
+      "knowledge": [
+        "现在进行时使用 am/is/are＋动词 -ing。",
+        "I 配 am，he/she 配 is，we/they 配 are。",
+        "用 What are you doing? 询问当前活动。"
+      ],
+      "vocabulary": [
+        {
+          "en": "reading",
+          "zh": "阅读中"
+        },
+        {
+          "en": "cooking",
+          "zh": "做饭中"
+        },
+        {
+          "en": "drawing",
+          "zh": "画画中"
+        },
+        {
+          "en": "garden",
+          "zh": "花园"
+        },
+        {
+          "en": "now",
+          "zh": "现在"
+        },
+        {
+          "en": "together",
+          "zh": "一起"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What are you doing now?",
+          "zh": "你现在在做什么？"
+        },
+        {
+          "en": "I'm drawing a bird.",
+          "zh": "我正在画一只鸟。"
+        },
+        {
+          "en": "My brother is reading beside me.",
+          "zh": "我的哥哥正在我旁边阅读。"
+        }
+      ],
+      "reading": {
+        "en": "It is Saturday morning. I am drawing in the garden. My brother is reading a book beside me. Our parents are cooking lunch, and we will eat together.",
+        "zh": "现在是星期六上午。我正在花园里画画。我的哥哥正在我旁边读书。父母正在做午饭，我们将一起吃。"
+      },
+      "writing": {
+        "prompt": "观察一张家庭活动图，用四句描述不同人物正在做什么。",
+        "sample": "I am drawing. My brother is reading. Mum and Dad are cooking. We are enjoying our weekend.",
+        "checklist": [
+          "am/is/are 与主语一致",
+          "动词使用 -ing",
+          "至少描述三个人或小组"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "She ___ reading now.",
+          "options": [
+            "are",
+            "is",
+            "am"
+          ],
+          "answer": "is",
+          "explanation": "She 是第三人称单数，现在进行时用 is reading。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "They are ___ lunch.",
+          "options": [
+            "cooking",
+            "cook",
+            "cooks"
+          ],
+          "answer": "cooking",
+          "explanation": "Are 后用动词 -ing，构成现在进行时。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "短文里哥哥正在做什么？",
+          "options": [
+            "Drawing",
+            "Cooking",
+            "Reading"
+          ],
+          "answer": "Reading",
+          "explanation": "短文说 My brother is reading a book。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "哪一句用于询问当前活动？",
+          "options": [
+            "What color is it?",
+            "What are you doing?",
+            "Where is your school?"
+          ],
+          "answer": "What are you doing?",
+          "explanation": "What are you doing? 表示你正在做什么。"
+        }
+      ]
+    },
+    {
+      "id": "p-08",
+      "title": "四季与计划",
+      "band": "4",
+      "theme": "人与自然",
+      "goal": "比较四季特点，用 be going to 表达计划。",
+      "minutes": 15,
+      "skills": [
+        "听力理解",
+        "情境表达",
+        "阅读与写作"
+      ],
+      "knowledge": [
+        "用 in spring/summer/autumn/winter 表达季节。",
+        "用 be going to＋动词原形说明打算做的事。",
+        "注意季节活动与当地天气、安全条件相联系。"
+      ],
+      "vocabulary": [
+        {
+          "en": "spring",
+          "zh": "春天"
+        },
+        {
+          "en": "summer",
+          "zh": "夏天"
+        },
+        {
+          "en": "autumn",
+          "zh": "秋天"
+        },
+        {
+          "en": "winter",
+          "zh": "冬天"
+        },
+        {
+          "en": "plant",
+          "zh": "种植"
+        },
+        {
+          "en": "plan",
+          "zh": "计划"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What are you going to do in spring?",
+          "zh": "你春天打算做什么？"
+        },
+        {
+          "en": "I'm going to plant flowers.",
+          "zh": "我打算种花。"
+        },
+        {
+          "en": "Let's make a plan together.",
+          "zh": "我们一起制订计划吧。"
+        }
+      ],
+      "reading": {
+        "en": "Spring is warm in our town. We are going to plant flowers in the school garden. In summer, we will water them early in the morning. We hope butterflies will visit the flowers.",
+        "zh": "我们小镇春天很暖和。我们打算在学校花园种花。夏天，我们将在清晨给花浇水。我们希望蝴蝶来花丛。"
+      },
+      "writing": {
+        "prompt": "选择一个季节，写一份含两项活动的计划。",
+        "sample": "In spring, I am going to plant flowers. I am going to water them with my friend.",
+        "checklist": [
+          "季节前使用 in",
+          "be going to 后用原形",
+          "计划具体且可行"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "We play outside ___ spring.",
+          "options": [
+            "at",
+            "on",
+            "in"
+          ],
+          "answer": "in",
+          "explanation": "季节前通常用 in。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "I am going to ___ flowers.",
+          "options": [
+            "plant",
+            "plants",
+            "planting"
+          ],
+          "answer": "plant",
+          "explanation": "Be going to 后接动词原形。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "短文里夏天什么时候浇水？",
+          "options": [
+            "At midnight",
+            "Early in the morning",
+            "At noon"
+          ],
+          "answer": "Early in the morning",
+          "explanation": "短文说 water them early in the morning。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "哪一个词表示秋天？",
+          "options": [
+            "Spring",
+            "Winter",
+            "Autumn"
+          ],
+          "answer": "Autumn",
+          "explanation": "Autumn 是秋天，spring 是春天，winter 是冬天。"
+        }
+      ]
+    },
+    {
+      "id": "p-09",
+      "title": "周末故事册",
+      "band": "5",
+      "theme": "人与自我",
+      "goal": "叙述已经发生的活动，区分现在与过去。",
+      "minutes": 15,
+      "skills": [
+        "听力理解",
+        "情境表达",
+        "阅读与写作"
+      ],
+      "knowledge": [
+        "用 yesterday、last weekend 识别过去时间。",
+        "规则动词过去式通常加 -ed，注意 visited 的音节。",
+        "不规则动词 go 的过去式为 went，不能写 goed。"
+      ],
+      "vocabulary": [
+        {
+          "en": "visited",
+          "zh": "参观过"
+        },
+        {
+          "en": "walked",
+          "zh": "步行过"
+        },
+        {
+          "en": "museum",
+          "zh": "博物馆"
+        },
+        {
+          "en": "yesterday",
+          "zh": "昨天"
+        },
+        {
+          "en": "last",
+          "zh": "上一个"
+        },
+        {
+          "en": "learned",
+          "zh": "学到过"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What did you do last weekend?",
+          "zh": "你上周末做了什么？"
+        },
+        {
+          "en": "I visited a science museum.",
+          "zh": "我参观了科学博物馆。"
+        },
+        {
+          "en": "I went there with my cousin.",
+          "zh": "我和表亲一起去的。"
+        }
+      ],
+      "reading": {
+        "en": "Last weekend, I visited a science museum with my cousin. We walked through a room about space. A guide showed us a model of the Moon. I learned that asking questions can make a visit more interesting.",
+        "zh": "上周末，我和表亲参观了科学博物馆。我们走过一个介绍太空的展厅。一位讲解员给我们看了一个月球模型。我明白了提问能让参观更有趣。"
+      },
+      "writing": {
+        "prompt": "写四至五句周末记录，说明时间、人物、活动与感受。",
+        "sample": "Last Sunday, I went to a museum with my friend. We saw old tools. A guide told us a story. I learned something new and felt happy.",
+        "checklist": [
+          "过去时间明确",
+          "使用过去式",
+          "有一项收获或感受"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "I ___ to the park yesterday.",
+          "options": [
+            "go",
+            "went",
+            "going"
+          ],
+          "answer": "went",
+          "explanation": "Yesterday 提示过去，go 的过去式是 went。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "Visit 的规则过去式是什么？",
+          "options": [
+            "visited",
+            "visitied",
+            "visitting"
+          ],
+          "answer": "visited",
+          "explanation": "Visit 直接加 -ed，得到 visited。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "短文里讲解员展示了什么？",
+          "options": [
+            "A train ticket",
+            "A toy car",
+            "A model of the Moon"
+          ],
+          "answer": "A model of the Moon",
+          "explanation": "短文说 A guide showed us a model of the Moon。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "哪一句问过去的活动？",
+          "options": [
+            "What are you doing now?",
+            "What did you do last weekend?",
+            "What will you do tomorrow?"
+          ],
+          "answer": "What did you do last weekend?",
+          "explanation": "Did 与 last weekend 一起提示一般过去时。"
+        }
+      ]
+    },
+    {
+      "id": "p-10",
+      "title": "城市绿色出行",
+      "band": "5",
+      "theme": "人与社会",
+      "goal": "比较交通方式，并给出简单理由。",
+      "minutes": 15,
+      "skills": [
+        "听力理解",
+        "情境表达",
+        "阅读与写作"
+      ],
+      "knowledge": [
+        "比较两者时可用形容词比较级，如 faster、safer。",
+        "用 because 说明选择背后的原因。",
+        "步行、骑行等出行方式需结合距离、天气与交通规则。"
+      ],
+      "vocabulary": [
+        {
+          "en": "bus",
+          "zh": "公共汽车"
+        },
+        {
+          "en": "bicycle",
+          "zh": "自行车"
+        },
+        {
+          "en": "station",
+          "zh": "车站"
+        },
+        {
+          "en": "safer",
+          "zh": "更安全的"
+        },
+        {
+          "en": "faster",
+          "zh": "更快的"
+        },
+        {
+          "en": "because",
+          "zh": "因为"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "How shall we go to the library?",
+          "zh": "我们怎样去图书馆？"
+        },
+        {
+          "en": "Let's take the bus. It is faster.",
+          "zh": "我们乘公共汽车吧。这样更快。"
+        },
+        {
+          "en": "Good idea. We can walk from the station.",
+          "zh": "好主意。我们可以从车站步行过去。"
+        }
+      ],
+      "reading": {
+        "en": "The city library is far from our school. We take a bus because it is faster than walking. From the station, we walk along a quiet street. We wait for the green light before crossing the road.",
+        "zh": "市图书馆离学校很远。我们乘公共汽车，因为它比步行更快。下车后，我们沿着安静的街道走。过马路前，我们等绿灯。"
+      },
+      "writing": {
+        "prompt": "为一次虚构的出行选择交通方式，写出理由和一条安全提示。",
+        "sample": "We can take the bus because it is faster than walking. We should wait for the green light.",
+        "checklist": [
+          "写出交通方式",
+          "用 because 说明原因",
+          "有具体安全提醒"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "A bus is ___ than walking over a long distance.",
+          "options": [
+            "fast",
+            "fastest",
+            "faster"
+          ],
+          "answer": "faster",
+          "explanation": "Than 提示比较两者，使用比较级 faster。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "___ 引导“因为”的理由。",
+          "options": [
+            "Because",
+            "Before",
+            "Where"
+          ],
+          "answer": "Because",
+          "explanation": "Because 引导原因，回答为什么选择这种方式。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "孩子们为什么乘公共汽车？",
+          "options": [
+            "It is red.",
+            "It is faster than walking.",
+            "It has no windows."
+          ],
+          "answer": "It is faster than walking.",
+          "explanation": "短文用 because 说明乘车比步行更快。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "过马路之前应做什么？",
+          "options": [
+            "Run across at once",
+            "Ignore the light",
+            "Wait for the green light"
+          ],
+          "answer": "Wait for the green light",
+          "explanation": "短文强调等绿灯后再过马路。"
+        }
+      ]
+    },
+    {
+      "id": "p-11",
+      "title": "守护河流小队",
+      "band": "6",
+      "theme": "人与自然",
+      "goal": "理解环保短文，使用 should/mustn't 提建议。",
+      "minutes": 15,
+      "skills": [
+        "听力理解",
+        "情境表达",
+        "阅读与写作"
+      ],
+      "knowledge": [
+        "Should＋动词原形表示建议；mustn't 表示禁止。",
+        "用标题和关键词预测环保短文内容。",
+        "区分描述现状、提出行动和说明结果三种信息。"
+      ],
+      "vocabulary": [
+        {
+          "en": "river",
+          "zh": "河流"
+        },
+        {
+          "en": "rubbish",
+          "zh": "垃圾"
+        },
+        {
+          "en": "protect",
+          "zh": "保护"
+        },
+        {
+          "en": "clean",
+          "zh": "清洁的"
+        },
+        {
+          "en": "should",
+          "zh": "应该"
+        },
+        {
+          "en": "mustn't",
+          "zh": "禁止"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What should we do for the river?",
+          "zh": "我们应该为河流做些什么？"
+        },
+        {
+          "en": "We should keep rubbish out of it.",
+          "zh": "我们应该防止垃圾进入河流。"
+        },
+        {
+          "en": "We mustn't go into deep water.",
+          "zh": "我们不能进入深水。"
+        }
+      ],
+      "reading": {
+        "en": "Our class starts a river-care team. We collect litter on the path with our teacher, but we do not enter the water. We put up signs to remind people to protect the river. Small actions can help keep our town clean.",
+        "zh": "我们班成立了一支护河小队。我们和老师在小路上捡垃圾，但不进入水中。我们立起标牌，提醒大家保护河流。小小的行动能帮助保持小镇整洁。"
+      },
+      "writing": {
+        "prompt": "写一张护河倡议卡，给出两条建议和一条安全规则。",
+        "sample": "We should put rubbish in bins. We should tell others to protect the river. We mustn't enter deep water.",
+        "checklist": [
+          "至少两个 should 建议",
+          "一个 mustn't 禁止事项",
+          "行动适龄且安全"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "We should ___ the river.",
+          "options": [
+            "protects",
+            "protect",
+            "protecting"
+          ],
+          "answer": "protect",
+          "explanation": "情态动词 should 后接动词原形。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "mustn't 的意思是什么？",
+          "options": [
+            "禁止；不可以",
+            "也许",
+            "应该"
+          ],
+          "answer": "禁止；不可以",
+          "explanation": "Mustn't 表示不允许发生的行为。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "短文中学生在哪里捡垃圾？",
+          "options": [
+            "In deep water",
+            "On a boat",
+            "On the path"
+          ],
+          "answer": "On the path",
+          "explanation": "短文说 collect litter on the path，且明确不下水。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "护河活动中最安全的做法是什么？",
+          "options": [
+            "独自下水捞垃圾",
+            "在老师带领下清理岸边小路",
+            "夜间自己去河边"
+          ],
+          "answer": "在老师带领下清理岸边小路",
+          "explanation": "环境行动也要遵守安全规则，与成人同行、不进入危险水域。"
+        }
+      ]
+    },
+    {
+      "id": "p-12",
+      "title": "讲好家乡故事",
+      "band": "6",
+      "theme": "人与社会",
+      "goal": "综合使用时态与连接词，向来访者介绍家乡。",
+      "minutes": 15,
+      "skills": [
+        "听力理解",
+        "情境表达",
+        "阅读与写作"
+      ],
+      "knowledge": [
+        "介绍地点时用一般现在时，叙述一次经历时用过去时。",
+        "用 first、then、finally 按顺序组织介绍。",
+        "向不了解本地文化的人解释节日活动，避免只列名称。"
+      ],
+      "vocabulary": [
+        {
+          "en": "hometown",
+          "zh": "家乡"
+        },
+        {
+          "en": "traditional",
+          "zh": "传统的"
+        },
+        {
+          "en": "festival",
+          "zh": "节日"
+        },
+        {
+          "en": "visitor",
+          "zh": "游客"
+        },
+        {
+          "en": "introduce",
+          "zh": "介绍"
+        },
+        {
+          "en": "however",
+          "zh": "然而"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What is special about your hometown?",
+          "zh": "你的家乡有什么特别之处？"
+        },
+        {
+          "en": "We have a lantern fair every spring.",
+          "zh": "我们每年春天有灯会。"
+        },
+        {
+          "en": "Let me show you how people make lanterns.",
+          "zh": "让我给你看看人们怎样做灯笼。"
+        }
+      ],
+      "reading": {
+        "en": "My hometown has a small lantern fair every spring. Last year, I made a paper lantern with my grandfather. Visitors watched local artists and tasted warm rice cakes. I want to introduce the fair to new friends because it brings people together.",
+        "zh": "我的家乡每年春天都有一个小灯会。去年，我和爷爷做了一个纸灯笼。游客观看当地艺人表演，并品尝热乎的米糕。我想向新朋友介绍灯会，因为它让人们欢聚一堂。"
+      },
+      "writing": {
+        "prompt": "写五至六句家乡介绍，包含一个活动、一次经历和欢迎语。",
+        "sample": "Welcome to my hometown. We have a lantern fair in spring. Last year, I made a lantern with my family. Visitors can watch artists and try local food. I hope you will enjoy it.",
+        "checklist": [
+          "有地点或活动特色",
+          "一般现在时与过去时区分清楚",
+          "有面向来访者的解释和欢迎"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "Last year, I ___ a lantern.",
+          "options": [
+            "make",
+            "made",
+            "making"
+          ],
+          "answer": "made",
+          "explanation": "Last year 是过去时间，make 的过去式是 made。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "Our town ___ a fair every spring.",
+          "options": [
+            "has",
+            "have",
+            "having"
+          ],
+          "answer": "has",
+          "explanation": "Our town 是单数，习惯性活动用一般现在时 has。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "作者为什么想介绍灯会？",
+          "options": [
+            "It is very far away.",
+            "It has no visitors.",
+            "It brings people together."
+          ],
+          "answer": "It brings people together.",
+          "explanation": "短文最后用 because 解释：灯会让大家欢聚。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "介绍活动顺序时，哪组词最合适？",
+          "options": [
+            "Red, blue, green",
+            "First, then, finally",
+            "Yesterday, apple, train"
+          ],
+          "answer": "First, then, finally",
+          "explanation": "First、then、finally 能清楚组织活动的先后顺序。"
+        }
+      ]
+    }
+  ]
+}

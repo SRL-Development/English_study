@@ -1,0 +1,1480 @@
+{
+  "id": "senior",
+  "title": "高中英语",
+  "subtitle": "主题探究 · 高考能力 · 综合表达",
+  "age": "15–18 岁",
+  "description": "围绕人与自我、人与社会、人与自然组织原创学习单元，衔接必修与选择性必修阶段的阅读、语法、听说和写作能力。",
+  "alignment": {
+    "label": "高中英语课程主题与必修／选择性必修能力框架",
+    "url": "https://www.ictr.edu.cn/download_center/put.html",
+    "note": "依照国内高中英语主题和能力进阶设计原创内容；年级分配为平台建议，不等同于特定教材版本或高考官方题库。"
+  },
+  "bands": [
+    {
+      "id": "10",
+      "label": "高一 · 必修基础"
+    },
+    {
+      "id": "11",
+      "label": "高二 · 选择性必修进阶"
+    },
+    {
+      "id": "12",
+      "label": "高三 · 综合应用"
+    }
+  ],
+  "units": [
+    {
+      "id": "s-01",
+      "title": "从被动学习到自主计划",
+      "band": "10",
+      "theme": "人与自我 · 学习与成长",
+      "goal": "从个人经历中提取问题、行动与结果，用具体行动描述学习计划。",
+      "minutes": 25,
+      "skills": [
+        "阅读主旨",
+        "计划表达",
+        "听力细节",
+        "段落写作"
+      ],
+      "knowledge": [
+        "一般现在时描述习惯；现在进行时描述目前正在发生的改变。",
+        "用 because 说明原因，用 so 说明结果，避免只有目标没有行动。",
+        "阅读个人经历时用 problem—action—result 梳理信息。"
+      ],
+      "vocabulary": [
+        {
+          "en": "routine",
+          "zh": "日常安排"
+        },
+        {
+          "en": "priority",
+          "zh": "优先事项"
+        },
+        {
+          "en": "distraction",
+          "zh": "干扰"
+        },
+        {
+          "en": "consistent",
+          "zh": "持续一致的"
+        },
+        {
+          "en": "reflect",
+          "zh": "反思"
+        },
+        {
+          "en": "progress",
+          "zh": "进步"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What makes your study plan difficult to follow?",
+          "zh": "是什么让你的学习计划难以坚持？"
+        },
+        {
+          "en": "I set too many goals and leave no time to rest.",
+          "zh": "我设定了太多目标，没有留休息时间。"
+        },
+        {
+          "en": "Try one priority each day and review your progress on Friday.",
+          "zh": "试试每天只设一个重点，周五回顾进展。"
+        }
+      ],
+      "reading": {
+        "en": "At the beginning of senior high school, Lin filled every evening with tasks. Her timetable looked impressive, but she rarely completed it. When a teacher asked her to keep a learning diary, she noticed that she spent twenty minutes choosing what to do before starting. She also checked messages whenever a question became difficult. Lin replaced her long list with one main task and two small ones. She left her phone outside the room and added a short break after each study period. After two weeks, her marks had not changed dramatically, but she could explain what she had learned. She decided that a useful plan should guide action rather than simply look ambitious.",
+        "zh": "高中开始时，林把每晚都排满任务，计划表看上去很出色，却很少完成。在老师建议下，她记录学习日志，发现开始前常花二十分钟选择任务，遇到难题又会查看消息。她改为每天一个主要任务、两个小任务，把手机放在房间外，并安排短暂休息。两周后分数没有剧变，但她能说明自己学会了什么。她认识到，有用的计划应当指导行动，而不只是显得目标宏大。"
+      },
+      "writing": {
+        "prompt": "用 80–100 词描述你的一项学习困难及一周行动计划，包含具体时间和检查方法。",
+        "sample": "I often begin homework without deciding what matters most. This week, I will choose one priority before dinner and work on it for twenty-five minutes. I will keep my phone in another room. On Friday, I will review my notes and explain one new idea to a classmate.",
+        "checklist": [
+          "困难是否具体",
+          "是否有可执行的时间安排",
+          "是否说明如何检查进步"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "林认为一个有用计划最重要的作用是什么？",
+          "options": [
+            "让时间表看起来充实",
+            "指导实际行动",
+            "马上大幅提高分数",
+            "取消所有休息"
+          ],
+          "answer": "指导实际行动",
+          "explanation": "结尾强调 guide action；成绩并未立刻大幅变化，行动的可执行性才是重点。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "She usually studies alone, but this week she ___ working with a partner.",
+          "answer": "is",
+          "explanation": "this week 表示目前一段时间的改变；主语 she 用 is working。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：说话人何时回顾进步？",
+          "listen_text": "I choose one priority every morning and review my progress on Friday.",
+          "options": [
+            "Every morning",
+            "On Monday",
+            "On Friday",
+            "After dinner"
+          ],
+          "answer": "On Friday",
+          "explanation": "choose 的时间是 every morning，review 的时间才是 on Friday；注意区分两个动作。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "在学习计划中，priority 最接近哪一项？",
+          "options": [
+            "A frequent interruption",
+            "An optional decoration",
+            "A past mistake",
+            "The most important task"
+          ],
+          "answer": "The most important task",
+          "explanation": "priority 指应优先处理的重要事项，与 distraction（干扰）不同。"
+        }
+      ]
+    },
+    {
+      "id": "s-02",
+      "title": "健康建议要有依据",
+      "band": "10",
+      "theme": "人与自我 · 健康生活",
+      "goal": "比较健康建议与个人经验，准确使用情态动词表达建议。",
+      "minutes": 25,
+      "skills": [
+        "信息比较",
+        "建议表达",
+        "听力定位",
+        "短文写作"
+      ],
+      "knowledge": [
+        "should 表示建议，must 通常表示较强义务，不能随意互换。",
+        "区分个人经历与可推广的证据，留意文章中的限制条件。",
+        "用 rather than 比较选择，用 enough 表示足够的程度。"
+      ],
+      "vocabulary": [
+        {
+          "en": "balanced",
+          "zh": "均衡的"
+        },
+        {
+          "en": "habit",
+          "zh": "习惯"
+        },
+        {
+          "en": "evidence",
+          "zh": "证据"
+        },
+        {
+          "en": "recover",
+          "zh": "恢复"
+        },
+        {
+          "en": "gradually",
+          "zh": "逐渐地"
+        },
+        {
+          "en": "reliable",
+          "zh": "可靠的"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Should I change every part of my routine at once?",
+          "zh": "我应该一下改变所有日常习惯吗？"
+        },
+        {
+          "en": "A small change may be easier to maintain.",
+          "zh": "小的改变可能更容易保持。"
+        },
+        {
+          "en": "I will start by going to bed at a regular time.",
+          "zh": "我会先从固定时间睡觉开始。"
+        }
+      ],
+      "reading": {
+        "en": "A school magazine invited students to share healthy habits. Some suggested difficult challenges, such as running a long distance every morning. Others described smaller changes. Mei began putting a bottle of water on her desk, while Jun stopped doing homework in bed. The editor noticed that the most dramatic stories attracted attention, but they did not always include useful evidence. She asked contributors to explain how long they had followed a habit and what problems they had met. The final article encouraged readers to choose realistic changes and seek qualified advice when necessary. It also reminded them that feeling energetic for one day does not prove that a new routine works for everyone. Healthy choices require patience, observation and reliable information.",
+        "zh": "校刊邀请学生分享健康习惯。有人提出每天长跑等高强度挑战，也有人分享桌上放水杯、不在床上写作业等小改变。编辑发现，最引人注目的故事未必有充分证据，因此请投稿者说明坚持时长和遇到的问题。最终文章鼓励读者选择现实可行的改变，必要时寻求专业意见，并提醒大家：某天精神好，不代表一种安排适合所有人。健康选择需要耐心、观察和可靠信息。"
+      },
+      "writing": {
+        "prompt": "给校刊写一段建议，提出两项可持续的生活习惯，并说明为什么不宜仅凭网络个案判断效果。",
+        "sample": "Students should choose changes that fit their daily lives. A regular bedtime and a short outdoor break may be easier to maintain than an extreme challenge. A popular story is only one person's experience, so we should check the source and seek qualified advice when needed.",
+        "checklist": [
+          "建议是否具体且温和",
+          "是否使用合适的情态动词",
+          "是否区分个案与证据"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "编辑为什么要求投稿者补充坚持时长和问题？",
+          "options": [
+            "为了让故事更夸张",
+            "为了替代所有专业建议",
+            "为了评估经验是否有充分依据",
+            "为了只保留长跑故事"
+          ],
+          "answer": "为了评估经验是否有充分依据",
+          "explanation": "补充持续时间和困难能够提供背景，帮助判断经验的可信度。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "You ___ choose a routine you can maintain. （填表示建议的情态动词）",
+          "answer": "should",
+          "explanation": "这里是建议而非强制要求，用 should；后接动词原形 choose。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：这位学生首先准备改变什么？",
+          "listen_text": "I will start with a regular bedtime rather than a difficult exercise challenge.",
+          "options": [
+            "The time of going to bed",
+            "The school magazine",
+            "Every meal",
+            "The length of homework"
+          ],
+          "answer": "The time of going to bed",
+          "explanation": "regular bedtime 是首要改变，rather than 后是未选择的做法。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "reliable information 指什么？",
+          "options": [
+            "Information with bright pictures",
+            "Information that can be trusted",
+            "Information shared most often",
+            "Information without a source"
+          ],
+          "answer": "Information that can be trusted",
+          "explanation": "reliable 表示可靠、值得信任；传播量与可靠性不是一回事。"
+        }
+      ]
+    },
+    {
+      "id": "s-03",
+      "title": "社区里的真实需求",
+      "band": "10",
+      "theme": "人与社会 · 志愿服务",
+      "goal": "阅读志愿活动报道，运用过去时叙述调查与调整。",
+      "minutes": 25,
+      "skills": [
+        "事件顺序",
+        "需求沟通",
+        "听力细节",
+        "报道写作"
+      ],
+      "knowledge": [
+        "一般过去时用于已完成事件，规则动词通常加 -ed。",
+        "用 before、after、instead 描述活动调整的逻辑。",
+        "报道先交代对象与需求，再写行动和结果，避免只有感想。"
+      ],
+      "vocabulary": [
+        {
+          "en": "volunteer",
+          "zh": "志愿者"
+        },
+        {
+          "en": "community",
+          "zh": "社区"
+        },
+        {
+          "en": "survey",
+          "zh": "调查"
+        },
+        {
+          "en": "accessible",
+          "zh": "易于使用的"
+        },
+        {
+          "en": "request",
+          "zh": "请求"
+        },
+        {
+          "en": "practical",
+          "zh": "实用的"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What did the residents ask for?",
+          "zh": "居民提出了什么需求？"
+        },
+        {
+          "en": "They wanted clear instructions, not another large event.",
+          "zh": "他们想要清楚的说明，而不是又一场大型活动。"
+        },
+        {
+          "en": "Then we can design a simple guide together.",
+          "zh": "那么我们可以一起设计一份简明指南。"
+        }
+      ],
+      "reading": {
+        "en": "A group of students planned a technology workshop for older residents. At first, they prepared a presentation about the newest phone features. Before the event, they visited the community centre and asked residents what they actually needed. Most wanted to make video calls and change the size of text on their screens. Several said that they forgot instructions when too many steps appeared at once. The students changed their plan. They worked in pairs with residents and made cards showing one action on each page. After the workshop, a resident used a video call to show her grandson the garden. The volunteers learned that meaningful service begins with listening to people rather than deciding what should impress them.",
+        "zh": "学生志愿者原计划为年长居民介绍手机的新功能。活动前调查发现，大家更需要视频通话和调整字体大小的帮助，多步骤说明容易让人忘记。学生因此改变计划，两人一组陪伴居民操作，并制作每页只展示一个动作的提示卡。活动后，一位居民通过视频向孙子展示花园。志愿者由此理解，服务应从倾听实际需求开始。"
+      },
+      "writing": {
+        "prompt": "用 80–100 词报道一次志愿活动，写清原计划、调查所得和实际改进。",
+        "sample": "Our team first planned a long presentation. After speaking with residents, we discovered that they needed help with two everyday phone tasks. We replaced the presentation with short demonstrations and simple cards. The change made the workshop more useful and taught us to listen before offering solutions.",
+        "checklist": [
+          "是否交代服务对象",
+          "是否写出调查导致的改变",
+          "过去时是否一致"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "学生改变活动计划的主要原因是什么？",
+          "options": [
+            "社区没有场地",
+            "居民不喜欢学生",
+            "最新手机无法使用",
+            "居民的实际需求与原计划不同"
+          ],
+          "answer": "居民的实际需求与原计划不同",
+          "explanation": "调查发现居民需要基本操作帮助，原来的新功能介绍没有对准需求。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "The students ___ their plan after the survey. （change 的过去式）",
+          "answer": "changed",
+          "explanation": "after the survey 指已经发生的事件，change 的规则过去式为 changed。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：每张提示卡包含多少个动作？",
+          "listen_text": "We put one action on each card so that residents could follow the instructions easily.",
+          "options": [
+            "Three actions",
+            "One action",
+            "Five actions",
+            "No actions"
+          ],
+          "answer": "One action",
+          "explanation": "关键词 one action on each card，设计目的在于降低操作负担。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "Which choice best illustrates a practical guide?",
+          "options": [
+            "A list of unrelated facts",
+            "A speech without examples",
+            "Clear steps for a real task",
+            "A page of advertisements"
+          ],
+          "answer": "Clear steps for a real task",
+          "explanation": "practical 强调能解决真实任务，clear steps 与语境最一致。"
+        }
+      ]
+    },
+    {
+      "id": "s-04",
+      "title": "校园减塑的证据链",
+      "band": "10",
+      "theme": "人与自然 · 环境保护",
+      "goal": "用数据判断环保措施效果，练习比较级与结果表达。",
+      "minutes": 25,
+      "skills": [
+        "数据阅读",
+        "比较表达",
+        "听力信息",
+        "建议写作"
+      ],
+      "knowledge": [
+        "比较级后常接 than；more 与形容词原级搭配。",
+        "减少量应当与同一时间范围和对象比较，避免误读数字。",
+        "使用 result 与 limitation 区分实际结果和仍待解决的问题。"
+      ],
+      "vocabulary": [
+        {
+          "en": "reduce",
+          "zh": "减少"
+        },
+        {
+          "en": "reusable",
+          "zh": "可重复使用的"
+        },
+        {
+          "en": "waste",
+          "zh": "废弃物"
+        },
+        {
+          "en": "measure",
+          "zh": "测量"
+        },
+        {
+          "en": "comparison",
+          "zh": "比较"
+        },
+        {
+          "en": "impact",
+          "zh": "影响"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Did the campaign reduce waste?",
+          "zh": "这项活动减少废弃物了吗？"
+        },
+        {
+          "en": "The bins contained fewer cups, but we need a fair comparison.",
+          "zh": "垃圾桶里杯子更少了，但需要公平比较。"
+        },
+        {
+          "en": "Let's record the number of students eating here as well.",
+          "zh": "我们也记录在这里就餐的学生人数吧。"
+        }
+      ],
+      "reading": {
+        "en": "The environmental club placed a refill station near the sports ground and encouraged students to bring reusable bottles. In the first week, members counted fewer disposable cups in nearby bins. They were ready to announce a complete success when one student asked about the weather. Heavy rain had cancelled several sports activities, so fewer people had visited the area. The club decided to compare similar days and count visitors as well as cups. A month later, cups per visitor had fallen, although some students still found the station inconvenient. The club moved a sign and suggested a second location. The project showed that environmental action is stronger when enthusiasm is supported by careful measurement and an honest discussion of limits.",
+        "zh": "环保社在运动场附近设置补水点，倡导自带水瓶。第一周一次性杯子减少，成员原本想宣布全面成功，却发现暴雨取消了活动，访客本来就减少了。他们改为比较相似天气的日子，并同时统计人数。一个月后，人均杯子使用确实下降，但补水点仍有不便。社团调整指示牌并建议增设地点。这表明环保热情还需要严谨测量和对局限的诚实讨论。"
+      },
+      "writing": {
+        "prompt": "为校园环保项目提出一项改进建议，并说明用什么数据判断是否有效。",
+        "sample": "The school could place a refill station near the library. To evaluate it, we should compare the number of disposable bottles per visitor before and after installation. We also need to ask students whether the station is convenient. Counting waste alone may give a misleading picture.",
+        "checklist": [
+          "措施是否具体",
+          "指标和比较对象是否一致",
+          "是否考虑其他影响因素"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "为什么第一周杯子减少还不能证明活动完全成功？",
+          "options": [
+            "雨天使来访人数也减少了",
+            "可重复使用瓶子不能装水",
+            "社团没有任何数据",
+            "所有学生都离开了学校"
+          ],
+          "answer": "雨天使来访人数也减少了",
+          "explanation": "访客数量变化是另一影响因素，需比较人均使用量和相似情境。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "A reusable bottle can be more convenient ___ a disposable cup.",
+          "answer": "than",
+          "explanation": "比较结构 more convenient than，than 引出比较对象。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：研究同时统计了什么？",
+          "listen_text": "We counted both visitors and disposable cups on days with similar weather.",
+          "options": [
+            "Rain and temperature only",
+            "Signs and classrooms",
+            "Visitors and disposable cups",
+            "Libraries and stations"
+          ],
+          "answer": "Visitors and disposable cups",
+          "explanation": "both A and B 连接 visitors 与 disposable cups；天气是控制比较条件。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "reusable 的含义是什么？",
+          "options": [
+            "Difficult to measure",
+            "Able to be used again",
+            "Made only for sport",
+            "Thrown away after one use"
+          ],
+          "answer": "Able to be used again",
+          "explanation": "前缀 re- 表示再次，reusable 即可重复使用。"
+        }
+      ]
+    },
+    {
+      "id": "s-05",
+      "title": "科技带来的便利与边界",
+      "band": "11",
+      "theme": "人与社会 · 科技与生活",
+      "goal": "辨认说明文中的优点、限制和建议，学习定语从句。",
+      "minutes": 30,
+      "skills": [
+        "结构分析",
+        "观点表达",
+        "听力理解",
+        "说明文写作"
+      ],
+      "knowledge": [
+        "who 引导修饰人的定语从句，which 常修饰事物。",
+        "说明技术时区分功能、适用条件与风险。",
+        "用 however、although 组织让步，避免把可能性写成必然结论。"
+      ],
+      "vocabulary": [
+        {
+          "en": "automatic",
+          "zh": "自动的"
+        },
+        {
+          "en": "privacy",
+          "zh": "隐私"
+        },
+        {
+          "en": "permission",
+          "zh": "许可"
+        },
+        {
+          "en": "convenient",
+          "zh": "便利的"
+        },
+        {
+          "en": "limitation",
+          "zh": "局限"
+        },
+        {
+          "en": "responsible",
+          "zh": "负责任的"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "This app can summarise my notes automatically.",
+          "zh": "这个应用能自动总结我的笔记。"
+        },
+        {
+          "en": "Does it ask permission before uploading them?",
+          "zh": "它上传笔记前会征求许可吗？"
+        },
+        {
+          "en": "I will check the settings and compare its summary with the original.",
+          "zh": "我会检查设置，并将摘要与原文比较。"
+        }
+      ],
+      "reading": {
+        "en": "When a study app offered automatic summaries, many students welcomed the time it might save. The software highlighted repeated terms and produced a short outline. However, an outline that sounded fluent sometimes missed the reason behind an argument. One class tested the app with two articles and compared its summaries with their own notes. They found it useful for locating topics but less reliable for identifying a writer's cautious attitude. The class also discussed privacy because the service stored uploaded documents. Their teacher suggested checking permission settings and avoiding personal material. Students concluded that the tool could support reading, provided that users remained responsible for checking meaning. A convenient feature was not a substitute for the judgement that careful learning requires.",
+        "zh": "自动摘要应用受到学生欢迎，它能标出重复词并生成提纲，但流畅摘要有时遗漏论证理由。班级比较两篇文章的机器摘要与自己的笔记，发现它适合定位主题，却不总能识别作者谨慎的态度。由于服务会存储上传文件，师生还讨论了隐私设置，建议避免上传个人材料。学生认为工具可以辅助阅读，但意义判断仍须由使用者负责。"
+      },
+      "writing": {
+        "prompt": "写一段关于学习科技的平衡评价，至少包含一个优点、一个限制和一条使用建议。",
+        "sample": "An automatic summary can help readers locate a topic quickly. However, it may overlook uncertainty or the relationship between ideas. Students who use such tools should compare the output with the original text and check privacy settings before uploading material.",
+        "checklist": [
+          "评价是否包含利弊",
+          "定语从句关系词是否恰当",
+          "建议是否回应限制"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "班级测试发现该应用更适合完成什么任务？",
+          "options": [
+            "替代所有阅读判断",
+            "发现文章主题",
+            "准确判断所有作者态度",
+            "保护全部个人文件"
+          ],
+          "answer": "发现文章主题",
+          "explanation": "文中 useful for locating topics，对谨慎态度判断则较不可靠。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "Students ___ use the tool should check the original text. （填修饰人的关系代词）",
+          "answer": ["who", "that"],
+          "explanation": "先行词 Students 指人，从句缺主语，限制性定语从句可以使用 who 或 that。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：上传文件前应检查什么？",
+          "listen_text": "Before uploading a document, check the privacy settings and remove personal information.",
+          "options": [
+            "Only the title",
+            "The weather report",
+            "The page colour",
+            "The privacy settings"
+          ],
+          "answer": "The privacy settings",
+          "explanation": "privacy settings 是明确检查对象，remove personal information 是另一个操作。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "limitation 在文中指什么？",
+          "options": [
+            "A feature that works perfectly",
+            "A reason to stop all learning",
+            "A boundary of what a tool can do",
+            "A type of personal document"
+          ],
+          "answer": "A boundary of what a tool can do",
+          "explanation": "limitation 指能力边界或局限，文中表现为遗漏态度与论证关系。"
+        }
+      ]
+    },
+    {
+      "id": "s-06",
+      "title": "让文化遗产成为生活的一部分",
+      "band": "11",
+      "theme": "人与社会 · 文化传承",
+      "goal": "理解保护与使用之间的关系，用被动语态介绍文化项目。",
+      "minutes": 30,
+      "skills": [
+        "推断目的",
+        "文化介绍",
+        "听力细节",
+        "项目提案"
+      ],
+      "knowledge": [
+        "被动语态基本结构为 be + 过去分词，时态体现在 be 上。",
+        "文化介绍需要说明具体活动与价值，避免只列抽象赞美。",
+        "阅读时从项目的选择推断组织者的目的，并回到文本找依据。"
+      ],
+      "vocabulary": [
+        {
+          "en": "heritage",
+          "zh": "文化遗产"
+        },
+        {
+          "en": "preserve",
+          "zh": "保护；保存"
+        },
+        {
+          "en": "craft",
+          "zh": "手工技艺"
+        },
+        {
+          "en": "restore",
+          "zh": "修复"
+        },
+        {
+          "en": "tradition",
+          "zh": "传统"
+        },
+        {
+          "en": "participate",
+          "zh": "参与"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Will the old building become a museum?",
+          "zh": "这座老建筑会变成博物馆吗？"
+        },
+        {
+          "en": "Part of it will be used for local craft workshops.",
+          "zh": "其中一部分将用于本地手工艺工作坊。"
+        },
+        {
+          "en": "Then visitors can learn from craftspeople instead of only looking at objects.",
+          "zh": "这样访客可以向手艺人学习，而不只是观看展品。"
+        }
+      ],
+      "reading": {
+        "en": "An old riverside house had stood empty for years. Some residents wanted to replace it with a car park, while others hoped to preserve every room exactly as it was. A local group proposed a third approach. The damaged roof would be restored, and the ground floor would host workshops led by local craftspeople. Upstairs, photographs and recorded memories would explain how families had used the house. The group did not claim that every visitor would become interested in history. Instead, it wanted the building to serve a present need while keeping its story visible. After the first workshop, a teenager returned with her grandmother, who recognised a weaving pattern. Their conversation showed how a living activity could connect different generations.",
+        "zh": "河边老屋闲置多年，有人主张改停车场，有人希望原样保存。本地团队提出第三种方案：修复屋顶，在一楼开设手工艺工作坊，楼上用照片和口述记忆介绍过去生活。目的在于满足当下需要，同时保留建筑故事。一名参加工作坊的少女带奶奶回来，奶奶认出了编织花纹。真实活动由此连接不同代际。"
+      },
+      "writing": {
+        "prompt": "为一处地方文化资源写 100 词左右的利用提案，说明保护内容和公众参与方式。",
+        "sample": "The old station could be restored without removing its original signs. One room could display photographs, while another could host storytelling sessions. Local residents should be invited to share memories. In this way, the building would be protected and used as a meeting place for different generations.",
+        "checklist": [
+          "是否提出具体保护对象",
+          "是否有参与活动",
+          "被动语态是否完整"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "团队提出第三种方案的主要目的是什么？",
+          "options": [
+            "完全替代本地传统",
+            "阻止所有居民进入",
+            "结合当下使用与历史保存",
+            "只增加停车位"
+          ],
+          "answer": "结合当下使用与历史保存",
+          "explanation": "方案既修复建筑和记录历史，也用工作坊满足今天的需求。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "The damaged roof will ___ restored before winter.",
+          "answer": "be",
+          "explanation": "将来被动语态为 will be + 过去分词 restored。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：哪一层用于手工艺工作坊？",
+          "listen_text": "The ground floor will host craft workshops, and the photographs will be displayed upstairs.",
+          "options": [
+            "The ground floor",
+            "The roof",
+            "Only the garden",
+            "The upstairs rooms"
+          ],
+          "answer": "The ground floor",
+          "explanation": "听取 ground floor 与 upstairs 对应的不同用途，不要对调。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "preserve heritage 最恰当的理解是什么？",
+          "options": [
+            "Remove all signs of the past",
+            "Protect valuable cultural practices and places",
+            "Sell every old building",
+            "Make every tradition identical"
+          ],
+          "answer": "Protect valuable cultural practices and places",
+          "explanation": "preserve 强调保留与保护有价值的遗产，不等于冻结全部日常使用。"
+        }
+      ]
+    },
+    {
+      "id": "s-07",
+      "title": "科学结论是如何形成的",
+      "band": "11",
+      "theme": "人与自然 · 科学探究",
+      "goal": "识别变量与证据，理解条件句在实验说明中的作用。",
+      "minutes": 30,
+      "skills": [
+        "实验阅读",
+        "条件表达",
+        "听力笔记",
+        "报告写作"
+      ],
+      "knowledge": [
+        "if 条件句中，描述一般规律时可用现在时；预测结果常用主将从现。",
+        "控制变量要求只改变待检验因素，其他条件尽量一致。",
+        "用 suggest 表示证据支持的推测，区别于 prove 的较强断言。"
+      ],
+      "vocabulary": [
+        {
+          "en": "hypothesis",
+          "zh": "假设"
+        },
+        {
+          "en": "variable",
+          "zh": "变量"
+        },
+        {
+          "en": "observe",
+          "zh": "观察"
+        },
+        {
+          "en": "consistent",
+          "zh": "一致的"
+        },
+        {
+          "en": "sample",
+          "zh": "样本"
+        },
+        {
+          "en": "conclusion",
+          "zh": "结论"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Did the extra light cause the plants to grow faster?",
+          "zh": "额外光照使植物长得更快了吗？"
+        },
+        {
+          "en": "Perhaps, but the two groups also received different amounts of water.",
+          "zh": "可能是，但两组的浇水量也不同。"
+        },
+        {
+          "en": "We need to repeat the experiment with consistent conditions.",
+          "zh": "我们需要在一致条件下重做实验。"
+        }
+      ],
+      "reading": {
+        "en": "Two students tested whether extra light helped young plants grow. They placed one tray beside a window and another under a lamp. At the end of the week, the plants under the lamp were taller. The students almost wrote that extra light always increased growth. During a discussion, however, a classmate noticed that the window tray had received less water. The teacher asked them to identify the variables and repeat the test. This time, both trays contained the same soil and received equal water. The difference became smaller. The students did not regard this result as a failure. It helped them improve their hypothesis and describe the limits of their evidence. Their final report explained the method before presenting a cautious conclusion.",
+        "zh": "两名学生比较窗边与灯下植物，一周后灯下植物更高，几乎写下额外光照总能促进生长的结论。讨论时同学发现，窗边那组浇水更少。重做实验时，两组使用相同土壤和等量水，差异变小。学生没有把这当失败，而是据此修正假设、说明证据边界。最终报告先解释方法，再谨慎下结论。"
+      },
+      "writing": {
+        "prompt": "用 100 词左右写一份简短实验报告，依次包括问题、变量、方法、结果和限制。",
+        "sample": "We investigated whether light affected plant growth. We used the same soil and gave both groups equal water. Only the light conditions changed. After a week, one group was slightly taller. The result suggests a possible effect, but our sample was small and the experiment should be repeated.",
+        "checklist": [
+          "是否说明控制条件",
+          "结果与结论是否区分",
+          "是否指出样本或方法限制"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "学生为什么重复实验？",
+          "options": [
+            "植物完全没有长大",
+            "老师要求换一个无关主题",
+            "第一周没有任何记录",
+            "浇水量差异影响了公平比较"
+          ],
+          "answer": "浇水量差异影响了公平比较",
+          "explanation": "光照之外还改变了水量，无法把差异单独归因于光照。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "If we ___ the conditions consistent, the comparison will be fairer. （keep）",
+          "answer": "keep",
+          "explanation": "真实条件句主句用 will，从句用一般现在时 keep。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：第二次实验保持相同的是哪一组条件？",
+          "listen_text": "In the second test, both trays had the same soil and received equal amounts of water.",
+          "options": [
+            "Only the location",
+            "Soil and water",
+            "Only plant height",
+            "Every observation result"
+          ],
+          "answer": "Soil and water",
+          "explanation": "same soil 与 equal amounts of water 是明确的控制条件。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "hypothesis 指什么？",
+          "options": [
+            "A final answer that cannot change",
+            "An unrelated observation",
+            "A possible explanation to be tested",
+            "A list of equipment"
+          ],
+          "answer": "A possible explanation to be tested",
+          "explanation": "hypothesis 是可供检验的假设，可以随证据修正。"
+        }
+      ]
+    },
+    {
+      "id": "s-08",
+      "title": "职业探索与真实体验",
+      "band": "11",
+      "theme": "人与自我 · 生涯规划",
+      "goal": "区分职业印象与工作任务，使用非谓语结构说明目的。",
+      "minutes": 30,
+      "skills": [
+        "细节推断",
+        "采访提问",
+        "听力定位",
+        "反思写作"
+      ],
+      "knowledge": [
+        "to + 动词原形可作目的状语，回答为什么做某事。",
+        "职业探索需关注日常任务、所需能力和工作条件，而不只看名称。",
+        "采访问题可以用 What does a typical day involve? 获取具体信息。"
+      ],
+      "vocabulary": [
+        {
+          "en": "career",
+          "zh": "职业生涯"
+        },
+        {
+          "en": "qualification",
+          "zh": "资格"
+        },
+        {
+          "en": "responsibility",
+          "zh": "职责"
+        },
+        {
+          "en": "collaborate",
+          "zh": "合作"
+        },
+        {
+          "en": "practical",
+          "zh": "实践性的"
+        },
+        {
+          "en": "adapt",
+          "zh": "适应"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What surprised you during the workplace visit?",
+          "zh": "参访工作场所时，什么让你惊讶？"
+        },
+        {
+          "en": "The designer spent much more time discussing needs than drawing.",
+          "zh": "设计师讨论需求的时间远多于画图。"
+        },
+        {
+          "en": "That helps us understand the communication skills the job requires.",
+          "zh": "这有助于理解这份工作需要的沟通能力。"
+        }
+      ],
+      "reading": {
+        "en": "Before visiting a design studio, Hao imagined that designers spent most of the day producing beautiful pictures. During the visit, he watched a team interview a shop owner, measure a doorway and revise a proposal after discussing costs. One designer explained that an attractive idea was useful only if it solved the client's problem. Hao asked what school subjects had helped her. She mentioned art, but also mathematics and the ability to explain a decision clearly. Later, Hao wrote that he was still interested in design, though for different reasons. He planned to interview people in two other fields to compare their daily responsibilities. The visit did not select a career for him; it gave him better questions for making an informed choice.",
+        "zh": "郝原以为设计师主要画漂亮的图。参访工作室时，他看到团队采访店主、测量门口、讨论成本并修改方案。设计师说，美观的想法只有解决客户问题才有用，工作还需要数学和清楚解释决策的能力。郝仍对设计感兴趣，但理由改变了。他打算再采访两个行业，比较日常职责。参访没有替他决定职业，却让他学会提出更好的问题。"
+      },
+      "writing": {
+        "prompt": "写一段职业体验反思，比较参访前后的认识，并列出两项下一步行动。",
+        "sample": "I used to think design was mainly about drawing. The visit showed me that listening, measurement and clear explanations are equally important. To explore the field further, I will interview a designer about daily responsibilities and join a small project at school.",
+        "checklist": [
+          "是否有前后认识变化",
+          "是否引用真实任务作依据",
+          "目的不定式是否恰当"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "参访最主要帮助郝获得了什么？",
+          "options": [
+            "作出职业选择时更有用的问题",
+            "保证能进入设计公司",
+            "只重视画图的理由",
+            "放弃所有其他学科的建议"
+          ],
+          "answer": "作出职业选择时更有用的问题",
+          "explanation": "结尾强调 better questions for making an informed choice，而非直接确定职业。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "He visited the studio ___ learn about daily responsibilities.",
+          "answer": "to",
+          "explanation": "to learn 作目的状语，说明参访的目的。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：团队在修改方案前讨论了什么？",
+          "listen_text": "The team measured the doorway and discussed the budget before revising the proposal.",
+          "options": [
+            "Holiday plans",
+            "School uniforms",
+            "The budget",
+            "A music performance"
+          ],
+          "answer": "The budget",
+          "explanation": "budget 是预算，before revising 表示这些动作发生在修改之前。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "collaborate with colleagues means to ___.",
+          "options": [
+            "avoid their questions",
+            "work together with them",
+            "copy every decision",
+            "replace their responsibilities"
+          ],
+          "answer": "work together with them",
+          "explanation": "collaborate 表示合作，共同完成任务。"
+        }
+      ]
+    },
+    {
+      "id": "s-09",
+      "title": "读懂观点背后的证据",
+      "band": "12",
+      "theme": "人与社会 · 媒介素养",
+      "goal": "辨认论点、证据和推断，练习让步从句与概要表达。",
+      "minutes": 35,
+      "skills": [
+        "论证分析",
+        "作者态度",
+        "听力辨析",
+        "概要写作"
+      ],
+      "knowledge": [
+        "although 引导让步从句，通常不再与 but 重复连接同一主句。",
+        "相关关系不直接等于因果关系，需要检查样本和其他变量。",
+        "概要应保留主要论点及限制，用自己的语言压缩而不增加结论。"
+      ],
+      "vocabulary": [
+        {
+          "en": "claim",
+          "zh": "论断"
+        },
+        {
+          "en": "correlation",
+          "zh": "相关关系"
+        },
+        {
+          "en": "causation",
+          "zh": "因果关系"
+        },
+        {
+          "en": "bias",
+          "zh": "偏差"
+        },
+        {
+          "en": "representative",
+          "zh": "有代表性的"
+        },
+        {
+          "en": "interpret",
+          "zh": "解释"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "The headline says the new timetable improves all students' results.",
+          "zh": "标题说新课表提高了所有学生的成绩。"
+        },
+        {
+          "en": "Was the study based on every student or just volunteers?",
+          "zh": "研究包括所有学生，还是只有自愿参与者？"
+        },
+        {
+          "en": "Let's examine the sample before accepting the claim.",
+          "zh": "接受这一论断前，先检查样本吧。"
+        }
+      ],
+      "reading": {
+        "en": "A headline announced that students who joined a morning reading group achieved higher marks. The report described the group as the cause of the improvement. Yet the participants had volunteered, and many already read regularly at home. The study did not compare their earlier marks with those of other students. A student journalist rewrote the headline more cautiously and contacted the researcher. The researcher explained that the findings showed a relationship, not proof of causation. The reading group might have helped, but motivation and family routines could also matter. The journalist included these limits in the school newspaper. Some readers found the revised headline less exciting. Nevertheless, the article gave them a more accurate basis for deciding whether the activity would suit their own needs.",
+        "zh": "一则标题称晨读小组导致学生成绩提高，但参与者是自愿报名者，许多人原本就在家阅读，研究也未比较先前成绩。学生记者联系研究者，得知发现只是相关关系，不是因果证明。动机、家庭安排等也可能有影响。记者在校报中加入局限，虽然标题没那么吸引眼球，却让读者更准确判断活动是否适合自己。"
+      },
+      "writing": {
+        "prompt": "用 60–80 词概括文章，保留研究发现及其局限，不加入个人评价。",
+        "sample": "A report linked a morning reading group with higher marks, but its volunteers already had different reading habits. The study therefore showed a relationship rather than proving causation. A student journalist revised the headline and explained the limits, helping readers judge the activity more accurately.",
+        "checklist": [
+          "是否保留核心发现",
+          "是否交代相关与因果的区别",
+          "是否避免新增事实"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "作者对记者修改标题持什么态度？",
+          "options": [
+            "认为完全没有必要",
+            "认为研究已证明因果",
+            "认为记者应隐瞒限制",
+            "认可其提高了报道准确性"
+          ],
+          "answer": "认可其提高了报道准确性",
+          "explanation": "结尾 more accurate basis 是正面评价，表明准确性比吸引眼球更重要。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "___ the headline was less exciting, it was more accurate. （尽管）",
+          "answer": ["Although", "Though", "Even though"],
+          "explanation": "Although、Though 或 Even though 均可引导让步，主句不再加 but；首字母大小写不影响句意。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：研究者明确说研究没有证明什么？",
+          "listen_text": "The findings show a relationship, but they do not prove that the reading group caused the improvement.",
+          "options": [
+            "That a reading group existed",
+            "That the group caused improvement",
+            "That volunteers joined the study",
+            "That marks were recorded"
+          ],
+          "answer": "That the group caused improvement",
+          "explanation": "听取 do not prove 后的宾语从句，重点是否定因果证明。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "a representative sample 是指什么？",
+          "options": [
+            "A sample with the highest marks only",
+            "A sample chosen for an exciting story",
+            "A sample that reflects the wider group",
+            "A sample without any description"
+          ],
+          "answer": "A sample that reflects the wider group",
+          "explanation": "representative 意为有代表性的，样本应能合理反映目标群体。"
+        }
+      ]
+    },
+    {
+      "id": "s-10",
+      "title": "全球议题中的本地行动",
+      "band": "12",
+      "theme": "人与自然 · 可持续发展",
+      "goal": "综合多方观点，使用条件与让步表达可行行动。",
+      "minutes": 35,
+      "skills": [
+        "信息整合",
+        "议题讨论",
+        "听力细节",
+        "议论文写作"
+      ],
+      "knowledge": [
+        "论证段可采用观点—理由—例子—限制的顺序。",
+        "非真实条件句可用 If + 过去式，would + 动词原形表达假设。",
+        "全球议题写作需要可核验的小例子，避免空泛承诺。"
+      ],
+      "vocabulary": [
+        {
+          "en": "sustainable",
+          "zh": "可持续的"
+        },
+        {
+          "en": "resource",
+          "zh": "资源"
+        },
+        {
+          "en": "cooperate",
+          "zh": "合作"
+        },
+        {
+          "en": "affordable",
+          "zh": "负担得起的"
+        },
+        {
+          "en": "emission",
+          "zh": "排放"
+        },
+        {
+          "en": "trade-off",
+          "zh": "取舍"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Could our school reduce food waste without raising costs?",
+          "zh": "学校能在不增加成本的情况下减少食物浪费吗？"
+        },
+        {
+          "en": "Smaller portions with free additional servings might help.",
+          "zh": "小份供应并允许免费添餐可能有帮助。"
+        },
+        {
+          "en": "We should ask students and kitchen staff before changing the system.",
+          "zh": "改变制度前应先询问学生和食堂员工。"
+        }
+      ],
+      "reading": {
+        "en": "Students discussing global sustainability often feel that their own actions are too small to matter. A school canteen project offered a more practical view. The team measured leftover food and interviewed students and kitchen workers. Some students wanted smaller portions, while others worried about not having enough to eat after sport. The kitchen also needed a system that would not slow service. After discussion, the canteen tested smaller first servings with an easy way to request more. Waste declined during the trial, but the team recorded waiting times as well. Members concluded that a local project cannot solve a global problem by itself. It can, however, develop the habits of measurement, cooperation and revision that larger changes also require.",
+        "zh": "讨论全球可持续发展时，学生常觉得个人行动微不足道。学校食堂项目通过测量剩饭、采访学生和员工，发现小份餐既可能减少浪费，也可能让运动后学生吃不够，还要兼顾服务速度。食堂于是试行小份初餐、方便添餐，并同时记录浪费和等候时间。团队认识到本地项目无法独自解决全球问题，却能培养测量、合作和修正的行动习惯。"
+      },
+      "writing": {
+        "prompt": "以 One local action can make a difference 为题写 100–120 词，使用一个具体例子并承认其限制。",
+        "sample": "A local action matters when it produces evidence and changes habits. For example, a school canteen can test smaller servings while allowing students to ask for more. This may reduce waste without leaving students hungry. Although one canteen cannot solve global food waste, the project teaches cooperation and careful evaluation.",
+        "checklist": [
+          "观点与例子是否一致",
+          "是否解释如何评价效果",
+          "是否承认行动边界"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "该食堂项目对更大规模改变的价值是什么？",
+          "options": [
+            "保证立刻解决全球问题",
+            "让所有人吃同样份量",
+            "培养测量、合作和修正的习惯",
+            "取消对员工需求的考虑"
+          ],
+          "answer": "培养测量、合作和修正的习惯",
+          "explanation": "末句明确说明，本地项目能培养大规模改变同样需要的能力。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "If every class shared its findings, we ___ understand the problem better. （would/can 选一词）",
+          "answer": "would",
+          "explanation": "假设条件 if + 过去式 shared，主句使用 would + 动词原形。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：试验除了食物浪费，还记录了什么？",
+          "listen_text": "During the trial, the team measured leftover food and recorded how long students waited.",
+          "options": [
+            "Waiting times",
+            "Only the price of water",
+            "Teachers' holidays",
+            "The colour of the plates"
+          ],
+          "answer": "Waiting times",
+          "explanation": "how long students waited 对应等候时间 waiting times。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "trade-off 在方案讨论中通常指什么？",
+          "options": [
+            "A result with no disadvantages",
+            "A balance between competing needs",
+            "A question that cannot be discussed",
+            "A rule that never changes"
+          ],
+          "answer": "A balance between competing needs",
+          "explanation": "trade-off 指在不同目标之间作取舍，例如速度、成本与减少浪费。"
+        }
+      ]
+    },
+    {
+      "id": "s-11",
+      "title": "读后续写：行动推动情节",
+      "band": "12",
+      "theme": "人与自我 · 困难与成长",
+      "goal": "依据人物、冲突与伏笔写出合理续篇，避免突然转折。",
+      "minutes": 35,
+      "skills": [
+        "叙事推断",
+        "情节衔接",
+        "听力理解",
+        "读后续写"
+      ],
+      "knowledge": [
+        "续写需保持人物、时间、地点和叙述视角的一致。",
+        "用可观察的动作与对话表现情绪，不只堆积情绪形容词。",
+        "过去完成时 had + 过去分词表示过去某时之前已经发生的动作。"
+      ],
+      "vocabulary": [
+        {
+          "en": "hesitate",
+          "zh": "犹豫"
+        },
+        {
+          "en": "reassure",
+          "zh": "使安心"
+        },
+        {
+          "en": "determination",
+          "zh": "决心"
+        },
+        {
+          "en": "relief",
+          "zh": "宽慰"
+        },
+        {
+          "en": "clue",
+          "zh": "线索"
+        },
+        {
+          "en": "resolve",
+          "zh": "解决"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What clue should the continuation use?",
+          "zh": "续写应该使用哪条线索？"
+        },
+        {
+          "en": "The spare map appeared earlier, so it can help resolve the problem.",
+          "zh": "备用地图之前出现过，因此可以帮助解决问题。"
+        },
+        {
+          "en": "And the character should act, not simply announce that everything is fine.",
+          "zh": "而且人物应当采取行动，而不是只宣布一切都好了。"
+        }
+      ],
+      "reading": {
+        "en": "On a school walking trip, Chen volunteered to lead the last group back to the visitor centre. She had checked the route the night before, but a fallen branch now covered the sign at a fork. Her classmates began suggesting different directions. Chen felt her face grow hot. In her bag lay a spare paper map that she had packed after her father reminded her that phones could lose power. She asked everyone to wait beside a bench while she opened it. A younger student pointed to a stream shown on the map and said they had crossed it only minutes earlier. Chen looked up at the path, then back at the map, and took a slow breath before speaking.",
+        "zh": "徒步活动中，陈负责带最后一组回游客中心。她事先查看过路线，但岔路标被树枝遮住，同学意见不一。她紧张起来，想起父亲提醒手机可能没电，于是包里备了纸质地图。她请大家在长椅旁等候。一名低年级学生指出地图上的小溪，说刚刚经过。陈看看路、再看看地图，缓缓吸气，准备开口。"
+      },
+      "writing": {
+        "prompt": "续写 100–120 词：Chen pointed to the stream on the map. 保持路线判断有依据，让合作推动结局。",
+        "sample": "Chen pointed to the stream on the map. “If we crossed it here, the visitor centre must be along this path,” she said. Instead of rushing ahead, she checked the next landmark with the group. When the roof finally appeared, she smiled at the younger student. “Your observation helped us all.”",
+        "checklist": [
+          "是否使用地图和小溪伏笔",
+          "解决过程是否合理",
+          "是否用动作对话呈现情绪变化"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "哪一种续写最符合原文线索？",
+          "options": [
+            "陌生人突然驾驶直升机出现",
+            "地图和同学的观察帮助判断路线",
+            "所有人毫无解释地瞬间到达",
+            "陈丢掉地图并独自离开"
+          ],
+          "answer": "地图和同学的观察帮助判断路线",
+          "explanation": "纸质地图、小溪和同学观察都是原文伏笔，合理续写应利用已有信息。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "She ___ checked the route before the trip began.",
+          "answer": "had",
+          "explanation": "检查发生在过去的出发之前，用过去完成时 had checked。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：陈让同学在哪里等待？",
+          "listen_text": "Chen asked the group to wait beside a bench while she opened the paper map.",
+          "options": [
+            "Inside the visitor centre",
+            "Across a bridge",
+            "Beside a bench",
+            "Under a bus"
+          ],
+          "answer": "Beside a bench",
+          "explanation": "beside a bench 为明确地点；while 引出同时进行的看地图动作。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "Which action best shows relief?",
+          "options": [
+            "She lists three new rules.",
+            "She reads the date aloud.",
+            "She asks where the map was printed.",
+            "Her shoulders relax when the centre appears."
+          ],
+          "answer": "Her shoulders relax when the centre appears.",
+          "explanation": "肩膀放松是可观察的身体动作，能自然表现宽慰而非直接贴情绪标签。"
+        }
+      ]
+    },
+    {
+      "id": "s-12",
+      "title": "完形与推断：让上下文作证",
+      "band": "12",
+      "theme": "人与社会 · 理解与合作",
+      "goal": "利用指代、转折和语义复现推断词义与人物动机。",
+      "minutes": 35,
+      "skills": [
+        "语篇衔接",
+        "词义推断",
+        "听力态度",
+        "综合写作"
+      ],
+      "knowledge": [
+        "完形填空先把握整体情节，再通过上下文排除不合语义的词。",
+        "however、instead、therefore 等连接词提示转折、替代与因果。",
+        "推断需要文本支持，不能把常识猜测当成作者已经表达的事实。"
+      ],
+      "vocabulary": [
+        {
+          "en": "context",
+          "zh": "语境"
+        },
+        {
+          "en": "inference",
+          "zh": "推断"
+        },
+        {
+          "en": "contrast",
+          "zh": "对比"
+        },
+        {
+          "en": "intention",
+          "zh": "意图"
+        },
+        {
+          "en": "recognise",
+          "zh": "识别；认可"
+        },
+        {
+          "en": "perspective",
+          "zh": "视角"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Why did the narrator change her opinion?",
+          "zh": "叙述者为什么改变看法？"
+        },
+        {
+          "en": "She learned that silence did not mean a lack of ideas.",
+          "zh": "她明白沉默不代表没有想法。"
+        },
+        {
+          "en": "We should support that inference with the note the student wrote.",
+          "zh": "我们应当用那个学生写的纸条来支持这一推断。"
+        }
+      ],
+      "reading": {
+        "en": "During a group task, the narrator assumed that a quiet classmate had nothing to contribute. She assigned him the simplest job and continued the discussion without waiting for his response. Near the end, he handed her a page containing a clear diagram and two questions about the group's plan. The diagram exposed a problem they had missed. He explained that he needed more time to organise his thoughts before speaking. The narrator felt embarrassed, but he did not blame her. Instead, he asked whether the team could examine his questions together. In the next meeting, she sent the discussion topic in advance and left time for written suggestions. The experience changed her understanding of participation: equal opportunity does not always mean requiring everyone to respond in the same way.",
+        "zh": "小组任务中，叙述者以为安静的同学没有贡献，只分给他最简单的工作。讨论将结束时，他递来清晰图示与两个问题，揭示团队遗漏。他解释自己需要更多时间组织想法。叙述者很尴尬，对方却没有责怪，而是邀请一起讨论。下次会议，她提前发主题并留书面建议时间。她因此理解，平等参与不一定意味着所有人必须用同一方式立即回应。"
+      },
+      "writing": {
+        "prompt": "用 100 词左右讨论怎样让不同表达习惯的同学公平参与小组活动，引用阅读中的一个细节。",
+        "sample": "Fair participation requires more than asking everyone to speak immediately. In the story, a quiet student contributes a useful diagram after organising his ideas. A group can share topics in advance, allow written suggestions and invite each member to explain a point. These choices recognise different ways of thinking.",
+        "checklist": [
+          "是否准确使用阅读细节",
+          "建议是否回应表达差异",
+          "推断是否有文本依据"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "从文中可合理推断安静同学的情况是什么？",
+          "options": [
+            "他有想法，但需要时间组织表达",
+            "他拒绝任何形式的合作",
+            "他故意隐藏所有信息",
+            "他只关心最简单的工作"
+          ],
+          "answer": "他有想法，但需要时间组织表达",
+          "explanation": "图示和解释共同支持这一推断；沉默不能直接推出没有贡献。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "He did not blame her. ___, he invited the team to discuss his questions. （相反）",
+          "answer": "Instead",
+          "explanation": "Instead 表示没有采取前一做法，而选择后一做法，符合前后替代关系。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：下一次讨论前，叙述者做了什么？",
+          "listen_text": "Before the next meeting, she shared the topic so that everyone had time to prepare ideas.",
+          "options": [
+            "Cancelled the task",
+            "Chose every answer",
+            "Removed the quiet student",
+            "Shared the topic in advance"
+          ],
+          "answer": "Shared the topic in advance",
+          "explanation": "before the next meeting 与 shared the topic 共同定位提前分享主题的行为。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "an inference is ___.",
+          "options": [
+            "a copied sentence without interpretation",
+            "a supported conclusion drawn from evidence",
+            "a random guess unrelated to the text",
+            "a list of unfamiliar words"
+          ],
+          "answer": "a supported conclusion drawn from evidence",
+          "explanation": "inference 是基于证据作出的推断，需要从文本找到依据。"
+        }
+      ]
+    }
+  ]
+}

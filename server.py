@@ -53,6 +53,7 @@ import html
 import smtplib
 import time
 import gzip
+import unicodedata
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from email.mime.multipart import MIMEMultipart
@@ -85,6 +86,8 @@ KIDS_CSS = os.path.join(BASE, "kids.css")
 KIDS_COMMON_JS = os.path.join(BASE, "kids-common.js")
 VOCABULARY_DATA_JS = os.path.join(BASE, "vocabulary-data.js")
 CONTENT_DB = os.path.join(BASE, "content", "content.db")
+CURRICULUM_DIR = os.path.join(BASE, "content", "curriculum")
+COURSES_HTML = os.path.join(BASE, "courses.html")
 APP_ROLE = os.environ.get("APP_ROLE", "all").strip().lower()
 if APP_ROLE not in {"all", "user", "admin"}:
     APP_ROLE = "all"
@@ -184,6 +187,7 @@ def init_db():
             password_hash TEXT,
             learning_stage TEXT NOT NULL DEFAULT 'general',
             preferred_age_band TEXT,
+            preferred_child_id INTEGER,
             created_at TEXT,
             last_login TEXT)"""
     )
@@ -269,6 +273,43 @@ def init_db():
     c.execute(
         "CREATE INDEX IF NOT EXISTS idx_child_events_child ON child_events(child_id,activity_date)"
     )
+    c.execute(
+        """CREATE TABLE IF NOT EXISTS course_progress(
+            user_id INTEGER NOT NULL,
+            learner_key TEXT NOT NULL,
+            stage TEXT NOT NULL,
+            unit_id TEXT NOT NULL,
+            best_score INTEGER NOT NULL DEFAULT 0,
+            attempts INTEGER NOT NULL DEFAULT 0,
+            completed INTEGER NOT NULL DEFAULT 0,
+            updated_at TEXT NOT NULL,
+            PRIMARY KEY(user_id,learner_key,stage,unit_id),
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE)"""
+    )
+    c.execute(
+        """CREATE TABLE IF NOT EXISTS course_mistakes(
+            user_id INTEGER NOT NULL,
+            learner_key TEXT NOT NULL,
+            stage TEXT NOT NULL,
+            unit_id TEXT NOT NULL,
+            question_id TEXT NOT NULL,
+            streak INTEGER NOT NULL DEFAULT 0,
+            last_answer TEXT,
+            updated_at TEXT NOT NULL,
+            PRIMARY KEY(user_id,learner_key,stage,unit_id,question_id),
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE)"""
+    )
+    c.execute(
+        """CREATE TABLE IF NOT EXISTS course_attempt_receipts(
+            user_id INTEGER NOT NULL,
+            learner_key TEXT NOT NULL,
+            stage TEXT NOT NULL,
+            unit_id TEXT NOT NULL,
+            request_id TEXT NOT NULL,
+            response_json TEXT NOT NULL,
+            PRIMARY KEY(user_id,learner_key,stage,unit_id,request_id),
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE)"""
+    )
     # 兼容旧库：微信登录所需的 openid 列（可为空、唯一）
     try:
         c.execute("ALTER TABLE users ADD COLUMN openid TEXT")
@@ -290,6 +331,10 @@ def init_db():
         pass
     try:
         c.execute("ALTER TABLE users ADD COLUMN preferred_age_band TEXT")
+    except Exception:
+        pass
+    try:
+        c.execute("ALTER TABLE users ADD COLUMN preferred_child_id INTEGER")
     except Exception:
         pass
     conn.commit()
@@ -325,6 +370,17 @@ def text_field(data, name, *, lower=False):
         return ""
     value = value.strip()
     return value.lower() if lower else value
+
+
+def positive_sqlite_id(value):
+    """Reject invalid or overflowing client IDs before binding them to SQLite."""
+    if isinstance(value, bool) or not isinstance(value, (int, str)):
+        return None
+    text = str(value)
+    if not re.fullmatch(r"[0-9]{1,19}", text):
+        return None
+    parsed = int(text)
+    return parsed if 0 < parsed <= 9223372036854775807 else None
 
 
 def make_token(user_id):
@@ -538,6 +594,7 @@ def _compress_response(resp):
         and resp.status_code == 200
         and "gzip" in accepted
         and content_type in compressible
+        and not resp.direct_passthrough
         and not resp.headers.get("Content-Encoding")
     ):
         data = resp.get_data()
@@ -681,24 +738,30 @@ def verify_html(ok, msg):
 
 
 # ----------------------------- 账号接口 -----------------------------
-LEARNING_STAGES = {"kindergarten", "primary", "general"}
+LEARNING_STAGES = {"kindergarten", "primary", "junior", "senior", "university", "general"}
 LEARNING_STAGE_AGES = {
     "kindergarten": {"3-4", "4-5", "5-6"},
     "primary": {"6-8", "8-10", "10-12"},
+    "junior": {"12-13", "13-14", "14-15"},
+    "senior": {"15-16", "16-17", "17-18"},
+    "university": {"18+"},
     "general": {"13+"},
 }
 DEFAULT_GRADE_BY_AGE = {
     "3-4": "k1", "4-5": "k2", "5-6": "k3",
     "6-8": "g1-2", "8-10": "g3-4", "10-12": "g5-6",
 }
-DEFAULT_AGE_BY_STAGE = {"kindergarten": "3-4", "primary": "6-8", "general": "13+"}
+DEFAULT_AGE_BY_STAGE = {
+    "kindergarten": "3-4", "primary": "6-8", "junior": "12-13",
+    "senior": "15-16", "university": "18+", "general": "13+",
+}
 
 
 def learning_selection(data, *, fallback_stage="general", fallback_age=None):
     stage = text_field(data, "learning_stage", lower=True) or fallback_stage
     if stage not in LEARNING_STAGES:
         return None, None, "学习年龄段无效"
-    default_age = "13+" if stage == "general" else None
+    default_age = DEFAULT_AGE_BY_STAGE[stage]
     age_band = text_field(data, "age_band") or fallback_age or default_age
     if age_band not in LEARNING_STAGE_AGES[stage]:
         return None, None, "请选择与学习阶段匹配的年龄段"
@@ -717,23 +780,29 @@ def learning_landing(stage):
         return "/kids/kindergarten"
     if stage == "primary":
         return "/kids/primary"
+    if stage in {"junior", "senior", "university"}:
+        return "/courses/" + stage
     return "/app/home"
 
 
 def ensure_learning_profile(conn, user_id, nickname, stage, age_band):
     """Return the child profile for a child stage, creating one when necessary."""
-    if stage == "general":
+    if stage not in {"kindergarten", "primary"}:
         return None
+    saved = conn.execute(
+        "SELECT preferred_child_id FROM users WHERE id=?", (user_id,)
+    ).fetchone()
+    preferred_id = saved["preferred_child_id"] if saved else None
     row = conn.execute(
-        "SELECT * FROM child_profiles WHERE parent_user_id=? AND track=? ORDER BY id LIMIT 1",
-        (user_id, stage),
+        "SELECT * FROM child_profiles WHERE parent_user_id=? AND track=? AND age_band=? "
+        "ORDER BY CASE WHEN id=? THEN 0 ELSE 1 END,id LIMIT 1",
+        (user_id, stage, age_band, preferred_id),
     ).fetchone()
     stamp = now_iso()
     grade_band = DEFAULT_GRADE_BY_AGE[age_band]
     if row:
         conn.execute(
-            "UPDATE child_profiles SET age_band=?,grade_band=?,updated_at=? WHERE id=?",
-            (age_band, grade_band, stamp, row["id"]),
+            "UPDATE users SET preferred_child_id=? WHERE id=?", (row["id"], user_id),
         )
         return row["id"]
     cur = conn.execute(
@@ -749,6 +818,7 @@ def ensure_learning_profile(conn, user_id, nickname, stage, age_band):
         "INSERT INTO child_progress(child_id,data,updated_at) VALUES(?,?,?)",
         (child_id, "{}", stamp),
     )
+    conn.execute("UPDATE users SET preferred_child_id=? WHERE id=?", (child_id, user_id))
     return child_id
 
 
@@ -974,16 +1044,38 @@ def api_learning_mode():
     data = request.get_json(silent=True) or {}
     if not isinstance(data, dict):
         return jsonify({"error": "请求格式错误"}), 400
+    conn = db()
+    selected_child = None
+    requested_child = data.get("child_id")
+    if requested_child is not None:
+        requested_id = positive_sqlite_id(requested_child)
+        if requested_id is None:
+            conn.close()
+            return jsonify({"error": "儿童档案编号无效"}), 400
+        selected_child = conn.execute(
+            "SELECT id,track,age_band FROM child_profiles WHERE id=? AND parent_user_id=?",
+            (requested_id, u["user_id"]),
+        ).fetchone()
+        if not selected_child:
+            conn.close()
+            return jsonify({"error": "儿童档案不存在"}), 404
+        data = dict(data)
+        requested_stage = text_field(data, "learning_stage", lower=True) or selected_child["track"]
+        requested_age = text_field(data, "age_band") or selected_child["age_band"]
+        if requested_stage != selected_child["track"] or requested_age != selected_child["age_band"]:
+            conn.close()
+            return jsonify({"error": "请选择与儿童档案匹配的学习阶段和年龄；档案信息请在儿童中心修改"}), 400
+        data.update({"learning_stage": requested_stage, "age_band": requested_age})
     stage, age_band, learning_error = learning_selection(data)
     if learning_error:
+        conn.close()
         return jsonify({"error": learning_error}), 400
-    conn = db()
-    conn.execute(
-        "UPDATE users SET learning_stage=?,preferred_age_band=? WHERE id=?",
-        (stage, age_band, u["user_id"]),
-    )
-    child_id = ensure_learning_profile(
+    child_id = selected_child["id"] if selected_child else ensure_learning_profile(
         conn, u["user_id"], u["nickname"], stage, age_band
+    )
+    conn.execute(
+        "UPDATE users SET learning_stage=?,preferred_age_band=?,preferred_child_id=? WHERE id=?",
+        (stage, age_band, child_id, u["user_id"]),
     )
     conn.commit()
     conn.close()
@@ -1200,6 +1292,11 @@ def api_child_detail(child_id):
         return jsonify({"error": "儿童档案不存在"}), 404
     if request.method == "DELETE":
         deleted_track = row["track"]
+        for table in ("course_progress", "course_mistakes", "course_attempt_receipts"):
+            conn.execute(
+                "DELETE FROM " + table + " WHERE user_id=? AND learner_key=?",
+                (parent_id, "child:" + str(child_id)),
+            )
         conn.execute("DELETE FROM child_profiles WHERE id=?", (child_id,))
         remaining = conn.execute(
             "SELECT COUNT(*) AS total FROM child_profiles WHERE parent_user_id=?",
@@ -1213,11 +1310,27 @@ def api_child_detail(child_id):
         switched_to_general = False
         if u["learning_stage"] == deleted_track and not remaining_same_track:
             conn.execute(
-                "UPDATE users SET learning_stage='general',preferred_age_band='13+' "
+                "UPDATE users SET learning_stage='general',preferred_age_band='13+',preferred_child_id=NULL "
                 "WHERE id=?",
                 (parent_id,),
             )
             switched_to_general = True
+        else:
+            saved = conn.execute(
+                "SELECT preferred_child_id FROM users WHERE id=?", (parent_id,)
+            ).fetchone()
+            if saved and saved["preferred_child_id"] == child_id:
+                replacement = conn.execute(
+                    "SELECT id,age_band FROM child_profiles WHERE parent_user_id=? AND track=? ORDER BY id LIMIT 1",
+                    (parent_id, deleted_track),
+                ).fetchone()
+                if replacement and u["learning_stage"] == deleted_track:
+                    conn.execute(
+                        "UPDATE users SET preferred_child_id=?,preferred_age_band=? WHERE id=?",
+                        (replacement["id"], replacement["age_band"], parent_id),
+                    )
+                else:
+                    conn.execute("UPDATE users SET preferred_child_id=NULL WHERE id=?", (parent_id,))
         conn.commit()
         conn.close()
         ANALYTICS_CACHE.clear()
@@ -1829,6 +1942,272 @@ def api_content_sentences():
     )
 
 
+# ----------------------------- 分学段课程与学习记录 -----------------------------
+CURRICULUM_ORDER = ("kindergarten", "primary", "junior", "senior", "university", "general")
+
+
+def load_curriculum(stage):
+    if stage not in CURRICULUM_ORDER:
+        return None
+    path = os.path.join(CURRICULUM_DIR, stage + ".json")
+    try:
+        with open(path, "r", encoding="utf-8") as source:
+            data = json.load(source)
+    except (OSError, ValueError):
+        return None
+    if not isinstance(data, dict) or data.get("id") != stage:
+        return None
+    return data
+
+
+def curriculum_summary(data):
+    out = {key: value for key, value in data.items() if key != "units"}
+    units = data.get("units", [])
+    out["unit_count"] = len(units)
+    out["question_count"] = sum(len(unit.get("questions", [])) for unit in units)
+    return out
+
+
+def curriculum_question(question):
+    return {
+        key: value for key, value in question.items()
+        if key not in {"answer", "explanation"}
+    }
+
+
+def curriculum_learner(conn, user_id, child_id):
+    if child_id is None or child_id == "":
+        return "self", None
+    parsed_id = positive_sqlite_id(child_id)
+    if parsed_id is None:
+        return None, (jsonify({"error": "儿童档案编号无效"}), 400)
+    child = conn.execute(
+        "SELECT id FROM child_profiles WHERE id=? AND parent_user_id=?",
+        (parsed_id, user_id),
+    ).fetchone()
+    if not child:
+        return None, (jsonify({"error": "儿童档案不存在"}), 404)
+    return "child:" + str(child["id"]), None
+
+
+def normalize_course_answer(value):
+    text = unicodedata.normalize("NFKC", str(value)).casefold()
+    text = text.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
+    return " ".join(text.strip().rstrip(".。!?！?？").split())
+
+
+@app.route("/api/curriculum", methods=["GET"])
+def api_curriculum_index():
+    stages = []
+    for stage in CURRICULUM_ORDER:
+        data = load_curriculum(stage)
+        if data:
+            stages.append(curriculum_summary(data))
+    return jsonify({"stages": stages, "version": APP_VERSION})
+
+
+@app.route("/api/curriculum/<stage>", methods=["GET"])
+def api_curriculum_stage(stage):
+    data = load_curriculum(stage)
+    if not data:
+        return jsonify({"error": "课程阶段不存在"}), 404
+    out = curriculum_summary(data)
+    band = (request.args.get("band") or "").strip()
+    units = data.get("units", [])
+    if band:
+        if band not in {str(item["id"]) for item in data.get("bands", [])}:
+            return jsonify({"error": "年级或学习路径无效"}), 400
+        units = [unit for unit in units if str(unit.get("band")) == band]
+    out["units"] = [
+        {
+            key: value for key, value in unit.items()
+            if key in {"id", "title", "band", "theme", "goal", "minutes", "skills"}
+        } | {"question_count": len(unit.get("questions", []))}
+        for unit in units
+    ]
+    return jsonify(out)
+
+
+@app.route("/api/curriculum/<stage>/<unit_id>", methods=["GET"])
+def api_curriculum_unit(stage, unit_id):
+    data = load_curriculum(stage)
+    unit = next((item for item in data.get("units", []) if item["id"] == unit_id), None) if data else None
+    if not unit:
+        return jsonify({"error": "课程单元不存在"}), 404
+    public_unit = dict(unit)
+    public_unit["questions"] = [curriculum_question(item) for item in unit.get("questions", [])]
+    return jsonify({"stage": curriculum_summary(data), "unit": public_unit})
+
+
+@app.route("/api/curriculum/progress", methods=["GET"])
+def api_curriculum_progress():
+    user = auth_user()
+    if not user:
+        return jsonify({"error": "请先登录后查看课程进度"}), 401
+    conn = db()
+    learner_key, error = curriculum_learner(conn, user["user_id"], request.args.get("child_id"))
+    if error:
+        conn.close()
+        return error
+    rows = conn.execute(
+        "SELECT stage,unit_id,best_score,attempts,completed,updated_at FROM course_progress "
+        "WHERE user_id=? AND learner_key=? ORDER BY updated_at DESC",
+        (user["user_id"], learner_key),
+    ).fetchall()
+    mistakes = conn.execute(
+        "SELECT COUNT(*) AS n FROM course_mistakes WHERE user_id=? AND learner_key=?",
+        (user["user_id"], learner_key),
+    ).fetchone()["n"]
+    conn.close()
+    return jsonify({
+        "learner_key": learner_key,
+        "units": [dict(row) for row in rows],
+        "summary": {
+            "completed": sum(bool(row["completed"]) for row in rows),
+            "attempts": sum(row["attempts"] for row in rows),
+            "mistakes": mistakes,
+        },
+    })
+
+
+@app.route("/api/curriculum/review", methods=["GET"])
+def api_curriculum_review():
+    user = auth_user()
+    if not user:
+        return jsonify({"error": "请先登录后复习错题"}), 401
+    stage = (request.args.get("stage") or "").strip()
+    if stage and stage not in CURRICULUM_ORDER:
+        return jsonify({"error": "课程阶段不存在"}), 400
+    conn = db()
+    learner_key, error = curriculum_learner(conn, user["user_id"], request.args.get("child_id"))
+    if error:
+        conn.close()
+        return error
+    conditions = "user_id=? AND learner_key=?"
+    params = [user["user_id"], learner_key]
+    if stage:
+        conditions += " AND stage=?"
+        params.append(stage)
+    rows = conn.execute(
+        "SELECT stage,unit_id,question_id,streak FROM course_mistakes WHERE "
+        + conditions + " ORDER BY updated_at ASC LIMIT 4", params,
+    ).fetchall()
+    conn.close()
+    items = []
+    for row in rows:
+        data = load_curriculum(row["stage"])
+        unit = next((item for item in data.get("units", []) if item["id"] == row["unit_id"]), None) if data else None
+        question = next((item for item in unit.get("questions", []) if item["id"] == row["question_id"]), None) if unit else None
+        if question and unit:
+            items.append({
+                "stage": row["stage"], "unit_id": row["unit_id"],
+                "unit_title": unit["title"], "question": curriculum_question(question),
+                "streak": row["streak"],
+            })
+    return jsonify({"items": items, "required_streak": 10})
+
+
+@app.route("/api/curriculum/<stage>/<unit_id>/attempt", methods=["POST"])
+def api_curriculum_attempt(stage, unit_id):
+    user = auth_user()
+    if not user:
+        return jsonify({"error": "请先登录后提交课程练习"}), 401
+    data = load_curriculum(stage)
+    unit = next((item for item in data.get("units", []) if item["id"] == unit_id), None) if data else None
+    if not unit:
+        return jsonify({"error": "课程单元不存在"}), 404
+    payload = request.get_json(silent=True)
+    if not isinstance(payload, dict) or not isinstance(payload.get("answers"), dict):
+        return jsonify({"error": "请提交答案对象"}), 400
+    answers = payload["answers"]
+    questions = {item["id"]: item for item in unit.get("questions", [])}
+    if not answers or any(key not in questions for key in answers):
+        return jsonify({"error": "题目编号无效或没有提交答案"}), 400
+    if any(not isinstance(value, str) or len(value) > 400 or not value.strip() for value in answers.values()):
+        return jsonify({"error": "答案必须为不超过 400 字符的非空文本"}), 400
+    request_id = payload.get("request_id", "")
+    if not isinstance(request_id, str) or len(request_id) > 100:
+        return jsonify({"error": "提交标识无效"}), 400
+    conn = db()
+    learner_key, error = curriculum_learner(conn, user["user_id"], payload.get("child_id"))
+    if error:
+        conn.close()
+        return error
+    conn.execute("BEGIN IMMEDIATE")
+    if request_id:
+        previous = conn.execute(
+            "SELECT response_json FROM course_attempt_receipts WHERE user_id=? AND learner_key=? "
+            "AND stage=? AND unit_id=? AND request_id=?",
+            (user["user_id"], learner_key, stage, unit_id, request_id),
+        ).fetchone()
+        if previous:
+            conn.close()
+            return jsonify(json.loads(previous["response_json"]))
+    feedback = []
+    stamp = now_iso()
+    for question_id, answer in answers.items():
+        question = questions[question_id]
+        expected = question["answer"]
+        accepted = expected if isinstance(expected, list) else [expected]
+        correct = normalize_course_answer(answer) in {normalize_course_answer(value) for value in accepted}
+        feedback.append({
+            "id": question_id, "correct": correct, "answer": expected,
+            "explanation": question.get("explanation", ""), "user_answer": answer,
+        })
+        keys = (user["user_id"], learner_key, stage, unit_id, question_id)
+        if correct:
+            conn.execute(
+                "UPDATE course_mistakes SET streak=streak+1,last_answer=?,updated_at=? "
+                "WHERE user_id=? AND learner_key=? AND stage=? AND unit_id=? AND question_id=?",
+                (answer, stamp) + keys,
+            )
+            conn.execute(
+                "DELETE FROM course_mistakes WHERE user_id=? AND learner_key=? AND stage=? "
+                "AND unit_id=? AND question_id=? AND streak>=10", keys,
+            )
+        else:
+            conn.execute(
+                "INSERT INTO course_mistakes(user_id,learner_key,stage,unit_id,question_id,streak,last_answer,updated_at) "
+                "VALUES(?,?,?,?,?,0,?,?) ON CONFLICT(user_id,learner_key,stage,unit_id,question_id) "
+                "DO UPDATE SET streak=0,last_answer=excluded.last_answer,updated_at=excluded.updated_at",
+                keys + (answer, stamp),
+            )
+    correct_count = sum(item["correct"] for item in feedback)
+    score = round(correct_count * 100 / len(questions)) if questions else 0
+    all_submitted = len(answers) == len(questions)
+    completed = all_submitted and score >= 75
+    progress_keys = (user["user_id"], learner_key, stage, unit_id)
+    conn.execute(
+        "INSERT INTO course_progress(user_id,learner_key,stage,unit_id,best_score,attempts,completed,updated_at) "
+        "VALUES(?,?,?,?,?,1,?,?) ON CONFLICT(user_id,learner_key,stage,unit_id) DO UPDATE SET "
+        "best_score=MAX(course_progress.best_score,excluded.best_score),attempts=course_progress.attempts+1,"
+        "completed=MAX(course_progress.completed,excluded.completed),updated_at=excluded.updated_at",
+        progress_keys + (score, int(completed), stamp),
+    )
+    progress = conn.execute(
+        "SELECT best_score,attempts,completed FROM course_progress WHERE user_id=? AND learner_key=? AND stage=? AND unit_id=?",
+        progress_keys,
+    ).fetchone()
+    remaining = conn.execute(
+        "SELECT COUNT(*) AS n FROM course_mistakes WHERE user_id=? AND learner_key=?",
+        (user["user_id"], learner_key),
+    ).fetchone()["n"]
+    response = {
+        "score": score, "correct": correct_count, "total": len(questions),
+        "all_submitted": all_submitted, "completed": completed,
+        "feedback": feedback, "progress": dict(progress), "mistakes_remaining": remaining,
+    }
+    if request_id:
+        conn.execute(
+            "INSERT INTO course_attempt_receipts VALUES(?,?,?,?,?,?)",
+            progress_keys + (request_id, json.dumps(response, ensure_ascii=False)),
+        )
+    conn.commit()
+    conn.close()
+    record_activity(user["user_id"], "study")
+    return jsonify(response)
+
+
 # ----------------------------- 静态托管 -----------------------------
 def send_html(path):
     """HTML 始终重新验证，避免镜像升级后浏览器或反代继续显示旧页面。"""
@@ -1892,6 +2271,16 @@ def user_auth_page():
 
 
 USER_PAGES = {"home", "vocabulary", "speaking", "grammar", "profile"}
+
+
+@app.route("/courses", methods=["GET"])
+@app.route("/courses/<stage>", methods=["GET"])
+def curriculum_page(stage=None):
+    if stage is not None and stage not in CURRICULUM_ORDER:
+        abort(404)
+    if not os.path.exists(COURSES_HTML):
+        abort(404)
+    return send_html(COURSES_HTML)
 
 
 @app.route("/app/<page>", methods=["GET"])

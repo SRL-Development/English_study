@@ -1,0 +1,1484 @@
+{
+  "id": "university",
+  "title": "大学英语",
+  "subtitle": "通用英语 · 四六级 · 学术与考研",
+  "age": "18 岁以上",
+  "description": "以通用英语、专门用途英语和跨文化沟通为主线，提供基础、提高与发展路径，连接四六级能力训练和研究学习。",
+  "alignment": {
+    "label": "《大学英语教学指南》（2020版）能力框架",
+    "url": "https://xuanshu.hep.com.cn/front/book/findBookDetails?bookId=5fbe19395710f1bcc39a1b3e",
+    "note": "原创单元参考基础、提高、发展层次；四六级和考研标签表示训练方向，不代表完整官方考纲或真题授权。"
+  },
+  "bands": [
+    {
+      "id": "foundation",
+      "label": "大学基础 · 校园与通用英语"
+    },
+    {
+      "id": "cet4",
+      "label": "四级能力 · 理解与表达"
+    },
+    {
+      "id": "cet6",
+      "label": "六级能力 · 分析与论证"
+    },
+    {
+      "id": "postgraduate",
+      "label": "考研与学术 · 研究沟通"
+    }
+  ],
+  "units": [
+    {
+      "id": "u-01",
+      "title": "在大学里主动获取资源",
+      "band": "foundation",
+      "theme": "校园生活 · 自主学习",
+      "goal": "理解校园服务信息，清楚询问条件、时间与预约步骤。",
+      "minutes": 30,
+      "skills": [
+        "应用文阅读",
+        "提问确认",
+        "听力细节",
+        "邮件写作"
+      ],
+      "knowledge": [
+        "间接疑问句使用陈述语序：Could you tell me when the centre opens?",
+        "询问服务需区分开放时间、预约时间和截止日期。",
+        "正式邮件包含目的、必要背景、具体请求和礼貌结束语。"
+      ],
+      "vocabulary": [
+        {
+          "en": "resource",
+          "zh": "资源"
+        },
+        {
+          "en": "appointment",
+          "zh": "预约"
+        },
+        {
+          "en": "eligibility",
+          "zh": "资格"
+        },
+        {
+          "en": "orientation",
+          "zh": "入学介绍"
+        },
+        {
+          "en": "consultation",
+          "zh": "咨询"
+        },
+        {
+          "en": "available",
+          "zh": "可用的"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Could you tell me how to book a writing consultation?",
+          "zh": "能告诉我如何预约写作咨询吗？"
+        },
+        {
+          "en": "Use the student portal and upload a short draft first.",
+          "zh": "先通过学生门户上传一份简短草稿。"
+        },
+        {
+          "en": "Do I need a complete essay, or can I bring an outline?",
+          "zh": "我需要完整文章，还是可以带提纲？"
+        }
+      ],
+      "reading": {
+        "en": "During orientation, first-year students received a long list of campus services. Jia saved the file but did not open it again until she struggled with an essay. She assumed that the writing centre only corrected grammar. When she visited its website, she discovered that tutors also discussed planning, structure and the use of evidence. Students could bring an outline rather than a finished paper. Jia booked an appointment and wrote down two questions beforehand. The tutor did not rewrite the essay for her. Instead, they examined one paragraph and discussed a method she could apply elsewhere. Jia left with a clearer task and a better understanding of the service. She realised that using university resources actively was part of becoming an independent learner.",
+        "zh": "新生嘉在写作遇到困难后才查看校园服务文件。她原以为写作中心只改语法，查网站后发现还讨论规划、结构和证据，带提纲也可以咨询。她预约前准备两个问题，导师没有代写，而是和她分析一个段落及可迁移方法。她离开时更清楚下一步任务，也认识到主动利用校园资源是自主学习的一部分。"
+      },
+      "writing": {
+        "prompt": "写一封 80–100 词的咨询预约邮件，说明写作阶段、两个困难和可用时间。",
+        "sample": "Dear Writing Centre Team, I am preparing an essay about campus transport. I have an outline but need advice on organising evidence and connecting paragraphs. Could I book a consultation this Thursday afternoon? Please let me know whether I should upload the outline before the meeting. Thank you for your help.",
+        "checklist": [
+          "请求是否具体",
+          "是否说明当前写作阶段",
+          "间接疑问句语序是否正确"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "导师在咨询中主要做了什么？",
+          "options": [
+            "替嘉重写全文",
+            "只检查标点",
+            "分析段落并讨论可迁移的方法",
+            "取消嘉的预约"
+          ],
+          "answer": "分析段落并讨论可迁移的方法",
+          "explanation": "tutor did not rewrite；他们 examined one paragraph 并讨论可用于其他部分的方法。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "Could you tell me when the writing centre ___? （open 的第三人称单数）",
+          "answer": "opens",
+          "explanation": "间接疑问句用陈述语序；单数主语 centre 对应 opens。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：预约前需要上传什么？",
+          "listen_text": "Before your appointment, please upload an outline and write down two questions.",
+          "options": [
+            "An outline",
+            "A passport",
+            "A complete textbook",
+            "A travel ticket"
+          ],
+          "answer": "An outline",
+          "explanation": "upload 的宾语是 an outline；write down two questions 是另一个准备步骤。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "available appointments 指什么？",
+          "options": [
+            "已经取消的课程",
+            "可以预约的时段",
+            "毕业要求",
+            "只有教师使用的资源"
+          ],
+          "answer": "可以预约的时段",
+          "explanation": "available 在服务语境中表示可供使用或预约。"
+        }
+      ]
+    },
+    {
+      "id": "u-02",
+      "title": "找到信息，更要判断信息",
+      "band": "foundation",
+      "theme": "信息素养 · 资料检索",
+      "goal": "比较来源质量，区分观点、数据与商业宣传。",
+      "minutes": 30,
+      "skills": [
+        "来源评价",
+        "引用意识",
+        "听力定位",
+        "摘要写作"
+      ],
+      "knowledge": [
+        "评价来源时检查作者、发布时间、证据与写作目的。",
+        "引用要使读者能找到原始资料，转述也需要标注来源。",
+        "用 according to 区分来源观点与作者自己的判断。"
+      ],
+      "vocabulary": [
+        {
+          "en": "source",
+          "zh": "来源"
+        },
+        {
+          "en": "credible",
+          "zh": "可信的"
+        },
+        {
+          "en": "citation",
+          "zh": "引用标注"
+        },
+        {
+          "en": "verify",
+          "zh": "核实"
+        },
+        {
+          "en": "commercial",
+          "zh": "商业的"
+        },
+        {
+          "en": "relevance",
+          "zh": "相关性"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "This page appears first in the search results. Is that enough?",
+          "zh": "这个页面排在搜索结果第一位，这就够了吗？"
+        },
+        {
+          "en": "Not necessarily. We should check who wrote it and what evidence it uses.",
+          "zh": "不一定，我们应检查作者和使用的证据。"
+        },
+        {
+          "en": "I will trace the statistic to the original report.",
+          "zh": "我会追查这个数字的原始报告。"
+        }
+      ],
+      "reading": {
+        "en": "A student group searched for information about remote learning. The first result claimed that a particular platform doubled achievement, but the page was written by the company selling it. Another article discussed both benefits and difficulties, linked to a study and explained the age group involved. The students initially preferred the stronger claim because it was easier to quote. Their librarian asked them to trace each statistic and consider whether the evidence matched their question. They discovered that the company's figure came from a small voluntary survey. They kept the page as an example of marketing, not as independent evidence of learning outcomes. The experience taught them that finding a source is only the beginning; evaluating its relevance and purpose is essential.",
+        "zh": "小组检索远程学习资料时，首条结果声称某平台使成绩翻倍，却来自销售该平台的公司。另一篇文章讨论利弊，链接研究并说明年龄范围。图书馆员请他们追查数字并核对相关性，结果发现翻倍数字来自小规模自愿调查。小组把网页保留为营销案例，而不是独立成效证据。他们认识到，找到来源之后还要评价目的、证据和适用范围。"
+      },
+      "writing": {
+        "prompt": "写 80–100 词比较两个资料来源，说明你将如何使用它们。",
+        "sample": "The company page is useful for understanding its marketing claims, but its small survey does not establish general learning effects. The second article provides a clearer method and links to the original study. I will use it cautiously, noting that its participants may differ from the students in our project.",
+        "checklist": [
+          "是否评价证据而不只评价版面",
+          "是否区分用途",
+          "是否保留适用范围限制"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "小组最终如何使用公司网页？",
+          "options": [
+            "作为适用于所有人的独立证据",
+            "作为营销案例",
+            "完全代替原始研究",
+            "证明另一篇文章错误"
+          ],
+          "answer": "作为营销案例",
+          "explanation": "网页仍有研究营销表达的价值，但不能直接作为学习成效的独立证据。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "According ___ the original report, the survey was voluntary.",
+          "answer": "to",
+          "explanation": "固定表达 according to 表示根据某来源。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：图书馆员建议首先检查哪两项？",
+          "listen_text": "Check the author's purpose and the original evidence before quoting the statistic.",
+          "options": [
+            "Font and colour",
+            "Only the title",
+            "The number of advertisements",
+            "Purpose and original evidence"
+          ],
+          "answer": "Purpose and original evidence",
+          "explanation": "purpose 与 original evidence 是关键评价项，搜索排名不在其中。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "verify a statistic 的意思是 ___.",
+          "options": [
+            "make it more dramatic",
+            "copy it without a source",
+            "check whether it is accurate",
+            "remove its context"
+          ],
+          "answer": "check whether it is accurate",
+          "explanation": "verify 意为核实，包括追查原始资料与计算背景。"
+        }
+      ]
+    },
+    {
+      "id": "u-03",
+      "title": "跨文化小组如何协作",
+      "band": "foundation",
+      "theme": "跨文化沟通 · 团队合作",
+      "goal": "避免以文化标签代替询问，用清楚规则协调合作。",
+      "minutes": 30,
+      "skills": [
+        "沟通策略",
+        "观点辨析",
+        "听力意图",
+        "反思写作"
+      ],
+      "knowledge": [
+        "避免把一个人的行为归因于整个文化群体。",
+        "用 Could we agree on…? 协商共同规则，而非指责个人。",
+        "现在完成时连接过去经历与现在结果：We have agreed on a schedule.。"
+      ],
+      "vocabulary": [
+        {
+          "en": "assumption",
+          "zh": "假设；想当然的看法"
+        },
+        {
+          "en": "clarify",
+          "zh": "澄清"
+        },
+        {
+          "en": "expectation",
+          "zh": "期望"
+        },
+        {
+          "en": "deadline",
+          "zh": "截止时间"
+        },
+        {
+          "en": "respectful",
+          "zh": "尊重他人的"
+        },
+        {
+          "en": "negotiate",
+          "zh": "协商"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Could we agree on what a finished draft should include?",
+          "zh": "我们能否就完成稿应包含什么达成一致？"
+        },
+        {
+          "en": "Yes. I thought we only needed an outline by Friday.",
+          "zh": "可以，我原以为周五只需要提纲。"
+        },
+        {
+          "en": "Let's write down the tasks and confirm them together.",
+          "zh": "我们把任务写下来，一起确认吧。"
+        }
+      ],
+      "reading": {
+        "en": "An international project team missed its first deadline. One member immediately blamed cultural differences, saying that some people were less direct than others. During a meeting, however, the team discovered a simpler problem. The word draft had meant a complete essay to two members and a list of ideas to the others. No one had checked the shared expectation. They agreed to describe deliverables with examples and record decisions after each meeting. They also invited members to ask questions privately if necessary. The next task was completed on time. The team did not conclude that cultural differences were irrelevant. Instead, members learned that labels cannot replace careful inquiry. Clear agreements and respectful questions helped them understand individual needs and work together more effectively.",
+        "zh": "国际小组错过第一次截止时间，有人立刻归因于文化差异。沟通后发现，draft 对部分人指完整文章，对另一些人只指想法清单，大家没有确认要求。团队于是用例子说明交付内容、会后记录决定，并允许私下提问。下次准时完成。他们没有否认文化差异，而是认识到文化标签不能替代具体询问；清楚约定和尊重式提问更有助于合作。"
+      },
+      "writing": {
+        "prompt": "写一份小组协作约定，包含交付标准、时间、反馈和澄清方式。",
+        "sample": "We have agreed to submit a complete first draft by Friday at six. Each section should include a main point and supporting evidence. We will record decisions in a shared document. If a requirement is unclear, members should ask for an example before beginning rather than assume that everyone understands it in the same way.",
+        "checklist": [
+          "交付要求是否可观察",
+          "是否明确时间",
+          "是否提供澄清渠道"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "小组第一次误期的直接问题是什么？",
+          "options": [
+            "所有成员都不愿合作",
+            "没有任何讨论工具",
+            "成员对 draft 的理解不同",
+            "文化差异必然导致失败"
+          ],
+          "answer": "成员对 draft 的理解不同",
+          "explanation": "正文通过 complete essay 与 list of ideas 的对比指出具体原因。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "We ___ agreed on a clear schedule. （现在完成时助动词）",
+          "answer": "have",
+          "explanation": "主语 We 使用 have agreed，表示约定已经形成并影响现在。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：发言者的主要意图是什么？",
+          "listen_text": "Could we confirm what each section should include before we divide the work?",
+          "options": [
+            "Clarify a shared expectation",
+            "Cancel the whole project",
+            "Blame one member",
+            "Change the topic"
+          ],
+          "answer": "Clarify a shared expectation",
+          "explanation": "confirm what each section should include 是在澄清共同要求。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "an assumption is ___.",
+          "options": [
+            "a verified final result",
+            "a belief accepted before checking it",
+            "a written deadline",
+            "a respectful question"
+          ],
+          "answer": "a belief accepted before checking it",
+          "explanation": "assumption 指未经充分核实便接受的看法，语境提醒应主动澄清。"
+        }
+      ]
+    },
+    {
+      "id": "u-04",
+      "title": "四级阅读：先定位，再核对",
+      "band": "cet4",
+      "theme": "学习策略 · 阅读理解",
+      "goal": "使用略读获取结构，再根据同义改写定位证据。",
+      "minutes": 30,
+      "skills": [
+        "略读",
+        "细节定位",
+        "同义识别",
+        "简短概括"
+      ],
+      "knowledge": [
+        "skimming 用于把握主旨和结构，scanning 用于寻找具体信息。",
+        "题目常用同义改写，不能只寻找完全相同的词。",
+        "细节题需核对主体、范围、时间和否定关系。"
+      ],
+      "vocabulary": [
+        {
+          "en": "skim",
+          "zh": "略读"
+        },
+        {
+          "en": "scan",
+          "zh": "查读"
+        },
+        {
+          "en": "paraphrase",
+          "zh": "同义转述"
+        },
+        {
+          "en": "locate",
+          "zh": "定位"
+        },
+        {
+          "en": "scope",
+          "zh": "范围"
+        },
+        {
+          "en": "contrast",
+          "zh": "对比"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "I found the same word in the passage. Is the option correct?",
+          "zh": "我在文章中找到了相同的词，选项就对吗？"
+        },
+        {
+          "en": "Check the whole sentence. The option may reverse the meaning.",
+          "zh": "要检查整句话，选项可能把意思颠倒。"
+        },
+        {
+          "en": "I will compare the subject, time and degree of certainty.",
+          "zh": "我会比较主体、时间和确定程度。"
+        }
+      ],
+      "reading": {
+        "en": "A university library extended its evening hours during an examination period. A short survey found that students appreciated the change, especially those sharing crowded rooms. However, attendance records showed that only a small number stayed until closing time. Some readers therefore argued that the longer schedule was unnecessary. The librarian offered a different interpretation. Students often valued the option to stay late even when they did not use it every evening. She proposed keeping the extension for the busiest weeks while examining staffing costs. The report did not recommend longer hours throughout the year. It described a limited change that met a particular need. Understanding that distinction required readers to check the scope of the recommendation rather than match isolated words.",
+        "zh": "大学图书馆在考试期间延长开放。调查显示学生欢迎，尤其宿舍拥挤者，但只有少数人待到关门。有人认为无需延时，馆员却指出：即使不是每天使用，学生也珍惜这个选项。她建议仅最忙的几周保留延时，并审查人员成本。报告没有要求全年延长，理解题意需要核对建议范围。"
+      },
+      "writing": {
+        "prompt": "用 60–80 词概括该图书馆建议，保留适用时间和成本考虑。",
+        "sample": "The library may keep extended evening hours during the busiest examination weeks because students value having a quiet place available. Low attendance at closing time does not necessarily remove that benefit. However, the proposal is limited to a particular period, and staffing costs still need to be examined.",
+        "checklist": [
+          "是否保留考试期间限制",
+          "是否准确解释低出席率",
+          "是否避免扩大为全年政策"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "馆员建议采取什么做法？",
+          "options": [
+            "全年二十四小时开放",
+            "只在最忙的考试周保留延时并评估成本",
+            "永久取消晚间开放",
+            "只为住单间学生开放"
+          ],
+          "answer": "只在最忙的考试周保留延时并评估成本",
+          "explanation": "关键限制是 busiest weeks，而非 throughout the year。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "The option is useful even ___ students do not use it every evening.",
+          "answer": ["if", "though"],
+          "explanation": "even if 强调即使出现该条件，even though 强调尽管存在该事实；本句语境两者都可接受。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：延时政策计划在什么时候使用？",
+          "listen_text": "We propose extending the hours only during the busiest examination weeks.",
+          "options": [
+            "Every summer holiday",
+            "Throughout the entire year",
+            "Only on national holidays",
+            "During the busiest examination weeks"
+          ],
+          "answer": "During the busiest examination weeks",
+          "explanation": "only 限定政策范围，不能扩大到全年。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "Which task mainly requires scanning?",
+          "options": [
+            "Finding a specific closing time",
+            "Evaluating every argument",
+            "Writing a complete summary",
+            "Comparing two opinions in depth"
+          ],
+          "answer": "Finding a specific closing time",
+          "explanation": "scanning 是快速寻找日期、数字、名称等具体信息。"
+        }
+      ]
+    },
+    {
+      "id": "u-05",
+      "title": "四级听力：抓住转折和决定",
+      "band": "cet4",
+      "theme": "校园沟通 · 听力策略",
+      "goal": "记录对话中的变更、原因和最后决定。",
+      "minutes": 30,
+      "skills": [
+        "听力笔记",
+        "时间核对",
+        "对话推断",
+        "通知写作"
+      ],
+      "knowledge": [
+        "but、actually、instead 常提示前文安排被修正。",
+        "笔记记录对象、变更、原因、最终决定，避免逐字抄写。",
+        "将来安排可用 be going to，礼貌请求可用 could。"
+      ],
+      "vocabulary": [
+        {
+          "en": "reschedule",
+          "zh": "重新安排"
+        },
+        {
+          "en": "venue",
+          "zh": "场地"
+        },
+        {
+          "en": "confirm",
+          "zh": "确认"
+        },
+        {
+          "en": "alternative",
+          "zh": "替代方案"
+        },
+        {
+          "en": "notify",
+          "zh": "通知"
+        },
+        {
+          "en": "equipment",
+          "zh": "设备"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "I thought the workshop was in Room 204 at three.",
+          "zh": "我原以为工作坊三点在 204 室。"
+        },
+        {
+          "en": "The projector is broken, so we have moved it to the media room at four.",
+          "zh": "投影仪坏了，因此改到四点在媒体教室举行。"
+        },
+        {
+          "en": "I will update the notice and tell the registered students.",
+          "zh": "我会更新通知，告知已报名学生。"
+        }
+      ],
+      "reading": {
+        "en": "The student society planned a presentation workshop in a small classroom. When members tested the equipment, the projector stopped working. They first considered cancelling the visual examples, but the speaker explained that these were central to the activity. A larger media room was available an hour later. The society moved the workshop and sent a short update to registered students. The message placed the new time and room first, followed by the reason for the change. It also explained that the original notice was no longer current. Some students had already copied the earlier details into their calendars, so a second reminder was sent. The organisers learned that a clear change notice must state the final arrangement, not merely describe a problem.",
+        "zh": "学生社团原定在小教室办演示工作坊，测试时投影仪故障。讲者认为视觉例子不可缺少，而媒体教室晚一小时有空，社团于是改时改地。通知先写新时间地点，再说明原因，并标明旧通知作废。由于部分学生已记下原安排，又发提醒。组织者认识到，变更通知应突出最终安排，而不只是描述故障。"
+      },
+      "writing": {
+        "prompt": "写一则活动变更通知，包含新时间地点、原因以及读者需要采取的行动。",
+        "sample": "The presentation workshop will now take place in the media room at four this afternoon. The original classroom projector is unavailable. Please update your calendar and use this notice instead of the earlier message. If you can no longer attend, contact the society before noon.",
+        "checklist": [
+          "最新安排是否放在前面",
+          "是否交代旧安排已变更",
+          "行动要求是否明确"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "变更通知为何把新时间地点放在第一位？",
+          "options": [
+            "读者最需要知道最终安排",
+            "故障原因完全不重要",
+            "组织者不想解释任何事情",
+            "所有人已知道新房间"
+          ],
+          "answer": "读者最需要知道最终安排",
+          "explanation": "文末明确指出通知需突出 final arrangement，让读者能据此行动。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "We are going ___ notify everyone about the change.",
+          "answer": "to",
+          "explanation": "be going to + 动词原形表示计划要做的事。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：工作坊最终几点举行？",
+          "listen_text": "It was originally at three, but we have rescheduled it for four in the media room.",
+          "options": [
+            "At two",
+            "At three",
+            "At four",
+            "At five"
+          ],
+          "answer": "At four",
+          "explanation": "but 后的 four 是最终安排；three 是已改变的原时间。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "reschedule a meeting means ___.",
+          "options": [
+            "write its minutes",
+            "remove its equipment",
+            "invite every student",
+            "change its arranged time"
+          ],
+          "answer": "change its arranged time",
+          "explanation": "re- 表示重新，reschedule 即重新安排时间。"
+        }
+      ]
+    },
+    {
+      "id": "u-06",
+      "title": "四级写译：让句子服务于段落",
+      "band": "cet4",
+      "theme": "语言表达 · 写作与翻译",
+      "goal": "围绕中心句组织支持细节，避免中文逐词映射。",
+      "minutes": 30,
+      "skills": [
+        "段落组织",
+        "汉英转换",
+        "听力理解",
+        "应用写作"
+      ],
+      "knowledge": [
+        "英语段落通常需要清楚中心句，例子应服务于该中心。",
+        "汉译英先判断动作和逻辑关系，再选择主语和时态。",
+        "定语过长时可拆分为两个句子，准确清楚优先于复杂。"
+      ],
+      "vocabulary": [
+        {
+          "en": "coherence",
+          "zh": "连贯性"
+        },
+        {
+          "en": "supporting detail",
+          "zh": "支持性细节"
+        },
+        {
+          "en": "revise",
+          "zh": "修改"
+        },
+        {
+          "en": "accurate",
+          "zh": "准确的"
+        },
+        {
+          "en": "concise",
+          "zh": "简洁的"
+        },
+        {
+          "en": "emphasis",
+          "zh": "强调"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "My paragraph contains many advanced words, but it feels unclear.",
+          "zh": "我的段落有很多高级词，却显得不清楚。"
+        },
+        {
+          "en": "What is the one point you want the reader to understand?",
+          "zh": "你最想让读者理解的一个要点是什么？"
+        },
+        {
+          "en": "I will remove the example that does not support that point.",
+          "zh": "我会删掉不能支持该要点的例子。"
+        }
+      ],
+      "reading": {
+        "en": "For a campus newsletter, a student wrote about a shared bicycle service. Her first paragraph included a long history of transport, several personal memories and a final sentence about repairing damaged bicycles. A peer reader could not identify the main point. The writer revised the paragraph around one claim: regular maintenance made the service more dependable. She kept a relevant example about a repair station and removed the unrelated history. When translating a Chinese notice for the same article, she also divided one long sentence into two shorter ones. The result used simpler vocabulary but communicated the message more clearly. Revision had improved not only grammar but also the relationship between ideas, helping readers understand why each detail belonged in the paragraph.",
+        "zh": "学生为校园通讯写共享单车，初稿混入交通史、个人回忆和维修话题，同伴找不到中心。修改时她围绕定期维护使服务可靠这一观点，保留维修点例子，删去无关历史。翻译中文通知时，又将一个长句拆成两句。最终词汇更简单，却更清楚，修改改善了信息关系，而不只是语法。"
+      },
+      "writing": {
+        "prompt": "写一个 80 词左右的段落，说明校园设施的一项改进，包含中心句和两个支持细节。",
+        "sample": "A small repair station has made the bicycle service more dependable. Students can report damage through a simple form, and a technician checks the bicycles every afternoon. These steps reduce the number of unusable bicycles at busy times. The improvement is modest, but it addresses a problem students face every day.",
+        "checklist": [
+          "中心句是否清楚",
+          "每个例子是否支持中心",
+          "是否避免无关背景堆积"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "修改后段落的中心是什么？",
+          "options": [
+            "所有交通工具的历史",
+            "作者童年的回忆",
+            "复杂词汇比清楚表达重要",
+            "定期维护提高单车服务可靠性"
+          ],
+          "answer": "定期维护提高单车服务可靠性",
+          "explanation": "修改围绕 regular maintenance made the service more dependable 展开。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "The writer removed details ___ did not support the main point. （填修饰事物的关系代词）",
+          "answer": ["that", "which"],
+          "explanation": "限制性定语从句修饰 details，在从句中作主语，可以使用 that 或 which。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：作者如何处理那个过长的句子？",
+          "listen_text": "She divided the long sentence into two shorter ones to make the notice clearer.",
+          "options": [
+            "Deleted every fact",
+            "Split it into two sentences",
+            "Added unrelated history",
+            "Changed it into a title"
+          ],
+          "answer": "Split it into two sentences",
+          "explanation": "divided ... into two shorter ones 对应拆分为两个短句。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "concise writing is writing that ___.",
+          "options": [
+            "repeats every detail",
+            "always uses difficult vocabulary",
+            "expresses necessary ideas without needless words",
+            "has no examples"
+          ],
+          "answer": "expresses necessary ideas without needless words",
+          "explanation": "concise 是简洁，不等于删除必要证据或一味追求短。"
+        }
+      ]
+    },
+    {
+      "id": "u-07",
+      "title": "六级阅读：因果解释与替代假设",
+      "band": "cet6",
+      "theme": "研究素养 · 证据评估",
+      "goal": "辨认因果主张及混杂因素，使用谨慎措辞。",
+      "minutes": 35,
+      "skills": [
+        "论证评估",
+        "因果辨析",
+        "听力态度",
+        "批判写作"
+      ],
+      "knowledge": [
+        "observational evidence 通常不能单独建立因果关系。",
+        "可能影响结果的第三因素称 confounding factor。",
+        "用 may、suggest、be associated with 表达证据允许的确定程度。"
+      ],
+      "vocabulary": [
+        {
+          "en": "causal",
+          "zh": "因果的"
+        },
+        {
+          "en": "confounding factor",
+          "zh": "混杂因素"
+        },
+        {
+          "en": "association",
+          "zh": "关联"
+        },
+        {
+          "en": "intervention",
+          "zh": "干预"
+        },
+        {
+          "en": "plausible",
+          "zh": "看似合理的"
+        },
+        {
+          "en": "cautious",
+          "zh": "谨慎的"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Students using the new app reported less stress.",
+          "zh": "使用新应用的学生报告压力较小。"
+        },
+        {
+          "en": "Could motivation or existing support explain part of the difference?",
+          "zh": "动机或原有支持是否能解释部分差异？"
+        },
+        {
+          "en": "We should describe an association rather than claim a proven cause.",
+          "zh": "我们应描述关联，而非宣称因果已被证明。"
+        }
+      ],
+      "reading": {
+        "en": "A campus survey found that students who used a planning application reported lower stress. The company described the result as evidence that its product reduced anxiety. A researcher reviewing the survey noted that users had chosen the app themselves. They might already have stronger organisational habits or better access to support. The survey also measured app use and stress at the same time, making the direction of the relationship unclear. The researcher did not dismiss the product. She suggested a more careful study in which comparable groups received different forms of support over a defined period. Until then, she recommended language that reflected uncertainty. A plausible explanation can guide further investigation, but it should not be presented as a conclusion stronger than the design can support.",
+        "zh": "校园调查发现，使用计划应用者报告压力较低，公司据此宣称产品降低焦虑。研究者指出用户自行选择使用，可能原本组织能力或支持条件更好；使用和压力又同时测量，方向不明。她未否定产品，而是建议在确定时段比较相近群体接受不同支持的结果。此前应使用反映不确定性的措辞，不能让结论超过设计所能支持的强度。"
+      },
+      "writing": {
+        "prompt": "用 100–120 词评价调查结论，提出两项方法限制和一个改进方向。",
+        "sample": "The survey identifies an association between app use and lower stress, but it does not establish causation. Users selected the app themselves, and both variables were measured at one time. A study following comparable groups over a defined period would provide stronger evidence. The current finding should be described cautiously.",
+        "checklist": [
+          "是否区分关联和因果",
+          "限制是否来自设计",
+          "建议是否能回应限制"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "研究者对产品的态度最接近什么？",
+          "options": [
+            "谨慎开放，要求更合适的证据",
+            "完全否定一切可能作用",
+            "确信调查已证明因果",
+            "只关心产品名称"
+          ],
+          "answer": "谨慎开放，要求更合适的证据",
+          "explanation": "did not dismiss 与 suggested a more careful study 表明谨慎但不全盘否定。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "Lower stress may be associated ___ stronger organisational habits.",
+          "answer": "with",
+          "explanation": "固定搭配 be associated with 表示与……相关。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：研究者认为调查支持哪种结论？",
+          "listen_text": "The survey suggests an association, but it does not establish a causal effect.",
+          "options": [
+            "A guaranteed cure",
+            "A final causal explanation",
+            "An association",
+            "No information at all"
+          ],
+          "answer": "An association",
+          "explanation": "转折前认可关联，转折后否定因果已建立。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "A confounding factor is a factor that ___.",
+          "options": [
+            "makes every survey useless",
+            "is always the intended treatment",
+            "can be ignored without explanation",
+            "may influence the observed relationship"
+          ],
+          "answer": "may influence the observed relationship",
+          "explanation": "混杂因素可能同时影响所研究变量，使关联被误读为直接因果。"
+        }
+      ]
+    },
+    {
+      "id": "u-08",
+      "title": "六级表达：回应反方观点",
+      "band": "cet6",
+      "theme": "思辨沟通 · 论证与辩论",
+      "goal": "准确呈现不同意见，再提出有条件的回应。",
+      "minutes": 35,
+      "skills": [
+        "反方理解",
+        "让步论证",
+        "听力立场",
+        "议论文写作"
+      ],
+      "knowledge": [
+        "让步不等于放弃立场，可以承认特定情况下对方理由成立。",
+        "避免 straw man，即把对方观点简化成容易攻击的极端版本。",
+        "用 while、nevertheless、provided that 表达兼顾条件的立场。"
+      ],
+      "vocabulary": [
+        {
+          "en": "counterargument",
+          "zh": "反方论点"
+        },
+        {
+          "en": "concession",
+          "zh": "让步"
+        },
+        {
+          "en": "feasible",
+          "zh": "可行的"
+        },
+        {
+          "en": "perspective",
+          "zh": "视角"
+        },
+        {
+          "en": "restriction",
+          "zh": "限制"
+        },
+        {
+          "en": "justify",
+          "zh": "论证合理性"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "I support recording lectures, but some students worry about privacy.",
+          "zh": "我支持录课，但有些学生担心隐私。"
+        },
+        {
+          "en": "That concern matters, especially during personal discussions.",
+          "zh": "这个顾虑重要，尤其涉及个人讨论时。"
+        },
+        {
+          "en": "We could record explanations and pause recording during sensitive activities.",
+          "zh": "我们可以录制讲解，在敏感活动时暂停。"
+        }
+      ],
+      "reading": {
+        "en": "A university committee debated whether lectures should always be recorded. Supporters argued that recordings helped students review difficult material and supported those who could not attend temporarily. Opponents raised concerns about privacy and the possibility that students would avoid asking questions. At first, both sides treated the policy as an all-or-nothing choice. A student representative proposed distinguishing between different parts of a class. Prepared explanations could be recorded, while personal discussions or activities involving sensitive examples could remain unrecorded. Access could also be limited to enrolled students. The proposal did not eliminate every difficulty, but it acknowledged legitimate concerns on both sides. The discussion became more productive when participants responded to the strongest version of the opposing argument rather than dismissing it as resistance to progress.",
+        "zh": "大学委员会讨论是否所有课都录制。支持者看重复习和临时缺课支持，反对者担心隐私与提问意愿。学生代表建议区分课堂环节：录制预备讲解，个人或敏感讨论不录，并限制注册学生访问。方案没有消除所有困难，却承认双方合理关切。讨论因此从全有全无转向回应对方最有力论据。"
+      },
+      "writing": {
+        "prompt": "用 120 词左右讨论课堂录制，包含一项反方关切及有条件的回应。",
+        "sample": "Lecture recordings can improve access to difficult explanations. Nevertheless, privacy concerns deserve a serious response. Students may hesitate to share personal experiences if every discussion is recorded. A flexible policy could record prepared explanations while allowing teachers to pause during sensitive activities. Access should be limited and clearly explained.",
+        "checklist": [
+          "是否准确呈现反方理由",
+          "回应是否包含具体条件",
+          "是否避免把不同意见极端化"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "学生代表的建议怎样改善讨论？",
+          "options": [
+            "拒绝承认任何隐私问题",
+            "兼顾了不同课堂环节及双方关切",
+            "保证所有学生都提问",
+            "把反对者排除出委员会"
+          ],
+          "answer": "兼顾了不同课堂环节及双方关切",
+          "explanation": "区分环节和访问权限，使政策脱离 all-or-nothing 的简单二选一。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "Recordings can help students, ___ privacy concerns still need attention. （填转折连词）",
+          "answer": ["but", "yet"],
+          "explanation": "前后分别陈述好处与仍需处理的问题，but 或 yet 都可连接转折。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：何时应暂停录制？",
+          "listen_text": "We can record prepared explanations but pause the recording during sensitive personal discussions.",
+          "options": [
+            "During all explanations",
+            "Only during breaks",
+            "Never",
+            "During sensitive personal discussions"
+          ],
+          "answer": "During sensitive personal discussions",
+          "explanation": "pause 对应 sensitive personal discussions，prepared explanations 可以录制。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "a counterargument is ___.",
+          "options": [
+            "a reason that challenges a position",
+            "a repeated title",
+            "a grammar correction only",
+            "a rule against discussion"
+          ],
+          "answer": "a reason that challenges a position",
+          "explanation": "反方论点提供不同立场的理由，准确回应它能使论证更扎实。"
+        }
+      ]
+    },
+    {
+      "id": "u-09",
+      "title": "六级社会议题：公平与可及性",
+      "band": "cet6",
+      "theme": "社会参与 · 公共服务",
+      "goal": "分析同一措施对不同群体的影响，使用具体例子支持观点。",
+      "minutes": 35,
+      "skills": [
+        "多角度分析",
+        "信息整合",
+        "听力细节",
+        "问题解决写作"
+      ],
+      "knowledge": [
+        "equality 强调相同待遇，equity 关注不同条件下的公平机会。",
+        "评价公共服务不仅看效率，也看可及性与替代渠道。",
+        "可使用 not only…but also 连接平行结构，保持语法一致。"
+      ],
+      "vocabulary": [
+        {
+          "en": "accessibility",
+          "zh": "可及性；无障碍性"
+        },
+        {
+          "en": "equity",
+          "zh": "公平"
+        },
+        {
+          "en": "barrier",
+          "zh": "障碍"
+        },
+        {
+          "en": "alternative",
+          "zh": "替代选择"
+        },
+        {
+          "en": "efficiency",
+          "zh": "效率"
+        },
+        {
+          "en": "inclusive",
+          "zh": "包容性的"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "The new online form is faster for most users.",
+          "zh": "新的在线表格对大部分用户更快。"
+        },
+        {
+          "en": "What about people who cannot use the required device?",
+          "zh": "无法使用所需设备的人怎么办？"
+        },
+        {
+          "en": "We should keep an assisted option while improving the online process.",
+          "zh": "我们应改善在线流程，同时保留有人协助的渠道。"
+        }
+      ],
+      "reading": {
+        "en": "A city service moved its appointments online to reduce waiting times. Most users welcomed the change, and the average processing time fell. However, a community survey found that some residents lacked a suitable device or needed help reading the form. The service initially offered everyone the same website and called this equal treatment. Community workers argued that identical procedures did not guarantee equal access. They proposed an assisted booking desk and clearer instructions, while keeping the online system for those who preferred it. Officials worried about additional costs, so the city tested the desk on selected mornings and recorded unmet requests. The project demonstrated that efficiency and inclusion need not be opposing goals, provided that barriers are identified and responses are evaluated carefully.",
+        "zh": "城市服务将预约移到网上，平均办理时间下降，但调查发现部分居民没有合适设备或读表需要帮助。社区工作者指出，同一网站不等于同等可及，建议保留协助窗口、改善说明，同时继续网上办理。考虑成本后，城市在指定上午试办窗口并记录未满足请求。这说明识别障碍、谨慎评价后，效率与包容可以兼顾。"
+      },
+      "writing": {
+        "prompt": "用 120 词左右为数字公共服务提出包容性改进，讨论成本与评价方法。",
+        "sample": "Online appointments can reduce waiting, but a complete service should also support residents who face digital barriers. An assisted booking desk on selected mornings could provide an alternative without replacing the website. The city should record demand, waiting times and unresolved requests before deciding whether to expand the service.",
+        "checklist": [
+          "是否明确具体障碍",
+          "替代渠道是否可执行",
+          "是否提出评价指标"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "社区工作者为什么不认为同一网站已经实现公平可及？",
+          "options": [
+            "网站对任何人都没有帮助",
+            "网上办理一定更贵",
+            "居民的设备和理解条件不同",
+            "所有居民都拒绝使用网络"
+          ],
+          "answer": "居民的设备和理解条件不同",
+          "explanation": "缺设备、读表困难等条件差异，意味着形式相同的流程未必提供同等机会。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "The service should be not only efficient ___ also accessible.",
+          "answer": "but",
+          "explanation": "固定关联结构 not only…but also，连接 efficient 与 accessible。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：城市如何开始试办协助窗口？",
+          "listen_text": "The assisted booking desk will open on selected mornings during the trial.",
+          "options": [
+            "Every night",
+            "On selected mornings",
+            "Only once a year",
+            "At all hours immediately"
+          ],
+          "answer": "On selected mornings",
+          "explanation": "selected mornings 表示选定上午，说明试点范围有限。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "an inclusive service aims to ___.",
+          "options": [
+            "give everyone the same device regardless of need",
+            "remove every online option",
+            "serve only the fastest users",
+            "reduce barriers for different groups"
+          ],
+          "answer": "reduce barriers for different groups",
+          "explanation": "inclusive 关注不同群体能否参与和使用服务。"
+        }
+      ]
+    },
+    {
+      "id": "u-10",
+      "title": "考研学术：摘要中的研究逻辑",
+      "band": "postgraduate",
+      "theme": "学术阅读 · 研究摘要",
+      "goal": "从摘要识别问题、方法、发现与限制，避免扩大结论。",
+      "minutes": 40,
+      "skills": [
+        "摘要结构",
+        "研究评价",
+        "听力信息",
+        "学术概括"
+      ],
+      "knowledge": [
+        "研究摘要通常交代背景或问题、方法、主要发现及意义。",
+        "区分研究对象、样本、测量工具与观察周期。",
+        "may indicate 与 demonstrate 强度不同，概括时应保留原有确定程度。"
+      ],
+      "vocabulary": [
+        {
+          "en": "abstract",
+          "zh": "摘要"
+        },
+        {
+          "en": "methodology",
+          "zh": "方法体系"
+        },
+        {
+          "en": "participant",
+          "zh": "参与者"
+        },
+        {
+          "en": "finding",
+          "zh": "研究发现"
+        },
+        {
+          "en": "implication",
+          "zh": "启示；影响"
+        },
+        {
+          "en": "limitation",
+          "zh": "局限"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What question does the study investigate?",
+          "zh": "这项研究考察什么问题？"
+        },
+        {
+          "en": "It examines whether structured peer feedback changes revision behaviour.",
+          "zh": "它考察结构化同伴反馈是否改变修改行为。"
+        },
+        {
+          "en": "We should note that the sample came from one course.",
+          "zh": "我们应注意样本来自一门课程。"
+        }
+      ],
+      "reading": {
+        "en": "This study examined how structured peer feedback influenced revision in an introductory writing course. Forty students completed two writing tasks over six weeks. For the second task, reviewers used a checklist focusing on the clarity of claims and the relevance of evidence. Drafts and revision notes were compared using the same coding scheme. Students made more changes to argument structure after receiving the checklist, although improvements in language accuracy were less consistent. Interviews suggested that specific questions helped writers identify what to revise. The findings indicate that structured feedback may support higher-level revision in this context. However, the study involved one course and did not measure long-term transfer. Further research should examine different disciplines and whether students continue using the strategy without a checklist.",
+        "zh": "本研究考察结构化同伴反馈如何影响一门入门写作课的修改。四十名学生在六周内完成两项写作，第二项使用关注论点清晰度与证据相关性的清单，并按同一编码体系比较草稿和修改笔记。结构修改增加，语言准确性改善却不一致。访谈显示具体问题有助定位修改对象。结论仅支持该情境下可能促进高层次修改，且未测长期迁移，仍需跨学科和无清单情境研究。"
+      },
+      "writing": {
+        "prompt": "用 100 词以内概括研究问题、方法、发现和两项局限。",
+        "sample": "The study explored structured peer feedback in one introductory writing course. Forty students completed two tasks over six weeks. A checklist was associated with more revisions to argument structure, while language accuracy improved less consistently. The findings are limited by the single-course setting and the absence of a long-term transfer measure.",
+        "checklist": [
+          "样本和时长是否准确",
+          "是否保留语言准确性限制",
+          "是否避免推广到所有学科"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "哪项结论得到摘要支持？",
+          "options": [
+            "清单在该课程中可能支持结构层面的修改",
+            "清单永久消除了所有语言错误",
+            "所有学科都已验证长期迁移",
+            "研究包含全国随机样本"
+          ],
+          "answer": "清单在该课程中可能支持结构层面的修改",
+          "explanation": "摘要使用 may support 且限定 in this context，不能扩大范围或时间。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "The findings ___ that structured feedback may support revision. （indicate 的适当形式）",
+          "answer": "indicate",
+          "explanation": "复数主语 findings 在一般现在时搭配 indicate，不加 -s。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：研究持续多久？",
+          "listen_text": "Forty students completed two writing tasks over a period of six weeks.",
+          "options": [
+            "Two weeks",
+            "Four months",
+            "Six weeks",
+            "Six years"
+          ],
+          "answer": "Six weeks",
+          "explanation": "forty 是人数，two 是任务数，six weeks 才是持续时长。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "an implication of a finding refers to ___.",
+          "options": [
+            "the spelling of its title",
+            "the number of references only",
+            "a guaranteed result in every setting",
+            "what the finding may mean for practice or theory"
+          ],
+          "answer": "what the finding may mean for practice or theory",
+          "explanation": "implication 是发现可能带来的理论或实践启示，需要结合局限解释。"
+        }
+      ]
+    },
+    {
+      "id": "u-11",
+      "title": "研究方法与学术诚信",
+      "band": "postgraduate",
+      "theme": "研究实践 · 方法与伦理",
+      "goal": "清楚描述抽样、同意和数据处理，理解可重复性的条件。",
+      "minutes": 40,
+      "skills": [
+        "方法阅读",
+        "伦理判断",
+        "听力记录",
+        "方法段写作"
+      ],
+      "knowledge": [
+        "方法描述需具体到他人可以理解和审查的步骤。",
+        "informed consent 包含知情、自愿及退出条件，不能仅看是否签字。",
+        "描述已完成研究通常使用过去时，避免不必要的被动堆叠。"
+      ],
+      "vocabulary": [
+        {
+          "en": "consent",
+          "zh": "同意"
+        },
+        {
+          "en": "anonymise",
+          "zh": "匿名化"
+        },
+        {
+          "en": "reproducibility",
+          "zh": "可重复性"
+        },
+        {
+          "en": "sampling",
+          "zh": "抽样"
+        },
+        {
+          "en": "protocol",
+          "zh": "研究方案"
+        },
+        {
+          "en": "transparency",
+          "zh": "透明性"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Can we publish the raw interview transcripts?",
+          "zh": "我们能发布访谈原始记录吗？"
+        },
+        {
+          "en": "Only if consent and privacy conditions permit it.",
+          "zh": "只有同意范围和隐私条件允许时才可以。"
+        },
+        {
+          "en": "We can still describe the coding process and share a de-identified example.",
+          "zh": "我们仍可说明编码过程，并分享去标识化例子。"
+        }
+      ],
+      "reading": {
+        "en": "A research team planned interviews about students' experiences of part-time work. Before collecting data, members prepared an information sheet explaining the study, voluntary participation and the right to withdraw before analysis. They avoided collecting employers' names because these were unnecessary for the research question. During transcription, identifying details were replaced with general descriptions. The team recorded its coding decisions so that another researcher could understand how themes were developed. One member suggested publishing every transcript to increase transparency. The supervisor explained that openness must respect the consent participants had given. The team instead shared its interview guide, coding procedure and a carefully de-identified example. Responsible reporting required both methodological detail and attention to the people whose experiences made the study possible.",
+        "zh": "团队采访兼职经历前提供说明，交代自愿参与和分析前退出权，不收集无关雇主姓名。转写时替换身份细节，记录编码决策，便于他人理解主题形成过程。成员提议公开全部记录以增加透明性，导师提醒公开必须符合参与者同意范围。团队于是分享访谈提纲、编码过程和谨慎去标识化例子，兼顾方法透明与参与者权益。"
+      },
+      "writing": {
+        "prompt": "为一项校园访谈写 100–120 词的方法说明，包含招募、同意、隐私和分析步骤。",
+        "sample": "We recruited volunteers through a course notice and explained the study before each interview. Participation was voluntary, and students could withdraw before analysis began. We removed identifying details from the transcripts and recorded coding decisions in a shared log. Only de-identified examples within the consent agreement were used in the report.",
+        "checklist": [
+          "是否说明自愿和退出条件",
+          "是否最少化身份信息",
+          "分析步骤是否可理解"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "团队为什么没有公开全部访谈记录？",
+          "options": [
+            "不愿说明任何方法",
+            "认为透明性毫无价值",
+            "所有记录都已丢失",
+            "公开必须尊重参与者同意与隐私条件"
+          ],
+          "answer": "公开必须尊重参与者同意与隐私条件",
+          "explanation": "方法透明不能超越同意范围；团队通过方案和去标识化例子提供透明性。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "Identifying details ___ removed before the examples were shared. （填过去时被动助动词）",
+          "answer": "were",
+          "explanation": "复数主语 details，过去被动用 were removed。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：参与者可以在什么时候退出？",
+          "listen_text": "Participants could withdraw from the study before the analysis began.",
+          "options": [
+            "Only after publication",
+            "Before the analysis began",
+            "Never after signing",
+            "Only during recruitment"
+          ],
+          "answer": "Before the analysis began",
+          "explanation": "before the analysis began 是明确退出条件，不能随意扩大或缩小。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "anonymise data means to ___.",
+          "options": [
+            "add more personal identifiers",
+            "change every research result",
+            "remove or obscure identifying information",
+            "publish all details without consent"
+          ],
+          "answer": "remove or obscure identifying information",
+          "explanation": "anonymise 指移除或隐藏可识别身份的信息，不能改变研究发现本身。"
+        }
+      ]
+    },
+    {
+      "id": "u-12",
+      "title": "学术报告：从结果到有边界的回答",
+      "band": "postgraduate",
+      "theme": "学术沟通 · 报告与答辩",
+      "goal": "清楚陈述研究贡献，并用证据范围回答问题。",
+      "minutes": 40,
+      "skills": [
+        "学术听力",
+        "报告结构",
+        "问答策略",
+        "论点表达"
+      ],
+      "knowledge": [
+        "报告可按问题—方法—主要结果—贡献—限制组织。",
+        "回答问题先确认所问，再区分已有证据、推断和待研究内容。",
+        "用 within our sample、under these conditions 限定结论适用范围。"
+      ],
+      "vocabulary": [
+        {
+          "en": "contribution",
+          "zh": "贡献"
+        },
+        {
+          "en": "robust",
+          "zh": "稳健的"
+        },
+        {
+          "en": "generalisability",
+          "zh": "可推广性"
+        },
+        {
+          "en": "clarification",
+          "zh": "澄清"
+        },
+        {
+          "en": "tentative",
+          "zh": "暂定的"
+        },
+        {
+          "en": "replicate",
+          "zh": "重复验证"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Would your findings apply to larger institutions?",
+          "zh": "你的发现是否适用于更大的机构？"
+        },
+        {
+          "en": "We have not tested that setting, so the extension remains tentative.",
+          "zh": "我们没有检验那种情境，因此推广仍是暂定推测。"
+        },
+        {
+          "en": "A replication with a broader sample would help answer the question.",
+          "zh": "使用更广样本重复研究有助于回答这个问题。"
+        }
+      ],
+      "reading": {
+        "en": "At a postgraduate seminar, a student presented a study of feedback in three small classes. Her slides contained many tables, but listeners struggled to identify the central finding. After rehearsal, she reorganised the presentation around one question and selected two figures that directly answered it. During discussion, a listener asked whether the result would apply to large online courses. The student resisted the temptation to promise a universal effect. She explained that her sample involved small classes with regular teacher contact. The finding was useful within those conditions, while broader application required further research. Her supervisor praised the answer because it distinguished evidence from expectation. A clear academic presentation did not require certainty about everything; it required a precise account of what the study had and had not established.",
+        "zh": "研究生展示三个小班的反馈研究，初稿表格太多，听众难抓重点。排练后她围绕一个问题，精选两张直接回答问题的图。问答中有人问能否适用于大型在线课，她没有承诺普遍效果，而是说明样本为有固定师生接触的小班，推广需进一步研究。导师认可她区分证据与期待。清晰报告不要求事事确定，而要求准确说明研究建立了什么、尚未建立什么。"
+      },
+      "writing": {
+        "prompt": "为一项小规模研究写 100 词左右的报告结尾，概括贡献、适用条件和下一步研究。",
+        "sample": "Our study suggests that structured feedback can support revision in small classes with regular teacher contact. Its contribution is a clearer account of how students use specific questions. The sample does not establish effects in large online courses. Future work should replicate the procedure in broader settings and examine whether the benefit continues over time.",
+        "checklist": [
+          "贡献是否与结果对应",
+          "是否限定适用情境",
+          "下一步研究是否具体"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "导师为什么肯定学生的回答？",
+          "options": [
+            "她区分了证据和期待的边界",
+            "她保证结果适用于所有课堂",
+            "她回避了样本信息",
+            "她用更多表格替代解释"
+          ],
+          "answer": "她区分了证据和期待的边界",
+          "explanation": "她说明现有样本条件，承认大型在线课推广尚待检验。"
+        },
+        {
+          "id": "q2",
+          "type": "fill",
+          "prompt": "The finding is useful ___ these conditions. （在这些条件下）",
+          "answer": "under",
+          "explanation": "under these conditions 表示在这些条件下，用于限定研究结论范围。"
+        },
+        {
+          "id": "q3",
+          "type": "choice",
+          "prompt": "听句子：报告修改后保留了多少张直接回答问题的图？",
+          "listen_text": "She selected two figures that directly answered the research question.",
+          "options": [
+            "One",
+            "Three",
+            "Two",
+            "Ten"
+          ],
+          "answer": "Two",
+          "explanation": "two figures 为直接数量信息，不要与样本中的 three classes 混淆。"
+        },
+        {
+          "id": "q4",
+          "type": "choice",
+          "prompt": "a tentative conclusion is ___.",
+          "options": [
+            "a conclusion that must never change",
+            "a copied answer from another study",
+            "a claim with no need for evidence",
+            "a provisional conclusion open to further testing"
+          ],
+          "answer": "a provisional conclusion open to further testing",
+          "explanation": "tentative 表示暂定、仍可进一步检验和修正。"
+        }
+      ]
+    }
+  ]
+}

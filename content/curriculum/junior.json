@@ -1,0 +1,1372 @@
+{
+  "id": "junior",
+  "title": "初中英语进阶",
+  "subtitle": "主题阅读 · 语法运用 · 中考衔接",
+  "age": "12–15 岁",
+  "description": "按七至九年级递进组织听、说、读、写、看活动，把语言形式放在校园、社会和自然主题中练习。阅读从信息提取进阶到证据推断，写作配有可操作的自查清单。",
+  "alignment": {
+    "label": "义务教育英语课程标准（2022 年版）三级（7–9 年级）衔接",
+    "url": "https://www.moe.gov.cn/srcsite/A26/s8001/202204/t20220420_619921.html",
+    "note": "采用原创语篇与练习覆盖主题、语法和综合语言实践；年级安排为平台建议，不是某地区中考范围承诺或出版社教材的逐课同步。"
+  },
+  "bands": [
+    {
+      "id": "7",
+      "label": "七年级 · 建立基础"
+    },
+    {
+      "id": "8",
+      "label": "八年级 · 拓展表达"
+    },
+    {
+      "id": "9",
+      "label": "九年级 · 综合运用"
+    }
+  ],
+  "units": [
+    {
+      "id": "j-01",
+      "title": "新校园，真实的我",
+      "band": "7",
+      "theme": "人与自我",
+      "goal": "在自我介绍中区分 be 动词与一般动词，提取人物信息。",
+      "minutes": 20,
+      "skills": [
+        "听说互动",
+        "阅读与证据",
+        "语法运用",
+        "写作表达"
+      ],
+      "knowledge": [
+        "Be 动词随主语变化：I am、he/she is、we/they are。",
+        "一般现在时描述稳定事实与习惯；第三人称单数动词通常加 -s。",
+        "自我介绍可按姓名与年级、兴趣、希望三部分组织。"
+      ],
+      "vocabulary": [
+        {
+          "en": "introduce",
+          "zh": "介绍"
+        },
+        {
+          "en": "member",
+          "zh": "成员"
+        },
+        {
+          "en": "interest",
+          "zh": "兴趣"
+        },
+        {
+          "en": "nervous",
+          "zh": "紧张的"
+        },
+        {
+          "en": "friendly",
+          "zh": "友好的"
+        },
+        {
+          "en": "club",
+          "zh": "社团"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Hi, I'm Chen Yu. I'm new here.",
+          "zh": "你好，我是陈宇。我刚来这里。"
+        },
+        {
+          "en": "Welcome! What do you enjoy doing?",
+          "zh": "欢迎！你喜欢做什么？"
+        },
+        {
+          "en": "I enjoy drawing, and I'd like to join the art club.",
+          "zh": "我喜欢画画，想加入美术社团。"
+        }
+      ],
+      "reading": {
+        "en": "Chen Yu is a new student at River School. On his first morning, he feels nervous because he knows nobody in his class. His teacher asks everyone to share one interest rather than a test score. Chen Yu shows a small drawing of a tree outside his home. Two classmates ask him about the picture, and one invites him to the art club. Chen Yu learns that an honest introduction can begin a friendship. He still feels a little shy, but now he has someone to talk to during lunch.",
+        "zh": "陈宇是河畔学校的新生。第一天早晨，他因为不认识班里的任何人而紧张。老师让大家分享一种兴趣，而不是一次考试成绩。陈宇展示了一幅家门外的树的小画。两个同学问起这幅画，其中一个邀请他参加美术社团。陈宇明白，真诚的介绍可以开启友谊。他仍然有点害羞，但现在午饭时有人可以聊天了。"
+      },
+      "writing": {
+        "prompt": "写一段约 60 词的自我介绍：说明年级、兴趣及想参加的活动；无需写真实地址。",
+        "sample": "I'm a student in Grade Seven. I enjoy drawing trees and reading short stories. I am sometimes shy, but I like listening to other people's ideas. This term, I would like to join the art club and make a poster with new friends.",
+        "checklist": [
+          "be 动词与主语一致",
+          "至少一个具体兴趣及例子",
+          "用礼貌自然的结束语"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "Chen Yu 为什么一开始感到紧张？",
+          "options": [
+            "He knows nobody in his class.",
+            "He has lost his drawing.",
+            "He dislikes lunch."
+          ],
+          "answer": "He knows nobody in his class.",
+          "explanation": "Because 从句说明原因：他在新班级里还不认识任何人。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "阅读最支持哪一个观点？",
+          "options": [
+            "Only test scores matter.",
+            "Sharing an interest can help people connect.",
+            "Shy people cannot make friends."
+          ],
+          "answer": "Sharing an interest can help people connect.",
+          "explanation": "画画的兴趣让同学开始交流，体现共同兴趣有助于建立联系。"
+        },
+        {
+          "id": "q3",
+          "type": "fill",
+          "prompt": "I ___ a new member of the art club.",
+          "answer": "am",
+          "explanation": "主语是 I，be 动词使用 am。"
+        },
+        {
+          "id": "q4",
+          "type": "fill",
+          "prompt": "Chen Yu ___ drawing trees.（enjoy）",
+          "answer": "enjoys",
+          "explanation": "Chen Yu 为第三人称单数，一般现在时 enjoy 加 -s。"
+        }
+      ]
+    },
+    {
+      "id": "j-02",
+      "title": "时间管理小实验",
+      "band": "7",
+      "theme": "人与自我",
+      "goal": "用频度副词描述作息，并从记录中找到改进办法。",
+      "minutes": 20,
+      "skills": [
+        "听说互动",
+        "阅读与证据",
+        "语法运用",
+        "写作表达"
+      ],
+      "knowledge": [
+        "频度副词通常放在实义动词前、be 动词后，如 usually read、is often busy。",
+        "Do/does 引出一般现在时问句；does 后动词还原。",
+        "读时间记录时先找时间、活动、变化，再提出可行建议。"
+      ],
+      "vocabulary": [
+        {
+          "en": "usually",
+          "zh": "通常"
+        },
+        {
+          "en": "sometimes",
+          "zh": "有时"
+        },
+        {
+          "en": "schedule",
+          "zh": "时间表"
+        },
+        {
+          "en": "habit",
+          "zh": "习惯"
+        },
+        {
+          "en": "review",
+          "zh": "复习"
+        },
+        {
+          "en": "balance",
+          "zh": "平衡"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Do you usually review after dinner?",
+          "zh": "你通常晚饭后复习吗？"
+        },
+        {
+          "en": "Yes, but I sometimes spend too long on one task.",
+          "zh": "是的，但我有时在一个任务上花太久。"
+        },
+        {
+          "en": "Let's make a short plan and leave time to rest.",
+          "zh": "我们做一个简短计划，也留出休息时间。"
+        }
+      ],
+      "reading": {
+        "en": "Liu Mei often begins her homework at seven, but she sometimes finishes after ten. She thinks she has too much work. For one week, she records what she does every evening. Her notes show that she checks messages many times and looks for books while working. She decides to put her materials on the desk before dinner and keep her phone away for twenty minutes at a time. Her work does not become easier immediately. However, she can focus better and usually has time for a short walk with her family.",
+        "zh": "刘梅经常七点开始写作业，但有时十点后才完成。她觉得作业太多。一周内，她记录了自己每晚做的事。笔记表明，她常常查看消息，做作业时还会找书。她决定晚饭前把材料放在桌上，每次专心二十分钟并把手机放远。作业没有立刻变容易，但她更能集中注意力，通常也有时间和家人散步。"
+      },
+      "writing": {
+        "prompt": "根据自己的虚构学习记录，写约 60 词的改善计划，包含频度和两条行动。",
+        "sample": "I sometimes look for my books after I start working. This wastes time. I will prepare my materials before dinner. I will also take a short break after a focused study period. I hope these small changes will help me finish earlier.",
+        "checklist": [
+          "用 often/usually/sometimes 中至少两个",
+          "建议针对具体问题",
+          "留有休息时间"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "记录表明刘梅的一个问题是什么？",
+          "options": [
+            "She has no books.",
+            "She checks messages repeatedly.",
+            "She never does homework."
+          ],
+          "answer": "She checks messages repeatedly.",
+          "explanation": "记录直接指出她多次查看消息，打断了学习。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "哪一句频度副词位置自然？",
+          "options": [
+            "She reads usually at night.",
+            "Usually she is always never busy.",
+            "She usually reads at night."
+          ],
+          "answer": "She usually reads at night.",
+          "explanation": "Usually 一般放在实义动词 reads 前面。"
+        },
+        {
+          "id": "q3",
+          "type": "fill",
+          "prompt": "___ he review his notes every day?",
+          "answer": "Does",
+          "explanation": "主语 he 为第三人称单数，一般现在时问句用 Does。"
+        },
+        {
+          "id": "q4",
+          "type": "fill",
+          "prompt": "Does he ___ his phone while studying?（check）",
+          "answer": "check",
+          "explanation": "助动词 does 已体现第三人称变化，后面 check 用原形。"
+        }
+      ]
+    },
+    {
+      "id": "j-03",
+      "title": "每个人都有一种能力",
+      "band": "7",
+      "theme": "人与社会",
+      "goal": "用 can/can't 谈能力，制定合作分工。",
+      "minutes": 20,
+      "skills": [
+        "听说互动",
+        "阅读与证据",
+        "语法运用",
+        "写作表达"
+      ],
+      "knowledge": [
+        "Can＋动词原形表达能力，否定式为 can't/cannot。",
+        "Can you ...? 既可询问能力，也可礼貌提出请求，需根据语境理解。",
+        "合作任务先列需求，再匹配能力；不把暂时不会看成永久标签。"
+      ],
+      "vocabulary": [
+        {
+          "en": "ability",
+          "zh": "能力"
+        },
+        {
+          "en": "prepare",
+          "zh": "准备"
+        },
+        {
+          "en": "poster",
+          "zh": "海报"
+        },
+        {
+          "en": "practice",
+          "zh": "练习"
+        },
+        {
+          "en": "support",
+          "zh": "支持"
+        },
+        {
+          "en": "teamwork",
+          "zh": "合作"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Can you design the poster?",
+          "zh": "你能设计海报吗？"
+        },
+        {
+          "en": "Yes, I can. Can you speak at the event?",
+          "zh": "可以。你能在活动上发言吗？"
+        },
+        {
+          "en": "Not yet, but I can practice with you.",
+          "zh": "现在还不太会，但我可以和你一起练习。"
+        }
+      ],
+      "reading": {
+        "en": "A school team is preparing a reading festival. At first, its members all want to choose the books, and nobody wants to speak on stage. Their teacher asks them to list the jobs before choosing roles. One student can draw clear posters. Another can arrange the chairs safely. A quiet member knows how to welcome visitors in two languages. They also pair students who want to practice public speaking. The team discovers that useful ability is not always the most visible ability. With support and practice, members can also develop new skills.",
+        "zh": "一个学校小组在筹备阅读节。起初，成员都想选书，没人想上台发言。老师让他们先列任务再选角色。一个学生能画清楚的海报，另一个能安全摆放椅子。一位安静的成员会用两种语言欢迎来宾。他们也让想练习演讲的同学两两合作。小组发现，有用的能力不总是最显眼的能力。在支持和练习下，成员也能发展新技能。"
+      },
+      "writing": {
+        "prompt": "给班级活动写一份约 70 词的分工说明，指出已有能力与想练习的新能力。",
+        "sample": "I can make a poster, so I will prepare the signs. Lin can welcome visitors, and she will work at the gate. I cannot speak confidently on stage yet. I will practice a short introduction with Lin before the event.",
+        "checklist": [
+          "can 后用动词原形",
+          "至少两项具体分工",
+          "说明一项想发展的能力"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "老师让学生首先做什么？",
+          "options": [
+            "List the jobs.",
+            "Choose the loudest speaker.",
+            "Cancel the festival."
+          ],
+          "answer": "List the jobs.",
+          "explanation": "先列工作需求，再决定谁适合哪些角色。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "Which idea is supported by the passage?",
+          "options": [
+            "Quiet students have no useful skills.",
+            "Only speaking matters.",
+            "Different abilities can support a team."
+          ],
+          "answer": "Different abilities can support a team.",
+          "explanation": "海报、安排椅子、迎宾等不同能力共同支持活动。"
+        },
+        {
+          "id": "q3",
+          "type": "fill",
+          "prompt": "She can ___ a clear poster.（design）",
+          "answer": "design",
+          "explanation": "情态动词 can 后面接动词原形。"
+        },
+        {
+          "id": "q4",
+          "type": "fill",
+          "prompt": "I ___ swim yet, but I am learning.（填写 can't 或 can）",
+          "answer": "can't",
+          "explanation": "But I am learning 表示正在学，yet 说明目前还不会，应使用 can't。"
+        }
+      ]
+    },
+    {
+      "id": "j-04",
+      "title": "一次意外的周末",
+      "band": "7",
+      "theme": "人与自然",
+      "goal": "用一般过去时叙述事件顺序，并判断信息证据。",
+      "minutes": 20,
+      "skills": [
+        "听说互动",
+        "阅读与证据",
+        "语法运用",
+        "写作表达"
+      ],
+      "knowledge": [
+        "一般过去时用于已结束的过去事件，规则动词常加 -ed。",
+        "记忆常见不规则形式：go→went、see→saw、find→found。",
+        "用 first、then、finally 组织事件；推断须有文中证据。"
+      ],
+      "vocabulary": [
+        {
+          "en": "suddenly",
+          "zh": "突然"
+        },
+        {
+          "en": "noticed",
+          "zh": "注意到"
+        },
+        {
+          "en": "shelter",
+          "zh": "避雨处"
+        },
+        {
+          "en": "returned",
+          "zh": "返回了"
+        },
+        {
+          "en": "safe",
+          "zh": "安全的"
+        },
+        {
+          "en": "experience",
+          "zh": "经历"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "How was your walk yesterday?",
+          "zh": "你昨天散步怎么样？"
+        },
+        {
+          "en": "It started well, but then it rained.",
+          "zh": "开始不错，但后来下雨了。"
+        },
+        {
+          "en": "We found a safe shelter and waited.",
+          "zh": "我们找了一个安全的避雨处等着。"
+        }
+      ],
+      "reading": {
+        "en": "Last Saturday, my cousin and I walked along a path near our village with my aunt. We planned to draw the hills, but dark clouds appeared after lunch. My aunt checked the weather message and decided to return. On our way back, rain began to fall. We found a public shelter near the visitor center and waited there. We did not stand under a tall tree or cross the small stream. When the rain stopped, we went home together. I did not finish my drawing, but I learned how a careful decision can keep a trip safe.",
+        "zh": "上周六，表亲和我跟着阿姨沿村边小路散步。我们原本打算画山，但午饭后出现乌云。阿姨查看天气信息后决定返回。回程开始下雨，我们在游客中心附近找到公共避雨处等待。我们没有站在高树下，也没有穿过小溪。雨停后，我们一起回家。我没画完画，却学到谨慎决定怎样保证旅行安全。"
+      },
+      "writing": {
+        "prompt": "写一段约 70 词的经历，交代时间、经过、结果和收获。",
+        "sample": "Last Sunday, I visited a park with my family. Dark clouds appeared, so we returned early. We waited in a safe building when it began to rain. Finally, we went home together. I learned to check the weather and follow an adult's instructions.",
+        "checklist": [
+          "过去式正确",
+          "事件有先后顺序",
+          "收获与事件相关"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "为什么阿姨决定返回？",
+          "options": [
+            "She lost her phone.",
+            "The weather was changing.",
+            "The drawing was finished."
+          ],
+          "answer": "The weather was changing.",
+          "explanation": "乌云出现且阿姨查看天气消息，支持天气改变的判断。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "他们在哪里等雨停？",
+          "options": [
+            "Under a tall tree",
+            "In the stream",
+            "At a public shelter"
+          ],
+          "answer": "At a public shelter",
+          "explanation": "文中明确提到游客中心附近的公共避雨处。"
+        },
+        {
+          "id": "q3",
+          "type": "fill",
+          "prompt": "We ___ home after the rain stopped.（go）",
+          "answer": "went",
+          "explanation": "事件发生在过去，go 用不规则过去式 went。"
+        },
+        {
+          "id": "q4",
+          "type": "fill",
+          "prompt": "First we checked the weather. ___ we returned.（填“然后”）",
+          "answer": "Then",
+          "explanation": "Then 连接随后发生的动作，帮助表达事件顺序。"
+        }
+      ]
+    },
+    {
+      "id": "j-05",
+      "title": "用证据比较选择",
+      "band": "8",
+      "theme": "人与自我",
+      "goal": "比较学习资源，区分事实信息与个人偏好。",
+      "minutes": 20,
+      "skills": [
+        "听说互动",
+        "阅读与证据",
+        "语法运用",
+        "写作表达"
+      ],
+      "knowledge": [
+        "比较级＋than 用于两者比较；多音节词常用 more＋形容词。",
+        "As ... as 表示同等程度，如 as useful as。",
+        "比较资源时使用价格、时间、效果等证据，避免把偏好当事实。"
+      ],
+      "vocabulary": [
+        {
+          "en": "compare",
+          "zh": "比较"
+        },
+        {
+          "en": "resource",
+          "zh": "资源"
+        },
+        {
+          "en": "convenient",
+          "zh": "方便的"
+        },
+        {
+          "en": "effective",
+          "zh": "有效的"
+        },
+        {
+          "en": "evidence",
+          "zh": "证据"
+        },
+        {
+          "en": "choice",
+          "zh": "选择"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Which resource is more useful for our project?",
+          "zh": "哪种资源对我们的项目更有用？"
+        },
+        {
+          "en": "The website is faster to search, but the book explains more.",
+          "zh": "网站搜索更快，但书解释得更多。"
+        },
+        {
+          "en": "Let's use both and check the sources.",
+          "zh": "我们两者都用，并核对来源。"
+        }
+      ],
+      "reading": {
+        "en": "Three students need information about local birds for a school project. One prefers a short video because it shows movement clearly. Another likes a field guide because it includes detailed drawings. The third wants to use a website that is easy to search. Instead of voting immediately, they compare the sources. They check who created each resource, when it was updated, and whether it describes birds in their area. They discover that the newest source is not always the most useful one. Their final report combines several sources and explains why each was selected.",
+        "zh": "三名学生为学校项目寻找本地鸟类信息。一人喜欢短视频，因为能清楚展示动作；另一人喜欢野外指南，因为有详细插图；第三人想用容易搜索的网站。他们没有立刻投票，而是核对作者、更新时间以及是否涉及本地鸟类。他们发现，最新的资料不一定最有用。最终报告结合多种资料，并说明选择原因。"
+      },
+      "writing": {
+        "prompt": "比较两种英语学习资源，写约 80 词的建议，至少包含两条证据。",
+        "sample": "A video is more convenient when I want to hear pronunciation. A reading guide is useful when I need a detailed explanation. For our project, I suggest using both. We should check the author and date before trusting information, rather than choose a source only because it looks exciting.",
+        "checklist": [
+          "至少一个正确比较结构",
+          "证据具体可核对",
+          "说明选择适用的情境"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "学生比较资料时没有提到哪项标准？",
+          "options": [
+            "Who made it",
+            "Its update date",
+            "The creator's favorite color"
+          ],
+          "answer": "The creator's favorite color",
+          "explanation": "作者、更新时间和本地相关性都有提及，喜好颜色无关。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "The website is ___ convenient than the heavy guide.",
+          "options": [
+            "more",
+            "most",
+            "much most"
+          ],
+          "answer": "more",
+          "explanation": "Convenient 是多音节形容词，比较级使用 more convenient。"
+        },
+        {
+          "id": "q3",
+          "type": "fill",
+          "prompt": "This guide is as ___ as the website.（useful）",
+          "answer": "useful",
+          "explanation": "As ... as 中间使用形容词原级。"
+        },
+        {
+          "id": "q4",
+          "type": "fill",
+          "prompt": "The newest resource is not always the ___ useful.（填最高级标志词）",
+          "answer": "most",
+          "explanation": "The most useful 表示“最有用的”；文中强调新不一定等于适合。"
+        }
+      ]
+    },
+    {
+      "id": "j-06",
+      "title": "第一次志愿服务",
+      "band": "8",
+      "theme": "人与社会",
+      "goal": "用现在完成时谈经历，区分过去时间点与目前影响。",
+      "minutes": 20,
+      "skills": [
+        "听说互动",
+        "阅读与证据",
+        "语法运用",
+        "写作表达"
+      ],
+      "knowledge": [
+        "现在完成时结构为 have/has＋过去分词。",
+        "Already 常用于肯定句；yet 常用于疑问句和否定句句末。",
+        "叙述明确过去时间用一般过去时，谈到现在的经历用现在完成时。"
+      ],
+      "vocabulary": [
+        {
+          "en": "volunteer",
+          "zh": "志愿者"
+        },
+        {
+          "en": "community",
+          "zh": "社区"
+        },
+        {
+          "en": "experience",
+          "zh": "经历"
+        },
+        {
+          "en": "already",
+          "zh": "已经"
+        },
+        {
+          "en": "yet",
+          "zh": "还；已经"
+        },
+        {
+          "en": "donate",
+          "zh": "捐赠"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Have you ever helped at a community event?",
+          "zh": "你曾在社区活动中帮过忙吗？"
+        },
+        {
+          "en": "Yes. I have helped at two book exchanges.",
+          "zh": "有。我在两次图书交换活动中帮过忙。"
+        },
+        {
+          "en": "I haven't tried it yet. Can I join you next time?",
+          "zh": "我还没有试过。下次能和你一起去吗？"
+        }
+      ],
+      "reading": {
+        "en": "Jia has volunteered at a community book exchange twice this term. At the first event, she simply placed books on shelves. Last weekend, she welcomed visitors and explained how to exchange a book. She has already learned that clear signs can prevent confusion. However, she has not learned how to organize a large event yet. Her team leader says that nobody needs to know everything at the beginning. After each event, the volunteers discuss one success and one problem. Jia now feels more confident because she can see how her small contributions help other readers.",
+        "zh": "这学期，佳已在社区图书交换活动中服务过两次。第一次，她只负责把书放上书架。上周末，她迎接来宾并讲解交换方法。她已明白清楚的标识能减少混乱，但还不会组织大型活动。组长说，没人需要一开始就什么都会。每次活动后，志愿者讨论一个成功点和一个问题。佳现在更自信，因为看到了自己的小贡献怎样帮助读者。"
+      },
+      "writing": {
+        "prompt": "写约 80 词的活动经历：用现在完成时概述经历，用过去时说明一次具体事件。",
+        "sample": "I have joined two community reading events this term. Last Saturday, I helped visitors find books and explained the rules. I have already become more confident about speaking to new people. I haven't organized an event yet, but I would like to learn from the team leader.",
+        "checklist": [
+          "have/has＋过去分词",
+          "明确过去时间使用过去时",
+          "真实区分已经做到与尚未做到"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "佳上周末做了什么？",
+          "options": [
+            "Welcomed visitors and explained the rules.",
+            "Built a new library.",
+            "Led a large event alone."
+          ],
+          "answer": "Welcomed visitors and explained the rules.",
+          "explanation": "第二次具体活动中，她迎宾并说明图书交换方法。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "哪句与 yet 的常见用法一致？",
+          "options": [
+            "She yet organized it.",
+            "She hasn't organized it yet.",
+            "She has yet already it."
+          ],
+          "answer": "She hasn't organized it yet.",
+          "explanation": "Yet 常放在否定句句末，表示“还没有”。"
+        },
+        {
+          "id": "q3",
+          "type": "fill",
+          "prompt": "She has already ___ two events.（join）",
+          "answer": "joined",
+          "explanation": "现在完成时 has 后用过去分词；join 为规则动词，写 joined。"
+        },
+        {
+          "id": "q4",
+          "type": "fill",
+          "prompt": "She ___ visitors last Saturday.（welcome）",
+          "answer": "welcomed",
+          "explanation": "Last Saturday 是明确过去时间，使用一般过去时 welcomed。"
+        }
+      ]
+    },
+    {
+      "id": "j-07",
+      "title": "给未来城市的一封信",
+      "band": "8",
+      "theme": "人与社会",
+      "goal": "用 will 与 be going to 区分预测和计划，表达有依据的愿景。",
+      "minutes": 20,
+      "skills": [
+        "听说互动",
+        "阅读与证据",
+        "语法运用",
+        "写作表达"
+      ],
+      "knowledge": [
+        "Will＋动词原形可表达未来预测或即时决定。",
+        "Be going to＋动词原形可表达已形成的计划。",
+        "提出未来设想时说明问题、行动和预期影响。"
+      ],
+      "vocabulary": [
+        {
+          "en": "future",
+          "zh": "未来"
+        },
+        {
+          "en": "transport",
+          "zh": "交通"
+        },
+        {
+          "en": "energy",
+          "zh": "能源"
+        },
+        {
+          "en": "predict",
+          "zh": "预测"
+        },
+        {
+          "en": "reduce",
+          "zh": "减少"
+        },
+        {
+          "en": "proposal",
+          "zh": "建议"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What will our town be like in ten years?",
+          "zh": "十年后我们的小镇会是什么样？"
+        },
+        {
+          "en": "I think it will have safer cycling routes.",
+          "zh": "我认为它会有更安全的自行车路线。"
+        },
+        {
+          "en": "Our class is going to send a proposal to the youth council.",
+          "zh": "我们班打算向青年议事机构寄一份建议。"
+        }
+      ],
+      "reading": {
+        "en": "Students at a town meeting imagine how their community may change in ten years. Some predict that buses will use cleaner energy. Others hope that roads will be safer for people who walk or cycle. A student named Tao points out that predictions alone do not change a town. His class is going to count traffic near the school for one week, with adult supervision. They will use the results to suggest a safer crossing. Their teacher explains that a useful proposal connects a future goal with evidence and an action that people can begin today.",
+        "zh": "镇上的学生会议设想十年后社区的变化。有人预测公共汽车会采用更清洁的能源，有人希望道路对步行和骑行者更安全。涛指出，预测本身不会改变小镇。他们班打算在成人监督下统计校门附近一周的交通情况，并用结果建议设置更安全的过街设施。老师说明，有用的建议应将未来目标、证据和今天就能开始的行动联系起来。"
+      },
+      "writing": {
+        "prompt": "给虚构的青年议事机构写约 80 词建议信，包含一个未来愿景及可实施计划。",
+        "sample": "Dear Youth Council, I hope our town will become safer for walkers. Our class is going to record traffic near the school with our teacher. We will share the results and suggest a clearer crossing sign. I believe evidence and small actions can help us improve our community.",
+        "checklist": [
+          "will 后用动词原形",
+          "be going to 与主语一致",
+          "建议包含证据来源和安全安排"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "涛认为仅有预测为什么不够？",
+          "options": [
+            "Predictions are always wrong.",
+            "The town has no buses.",
+            "People also need evidence and action."
+          ],
+          "answer": "People also need evidence and action.",
+          "explanation": "全文把未来目标与数据收集、具体行动联系起来。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "They will ___ cleaner buses.",
+          "options": [
+            "use",
+            "uses",
+            "using"
+          ],
+          "answer": "use",
+          "explanation": "Will 为情态助动词，后面接动词原形。"
+        },
+        {
+          "id": "q3",
+          "type": "fill",
+          "prompt": "Our class ___ going to record traffic.（be）",
+          "answer": "is",
+          "explanation": "Our class 在本句作为一个整体，be 用 is。"
+        },
+        {
+          "id": "q4",
+          "type": "fill",
+          "prompt": "I think the roads ___ be safer in the future.（填 will 或 did）",
+          "answer": "will",
+          "explanation": "In the future 提示未来预测，使用 will。"
+        }
+      ]
+    },
+    {
+      "id": "j-08",
+      "title": "一件物品的绿色旅程",
+      "band": "8",
+      "theme": "人与自然",
+      "goal": "用被动语态描述制作过程，阅读产品生命周期。",
+      "minutes": 20,
+      "skills": [
+        "听说互动",
+        "阅读与证据",
+        "语法运用",
+        "写作表达"
+      ],
+      "knowledge": [
+        "一般现在时被动语态：am/is/are＋过去分词。",
+        "当过程或物品比执行者更重要时，可以使用被动表达。",
+        "区分 reuse 重复使用与 recycle 加工回收利用。"
+      ],
+      "vocabulary": [
+        {
+          "en": "material",
+          "zh": "材料"
+        },
+        {
+          "en": "recycle",
+          "zh": "回收利用"
+        },
+        {
+          "en": "produce",
+          "zh": "生产"
+        },
+        {
+          "en": "package",
+          "zh": "包装"
+        },
+        {
+          "en": "reuse",
+          "zh": "重复使用"
+        },
+        {
+          "en": "process",
+          "zh": "过程"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What is this notebook made from?",
+          "zh": "这本笔记本由什么制成？"
+        },
+        {
+          "en": "It is made from recycled paper.",
+          "zh": "它由再生纸制成。"
+        },
+        {
+          "en": "How can we use it more carefully?",
+          "zh": "我们怎样更节约地使用它？"
+        }
+      ],
+      "reading": {
+        "en": "A class follows the journey of a notebook to understand the resources behind everyday objects. First, used paper is collected and sorted. It is then cleaned and mixed with water before new sheets are produced. The sheets are dried, cut, and joined to make notebooks. Transport and packaging also use energy, so recycling is only one part of the story. The students decide to write on both sides of each page and reuse old notebooks for rough work. They learn that a greener choice involves how an object is made as well as how it is used.",
+        "zh": "一个班级追踪笔记本的旅程，了解日常物品背后的资源。废纸先被收集、分类，再经清洁并与水混合，形成新纸。纸页干燥、裁切、装订后成为笔记本。运输和包装也消耗能源，所以回收只是其中一部分。学生决定双面书写，并用旧本子打草稿。他们明白，更环保的选择既涉及物品如何制造，也涉及如何使用。"
+      },
+      "writing": {
+        "prompt": "写约 80 词，描述一个简化的回收过程，并提出两条节约建议。",
+        "sample": "Used paper is collected and sorted. It is cleaned, and new sheets are produced. The sheets are made into notebooks. Recycling is helpful, but it also uses energy. We should write on both sides of the paper and reuse unfinished notebooks for rough work.",
+        "checklist": [
+          "被动语态 be＋过去分词",
+          "过程顺序清楚",
+          "建议兼顾减少使用与重复使用"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "为什么回收不是全部答案？",
+          "options": [
+            "Transport and packaging also use energy.",
+            "Paper cannot be recycled.",
+            "Students never use notebooks."
+          ],
+          "answer": "Transport and packaging also use energy.",
+          "explanation": "文章指出运输、包装也耗能，使用方式同样重要。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "Paper ___ collected before it is cleaned.",
+          "options": [
+            "are",
+            "is",
+            "be"
+          ],
+          "answer": "is",
+          "explanation": "Paper 为不可数名词，被动语态用 is collected。"
+        },
+        {
+          "id": "q3",
+          "type": "fill",
+          "prompt": "New sheets are ___ after the paper is cleaned.（produce）",
+          "answer": "produced",
+          "explanation": "被动语态 are 后需要过去分词 produced。"
+        },
+        {
+          "id": "q4",
+          "type": "fill",
+          "prompt": "反复使用旧本子打草稿属于 ___。填写 reuse 或 recycle。",
+          "answer": "reuse",
+          "explanation": "没有加工成新材料，只再次使用原物品，属于 reuse。"
+        }
+      ]
+    },
+    {
+      "id": "j-09",
+      "title": "信息核查，不轻信标题",
+      "band": "9",
+      "theme": "人与社会",
+      "goal": "理解定语从句，依据来源与证据评价网络信息。",
+      "minutes": 20,
+      "skills": [
+        "听说互动",
+        "阅读与证据",
+        "语法运用",
+        "写作表达"
+      ],
+      "knowledge": [
+        "Who 引导修饰人的定语从句，which/that 可引导修饰物的定语从句。",
+        "关系词在从句中作主语时，不能再重复一个主语代词。",
+        "阅读标题后核对作者、日期、原始证据和上下文。"
+      ],
+      "vocabulary": [
+        {
+          "en": "source",
+          "zh": "来源"
+        },
+        {
+          "en": "claim",
+          "zh": "声称"
+        },
+        {
+          "en": "reliable",
+          "zh": "可靠的"
+        },
+        {
+          "en": "verify",
+          "zh": "核实"
+        },
+        {
+          "en": "headline",
+          "zh": "标题"
+        },
+        {
+          "en": "context",
+          "zh": "语境"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Have you checked the source of this story?",
+          "zh": "你查过这篇报道的来源吗？"
+        },
+        {
+          "en": "Not yet. The headline sounds surprising.",
+          "zh": "还没有。标题听起来很惊人。"
+        },
+        {
+          "en": "Let's find the report that the writer used.",
+          "zh": "我们找找作者使用的那份报告。"
+        }
+      ],
+      "reading": {
+        "en": "A surprising headline spreads quickly in a class chat. It says that a common drink can improve every student's memory overnight. Before sharing it, Yun looks for the study that the article mentions. She finds that it involved a small group of adults, not school students, and measured only a short task. The scientist who led the study did not make the promise in the headline. Yun shares the original source and explains the missing context. Her classmates learn that checking information is not about rejecting every new idea. It is about matching a claim to the evidence that actually supports it.",
+        "zh": "一个惊人标题在班级群里迅速传播：某种普通饮料能一夜提高所有学生的记忆力。芸在转发前找到文章提到的研究。她发现，研究对象是少量成人而非学生，而且只测了一项短任务。主持研究的科学家并未做出标题中的承诺。芸分享原始来源并解释缺失的背景。同学明白，核实信息并非拒绝所有新想法，而是让说法与真正支持它的证据相符。"
+      },
+      "writing": {
+        "prompt": "写约 90 词，说明你如何核查一个虚构的惊人说法，避免传播未经验证的健康承诺。",
+        "sample": "I saw a headline that promised a quick way to improve memory. Before sharing it, I checked the original report and the date. The participants were adults, so the result did not directly describe school students. I explained the limits to my friends and shared the source instead of repeating the promise.",
+        "checklist": [
+          "至少一个清楚的定语从句",
+          "区分研究发现与夸大标题",
+          "说明证据限制"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "原始研究对象是谁？",
+          "options": [
+            "All school students",
+            "A small group of adults",
+            "Every person in the town"
+          ],
+          "answer": "A small group of adults",
+          "explanation": "文章直接说明参与者是少量成人，而不是学校学生。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "The scientist ___ led the study did not make that promise.",
+          "options": [
+            "where",
+            "when",
+            "who"
+          ],
+          "answer": "who",
+          "explanation": "先行词 scientist 指人，关系词在从句中作主语，用 who。"
+        },
+        {
+          "id": "q3",
+          "type": "fill",
+          "prompt": "Find the report ___ the writer mentioned.（填写 that 或 where）",
+          "answer": "that",
+          "explanation": "Report 指物，关系词在从句中作 mentioned 的宾语，用 that。"
+        },
+        {
+          "id": "q4",
+          "type": "fill",
+          "prompt": "The evidence ___ supports the claim must be checked.（填写 which 或 when）",
+          "answer": "which",
+          "explanation": "Evidence 指物，关系词作 supports 的主语，应使用 which。"
+        }
+      ]
+    },
+    {
+      "id": "j-10",
+      "title": "如果每人少浪费一点",
+      "band": "9",
+      "theme": "人与自然",
+      "goal": "用真实条件句讨论结果，区分建议、条件与事实。",
+      "minutes": 20,
+      "skills": [
+        "听说互动",
+        "阅读与证据",
+        "语法运用",
+        "写作表达"
+      ],
+      "knowledge": [
+        "真实条件句常用 if＋一般现在时，主句 will＋动词原形。",
+        "If 从句中的将来含义通常不用 will。",
+        "用调查数据支持行动，避免把假设说成已经发生的事实。"
+      ],
+      "vocabulary": [
+        {
+          "en": "waste",
+          "zh": "浪费"
+        },
+        {
+          "en": "portion",
+          "zh": "一份食物"
+        },
+        {
+          "en": "survey",
+          "zh": "调查"
+        },
+        {
+          "en": "result",
+          "zh": "结果"
+        },
+        {
+          "en": "condition",
+          "zh": "条件"
+        },
+        {
+          "en": "responsibility",
+          "zh": "责任"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What will happen if we take smaller portions?",
+          "zh": "如果我们每次少取一点食物，会怎么样？"
+        },
+        {
+          "en": "We will waste less if we take only what we need.",
+          "zh": "如果只取所需，我们会减少浪费。"
+        },
+        {
+          "en": "Then we can return for more when we are still hungry.",
+          "zh": "如果还饿，可以再去添。"
+        }
+      ],
+      "reading": {
+        "en": "A school canteen wants to reduce food waste without leaving students hungry. A student group observes how much food is left on trays for three days. They do not record names or judge individual students. Their survey suggests that some portions are larger than students need. The group proposes a small-portion option and a sign inviting students to return for more. If students choose a suitable amount first, less food will be thrown away. The canteen agrees to try the idea for a week and compare the results. The group knows that a fair test may change their first explanation.",
+        "zh": "学校食堂希望在不让学生挨饿的前提下减少浪费。学生小组连续三天观察餐盘剩饭量，不记录姓名，也不评判个人。调查提示，有些份量超过需求。他们提出小份选项，并用标识欢迎按需添餐。如果先选择合适份量，被丢弃的食物就会减少。食堂同意试行一周并比较结果。小组也知道，公平测试可能改变最初的解释。"
+      },
+      "writing": {
+        "prompt": "写约 90 词的小份用餐倡议，包含两个真实条件句及效果检验办法。",
+        "sample": "If we take only what we need, we will waste less food. If we are still hungry, we can return for more. Our canteen could offer a small-portion option. We will compare the amount of leftover food before and after the trial, without recording students' names.",
+        "checklist": [
+          "if 从句使用一般现在时",
+          "主句结果表达合理",
+          "提出可比较的效果指标"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "调查如何保护学生？",
+          "options": [
+            "It records every student's name.",
+            "It judges students in public.",
+            "It does not record names or judge individuals."
+          ],
+          "answer": "It does not record names or judge individuals.",
+          "explanation": "原文明确避免记录姓名和评判个人。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "If students ___ smaller portions, they will waste less.",
+          "options": [
+            "choose",
+            "will choose",
+            "chose yesterday"
+          ],
+          "answer": "choose",
+          "explanation": "真实条件句遵循 if 从句一般现在时、主句将来时。"
+        },
+        {
+          "id": "q3",
+          "type": "fill",
+          "prompt": "If the trial works, the canteen ___ keep the option.（will 或 did）",
+          "answer": "will",
+          "explanation": "表达未来结果，主句使用 will。"
+        },
+        {
+          "id": "q4",
+          "type": "fill",
+          "prompt": "If we ___ still hungry, we can ask for more.（be）",
+          "answer": "are",
+          "explanation": "主语 we，if 从句用一般现在时 are。"
+        }
+      ]
+    },
+    {
+      "id": "j-11",
+      "title": "听见别人的观点",
+      "band": "9",
+      "theme": "人与社会",
+      "goal": "用宾语从句转述观点，区分事实与个人判断。",
+      "minutes": 20,
+      "skills": [
+        "听说互动",
+        "阅读与证据",
+        "语法运用",
+        "写作表达"
+      ],
+      "knowledge": [
+        "宾语从句使用陈述语序：where the room is，而非 where is the room。",
+        "转述疑问可用 if/whether；转述事实或观点可用 that。",
+        "讨论中先准确复述对方意思，再说明自己的证据与建议。"
+      ],
+      "vocabulary": [
+        {
+          "en": "opinion",
+          "zh": "观点"
+        },
+        {
+          "en": "disagree",
+          "zh": "不同意"
+        },
+        {
+          "en": "explain",
+          "zh": "解释"
+        },
+        {
+          "en": "respect",
+          "zh": "尊重"
+        },
+        {
+          "en": "discussion",
+          "zh": "讨论"
+        },
+        {
+          "en": "solution",
+          "zh": "解决办法"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "Could you explain why you prefer the quiet room?",
+          "zh": "你能解释为什么更喜欢安静的房间吗？"
+        },
+        {
+          "en": "I think that some students need a place to read.",
+          "zh": "我认为有些学生需要一个阅读的地方。"
+        },
+        {
+          "en": "I understand. Could we keep one room for group work?",
+          "zh": "我明白。我们能留一间房用于小组活动吗？"
+        }
+      ],
+      "reading": {
+        "en": "The student council must decide how to use an empty room. Some students want a quiet reading space, while others ask for a place to work on group projects. At first, each group repeats its own wish. The chair then asks each speaker to explain what the other group needs before giving a response. This changes the discussion. Members realize that both groups need a suitable place, but at different times. They suggest a weekly timetable and a booking system. Not everyone gets everything they wanted, yet the solution shows that respectful listening can turn disagreement into a practical plan.",
+        "zh": "学生会决定如何使用一间空房。有人想要安静阅览室，有人想做小组项目。开始时双方只重复自己的愿望。主持人要求每位发言者先说明另一方的需求，再回应。讨论由此改变：大家发现，双方都需要合适空间，只是时间不同。他们提出每周时间表和预约系统。并非人人得到全部所求，但方案显示，尊重地倾听能把分歧变成可行计划。"
+      },
+      "writing": {
+        "prompt": "写约 90 词的讨论记录，准确转述两种需求并提出折中方案。",
+        "sample": "Some students said that they needed a quiet place to read. Others explained that they wanted space for group projects. We discussed whether one room could meet both needs. Finally, we suggested a timetable: quiet reading in the morning and group work after lunch.",
+        "checklist": [
+          "转述内容准确",
+          "宾语从句使用陈述语序",
+          "解决办法回应双方需求"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "什么改变了讨论方式？",
+          "options": [
+            "Repeating the same wish louder",
+            "Explaining the other group's needs first",
+            "Closing the room"
+          ],
+          "answer": "Explaining the other group's needs first",
+          "explanation": "主持人要求先准确说明对方需求，推动双方理解。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "Could you tell me where ___?",
+          "options": [
+            "is the room",
+            "does the room",
+            "the room is"
+          ],
+          "answer": "the room is",
+          "explanation": "宾语从句用陈述语序：主语 the room 在 is 前。"
+        },
+        {
+          "id": "q3",
+          "type": "fill",
+          "prompt": "We discussed ___ one room could meet both needs.（whether 或 what）",
+          "answer": "whether",
+          "explanation": "这里讨论“是否”，从句不缺主语或宾语，使用 whether。"
+        },
+        {
+          "id": "q4",
+          "type": "fill",
+          "prompt": "She explained ___ the students needed a quiet place.（that 或 where）",
+          "answer": "that",
+          "explanation": "转述一个完整陈述内容，用 that 引导宾语从句。"
+        }
+      ]
+    },
+    {
+      "id": "j-12",
+      "title": "把研究做成一场分享",
+      "band": "9",
+      "theme": "人与自我",
+      "goal": "综合阅读、研究和表达，形成有证据、有限度的项目报告。",
+      "minutes": 20,
+      "skills": [
+        "听说互动",
+        "阅读与证据",
+        "语法运用",
+        "写作表达"
+      ],
+      "knowledge": [
+        "报告按问题、方法、发现、局限、建议组织，区分结果与结论。",
+        "过去时叙述已完成的研究步骤；一般现在时说明图表或结论。",
+        "使用 because、however、therefore 连接证据，但避免超出证据作断言。"
+      ],
+      "vocabulary": [
+        {
+          "en": "research",
+          "zh": "研究"
+        },
+        {
+          "en": "method",
+          "zh": "方法"
+        },
+        {
+          "en": "finding",
+          "zh": "发现"
+        },
+        {
+          "en": "limitation",
+          "zh": "局限"
+        },
+        {
+          "en": "conclusion",
+          "zh": "结论"
+        },
+        {
+          "en": "presentation",
+          "zh": "展示"
+        }
+      ],
+      "dialogue": [
+        {
+          "en": "What question did your group investigate?",
+          "zh": "你们小组研究了什么问题？"
+        },
+        {
+          "en": "We studied how students choose books after seeing a display.",
+          "zh": "我们研究学生看过展示后怎样选书。"
+        },
+        {
+          "en": "What can your results tell us, and what can't they tell us?",
+          "zh": "你们的结果能说明什么，又不能说明什么？"
+        }
+      ],
+      "reading": {
+        "en": "For their final project, four students investigate whether a themed display helps classmates discover unfamiliar books. They ask permission to place a small display in the library and count how often the displayed books are borrowed. They compare one week before the display with one week after it. Borrowing increases, but the group notices that a school reading event happened during the second week. In their presentation, they describe this limitation instead of hiding it. They conclude that the display may have helped, but more evidence is needed. Their audience appreciates a report that explains both its findings and its uncertainty.",
+        "zh": "期末项目中，四名学生研究主题展示是否帮助同学发现陌生书籍。他们获准在图书馆布置展示，统计展示书籍借阅次数，比较展示前后一周的数据。借阅增加，但第二周也举行了学校阅读活动。展示时，他们主动说明这一局限。他们认为展示可能有帮助，但还需更多证据。听众欣赏这份同时解释发现和不确定性的报告。"
+      },
+      "writing": {
+        "prompt": "写约 100 词的项目小报告，包含问题、方法、发现、一项局限和下一步。",
+        "sample": "We investigated whether a themed book display could encourage borrowing. We compared the borrowing records from two weeks. More displayed books were borrowed in the second week. However, a reading event also took place, so we cannot say that the display caused all the change. Next time, we will observe several weeks and compare more carefully.",
+        "checklist": [
+          "方法能回答问题",
+          "至少一条证据支持发现",
+          "明确写出局限和下一步"
+        ]
+      },
+      "questions": [
+        {
+          "id": "q1",
+          "type": "choice",
+          "prompt": "为什么不能把增长全归因于展示？",
+          "options": [
+            "A reading event also happened.",
+            "The books disappeared.",
+            "The students never counted borrowing."
+          ],
+          "answer": "A reading event also happened.",
+          "explanation": "同期阅读活动也是可能影响借阅的因素，构成研究局限。"
+        },
+        {
+          "id": "q2",
+          "type": "choice",
+          "prompt": "哪一个结论与证据最相称？",
+          "options": [
+            "The display always works everywhere.",
+            "The display may have helped, but more evidence is needed.",
+            "The event had no effect at all."
+          ],
+          "answer": "The display may have helped, but more evidence is needed.",
+          "explanation": "May have helped 保留不确定性，符合有限证据。"
+        },
+        {
+          "id": "q3",
+          "type": "fill",
+          "prompt": "The students ___ borrowing records last week.（compare）",
+          "answer": "compared",
+          "explanation": "Last week 是明确过去时间，使用 compared。"
+        },
+        {
+          "id": "q4",
+          "type": "fill",
+          "prompt": "Borrowing increased. ___, another event happened at the same time.（填“然而”）",
+          "answer": "However",
+          "explanation": "However 引出限制或转折，提醒读者考虑其他解释。"
+        }
+      ]
+    }
+  ]
+}

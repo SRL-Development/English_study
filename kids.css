@@ -57,3 +57,244 @@ a{color:inherit}
 @media(max-width:760px){.cartoon-feature{grid-template-columns:1fr;padding:24px}.cartoon-preview{height:190px}.learn-top .reward-row{display:none}.kids-top{gap:8px}.kids-brand{min-width:0}.top-actions{gap:6px;min-width:0}.learner-chip{padding-right:7px}.learner-chip>span:last-child{display:none}.pill,.icon-btn{min-height:40px}.learn-top .pill{width:40px;padding:0;justify-content:center}.icon-btn{width:40px}.activity-modal{max-height:calc(100dvh - 20px)}.activity-body{min-height:330px}.profile-actions .btn{flex:1 1 42%}.profile-actions .profile-delete{flex:1 1 100%}.review-shelf{align-items:flex-start}.review-chips{max-width:none;flex:1}}
 @media(max-width:420px){.kids-top{padding-left:10px;padding-right:10px}.kids-mark{width:40px;height:40px;border-radius:13px}.kids-brand{font-size:15px;gap:7px}.learn-top .kids-brand>span:last-child{display:none}.top-actions{margin-left:auto}.kids-main,.learn-main{padding-left:10px;padding-right:10px}.hero{margin-left:-10px;margin-right:-10px}.hero h1{font-size:34px}.cartoon-feature{margin-left:-2px;margin-right:-2px;padding:20px;border-radius:22px}.cartoon-copy h2{font-size:23px}.cartoon-preview{height:170px}.world-card,.quest-world{padding:16px;border-radius:22px}.lesson-path,.quest-nodes{grid-template-columns:1fr 1fr;gap:8px}.lesson-node,.quest-node{min-height:108px;padding:12px 7px}.choice-grid{grid-template-columns:1fr}.choice{min-height:72px}.activity-body{padding:18px 10px;min-height:300px}.activity-head{padding:14px}.activity-scene{border-radius:20px}.cartoon-player .cartoon-fox{left:16%;font-size:64px}.cartoon-player .scene-friend{right:16%;font-size:68px}.speech{right:8px;bottom:51px;font-size:11px}.modal-mask{padding:10px}.modal{padding:18px;max-height:calc(100dvh - 20px)}.modal-actions{flex-direction:column}.profile-stats b{font-size:15px}.week-bars{gap:5px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+
+/* EnglishLab Family — a warm, tactile learning studio. */
+:root{
+  --ink:#203d36;--muted:#68766e;--paper:#fffdf7;--line:#dde3d9;
+  --sky:#9dcacb;--ocean:#216655;--mint:#57aa86;--sun:#efc66f;--coral:#d98265;
+  --violet:#707eab;--shadow:0 12px 35px rgba(44,65,48,.055);--soft-shadow:0 5px 18px rgba(44,65,48,.04);
+}
+html,body{font-family:"Avenir Next","Nunito","PingFang SC","Microsoft YaHei",system-ui,sans-serif;letter-spacing:.05px;line-height:1.65}
+body,.loading{background:#f6f4ee}
+button,a,input,select{touch-action:manipulation}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b97733;outline-offset:4px}
+button:disabled{cursor:not-allowed}
+.kids-shell{background:#f6f4ee;background-image:radial-gradient(#c9cec330 .7px,transparent .7px);background-size:16px 16px}
+.kids-top{max-width:1220px;padding:24px 28px;gap:20px}
+.kids-brand{font-weight:850;font-size:19px;letter-spacing:-.65px;line-height:1.2}
+.kids-mark{width:44px;height:44px;border-radius:13px 13px 13px 4px;background:#24614f;box-shadow:none;font-weight:850;font-size:24px;transform:rotate(-3deg)}
+.kids-brand small{margin-top:5px;font-size:9px;letter-spacing:2px;color:#708176;font-weight:700}
+.pill,.icon-btn{min-height:44px;border-color:#d8e0d5;box-shadow:none;background:#fffdf8;color:#385247;font-size:12px;font-weight:750;transition:background .18s,transform .18s}
+.pill:hover,.icon-btn:hover{background:#eaf0e4;transform:translateY(-1px)}
+.icon-btn{width:44px;font-size:20px}
+.kids-main{padding:8px 28px 80px;max-width:1220px}
+.kids-main>.btn-ghost,.learn-main>.btn-ghost{font-size:12px;min-height:44px;border-style:dashed;background:transparent;color:#617562;box-shadow:none;border-radius:11px}
+.hero{border:1px solid #d9e3d0;border-radius:28px;background:#e9efdf;color:var(--ink);box-shadow:none;min-height:365px;padding:42px 46px;grid-template-columns:minmax(0,1.15fr) minmax(270px,.85fr);gap:24px}
+.hero:before{width:370px;height:370px;right:-90px;top:-105px;background:#f8f9ef;border:1px solid #dbe4cd}
+.hero:after{width:110px;height:110px;left:56%;bottom:-65px;background:#dce7cf;border:1px solid #cfdcbd}
+.eyebrow{font-size:10px;letter-spacing:2.1px;font-weight:800;opacity:1;color:#6a7c60}
+.eyebrow-coral{color:#a16345}
+.hero h1{font-size:clamp(33px,4.3vw,52px);line-height:1.23;letter-spacing:-1.7px;margin:15px 0 17px;font-weight:850;max-width:590px}
+.hero p{color:#64735f;font-size:14px;line-height:1.9;max-width:510px}
+.hero-actions{gap:9px;margin-top:25px}
+.btn{min-height:48px;border-radius:12px;padding:12px 19px;font-size:13px;line-height:1.45;font-weight:800;transition:transform .18s,background .18s,box-shadow .18s}
+.btn:hover{transform:translateY(-2px)}
+.btn-light,.btn-primary{background:#216655;color:white;border:1px solid #216655;box-shadow:0 4px 0 #164939}
+.btn-light:hover,.btn-primary:hover{background:#195543;box-shadow:0 6px 0 #164939}
+.btn-coral{background:#b56548;color:#fff;border:1px solid #b56548;box-shadow:0 4px 0 #8e4a34}
+.btn-coral:hover{background:#a65a3e;box-shadow:0 6px 0 #8e4a34}
+.btn-mint{background:#398569;color:#fff;border:1px solid #398569;box-shadow:0 4px 0 #28664f}
+.btn-ghost{background:#fffdf8;color:#42604d;border:1px solid #cdd8c6;box-shadow:none}
+.btn-ghost:hover{background:#f4f7ed}
+.btn-danger{color:#a64b3d;background:#fff7f2;border-color:#e8c8bc;box-shadow:none}
+.hero-art{height:270px;position:relative;right:auto;bottom:auto;opacity:1}
+.hero-art:after{content:"A WORLD TO DISCOVER";position:absolute;left:35px;bottom:0;font-size:9px;letter-spacing:2.2px;font-weight:850;color:#657b5f;transform:rotate(-6deg);border-bottom:1px solid #a7b597;padding:6px 0}
+.planet{width:220px;height:220px;right:26px;top:14px;border:7px solid #fffdf4;background:#b6d5bc;box-shadow:inset -13px -10px 0 #9fc5a6,0 15px 0 #d5dfc9;animation:float 6s ease-in-out infinite}
+.planet:before{width:94px;height:73px;left:13px;top:29px;border-radius:42% 58% 61% 39%/44% 44% 56% 56%;background:#73a782;box-shadow:70px 85px 0 -7px #73a782;transform:rotate(18deg)}
+.planet:after{width:183px;height:183px;left:12px;top:11px;right:auto;bottom:auto;border:1px solid #7ea887;background:transparent;border-radius:50%;transform:scaleX(.47)}
+.orbit{width:285px;height:102px;right:-6px;top:75px;border:2px dashed #76946a;box-shadow:none;transform:rotate(-25deg);z-index:2}
+.hero-friend{right:89px;top:92px;width:95px;height:100px;display:grid;place-items:center;border:6px solid #fffdf5;border-radius:22px;background:#f4d898;font-size:61px;filter:none;box-shadow:0 6px 0 #b1c4a2;transform:rotate(-6deg);animation:bob 4s ease-in-out infinite}
+.section-head{margin:36px 0 16px;gap:16px;align-items:center}
+.section-head h2{font-size:23px;letter-spacing:-.7px;font-weight:850}
+.section-head p{font-size:12px;color:#768070;margin-top:5px;line-height:1.7}
+.section-head .mini{font-size:10px;border:1px solid #dce2d5;border-radius:8px;padding:6px 10px;background:#fafaf3;color:#75816e}
+.program-grid{gap:18px}
+.program-card{border-radius:22px;min-height:300px;padding:27px;box-shadow:none;border:1px solid #e6d8bd;transition:transform .2s,box-shadow .2s}
+.program-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.program-card.kinder{background:#fbf0d9;border-color:#e9d8b3}
+.program-card.primary{background:#e8eef0;border-color:#d2dfe0}
+.program-card:after{background:#fff9eb;border:1px solid #ebddb9;width:150px;height:150px;top:-45px;right:-50px}
+.program-card.primary:after{background:#f6fafa;border-color:#d7e4e3}
+.program-art{font-size:65px;right:26px;top:63px;filter:none;transform:rotate(7deg);z-index:1}
+.program-card .tag{background:#fffaf0;border:1px solid #e9d7b1;color:#8c754b;border-radius:7px;font-size:10px;padding:5px 8px;letter-spacing:.3px}
+.program-card.primary .tag{background:#f5fafa;border-color:#cfdddd;color:#5b777a}
+.program-card h3{font-size:27px;margin-top:15px;letter-spacing:-1px;position:relative;z-index:2}
+.program-card p{font-size:12px;color:#7d785f;line-height:1.85;max-width:74%;position:relative;z-index:2}
+.program-card.primary p{color:#6f7d7d}
+.program-card .features{gap:6px;margin:18px 0 20px}
+.program-card .features span{background:transparent;border:1px solid #e1d3b8;border-radius:7px;padding:5px 8px;font-size:10px;color:#8b785a}
+.program-card.primary .features span{border-color:#cfdcdd;color:#6a7c7c}
+.program-card>.btn{align-self:flex-start;min-width:170px;position:relative;z-index:2}
+.profile-grid{gap:15px}
+.profile-card,.panel{border:1px solid #dde3d6;background:#fffdf8;border-radius:20px;box-shadow:none}
+.profile-card{padding:22px;min-width:0}
+.profile-card.active{outline:0;border-color:#82aa8c;box-shadow:inset 0 3px 0 #6b9c77}
+.profile-name{font-size:17px;font-weight:850;overflow-wrap:anywhere}
+.profile-meta{font-size:11px;color:#81907f}
+.avatar{background:#f1ecd9;border:1px solid #e8dfc4;border-radius:19px;width:58px;height:58px;font-size:33px;box-shadow:none;flex:none}
+.profile-stats{margin:20px 0;gap:8px}
+.profile-stats div{background:#f2f4eb;border:1px solid #e9edde;border-radius:10px;padding:10px 3px}
+.profile-stats b{font-size:18px;color:#46664b;font-weight:800}
+.profile-stats span{font-size:9px;letter-spacing:.25px}
+.profile-actions{gap:8px}
+.profile-actions .btn{min-height:44px;font-size:11px;padding:8px 11px}
+.add-profile{background:#f4f4e9;border:1px dashed #c7d1ba;min-height:232px}
+.add-profile .plus{background:#fffdf8;border:1px solid #dde3d0;border-radius:15px;box-shadow:none;color:#63815f;font-weight:500}
+.add-profile b{font-size:14px;color:#667e60}
+.add-profile span{font-size:11px}
+.panel{padding:24px}
+.panel h3{font-size:16px;letter-spacing:-.3px}
+.panel-sub{font-size:11px;color:#83917d;margin-bottom:22px}
+.week-bars{gap:13px;height:125px}
+.day-bar i{background:#9fc3a3;border-radius:7px 7px 3px 3px;box-shadow:inset 0 1px #c7dcc5}
+.day-bar:nth-child(even) i{background:#c2d1aa}
+.day-bar span{font-size:10px;display:block;margin-top:7px}
+.safety-list{gap:14px}
+.safety-item{font-size:11px;color:#7b8875;line-height:1.8}
+.safety-item i{background:#f1f4e8;border:1px solid #e7eddd;border-radius:9px;font-size:14px}
+.learn-top{background:#fbfaf4f2;border-bottom:1px solid #dfe4d7;backdrop-filter:blur(14px)}
+.learn-top .kids-top{padding:14px 28px}
+.learner-chip{background:#fffdf8;border-color:#dbe2d4;box-shadow:none;border-radius:12px;font-size:11px;min-height:44px}
+.learner-chip .mini-avatar{background:#f3efd9;border-radius:9px}
+.reward{background:#fcf7e9;border-color:#e8dfc5;box-shadow:none;border-radius:10px;color:#8b7851;font-size:11px}
+.learn-main{max-width:1220px;padding:26px 28px 75px}
+.learn-intro{margin:8px 0 24px;align-items:center}
+.learn-intro h1{font-size:29px;letter-spacing:-1px;line-height:1.4}
+.learn-intro p{font-size:12px;line-height:1.8}
+.overall{min-width:225px;background:#fffdf8;border:1px solid #dde3d5;padding:13px 15px;border-radius:13px}
+.overall-top{font-size:10px;margin-bottom:8px}
+.progress-track{height:8px;background:#e7edde}
+.progress-track i{background:#6b9e7c}
+.cartoon-feature{background:#f1dfd2;border:1px solid #e4cdbb;color:#573e31;box-shadow:none;border-radius:23px;padding:29px 32px;gap:32px;grid-template-columns:minmax(0,1fr) minmax(280px,.78fr)}
+.cartoon-copy .eyebrow{color:#9d7660}
+.cartoon-copy h2{font-size:28px;line-height:1.35;letter-spacing:-.8px;margin:9px 0 12px}
+.cartoon-copy p{color:#927967;font-size:12px;line-height:1.85;margin-bottom:20px}
+.cartoon-copy .btn-light{background:#8f5c44;border-color:#8f5c44;box-shadow:0 4px 0 #6e412e;max-width:100%;text-align:left;font-size:12px}
+.cartoon-preview{height:220px;border:7px solid #fffaf0;border-radius:17px;background:linear-gradient(180deg,#c8dfe0 0 60%,#b9cba0 60%);box-shadow:0 7px 0 #cfb6a2;transform:rotate(2deg)}
+.cartoon-preview:before{content:"";position:absolute;width:160px;height:100px;background:#e0e8bd;border-radius:50% 50% 0 0;bottom:20px;left:-35px;transform:rotate(-7deg)}
+.preview-sun{font-size:33px;top:17px;right:21px;animation:none}
+.preview-fox{font-size:69px;bottom:39px;left:20%;animation:bob 4s ease-in-out infinite}
+.preview-friend{font-size:48px;bottom:47px;right:20%;animation:cartoonWave 2.8s ease-in-out infinite alternate}
+.cartoon-preview b{background:#fbf8e9f5;color:#62755b;left:12px;right:12px;bottom:11px;font-size:11px;border-radius:7px;font-weight:800;box-shadow:none;border:1px solid #fff}
+.review-shelf{border-color:#e4dfca;border-radius:16px;background:#fffdf5;padding:14px 17px;gap:15px;box-shadow:none;margin-bottom:23px}
+.review-badge{width:52px;min-width:52px;height:52px;border-radius:13px;background:#f3e9cf;color:#987942;font-size:9px}
+.review-badge b{font-size:19px}
+.review-shelf h3{font-size:14px;letter-spacing:-.25px;margin-bottom:3px}
+.review-shelf p{font-size:10px;color:#92917d;line-height:1.7}
+.review-chip{background:#f9eee1;border:1px solid #e8d9c4;color:#a17b54;border-radius:8px;padding:6px 8px;font-size:10px}
+.review-chip b{color:#8c6948}
+.review-empty{background:#edf4e6;border-color:#d5e4c7;color:#748b60}
+.world-tabs{gap:8px;padding:2px 1px 15px;scrollbar-width:thin;scrollbar-color:#c5d3bc transparent}
+.world-tab{border-color:#d7e0cf;background:#fffdf7;border-radius:11px;min-height:44px;font-size:12px;padding:10px 17px;color:#77866f;box-shadow:none}
+.world-tab.on{background:#496c50;border-color:#496c50;color:#fff}
+.world-card{border-radius:22px;padding:28px;border:1px solid #dedfc9;box-shadow:none}
+.world-card.sunny{background:#f3ead1;border-color:#e3d7b7}
+.world-card.sky{background:#e5edef;border-color:#cfdfe1}
+.world-card.forest{background:#e8eedc;border-color:#d4dfc6}
+.world-head h2{font-size:25px;letter-spacing:-.7px;line-height:1.4}
+.world-head p{color:#868571;font-size:12px;line-height:1.8}
+.world-icon{font-size:49px;filter:none;opacity:.8}
+.lesson-path{gap:13px;margin-top:24px}
+.lesson-node{border:1px solid #e3dfc8;border-bottom:4px solid #d9d4bd;border-radius:17px;background:#fffdf6;box-shadow:none;min-height:157px;padding:20px 12px 16px;transition:transform .18s,border-color .18s,background .18s}
+.lesson-node:hover:not(:disabled){transform:translateY(-4px);border-color:#99af83}
+.lesson-node.done{outline:0;background:#f5f8ee;border-color:#a9c492;border-bottom-color:#88ad70}
+.lesson-node:disabled{opacity:.62;filter:grayscale(.7)}
+.lesson-node .node-icon{font-size:36px;margin-bottom:12px;filter:saturate(.8)}
+.lesson-node b{font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+.lesson-node small{font-size:10px;color:#8e927f;line-height:1.7;margin-top:6px}
+.node-stars{font-size:11px;letter-spacing:3px;color:#c29d52;margin-top:9px}
+.lock{right:11px;top:10px;font-size:11px;color:#71905f}
+.quest-hero{background:#dfe9de;border:1px solid #cddbc9;color:#2a503b;border-radius:23px;box-shadow:none;padding:33px;margin-bottom:24px;gap:20px}
+.quest-hero:after{background:#f3f5e9;border:1px solid #d7e0c9;right:-50px;top:-75px}
+.quest-hero h1{font-size:30px;line-height:1.3;letter-spacing:-1px;margin:10px 0 11px;position:relative;z-index:2}
+.quest-hero p{color:#728570;line-height:1.85;font-size:12px;position:relative;z-index:2}
+.quest-avatar{font-size:65px;filter:none;transform:rotate(9deg);background:#f7f5df;border:6px solid #fdfcf3;border-radius:24px;width:111px;height:111px;display:grid;place-items:center;box-shadow:0 6px 0 #c0d1b8}
+.quest-map{gap:18px}
+.quest-world{padding:25px;border-color:#dfe4d7;border-radius:22px;background:#fffdf8;box-shadow:none}
+.quest-world-head{gap:13px;margin-bottom:22px}
+.quest-world-icon{width:51px;height:51px;font-size:27px;border:1px solid #e4dbc0;border-radius:14px;background:#f6eed6}
+.quest-world:nth-child(2) .quest-world-icon{background:#e9efef;border-color:#d4e0df}
+.quest-world:nth-child(3) .quest-world-icon{background:#ece9f0;border-color:#dbd5e5}
+.quest-world h2{font-size:20px;letter-spacing:-.6px;line-height:1.4}
+.quest-world p{font-size:11px;color:#87907f;line-height:1.8}
+.quest-nodes{gap:12px}
+.quest-node{background:#f7f7ed;border:1px solid #e0e5d4;border-bottom:4px solid #dce3cb;border-radius:15px;min-height:132px;padding:18px 10px 12px;transition:transform .18s,background .18s,border-color .18s}
+.quest-node:hover:not(:disabled){border-color:#93ad80;transform:translateY(-3px);background:#f5f8e9}
+.quest-node .num{width:31px;height:31px;border:1px solid #e5d1a4;border-radius:10px;background:#f4e4b9;color:#9a7b36;font-size:13px;margin:0 auto 11px}
+.quest-node b{font-size:12px;line-height:1.5}
+.quest-node small{font-size:9px;color:#8b9581;line-height:1.6}
+.quest-node.done{border-color:#b0c89a;background:#f0f6e7;border-bottom-color:#8fab74}
+.quest-node.done .num{background:#5f8e64;border-color:#5f8e64;color:#fff}
+.quest-node.boss{background:#f5e7db;border-color:#e4cfbb;border-bottom-color:#d2b393}
+.quest-node.boss .num{background:#e9d2bb;border-color:#d9b999;color:#96704c}
+.quest-node:disabled{opacity:.52;filter:grayscale(.5)}
+.modal-mask{background:#1d352f85;backdrop-filter:blur(5px);padding:20px}
+.modal{background:#fffdf7;border:1px solid #e1e3d5;border-radius:23px;padding:28px;box-shadow:0 22px 80px #152e2a33;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#c6d2bd transparent}
+.modal h2{font-size:24px;letter-spacing:-.7px;line-height:1.4}
+.modal-desc{font-size:12px;color:#84907c;line-height:1.8}
+.field label{font-size:11px;color:#697c5e;letter-spacing:.2px}
+.field input,.field select{background:#f8f9f1;border-color:#dce3d1;border-radius:10px;min-height:48px;font-size:16px}
+.field input:focus,.field select:focus{border-color:#699472;box-shadow:0 0 0 3px #67957117}
+.avatar-choice{min-height:52px;background:#f4f4e8;border-color:#e1e5d5;border-radius:13px;font-size:25px}
+.avatar-choice.on{background:#e9f0dd;border-color:#80a66b;box-shadow:0 0 0 3px #9db48726}
+.modal-actions{gap:10px;margin-top:24px}
+.parent-gate{color:#93a087;font-size:10px}
+.activity-modal{display:flex;flex-direction:column;padding:0;max-height:90vh;max-height:calc(100dvh - 40px);border-radius:24px;overflow:hidden}
+.activity-head{background:#eef1e4;border-bottom:1px solid #dce3d1;padding:18px 23px;flex:none}
+.activity-head small{font-size:10px;color:#839272;letter-spacing:.4px}
+.activity-head b{font-size:14px;line-height:1.6}
+.close-x{width:44px;height:44px;flex:none;border:1px solid #dce2d0;border-radius:13px;background:#fffdf5;font-size:21px;color:#6d7e61}
+.activity-body{padding:28px;min-height:0;flex:1;overflow:auto;overscroll-behavior:contain;justify-content:flex-start;scrollbar-width:thin;scrollbar-color:#c6d2bd transparent}
+.activity-body>*{flex-shrink:0}
+.activity-scene{background:linear-gradient(180deg,#d5e4df 0 62%,#bdcfa3 62%);border:5px solid #fff;border-radius:20px;min-height:205px;box-shadow:0 4px 0 #e3e6d5;margin:0 0 22px}
+.scene-sun{font-size:34px;animation:none}
+.scene-cloud{font-size:35px;opacity:.85;animation:cloud 14s ease-in-out infinite}
+.scene-friend{font-size:80px;animation:bob 4s ease-in-out infinite}
+.speech{background:#fffdf3;border:1px solid #ecdfbf;box-shadow:none;border-radius:13px 13px 3px 13px;font-size:12px;line-height:1.5;color:#75825e;max-width:180px}
+.cartoon-player .cartoon-fox{font-size:72px;bottom:42px}
+.cartoon-player .scene-friend{font-size:65px;bottom:43px}
+.cartoon-caption{background:#38594eea;left:8px;right:8px;bottom:8px;border-radius:9px;padding:7px 10px}
+.cartoon-caption b{font-size:12px;line-height:1.5}
+.cartoon-caption span{color:#cfdfca;font-size:9px}
+.cartoon-player.playing:after{background:#607c4a;border-radius:8px;left:10px;top:10px;font-size:9px;padding:5px 8px;box-shadow:none}
+.activity-title{font-size:25px;letter-spacing:-.7px;line-height:1.45}
+.activity-prompt{font-size:13px;color:#839078;line-height:1.85;margin:9px 0 21px;max-width:540px}
+.choice-grid{gap:11px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.choice{background:#fffef9;border:1px solid #dbe2d0;border-bottom:4px solid #d6dfc8;border-radius:14px;font-size:16px;line-height:1.5;padding:15px 12px;min-height:94px;overflow-wrap:anywhere;transition:transform .15s,border-color .15s,background .15s;color:#4f6847}
+.choice .choice-icon{font-size:32px;margin-bottom:5px}
+.choice:hover{border-color:#a5bc90;transform:translateY(-2px);background:#f5f8ed}
+.choice.correct{background:#eaf4df;border-color:#7ea764;border-bottom-color:#6a9254;color:#4b743b}
+.choice.wrong{background:#fbede2;border-color:#d9aa8c;border-bottom-color:#c18867;color:#a56949}
+.choice:disabled{cursor:default}
+.big-word{color:#3e6c50;font-weight:850;line-height:1.3;letter-spacing:-1.2px;font-size:clamp(36px,7vw,60px);margin:15px 0}
+.challenge-type{color:#a78b47;font-size:10px;letter-spacing:2px}
+.challenge-question{font-size:25px;line-height:1.45;letter-spacing:-.6px;font-weight:850}
+.challenge-context{font-size:13px;line-height:1.9;color:#7a8a6e;background:#f2f5e9;padding:14px 17px;border-radius:12px;max-width:540px}
+.answer-input{height:56px;border:1px solid #cedabf;border-bottom:3px solid #bccfa7;border-radius:12px;background:#fffefa;color:#4a6541;font-size:21px;font-weight:750}
+.answer-input:focus{border-color:#789966;box-shadow:0 0 0 4px #71945519}
+.sentence-build{background:#eff3e5;border:1px dashed #b9cba6;min-height:62px;border-radius:12px;gap:8px;padding:11px}
+.word-bank{gap:8px;margin:16px 0}
+.word-chip{background:#fffdf7;border:1px solid #d7dfca;border-bottom:3px solid #cbd6bb;padding:10px 14px;min-height:44px;border-radius:10px;color:#61784f;font-size:14px}
+.word-chip.used{opacity:.34;background:#eff1e9}
+.sentence-hint{color:#8c9b7d;font-size:12px;align-self:center}
+.feedback{line-height:1.8;font-size:13px;min-height:43px;margin-top:18px}
+.feedback.ok{color:#4b7b43}.feedback.no{color:#af6c49}
+.reward-burst{font-size:75px;margin:15px 0 10px}
+.toast{background:#365847;color:#fffdf2;box-shadow:0 8px 30px #254b3220;border:1px solid #4b6a4e;border-radius:12px;font-size:12px;font-weight:700;max-width:calc(100vw - 32px);text-align:center;line-height:1.65;bottom:calc(24px + env(safe-area-inset-bottom))}
+.loader-card{font-size:12px;color:#7e9071}
+.loader-friend{font-size:53px;animation:bob 3s ease-in-out infinite}
+@media(min-width:901px){.hero-art{display:block}.hero-copy{max-width:590px}}
+@media(max-width:1000px) and (min-width:761px){.hero{padding:34px;grid-template-columns:minmax(0,1.1fr) minmax(240px,.8fr)}.hero h1{font-size:41px}.planet{right:9px;width:200px;height:200px}.orbit{right:-20px}.hero-friend{right:65px;top:85px}.profile-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.insight-grid{grid-template-columns:1fr}.program-card p{max-width:80%}.hero-art:after{left:0}}
+@media(max-width:900px){.program-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{min-height:0}.hero-art{position:relative;right:auto;bottom:auto;opacity:1}.lesson-path,.quest-nodes{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.kids-top{padding:17px 20px;gap:12px}.kids-main{padding:5px 20px 60px}.hero{padding:29px;grid-template-columns:minmax(0,1.3fr) minmax(180px,.7fr);gap:10px}.hero h1{font-size:34px;line-height:1.25}.hero p{font-size:12px;line-height:1.85}.hero-art{height:230px;transform:scale(.78);transform-origin:right center;min-width:190px}.hero-art:after{left:-10px}.hero-actions .btn{font-size:12px;padding:11px 14px}.program-card{padding:23px;min-height:305px}.program-card h3{font-size:24px;max-width:85%}.program-card p{max-width:100%;padding-right:0}.program-art{right:16px;top:54px;font-size:45px;opacity:.55}.program-card>.btn{min-width:0;width:100%;font-size:12px}.profile-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.learn-top .kids-top{padding:12px 20px}.learn-main{padding:20px 20px 65px}.learn-intro{align-items:flex-start}.learn-intro h1{font-size:27px}.overall{min-width:200px}.cartoon-feature{grid-template-columns:1fr minmax(220px,.85fr);padding:25px;gap:20px}.cartoon-copy h2{font-size:24px}.cartoon-copy p{font-size:11px}.cartoon-preview{height:190px}.review-shelf{gap:12px}.review-chips{max-width:38%;flex:none}.reward-row{display:none}.pill,.icon-btn,.learn-top .pill{width:auto;min-height:44px}.icon-btn,.learn-top .icon-btn{width:44px}.learn-top .pill{width:44px}.learner-chip{min-height:44px}.profile-actions .btn{flex:1 1 42%}.profile-actions .profile-delete{flex:1 1 100%}.activity-modal{max-height:calc(100dvh - 28px)}}
+@media(max-width:620px){.hero{margin:0;border-radius:23px;grid-template-columns:1fr;padding:27px 24px 15px;gap:5px}.hero-copy{max-width:100%}.hero h1{font-size:36px;line-height:1.25;letter-spacing:-1.25px;max-width:440px;margin-top:13px}.hero p{font-size:12px;max-width:430px}.hero-art{height:180px;min-width:0;width:255px;margin:0 0 0 auto;transform:scale(.73);transform-origin:right top;margin-bottom:-35px}.hero-art:after{left:-30px;bottom:-25px}.hero-actions{margin-top:20px;gap:8px}.hero-actions .btn{font-size:12px;min-height:47px;flex:1 1 auto}.section-head{display:block;margin:29px 0 14px}.section-head h2{font-size:21px}.section-head .mini{display:inline-block;margin-top:8px;font-size:9px}.program-grid{grid-template-columns:1fr;gap:14px}.program-card{min-height:282px;padding:24px}.program-card h3{font-size:26px;margin-top:16px}.program-card p{padding-right:65px;font-size:12px}.program-art{right:25px;top:65px;font-size:60px;opacity:.85}.program-card>.btn{width:auto;min-width:170px;align-self:flex-start}.program-card .features{margin-bottom:18px}.profile-grid{grid-template-columns:1fr}.profile-card{padding:22px}.profile-actions .btn{flex:1 1 auto}.profile-actions .profile-delete{flex:0 1 auto}.add-profile{min-height:195px}.insight-grid{grid-template-columns:1fr}.learn-top .kids-brand{min-width:44px}.learn-intro{display:block;margin:6px 0 22px}.overall{margin-top:15px;min-width:0;width:100%;padding:12px 14px}.learn-intro h1{font-size:27px}.cartoon-feature{grid-template-columns:1fr;padding:24px;gap:23px;border-radius:22px}.cartoon-copy h2{font-size:27px}.cartoon-copy p{font-size:12px;margin-bottom:19px}.cartoon-preview{width:100%;height:190px;max-width:350px;margin:auto}.review-shelf{display:grid;grid-template-columns:48px minmax(0,1fr);padding:14px;gap:10px}.review-badge{width:48px;min-width:48px;height:48px}.review-shelf-copy{align-self:center}.review-shelf h3{font-size:13px}.review-shelf p{font-size:10px}.review-chips{max-width:none;min-width:0;width:100%;grid-column:1 / -1;padding-top:5px;overflow-x:auto}.world-card{padding:21px;border-radius:21px}.world-head h2{font-size:22px}.world-head p{font-size:11px}.world-icon{font-size:42px}.lesson-path,.quest-nodes{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.lesson-node{min-height:148px}.quest-hero{padding:25px;grid-template-columns:1fr auto;gap:15px}.quest-hero h1{font-size:26px}.quest-hero p{font-size:11px}.quest-avatar{width:76px;height:81px;font-size:45px;border-width:4px;border-radius:18px}.quest-world{padding:21px}.quest-world h2{font-size:19px}.quest-node{min-height:131px}.modal{padding:24px;border-radius:22px}.avatar-pick{grid-template-columns:repeat(3,minmax(0,1fr))}.modal-mask{padding:14px}.activity-modal{padding:0;border-radius:22px;max-height:calc(100dvh - 28px)}.activity-head{padding:16px 18px}.activity-body{padding:22px 17px;min-height:0}.activity-title{font-size:23px}.activity-prompt{font-size:12px}.activity-scene{min-height:185px}.choice-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.choice{min-height:88px;font-size:15px}.activity-actions{width:100%;gap:9px}.activity-actions .btn{min-height:48px;font-size:12px;flex:1 1 auto}.modal-actions{flex-direction:row}.modal-actions .btn{font-size:12px}.challenge-context{font-size:12px;padding:13px 14px}.challenge-question{font-size:23px}.challenge-card{padding:0}.toast{font-size:11px}}
+@media(max-width:420px){.kids-top{padding:15px 16px;gap:9px}.kids-brand{font-size:15px;gap:8px;letter-spacing:-.5px}.kids-mark{width:40px;height:42px;font-size:22px}.top-actions{gap:6px}.pill{font-size:11px;padding:8px 12px;min-height:44px}.icon-btn{width:44px}.kids-main{padding:3px 16px 55px}.hero{margin:0;padding:26px 22px 14px}.hero h1{font-size:32px;line-height:1.27}.hero p{line-height:1.85}.hero-actions .btn{flex-basis:100%;min-height:47px}.hero-art{height:175px;margin-top:5px;margin-bottom:-30px}.section-head{margin-top:26px}.program-card{padding:22px}.program-card p{padding-right:56px}.program-card h3{font-size:25px}.program-art{font-size:54px;right:19px}.program-card>.btn{min-width:164px}.profile-actions{gap:7px}.profile-actions .btn{flex:1 1 40%;min-height:44px}.profile-actions .profile-delete{flex:1 1 100%}.panel{padding:21px}.week-bars{gap:8px}.learn-top .kids-top{padding:11px 14px}.learn-top .kids-brand{gap:0;flex:none}.learn-top .kids-mark{width:40px;height:42px}.learn-top .kids-brand>span:last-child{display:none}.learn-top .top-actions{gap:6px}.learn-top .pill{width:44px}.learn-top .icon-btn{width:44px}.learner-chip{padding:4px;min-height:44px;border-radius:11px}.learner-chip .mini-avatar{width:34px;height:34px;font-size:22px}.learn-main{padding:17px 16px 55px}.cartoon-feature{padding:22px;margin:0 0 22px;border-radius:21px}.cartoon-copy h2{font-size:25px}.cartoon-preview{height:180px}.cartoon-copy .btn-light{font-size:11px;width:100%;padding:12px}.world-card,.quest-world{padding:18px;border-radius:20px}.world-head{gap:10px}.world-head h2{font-size:21px}.world-head p{line-height:1.8}.world-icon{font-size:37px}.lesson-path,.quest-nodes{gap:9px}.lesson-node{min-height:145px;padding:17px 9px 13px}.lesson-node b{font-size:11px}.lesson-node .node-icon{font-size:33px}.world-tab{font-size:11px;min-height:44px;padding:10px 14px}.quest-hero{padding:23px;grid-template-columns:1fr}.quest-hero h1{font-size:25px;margin:8px 0 10px;max-width:240px}.quest-hero p{max-width:250px}.quest-avatar{display:none}.quest-world-head{gap:10px}.quest-world-icon{width:46px;height:46px;flex:none;font-size:25px}.quest-world h2{font-size:18px}.quest-world p{font-size:10px}.quest-node{min-height:128px;padding:16px 9px 12px}.quest-node b{font-size:11px}.activity-head{padding:14px 16px}.activity-body{padding:21px 14px;min-height:0}.activity-title{font-size:21px}.activity-scene{border-radius:17px;min-height:180px}.cartoon-player .cartoon-fox{left:14%;font-size:62px;bottom:46px}.cartoon-player .scene-friend{right:15%;font-size:59px;bottom:46px}.speech{right:9px;bottom:64px;font-size:10px;max-width:150px;padding:7px 9px}.cartoon-caption b{font-size:11px}.choice-grid{grid-template-columns:1fr}.choice{min-height:66px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:15px;padding:12px}.choice .choice-icon{font-size:26px;display:inline-block;margin:0}.modal-mask{padding:12px}.modal{padding:22px 18px;max-height:calc(100dvh - 24px);border-radius:21px}.activity-modal,.challenge-card{padding:0;max-height:calc(100dvh - 24px)}.modal h2{font-size:22px}.modal-actions{flex-direction:column}.answer-input{font-size:19px}.word-chip{font-size:13px;padding:9px 12px}.challenge-question{font-size:22px}.big-word{font-size:45px}.review-shelf p{font-size:9px}.feedback{font-size:12px}}
+/* Keep small, useful text legible on the warm paper surfaces. */
+.profile-meta,.panel-sub,.learn-intro p,.world-head p,.quest-world p,.activity-prompt,.challenge-context,.safety-item{color:#64725f}
+.program-card p{color:#77694e}.program-card.primary p{color:#5d7472}
+.cartoon-copy p{color:#795a47}.review-shelf p{color:#77715e}
+.profile-stats span,.day-bar span,.parent-gate,.lesson-node small,.quest-node small,.sentence-hint{color:#6f7d63}
+.profile-stats span,.panel-sub,.safety-item,.review-shelf p,.lesson-node small,.quest-node small,.parent-gate{font-size:11px}
+@media(max-width:420px){.review-shelf p,.quest-world p{font-size:11px}.review-shelf h3{font-size:14px}.world-head p,.learn-intro p,.cartoon-copy p{font-size:12px}.profile-actions .btn{font-size:12px}.program-card .features span{font-size:11px}}
+@media(hover:none){.btn:hover,.pill:hover,.icon-btn:hover,.program-card:hover,.choice:hover,.quest-node:hover:not(:disabled),.lesson-node:hover:not(:disabled){transform:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
